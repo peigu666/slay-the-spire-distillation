@@ -1,0 +1,136 @@
+# Slay the Spire 蒸馏
+
+面向 AI 的《Slay the Spire》（杀戮尖塔）Java Mod 开发知识库。它把本机游戏、ModTheSpire、BaseMod、StSLib、已安装 Mod 和第三方 Java API 整理成可检索的 JSONL 索引，并附带查询、校验、构建模板和离线浏览报告。
+
+这个仓库不是游戏本体，也不是 Mod 安装包。它的目标是让 AI 在编写或排查 Slay the Spire Mod 时，能够依据当前 JAR 的真实类名、方法描述符、参数、返回值、访问级别、注解、字段和资源路径回答，而不是依赖过时教程或猜测重载。
+
+## 它有什么用
+
+- 为 AI 编写卡牌、遗物、能力、药水、角色、怪物、事件和 UI Mod 提供当前版本 API 依据。
+- 查询 ModTheSpire 的补丁注解、Locator、Insert/Prefix/Postfix/Instrument Patch 和 `SpireField`。
+- 查询 BaseMod、StSLib 和已安装 Mod 的类、方法、字段、注解和依赖信息。
+- 根据资源索引定位卡图、遗物图标、语言包、Spine/Atlas 和其他 JAR 内资源。
+- 用 SHA-256 校验本机 JAR 是否仍与知识库生成时的版本一致。
+- 用最小 Java 8 模板快速创建一个可编译的 Mod 项目。
+
+## 当前快照
+
+| 项目 | 当前值 |
+|---|---|
+| 游戏 | Slay the Spire 2.3.4 |
+| 本体 JAR | `desktop-1.0.jar` |
+| 本体 SHA-256 | `CFAD868AC8D65A88E71A0BF096FB09F78811E553EFFE0787C5309A655E081673` |
+| ModTheSpire 元数据 | `999.999.999`（JAR 内标记，不等同于实际发布版本） |
+| BaseMod | 5.56.0 |
+| StSLib | 2.12.0 |
+| Java | `1.8.0_144` |
+| JAR 快照 | 66 个：本体 1、框架 3、本地 Mod 2、Workshop 60 |
+| API 类型记录 | 31,088 个类 |
+| JAR 资源记录 | 10,931 项 |
+| 文本资源记录 | 1,580 项 |
+| 生成时间 | 2026-09-26 16:44 UTC |
+
+生成时使用的环境路径为：
+
+```text
+游戏目录：E:\SteamLibrary\steamapps\common\SlayTheSpire
+本地 Mod 目录：E:\SteamLibrary\steamapps\common\SlayTheSpire\mods
+创意工坊 Mod 目录：E:\SteamLibrary\steamapps\workshop\content\646570
+```
+
+这些绝对路径只用于审计。使用知识库时应使用 `portable_path` 和 SHA-256，不要假设别人的 Steam 安装路径相同。
+
+## 目录说明
+
+| 路径 | 内容 | 主要用途 |
+|---|---|---|
+| `api/base_game_api.*` | 本体 `com.megacrit.cardcrawl.*` API | 查询游戏类、方法、字段和补丁目标 |
+| `api/modthespire_api.*` | ModTheSpire API | 查询补丁注解、Locator 和补丁框架 |
+| `api/basemod_api.*` | BaseMod API | 注册卡牌、遗物、药水、角色和生命周期订阅 |
+| `api/stslib_api.*` | StSLib API | 查询额外机制、接口和通用动作 |
+| `api/installed_mods_api.*` | 生成时已安装 Mod 的类索引 | 参考现有 Mod 的调用方式和命名 |
+| `api/third_party_api.*` | LibGDX、Spine、Javassist 等第三方类 | UI、图片、动画和底层依赖 |
+| `environment/` | JAR、类、资源、Workshop 和运行环境快照 | 版本审计、依赖定位和资源定位 |
+| `resources/text_resources.jsonl` | JAR 内可读文本资源 | 查询 JSON、Atlas、语言包和少量源码文本 |
+| `docs/` | 工作流、API 入口、补丁、资源和排错说明 | 给 AI 或开发者的使用导航 |
+| `templates/` | Java 8 + ModTheSpire + BaseMod 最小模板 | 创建和构建新 Mod |
+| `tools/` | API 查询、JAR 校验、`javap` 辅助脚本和生成器 | 实际验证与再生成 |
+| `sts_ai_knowledge_report.html` | 离线类/成员浏览器 | 人类快速搜索，不作为唯一事实来源 |
+
+## 给 AI 的推荐读取顺序
+
+1. 读取本文件和 `AI_INGESTION_GUIDE.md`。
+2. 读取 `manifest.json`，确认本知识库对应的本体 JAR 哈希。
+3. 查本体类时使用 `api/base_game_api.types.jsonl`。
+4. 查 ModTheSpire、BaseMod、StSLib 或已安装 Mod 时，只读取对应角色的 JSONL。
+5. 遇到资源、依赖或 Workshop 版本问题时读取 `environment/`。
+6. 涉及补丁插入点、方法行为或字节码布局时，用当前机器的实际 JAR、`javap -c`、编译结果和运行日志复核。
+
+不要把所有大型 JSONL 一次性放进上下文；先按类型名和成员名查询。
+
+## 常用命令
+
+查询本体的 `AbstractCard.use`：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\query-sts-api.ps1 `
+  -PackRoot $PWD `
+  -Role base_game `
+  -TypeName com.megacrit.cardcrawl.cards.AbstractCard `
+  -Member use
+```
+
+查询 BaseMod 的 `addCard`：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\query-sts-api.ps1 `
+  -PackRoot $PWD `
+  -Role basemod `
+  -TypeName basemod.BaseMod `
+  -Member addCard
+```
+
+校验本机安装是否与快照一致：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\verify-sts-pack.ps1 `
+  -GameRoot 'E:\SteamLibrary\steamapps\common\SlayTheSpire' `
+  -PackRoot $PWD `
+  -VerifyPackFiles
+```
+
+使用最小模板：
+
+```powershell
+.\templates\build.ps1 `
+  -StsRoot 'E:\SteamLibrary\steamapps\common\SlayTheSpire' `
+  -JavaHome 'C:\Program Files\Java\jdk8'
+```
+
+## 可移植性与 Workshop 快照
+
+`environment/mod_catalog.json`、`environment/jar_inventory.jsonl` 和 `environment/workshop_manifest.json` 是生成机的安装快照，不代表每个使用者都安装了相同的 Mod。
+
+本仓库不上传游戏 JAR、Mod JAR、图片、音频、存档或完整 Workshop 资源。JAR 内资源只保留路径、大小、CRC/哈希和可读文本索引；其他用户缺少对应 Workshop 项目是正常情况。需要实际运行或验证某个 Mod 时，用户应自行通过 Steam Workshop 安装，并重新运行校验脚本。
+
+## 重要边界
+
+- API 记录来自生成时的具体 JAR，不应泛化到所有 Slay the Spire、ModTheSpire、BaseMod 或 StSLib 版本。
+- 类记录包含私有成员、访问级别、描述符、注解以及方法代码长度/哈希，但不等同于可读 Java 源码，也不包含完整方法体。
+- `installed_mods` 是生成时的 Mod 快照；Workshop 更新后必须重新生成或重新校验。
+- 一个 Workshop Mod 的 `ModTheSpire.json` 存在格式问题，目录中仍保留其原始文本资源，但 `mod_catalog.json` 无法提供完整解析后的 metadata。
+- 这个仓库只提供知识索引和工具，不替代游戏、ModTheSpire、BaseMod、StSLib 或具体 Mod 的安装包。
+
+## 搜索关键词 / Search keywords
+
+### 中文
+
+`杀戮尖塔` `尖塔` `Slay the Spire` `StS Mod` `尖塔 Mod` `杀戮尖塔 Mod 开发` `杀戮尖塔模组` `Java 模组` `Java Mod` `ModTheSpire` `BaseMod` `StSLib` `卡牌 Mod` `遗物 Mod` `能力 Mod` `药水 Mod` `角色 Mod` `怪物 Mod` `事件 Mod` `补丁` `字节码补丁` `Locator` `插入补丁` `资源路径` `语言包` `本地化` `卡图` `创意工坊` `Steam Workshop` `AI 知识库` `API 索引` `JAR 分析` `Java 8`
+
+### English
+
+`slay-the-spire` `slay-the-spire-modding` `sts-modding` `slay-the-spire-mod` `java-mod` `java-game-modding` `modthespire` `basemod` `stslib` `card-mod` `relic-mod` `power-mod` `potion-mod` `character-mod` `monster-mod` `event-mod` `ui-mod` `game-modding` `mod-development` `java-8` `javassist` `bytecode-patching` `runtime-patching` `api-index` `jsonl` `workshop-mods` `steam-workshop` `ai-knowledge-base` `reverse-engineering` `resource-index` `localization` `modding-tools`
+
+## 第三方内容说明
+
+本仓库发布的是从本机安装生成的 API、元数据、资源索引和辅助工具，不包含《Slay the Spire》本体或完整 Mod 二进制。类名、方法签名、资源路径、Mod 名称和文本可能受原作者或相应项目许可约束。使用、再分发或基于这些资料开发时，请遵守 Steam、游戏本体、ModTheSpire、BaseMod、StSLib 以及各 Workshop Mod 的许可和作者要求。
