@@ -1,0 +1,99 @@
+Compiled from "UpgradeRandomCardAction.java"
+public class com.megacrit.cardcrawl.actions.common.UpgradeRandomCardAction extends com.megacrit.cardcrawl.actions.AbstractGameAction {
+  private com.megacrit.cardcrawl.characters.AbstractPlayer p;
+    descriptor: Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+
+  public com.megacrit.cardcrawl.actions.common.UpgradeRandomCardAction();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/actions/AbstractGameAction."<init>":()V
+       4: aload_0
+       5: getstatic     #2                  // Field com/megacrit/cardcrawl/actions/AbstractGameAction$ActionType.CARD_MANIPULATION:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+       8: putfield      #3                  // Field actionType:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      11: aload_0
+      12: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      15: putfield      #5                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      18: aload_0
+      19: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_FAST:F
+      22: putfield      #7                  // Field duration:F
+      25: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field duration:F
+       4: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_FAST:F
+       7: fcmpl
+       8: ifne          161
+      11: aload_0
+      12: getfield      #5                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      15: getfield      #8                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      18: getfield      #9                  // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+      21: invokevirtual #10                 // Method java/util/ArrayList.size:()I
+      24: ifgt          33
+      27: aload_0
+      28: iconst_1
+      29: putfield      #11                 // Field isDone:Z
+      32: return
+      33: new           #12                 // class com/megacrit/cardcrawl/cards/CardGroup
+      36: dup
+      37: getstatic     #13                 // Field com/megacrit/cardcrawl/cards/CardGroup$CardGroupType.UNSPECIFIED:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+      40: invokespecial #14                 // Method com/megacrit/cardcrawl/cards/CardGroup."<init>":(Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;)V
+      43: astore_1
+      44: aload_0
+      45: getfield      #5                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      48: getfield      #8                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      51: getfield      #9                  // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+      54: invokevirtual #15                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      57: astore_2
+      58: aload_2
+      59: invokeinterface #16,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      64: ifeq          102
+      67: aload_2
+      68: invokeinterface #17,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      73: checkcast     #18                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      76: astore_3
+      77: aload_3
+      78: invokevirtual #19                 // Method com/megacrit/cardcrawl/cards/AbstractCard.canUpgrade:()Z
+      81: ifeq          99
+      84: aload_3
+      85: getfield      #20                 // Field com/megacrit/cardcrawl/cards/AbstractCard.type:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardType;
+      88: getstatic     #21                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardType.STATUS:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardType;
+      91: if_acmpeq     99
+      94: aload_1
+      95: aload_3
+      96: invokevirtual #22                 // Method com/megacrit/cardcrawl/cards/CardGroup.addToTop:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      99: goto          58
+     102: aload_1
+     103: invokevirtual #23                 // Method com/megacrit/cardcrawl/cards/CardGroup.size:()I
+     106: ifle          155
+     109: aload_1
+     110: invokevirtual #24                 // Method com/megacrit/cardcrawl/cards/CardGroup.shuffle:()V
+     113: aload_1
+     114: getfield      #9                  // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     117: iconst_0
+     118: invokevirtual #25                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     121: checkcast     #18                 // class com/megacrit/cardcrawl/cards/AbstractCard
+     124: invokevirtual #26                 // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+     127: aload_1
+     128: getfield      #9                  // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     131: iconst_0
+     132: invokevirtual #25                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     135: checkcast     #18                 // class com/megacrit/cardcrawl/cards/AbstractCard
+     138: invokevirtual #27                 // Method com/megacrit/cardcrawl/cards/AbstractCard.superFlash:()V
+     141: aload_1
+     142: getfield      #9                  // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     145: iconst_0
+     146: invokevirtual #25                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     149: checkcast     #18                 // class com/megacrit/cardcrawl/cards/AbstractCard
+     152: invokevirtual #28                 // Method com/megacrit/cardcrawl/cards/AbstractCard.applyPowers:()V
+     155: aload_0
+     156: iconst_1
+     157: putfield      #11                 // Field isDone:Z
+     160: return
+     161: aload_0
+     162: invokevirtual #29                 // Method tickDuration:()V
+     165: return
+}

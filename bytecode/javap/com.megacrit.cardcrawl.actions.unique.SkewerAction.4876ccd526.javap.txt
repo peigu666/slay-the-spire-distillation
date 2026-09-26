@@ -1,0 +1,113 @@
+Compiled from "SkewerAction.java"
+public class com.megacrit.cardcrawl.actions.unique.SkewerAction extends com.megacrit.cardcrawl.actions.AbstractGameAction {
+  private boolean freeToPlayOnce;
+    descriptor: Z
+
+  private int damage;
+    descriptor: I
+
+  private com.megacrit.cardcrawl.characters.AbstractPlayer p;
+    descriptor: Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+
+  private com.megacrit.cardcrawl.monsters.AbstractMonster m;
+    descriptor: Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+
+  private com.megacrit.cardcrawl.cards.DamageInfo$DamageType damageTypeForTurn;
+    descriptor: Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+
+  private int energyOnUse;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.actions.unique.SkewerAction(com.megacrit.cardcrawl.characters.AbstractPlayer, com.megacrit.cardcrawl.monsters.AbstractMonster, int, com.megacrit.cardcrawl.cards.DamageInfo$DamageType, boolean, int);
+    descriptor: (Lcom/megacrit/cardcrawl/characters/AbstractPlayer;Lcom/megacrit/cardcrawl/monsters/AbstractMonster;ILcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;ZI)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/actions/AbstractGameAction."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #2                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       9: aload_0
+      10: aload_2
+      11: putfield      #3                  // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+      14: aload_0
+      15: iload_3
+      16: putfield      #4                  // Field damage:I
+      19: aload_0
+      20: iload         5
+      22: putfield      #5                  // Field freeToPlayOnce:Z
+      25: aload_0
+      26: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_XFAST:F
+      29: putfield      #7                  // Field duration:F
+      32: aload_0
+      33: getstatic     #8                  // Field com/megacrit/cardcrawl/actions/AbstractGameAction$ActionType.SPECIAL:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      36: putfield      #9                  // Field actionType:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      39: aload_0
+      40: aload         4
+      42: putfield      #10                 // Field damageTypeForTurn:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+      45: aload_0
+      46: iload         6
+      48: putfield      #11                 // Field energyOnUse:I
+      51: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: getstatic     #12                 // Field com/megacrit/cardcrawl/ui/panels/EnergyPanel.totalCount:I
+       3: istore_1
+       4: aload_0
+       5: getfield      #11                 // Field energyOnUse:I
+       8: iconst_m1
+       9: if_icmpeq     17
+      12: aload_0
+      13: getfield      #11                 // Field energyOnUse:I
+      16: istore_1
+      17: aload_0
+      18: getfield      #2                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      21: ldc           #14                 // String Chemical X
+      23: invokevirtual #15                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+      26: ifeq          44
+      29: iinc          1, 2
+      32: aload_0
+      33: getfield      #2                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      36: ldc           #14                 // String Chemical X
+      38: invokevirtual #16                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+      41: invokevirtual #17                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.flash:()V
+      44: iload_1
+      45: ifle          118
+      48: iconst_0
+      49: istore_2
+      50: iload_2
+      51: iload_1
+      52: if_icmpge     98
+      55: aload_0
+      56: new           #18                 // class com/megacrit/cardcrawl/actions/common/DamageAction
+      59: dup
+      60: aload_0
+      61: getfield      #3                  // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+      64: new           #19                 // class com/megacrit/cardcrawl/cards/DamageInfo
+      67: dup
+      68: aload_0
+      69: getfield      #2                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      72: aload_0
+      73: getfield      #4                  // Field damage:I
+      76: aload_0
+      77: getfield      #10                 // Field damageTypeForTurn:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+      80: invokespecial #20                 // Method com/megacrit/cardcrawl/cards/DamageInfo."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;ILcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;)V
+      83: getstatic     #21                 // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.BLUNT_LIGHT:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      86: invokespecial #22                 // Method com/megacrit/cardcrawl/actions/common/DamageAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/cards/DamageInfo;Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;)V
+      89: invokevirtual #23                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      92: iinc          2, 1
+      95: goto          50
+      98: aload_0
+      99: getfield      #5                  // Field freeToPlayOnce:Z
+     102: ifne          118
+     105: aload_0
+     106: getfield      #2                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     109: getfield      #24                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.energy:Lcom/megacrit/cardcrawl/core/EnergyManager;
+     112: getstatic     #12                 // Field com/megacrit/cardcrawl/ui/panels/EnergyPanel.totalCount:I
+     115: invokevirtual #25                 // Method com/megacrit/cardcrawl/core/EnergyManager.use:(I)V
+     118: aload_0
+     119: iconst_1
+     120: putfield      #26                 // Field isDone:Z
+     123: return
+}

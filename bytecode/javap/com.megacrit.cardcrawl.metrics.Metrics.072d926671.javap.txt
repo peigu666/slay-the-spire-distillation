@@ -1,0 +1,852 @@
+Compiled from "Metrics.java"
+public class com.megacrit.cardcrawl.metrics.Metrics implements java.lang.Runnable {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  private java.util.HashMap<java.lang.Object, java.lang.Object> params;
+    descriptor: Ljava/util/HashMap;
+
+  private com.google.gson.Gson gson;
+    descriptor: Lcom/google/gson/Gson;
+
+  private long lastPlaytimeEnd;
+    descriptor: J
+
+  public static final java.text.SimpleDateFormat timestampFormatter;
+    descriptor: Ljava/text/SimpleDateFormat;
+
+  public boolean death;
+    descriptor: Z
+
+  public boolean trueVictory;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.monsters.MonsterGroup monsters;
+    descriptor: Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+
+  public com.megacrit.cardcrawl.metrics.Metrics$MetricRequestType type;
+    descriptor: Lcom/megacrit/cardcrawl/metrics/Metrics$MetricRequestType;
+
+  public com.megacrit.cardcrawl.metrics.Metrics();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #2                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #3                  // class java/util/HashMap
+       8: dup
+       9: invokespecial #4                  // Method java/util/HashMap."<init>":()V
+      12: putfield      #5                  // Field params:Ljava/util/HashMap;
+      15: aload_0
+      16: new           #6                  // class com/google/gson/Gson
+      19: dup
+      20: invokespecial #7                  // Method com/google/gson/Gson."<init>":()V
+      23: putfield      #8                  // Field gson:Lcom/google/gson/Gson;
+      26: aload_0
+      27: aconst_null
+      28: putfield      #9                  // Field monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      31: return
+
+  public void setValues(boolean, boolean, com.megacrit.cardcrawl.monsters.MonsterGroup, com.megacrit.cardcrawl.metrics.Metrics$MetricRequestType);
+    descriptor: (ZZLcom/megacrit/cardcrawl/monsters/MonsterGroup;Lcom/megacrit/cardcrawl/metrics/Metrics$MetricRequestType;)V
+    Code:
+       0: aload_0
+       1: iload_1
+       2: putfield      #10                 // Field death:Z
+       5: aload_0
+       6: iload_2
+       7: putfield      #11                 // Field trueVictory:Z
+      10: aload_0
+      11: aload_3
+      12: putfield      #9                  // Field monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      15: aload_0
+      16: aload         4
+      18: putfield      #12                 // Field type:Lcom/megacrit/cardcrawl/metrics/Metrics$MetricRequestType;
+      21: return
+
+  private void sendPost(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: return
+
+  private void addData(java.lang.Object, java.lang.Object);
+    descriptor: (Ljava/lang/Object;Ljava/lang/Object;)V
+    Code:
+       0: aload_0
+       1: getfield      #5                  // Field params:Ljava/util/HashMap;
+       4: aload_1
+       5: aload_2
+       6: invokevirtual #13                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+       9: pop
+      10: return
+
+  private void sendPost(java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;)V
+    Code:
+       0: new           #3                  // class java/util/HashMap
+       3: dup
+       4: invokespecial #4                  // Method java/util/HashMap."<init>":()V
+       7: astore_3
+       8: aload_3
+       9: ldc           #14                 // String event
+      11: aload_0
+      12: getfield      #5                  // Field params:Ljava/util/HashMap;
+      15: invokevirtual #13                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      18: pop
+      19: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.isBeta:Z
+      22: ifeq          38
+      25: aload_3
+      26: ldc           #16                 // String host
+      28: getstatic     #17                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.playerName:Ljava/lang/String;
+      31: invokevirtual #13                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      34: pop
+      35: goto          48
+      38: aload_3
+      39: ldc           #16                 // String host
+      41: getstatic     #18                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.alias:Ljava/lang/String;
+      44: invokevirtual #13                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      47: pop
+      48: aload_3
+      49: ldc           #19                 // String time
+      51: invokestatic  #20                 // Method java/lang/System.currentTimeMillis:()J
+      54: ldc2_w        #21                 // long 1000l
+      57: ldiv
+      58: invokestatic  #23                 // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+      61: invokevirtual #13                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      64: pop
+      65: aload_0
+      66: getfield      #8                  // Field gson:Lcom/google/gson/Gson;
+      69: aload_3
+      70: invokevirtual #24                 // Method com/google/gson/Gson.toJson:(Ljava/lang/Object;)Ljava/lang/String;
+      73: astore        4
+      75: getstatic     #1                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      78: new           #25                 // class java/lang/StringBuilder
+      81: dup
+      82: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+      85: ldc           #27                 // String UPLOADING METRICS TO: url=
+      87: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      90: aload_1
+      91: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      94: ldc           #29                 // String ,data=
+      96: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      99: aload         4
+     101: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     104: invokevirtual #30                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     107: invokeinterface #31,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     112: new           #32                 // class com/badlogic/gdx/net/HttpRequestBuilder
+     115: dup
+     116: invokespecial #33                 // Method com/badlogic/gdx/net/HttpRequestBuilder."<init>":()V
+     119: astore        5
+     121: aload         5
+     123: invokevirtual #34                 // Method com/badlogic/gdx/net/HttpRequestBuilder.newRequest:()Lcom/badlogic/gdx/net/HttpRequestBuilder;
+     126: ldc           #36                 // String POST
+     128: invokevirtual #37                 // Method com/badlogic/gdx/net/HttpRequestBuilder.method:(Ljava/lang/String;)Lcom/badlogic/gdx/net/HttpRequestBuilder;
+     131: aload_1
+     132: invokevirtual #38                 // Method com/badlogic/gdx/net/HttpRequestBuilder.url:(Ljava/lang/String;)Lcom/badlogic/gdx/net/HttpRequestBuilder;
+     135: ldc           #39                 // String Content-Type
+     137: ldc           #40                 // String application/json
+     139: invokevirtual #41                 // Method com/badlogic/gdx/net/HttpRequestBuilder.header:(Ljava/lang/String;Ljava/lang/String;)Lcom/badlogic/gdx/net/HttpRequestBuilder;
+     142: ldc           #42                 // String Accept
+     144: ldc           #40                 // String application/json
+     146: invokevirtual #41                 // Method com/badlogic/gdx/net/HttpRequestBuilder.header:(Ljava/lang/String;Ljava/lang/String;)Lcom/badlogic/gdx/net/HttpRequestBuilder;
+     149: ldc           #43                 // String User-Agent
+     151: ldc           #44                 // String curl/7.43.0
+     153: invokevirtual #41                 // Method com/badlogic/gdx/net/HttpRequestBuilder.header:(Ljava/lang/String;Ljava/lang/String;)Lcom/badlogic/gdx/net/HttpRequestBuilder;
+     156: invokevirtual #45                 // Method com/badlogic/gdx/net/HttpRequestBuilder.build:()Lcom/badlogic/gdx/Net$HttpRequest;
+     159: astore        6
+     161: aload         6
+     163: aload         4
+     165: invokevirtual #46                 // Method com/badlogic/gdx/Net$HttpRequest.setContent:(Ljava/lang/String;)V
+     168: getstatic     #47                 // Field com/badlogic/gdx/Gdx.net:Lcom/badlogic/gdx/Net;
+     171: aload         6
+     173: new           #48                 // class com/megacrit/cardcrawl/metrics/Metrics$1
+     176: dup
+     177: aload_0
+     178: aload_2
+     179: invokespecial #49                 // Method com/megacrit/cardcrawl/metrics/Metrics$1."<init>":(Lcom/megacrit/cardcrawl/metrics/Metrics;Ljava/lang/String;)V
+     182: invokeinterface #50,  3           // InterfaceMethod com/badlogic/gdx/Net.sendHttpRequest:(Lcom/badlogic/gdx/Net$HttpRequest;Lcom/badlogic/gdx/Net$HttpResponseListener;)V
+     187: return
+
+  private void gatherAllData(boolean, boolean, com.megacrit.cardcrawl.monsters.MonsterGroup);
+    descriptor: (ZZLcom/megacrit/cardcrawl/monsters/MonsterGroup;)V
+    Code:
+       0: aload_0
+       1: ldc           #51                 // String play_id
+       3: invokestatic  #52                 // Method java/util/UUID.randomUUID:()Ljava/util/UUID;
+       6: invokevirtual #53                 // Method java/util/UUID.toString:()Ljava/lang/String;
+       9: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+      12: aload_0
+      13: ldc           #55                 // String build_version
+      15: getstatic     #56                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.TRUE_VERSION_NUM:Ljava/lang/String;
+      18: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+      21: aload_0
+      22: ldc           #57                 // String seed_played
+      24: getstatic     #58                 // Field com/megacrit/cardcrawl/core/Settings.seed:Ljava/lang/Long;
+      27: invokevirtual #59                 // Method java/lang/Long.toString:()Ljava/lang/String;
+      30: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+      33: aload_0
+      34: ldc           #60                 // String chose_seed
+      36: getstatic     #61                 // Field com/megacrit/cardcrawl/core/Settings.seedSet:Z
+      39: invokestatic  #62                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      42: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+      45: aload_0
+      46: ldc           #63                 // String seed_source_timestamp
+      48: getstatic     #64                 // Field com/megacrit/cardcrawl/core/Settings.seedSourceTimestamp:J
+      51: invokestatic  #23                 // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+      54: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+      57: aload_0
+      58: ldc           #65                 // String is_daily
+      60: getstatic     #66                 // Field com/megacrit/cardcrawl/core/Settings.isDailyRun:Z
+      63: invokestatic  #62                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      66: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+      69: aload_0
+      70: ldc           #67                 // String special_seed
+      72: getstatic     #68                 // Field com/megacrit/cardcrawl/core/Settings.specialSeed:Ljava/lang/Long;
+      75: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+      78: getstatic     #69                 // Field com/megacrit/cardcrawl/helpers/ModHelper.enabledMods:Ljava/util/ArrayList;
+      81: invokevirtual #70                 // Method java/util/ArrayList.size:()I
+      84: ifle          96
+      87: aload_0
+      88: ldc           #71                 // String daily_mods
+      90: invokestatic  #72                 // Method com/megacrit/cardcrawl/helpers/ModHelper.getEnabledModIDs:()Ljava/util/ArrayList;
+      93: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+      96: aload_0
+      97: ldc           #73                 // String is_trial
+      99: getstatic     #74                 // Field com/megacrit/cardcrawl/core/Settings.isTrial:Z
+     102: invokestatic  #62                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     105: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     108: aload_0
+     109: ldc           #75                 // String is_endless
+     111: getstatic     #76                 // Field com/megacrit/cardcrawl/core/Settings.isEndless:Z
+     114: invokestatic  #62                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     117: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     120: iload_1
+     121: ifeq          183
+     124: getstatic     #77                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     127: astore        4
+     129: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     132: getfield      #79                 // Field com/megacrit/cardcrawl/metrics/MetricData.current_hp_per_floor:Ljava/util/ArrayList;
+     135: aload         4
+     137: getfield      #80                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentHealth:I
+     140: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     143: invokevirtual #82                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     146: pop
+     147: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     150: getfield      #83                 // Field com/megacrit/cardcrawl/metrics/MetricData.max_hp_per_floor:Ljava/util/ArrayList;
+     153: aload         4
+     155: getfield      #84                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+     158: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     161: invokevirtual #82                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     164: pop
+     165: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     168: getfield      #85                 // Field com/megacrit/cardcrawl/metrics/MetricData.gold_per_floor:Ljava/util/ArrayList;
+     171: aload         4
+     173: getfield      #86                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.gold:I
+     176: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     179: invokevirtual #82                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     182: pop
+     183: aload_0
+     184: ldc           #87                 // String is_ascension_mode
+     186: getstatic     #88                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.isAscensionMode:Z
+     189: invokestatic  #62                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     192: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     195: aload_0
+     196: ldc           #89                 // String ascension_level
+     198: getstatic     #90                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.ascensionLevel:I
+     201: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     204: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     207: aload_0
+     208: ldc           #91                 // String neow_bonus
+     210: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     213: getfield      #92                 // Field com/megacrit/cardcrawl/metrics/MetricData.neowBonus:Ljava/lang/String;
+     216: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     219: aload_0
+     220: ldc           #93                 // String neow_cost
+     222: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     225: getfield      #94                 // Field com/megacrit/cardcrawl/metrics/MetricData.neowCost:Ljava/lang/String;
+     228: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     231: aload_0
+     232: ldc           #95                 // String is_beta
+     234: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.isBeta:Z
+     237: invokestatic  #62                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     240: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     243: aload_0
+     244: ldc           #96                 // String is_prod
+     246: getstatic     #97                 // Field com/megacrit/cardcrawl/core/Settings.isDemo:Z
+     249: invokestatic  #62                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     252: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     255: aload_0
+     256: ldc           #98                 // String victory
+     258: iload_1
+     259: ifne          266
+     262: iconst_1
+     263: goto          267
+     266: iconst_0
+     267: invokestatic  #62                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     270: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     273: aload_0
+     274: ldc           #99                 // String floor_reached
+     276: getstatic     #100                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.floorNum:I
+     279: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     282: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     285: iload_2
+     286: ifeq          313
+     289: aload_0
+     290: ldc           #101                // String score
+     292: iload_1
+     293: ifne          300
+     296: iconst_1
+     297: goto          301
+     300: iconst_0
+     301: invokestatic  #102                // Method com/megacrit/cardcrawl/screens/VictoryScreen.calcScore:(Z)I
+     304: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     307: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     310: goto          334
+     313: aload_0
+     314: ldc           #101                // String score
+     316: iload_1
+     317: ifne          324
+     320: iconst_1
+     321: goto          325
+     324: iconst_0
+     325: invokestatic  #103                // Method com/megacrit/cardcrawl/screens/DeathScreen.calcScore:(Z)I
+     328: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     331: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     334: aload_0
+     335: invokestatic  #20                 // Method java/lang/System.currentTimeMillis:()J
+     338: ldc2_w        #21                 // long 1000l
+     341: ldiv
+     342: putfield      #104                // Field lastPlaytimeEnd:J
+     345: aload_0
+     346: ldc           #105                // String timestamp
+     348: aload_0
+     349: getfield      #104                // Field lastPlaytimeEnd:J
+     352: invokestatic  #23                 // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     355: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     358: aload_0
+     359: ldc           #106                // String local_time
+     361: getstatic     #107                // Field timestampFormatter:Ljava/text/SimpleDateFormat;
+     364: invokestatic  #108                // Method java/util/Calendar.getInstance:()Ljava/util/Calendar;
+     367: invokevirtual #109                // Method java/util/Calendar.getTime:()Ljava/util/Date;
+     370: invokevirtual #110                // Method java/text/SimpleDateFormat.format:(Ljava/util/Date;)Ljava/lang/String;
+     373: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     376: aload_0
+     377: ldc           #111                // String playtime
+     379: getstatic     #112                // Field com/megacrit/cardcrawl/core/CardCrawlGame.playtime:F
+     382: f2l
+     383: invokestatic  #23                 // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     386: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     389: aload_0
+     390: ldc           #113                // String player_experience
+     392: getstatic     #114                // Field com/megacrit/cardcrawl/core/Settings.totalPlayTime:J
+     395: invokestatic  #23                 // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     398: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     401: aload_0
+     402: ldc           #115                // String master_deck
+     404: getstatic     #77                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     407: getfield      #116                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     410: invokevirtual #117                // Method com/megacrit/cardcrawl/cards/CardGroup.getCardIdsForMetrics:()Ljava/util/ArrayList;
+     413: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     416: aload_0
+     417: ldc           #118                // String relics
+     419: getstatic     #77                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     422: invokevirtual #119                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelicNames:()Ljava/util/ArrayList;
+     425: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     428: aload_0
+     429: ldc           #120                // String gold
+     431: getstatic     #77                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     434: getfield      #86                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.gold:I
+     437: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     440: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     443: aload_0
+     444: ldc           #121                // String campfire_rested
+     446: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     449: getfield      #122                // Field com/megacrit/cardcrawl/metrics/MetricData.campfire_rested:I
+     452: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     455: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     458: aload_0
+     459: ldc           #123                // String campfire_upgraded
+     461: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     464: getfield      #124                // Field com/megacrit/cardcrawl/metrics/MetricData.campfire_upgraded:I
+     467: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     470: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     473: aload_0
+     474: ldc           #125                // String purchased_purges
+     476: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     479: getfield      #126                // Field com/megacrit/cardcrawl/metrics/MetricData.purchased_purges:I
+     482: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     485: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     488: aload_0
+     489: ldc           #127                // String potions_floor_spawned
+     491: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     494: getfield      #128                // Field com/megacrit/cardcrawl/metrics/MetricData.potions_floor_spawned:Ljava/util/ArrayList;
+     497: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     500: aload_0
+     501: ldc           #129                // String potions_floor_usage
+     503: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     506: getfield      #130                // Field com/megacrit/cardcrawl/metrics/MetricData.potions_floor_usage:Ljava/util/ArrayList;
+     509: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     512: aload_0
+     513: ldc           #131                // String current_hp_per_floor
+     515: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     518: getfield      #79                 // Field com/megacrit/cardcrawl/metrics/MetricData.current_hp_per_floor:Ljava/util/ArrayList;
+     521: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     524: aload_0
+     525: ldc           #132                // String max_hp_per_floor
+     527: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     530: getfield      #83                 // Field com/megacrit/cardcrawl/metrics/MetricData.max_hp_per_floor:Ljava/util/ArrayList;
+     533: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     536: aload_0
+     537: ldc           #133                // String gold_per_floor
+     539: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     542: getfield      #85                 // Field com/megacrit/cardcrawl/metrics/MetricData.gold_per_floor:Ljava/util/ArrayList;
+     545: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     548: aload_0
+     549: ldc           #134                // String path_per_floor
+     551: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     554: getfield      #135                // Field com/megacrit/cardcrawl/metrics/MetricData.path_per_floor:Ljava/util/ArrayList;
+     557: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     560: aload_0
+     561: ldc           #136                // String path_taken
+     563: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     566: getfield      #137                // Field com/megacrit/cardcrawl/metrics/MetricData.path_taken:Ljava/util/ArrayList;
+     569: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     572: aload_0
+     573: ldc           #138                // String items_purchased
+     575: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     578: getfield      #139                // Field com/megacrit/cardcrawl/metrics/MetricData.items_purchased:Ljava/util/ArrayList;
+     581: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     584: aload_0
+     585: ldc           #140                // String item_purchase_floors
+     587: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     590: getfield      #141                // Field com/megacrit/cardcrawl/metrics/MetricData.item_purchase_floors:Ljava/util/ArrayList;
+     593: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     596: aload_0
+     597: ldc           #142                // String items_purged
+     599: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     602: getfield      #143                // Field com/megacrit/cardcrawl/metrics/MetricData.items_purged:Ljava/util/ArrayList;
+     605: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     608: aload_0
+     609: ldc           #144                // String items_purged_floors
+     611: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     614: getfield      #145                // Field com/megacrit/cardcrawl/metrics/MetricData.items_purged_floors:Ljava/util/ArrayList;
+     617: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     620: aload_0
+     621: ldc           #146                // String character_chosen
+     623: getstatic     #77                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     626: getfield      #147                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.chosenClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     629: invokevirtual #148                // Method com/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass.name:()Ljava/lang/String;
+     632: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     635: aload_0
+     636: ldc           #149                // String card_choices
+     638: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     641: getfield      #150                // Field com/megacrit/cardcrawl/metrics/MetricData.card_choices:Ljava/util/ArrayList;
+     644: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     647: aload_0
+     648: ldc           #151                // String event_choices
+     650: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     653: getfield      #152                // Field com/megacrit/cardcrawl/metrics/MetricData.event_choices:Ljava/util/ArrayList;
+     656: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     659: aload_0
+     660: ldc           #153                // String boss_relics
+     662: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     665: getfield      #154                // Field com/megacrit/cardcrawl/metrics/MetricData.boss_relics:Ljava/util/ArrayList;
+     668: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     671: aload_0
+     672: ldc           #155                // String damage_taken
+     674: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     677: getfield      #156                // Field com/megacrit/cardcrawl/metrics/MetricData.damage_taken:Ljava/util/ArrayList;
+     680: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     683: aload_0
+     684: ldc           #157                // String potions_obtained
+     686: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     689: getfield      #158                // Field com/megacrit/cardcrawl/metrics/MetricData.potions_obtained:Ljava/util/ArrayList;
+     692: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     695: aload_0
+     696: ldc           #159                // String relics_obtained
+     698: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     701: getfield      #160                // Field com/megacrit/cardcrawl/metrics/MetricData.relics_obtained:Ljava/util/ArrayList;
+     704: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     707: aload_0
+     708: ldc           #161                // String campfire_choices
+     710: getstatic     #78                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     713: getfield      #162                // Field com/megacrit/cardcrawl/metrics/MetricData.campfire_choices:Ljava/util/ArrayList;
+     716: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     719: aload_0
+     720: ldc           #163                // String circlet_count
+     722: getstatic     #77                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     725: invokevirtual #164                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getCircletCount:()I
+     728: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     731: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     734: getstatic     #77                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     737: invokevirtual #165                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getPrefs:()Lcom/megacrit/cardcrawl/helpers/Prefs;
+     740: astore        4
+     742: aload         4
+     744: ldc           #167                // String WIN_COUNT
+     746: iconst_0
+     747: invokevirtual #168                // Method com/megacrit/cardcrawl/helpers/Prefs.getInteger:(Ljava/lang/String;I)I
+     750: istore        5
+     752: aload         4
+     754: ldc           #169                // String LOSE_COUNT
+     756: iconst_0
+     757: invokevirtual #168                // Method com/megacrit/cardcrawl/helpers/Prefs.getInteger:(Ljava/lang/String;I)I
+     760: istore        6
+     762: iload         5
+     764: ifgt          780
+     767: aload_0
+     768: ldc           #170                // String win_rate
+     770: fconst_0
+     771: invokestatic  #171                // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+     774: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     777: goto          797
+     780: aload_0
+     781: ldc           #170                // String win_rate
+     783: iload         5
+     785: iload         6
+     787: iload         5
+     789: iadd
+     790: idiv
+     791: invokestatic  #81                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     794: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     797: iload_1
+     798: ifeq          817
+     801: aload_3
+     802: ifnull        817
+     805: aload_0
+     806: ldc           #172                // String killed_by
+     808: getstatic     #173                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.lastCombatMetricKey:Ljava/lang/String;
+     811: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     814: goto          824
+     817: aload_0
+     818: ldc           #172                // String killed_by
+     820: aconst_null
+     821: invokespecial #54                 // Method addData:(Ljava/lang/Object;Ljava/lang/Object;)V
+     824: return
+
+  private void gatherAllDataAndSend(boolean, boolean, com.megacrit.cardcrawl.monsters.MonsterGroup);
+    descriptor: (ZZLcom/megacrit/cardcrawl/monsters/MonsterGroup;)V
+    Code:
+       0: invokestatic  #174                // Method com/megacrit/cardcrawl/screens/DeathScreen.shouldUploadMetricData:()Z
+       3: ifeq          18
+       6: aload_0
+       7: iload_1
+       8: iload_2
+       9: aload_3
+      10: invokespecial #175                // Method gatherAllData:(ZZLcom/megacrit/cardcrawl/monsters/MonsterGroup;)V
+      13: aload_0
+      14: aconst_null
+      15: invokespecial #176                // Method sendPost:(Ljava/lang/String;)V
+      18: return
+
+  public void gatherAllDataAndSave(boolean, boolean, com.megacrit.cardcrawl.monsters.MonsterGroup);
+    descriptor: (ZZLcom/megacrit/cardcrawl/monsters/MonsterGroup;)V
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iload_2
+       3: aload_3
+       4: invokespecial #175                // Method gatherAllData:(ZZLcom/megacrit/cardcrawl/monsters/MonsterGroup;)V
+       7: aload_0
+       8: getfield      #8                  // Field gson:Lcom/google/gson/Gson;
+      11: aload_0
+      12: getfield      #5                  // Field params:Ljava/util/HashMap;
+      15: invokevirtual #24                 // Method com/google/gson/Gson.toJson:(Ljava/lang/Object;)Ljava/lang/String;
+      18: astore        4
+      20: getstatic     #66                 // Field com/megacrit/cardcrawl/core/Settings.isDailyRun:Z
+      23: ifne          165
+      26: new           #25                 // class java/lang/StringBuilder
+      29: dup
+      30: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+      33: ldc           #177                // String runs
+      35: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      38: getstatic     #178                // Field java/io/File.separator:Ljava/lang/String;
+      41: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      44: invokevirtual #30                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      47: astore        6
+      49: getstatic     #179                // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlot:I
+      52: lookupswitch  { // 1
+
+                     0: 72
+               default: 75
+          }
+      72: goto          103
+      75: new           #25                 // class java/lang/StringBuilder
+      78: dup
+      79: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+      82: aload         6
+      84: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      87: getstatic     #179                // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlot:I
+      90: invokevirtual #180                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      93: ldc           #181                // String _
+      95: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      98: invokevirtual #30                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     101: astore        6
+     103: new           #25                 // class java/lang/StringBuilder
+     106: dup
+     107: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+     110: aload         6
+     112: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     115: getstatic     #77                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     118: getfield      #147                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.chosenClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     121: invokevirtual #148                // Method com/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass.name:()Ljava/lang/String;
+     124: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     127: getstatic     #178                // Field java/io/File.separator:Ljava/lang/String;
+     130: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     133: aload_0
+     134: getfield      #104                // Field lastPlaytimeEnd:J
+     137: invokevirtual #182                // Method java/lang/StringBuilder.append:(J)Ljava/lang/StringBuilder;
+     140: ldc           #183                // String .run
+     142: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     145: invokevirtual #30                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     148: astore        6
+     150: getstatic     #184                // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+     153: aload         6
+     155: invokeinterface #185,  2          // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+     160: astore        5
+     162: goto          287
+     165: new           #25                 // class java/lang/StringBuilder
+     168: dup
+     169: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+     172: ldc           #177                // String runs
+     174: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     177: getstatic     #178                // Field java/io/File.separator:Ljava/lang/String;
+     180: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     183: invokevirtual #30                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     186: astore        6
+     188: getstatic     #179                // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlot:I
+     191: lookupswitch  { // 1
+
+                     0: 208
+               default: 211
+          }
+     208: goto          239
+     211: new           #25                 // class java/lang/StringBuilder
+     214: dup
+     215: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+     218: aload         6
+     220: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     223: getstatic     #179                // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlot:I
+     226: invokevirtual #180                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     229: ldc           #181                // String _
+     231: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     234: invokevirtual #30                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     237: astore        6
+     239: getstatic     #184                // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+     242: new           #25                 // class java/lang/StringBuilder
+     245: dup
+     246: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+     249: aload         6
+     251: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     254: ldc           #186                // String DAILY
+     256: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     259: getstatic     #178                // Field java/io/File.separator:Ljava/lang/String;
+     262: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     265: aload_0
+     266: getfield      #104                // Field lastPlaytimeEnd:J
+     269: invokevirtual #182                // Method java/lang/StringBuilder.append:(J)Ljava/lang/StringBuilder;
+     272: ldc           #183                // String .run
+     274: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     277: invokevirtual #30                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     280: invokeinterface #185,  2          // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+     285: astore        5
+     287: aload         5
+     289: aload         4
+     291: iconst_0
+     292: invokevirtual #187                // Method com/badlogic/gdx/files/FileHandle.writeString:(Ljava/lang/String;Z)V
+     295: aload_0
+     296: invokespecial #188                // Method removeExcessRunFiles:()V
+     299: return
+
+  private void removeExcessRunFiles();
+    descriptor: ()V
+    Code:
+       0: getstatic     #189                // Field com/megacrit/cardcrawl/core/Settings.isConsoleBuild:Z
+       3: ifne          7
+       6: return
+       7: getstatic     #184                // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+      10: ldc           #177                // String runs
+      12: invokeinterface #185,  2          // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+      17: astore_1
+      18: aload_1
+      19: invokevirtual #190                // Method com/badlogic/gdx/files/FileHandle.list:()[Lcom/badlogic/gdx/files/FileHandle;
+      22: astore_2
+      23: new           #3                  // class java/util/HashMap
+      26: dup
+      27: invokespecial #4                  // Method java/util/HashMap."<init>":()V
+      30: astore_3
+      31: new           #191                // class java/util/ArrayList
+      34: dup
+      35: invokespecial #192                // Method java/util/ArrayList."<init>":()V
+      38: astore        4
+      40: aload_2
+      41: astore        5
+      43: aload         5
+      45: arraylength
+      46: istore        6
+      48: iconst_0
+      49: istore        7
+      51: iload         7
+      53: iload         6
+      55: if_icmpge     137
+      58: aload         5
+      60: iload         7
+      62: aaload
+      63: astore        8
+      65: aload         8
+      67: ldc           #193                // String run
+      69: invokevirtual #194                // Method com/badlogic/gdx/files/FileHandle.list:(Ljava/lang/String;)[Lcom/badlogic/gdx/files/FileHandle;
+      72: astore        9
+      74: aload         9
+      76: astore        10
+      78: aload         10
+      80: arraylength
+      81: istore        11
+      83: iconst_0
+      84: istore        12
+      86: iload         12
+      88: iload         11
+      90: if_icmpge     131
+      93: aload         10
+      95: iload         12
+      97: aaload
+      98: astore        13
+     100: aload         4
+     102: aload         13
+     104: invokevirtual #195                // Method com/badlogic/gdx/files/FileHandle.name:()Ljava/lang/String;
+     107: invokeinterface #196,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     112: pop
+     113: aload_3
+     114: aload         13
+     116: invokevirtual #195                // Method com/badlogic/gdx/files/FileHandle.name:()Ljava/lang/String;
+     119: aload         13
+     121: invokevirtual #13                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     124: pop
+     125: iinc          12, 1
+     128: goto          86
+     131: iinc          7, 1
+     134: goto          51
+     137: sipush        500
+     140: istore        5
+     142: aload         4
+     144: invokeinterface #197,  1          // InterfaceMethod java/util/List.size:()I
+     149: iload         5
+     151: isub
+     152: istore        6
+     154: aload         4
+     156: invokeinterface #197,  1          // InterfaceMethod java/util/List.size:()I
+     161: iload         5
+     163: if_icmpge     167
+     166: return
+     167: aload         4
+     169: invokestatic  #198                // Method java/util/Collections.sort:(Ljava/util/List;)V
+     172: iconst_0
+     173: istore        7
+     175: iload         7
+     177: iload         6
+     179: if_icmpge     269
+     182: aload_3
+     183: aload         4
+     185: iload         7
+     187: invokeinterface #199,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+     192: invokevirtual #200                // Method java/util/HashMap.containsKey:(Ljava/lang/Object;)Z
+     195: ifeq          263
+     198: getstatic     #1                  // Field logger:Lorg/apache/logging/log4j/Logger;
+     201: new           #25                 // class java/lang/StringBuilder
+     204: dup
+     205: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+     208: ldc           #201                // String DELETING EXCESS RUN:
+     210: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     213: aload_3
+     214: aload         4
+     216: iload         7
+     218: invokeinterface #199,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+     223: checkcast     #202                // class java/lang/String
+     226: invokevirtual #203                // Method java/lang/String.toString:()Ljava/lang/String;
+     229: invokevirtual #204                // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     232: invokevirtual #205                // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+     235: invokevirtual #30                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     238: invokeinterface #31,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     243: aload_3
+     244: aload         4
+     246: iload         7
+     248: invokeinterface #199,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+     253: invokevirtual #204                // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     256: checkcast     #206                // class com/badlogic/gdx/files/FileHandle
+     259: invokevirtual #207                // Method com/badlogic/gdx/files/FileHandle.delete:()Z
+     262: pop
+     263: iinc          7, 1
+     266: goto          175
+     269: return
+
+  public void run();
+    descriptor: ()V
+    Code:
+       0: getstatic     #208                // Field com/megacrit/cardcrawl/metrics/Metrics$2.$SwitchMap$com$megacrit$cardcrawl$metrics$Metrics$MetricRequestType:[I
+       3: aload_0
+       4: getfield      #12                 // Field type:Lcom/megacrit/cardcrawl/metrics/Metrics$MetricRequestType;
+       7: invokevirtual #209                // Method com/megacrit/cardcrawl/metrics/Metrics$MetricRequestType.ordinal:()I
+      10: iaload
+      11: lookupswitch  { // 2
+
+                     1: 36
+
+                     2: 58
+               default: 83
+          }
+      36: getstatic     #210                // Field com/megacrit/cardcrawl/core/Settings.isModded:Z
+      39: ifne          121
+      42: aload_0
+      43: aload_0
+      44: getfield      #10                 // Field death:Z
+      47: iconst_0
+      48: aload_0
+      49: getfield      #9                  // Field monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      52: invokespecial #211                // Method gatherAllDataAndSend:(ZZLcom/megacrit/cardcrawl/monsters/MonsterGroup;)V
+      55: goto          121
+      58: getstatic     #210                // Field com/megacrit/cardcrawl/core/Settings.isModded:Z
+      61: ifne          121
+      64: aload_0
+      65: aload_0
+      66: getfield      #10                 // Field death:Z
+      69: aload_0
+      70: getfield      #11                 // Field trueVictory:Z
+      73: aload_0
+      74: getfield      #9                  // Field monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      77: invokespecial #211                // Method gatherAllDataAndSend:(ZZLcom/megacrit/cardcrawl/monsters/MonsterGroup;)V
+      80: goto          121
+      83: getstatic     #1                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      86: new           #25                 // class java/lang/StringBuilder
+      89: dup
+      90: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+      93: ldc           #212                // String Unspecified MetricRequestType:
+      95: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      98: aload_0
+      99: getfield      #12                 // Field type:Lcom/megacrit/cardcrawl/metrics/Metrics$MetricRequestType;
+     102: invokevirtual #213                // Method com/megacrit/cardcrawl/metrics/Metrics$MetricRequestType.name:()Ljava/lang/String;
+     105: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     108: ldc           #214                // String  in run()
+     110: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     113: invokevirtual #30                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     116: invokeinterface #31,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     121: return
+
+  static org.apache.logging.log4j.Logger access$000();
+    descriptor: ()Lorg/apache/logging/log4j/Logger;
+    Code:
+       0: getstatic     #1                  // Field logger:Lorg/apache/logging/log4j/Logger;
+       3: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #215                // class com/megacrit/cardcrawl/metrics/Metrics
+       2: invokevirtual #216                // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #217                // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #1                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: new           #218                // class java/text/SimpleDateFormat
+      14: dup
+      15: ldc           #219                // String yyyyMMddHHmmss
+      17: invokespecial #220                // Method java/text/SimpleDateFormat."<init>":(Ljava/lang/String;)V
+      20: putstatic     #107                // Field timestampFormatter:Ljava/text/SimpleDateFormat;
+      23: return
+}

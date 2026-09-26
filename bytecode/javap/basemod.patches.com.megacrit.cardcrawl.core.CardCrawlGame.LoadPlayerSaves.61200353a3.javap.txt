@@ -1,0 +1,307 @@
+Compiled from "LoadPlayerSaves.java"
+public class basemod.patches.com.megacrit.cardcrawl.core.CardCrawlGame.LoadPlayerSaves {
+  public basemod.patches.com.megacrit.cardcrawl.core.CardCrawlGame.LoadPlayerSaves();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void Postfix(com.megacrit.cardcrawl.core.CardCrawlGame, com.megacrit.cardcrawl.characters.AbstractPlayer);
+    descriptor: (Lcom/megacrit/cardcrawl/core/CardCrawlGame;Lcom/megacrit/cardcrawl/characters/AbstractPlayer;)V
+    Code:
+       0: getstatic     #2                  // Field basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves.modCardSaves:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+       3: getstatic     #3                  // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveFile:Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+       6: invokevirtual #4                  // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       9: checkcast     #5                  // class basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement
+      12: astore_2
+      13: iconst_0
+      14: istore_3
+      15: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      18: getfield      #7                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      21: getfield      #8                  // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+      24: invokevirtual #9                  // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      27: astore        4
+      29: aload         4
+      31: invokeinterface #10,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      36: ifeq          99
+      39: aload         4
+      41: invokeinterface #11,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      46: checkcast     #12                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      49: astore        5
+      51: aload         5
+      53: instanceof    #13                 // class basemod/abstracts/CustomSavableRaw
+      56: ifeq          93
+      59: aload         5
+      61: checkcast     #13                 // class basemod/abstracts/CustomSavableRaw
+      64: aload_2
+      65: ifnull        76
+      68: iload_3
+      69: aload_2
+      70: invokevirtual #14                 // Method basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement.size:()I
+      73: if_icmplt     80
+      76: aconst_null
+      77: goto          88
+      80: aload_2
+      81: iload_3
+      82: invokevirtual #15                 // Method basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement.get:(I)Ljava/lang/Object;
+      85: checkcast     #16                 // class com/google/gson/JsonElement
+      88: invokeinterface #17,  2           // InterfaceMethod basemod/abstracts/CustomSavableRaw.onLoadRaw:(Lcom/google/gson/JsonElement;)V
+      93: iinc          3, 1
+      96: goto          29
+      99: new           #18                 // class com/google/gson/GsonBuilder
+     102: dup
+     103: invokespecial #19                 // Method com/google/gson/GsonBuilder."<init>":()V
+     106: astore        4
+     108: getstatic     #20                 // Field basemod/patches/com/megacrit/cardcrawl/cards/AbstractCard/CardModifierPatches.modifierAdapter:Lcom/google/gson/typeadapters/RuntimeTypeAdapterFactory;
+     111: ifnonnull     117
+     114: invokestatic  #21                 // Method basemod/patches/com/megacrit/cardcrawl/cards/AbstractCard/CardModifierPatches.initializeAdapterFactory:()V
+     117: aload         4
+     119: getstatic     #20                 // Field basemod/patches/com/megacrit/cardcrawl/cards/AbstractCard/CardModifierPatches.modifierAdapter:Lcom/google/gson/typeadapters/RuntimeTypeAdapterFactory;
+     122: invokevirtual #22                 // Method com/google/gson/GsonBuilder.registerTypeAdapterFactory:(Lcom/google/gson/TypeAdapterFactory;)Lcom/google/gson/GsonBuilder;
+     125: pop
+     126: aload         4
+     128: invokevirtual #23                 // Method com/google/gson/GsonBuilder.create:()Lcom/google/gson/Gson;
+     131: astore        5
+     133: getstatic     #24                 // Field basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves.cardModifierSaves:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     136: getstatic     #3                  // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveFile:Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+     139: invokevirtual #4                  // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     142: checkcast     #5                  // class basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement
+     145: astore        6
+     147: iconst_0
+     148: istore_3
+     149: aload         6
+     151: ifnull        407
+     154: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     157: getfield      #7                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     160: getfield      #8                  // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     163: invokevirtual #9                  // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     166: astore        7
+     168: aload         7
+     170: invokeinterface #10,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     175: ifeq          407
+     178: aload         7
+     180: invokeinterface #11,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     185: checkcast     #12                 // class com/megacrit/cardcrawl/cards/AbstractCard
+     188: astore        8
+     190: new           #25                 // class java/util/ArrayList
+     193: dup
+     194: invokespecial #26                 // Method java/util/ArrayList."<init>":()V
+     197: astore        9
+     199: iload_3
+     200: aload         6
+     202: invokevirtual #14                 // Method basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement.size:()I
+     205: if_icmplt     212
+     208: aconst_null
+     209: goto          221
+     212: aload         6
+     214: iload_3
+     215: invokevirtual #15                 // Method basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement.get:(I)Ljava/lang/Object;
+     218: checkcast     #16                 // class com/google/gson/JsonElement
+     221: astore        10
+     223: aload         10
+     225: ifnull        353
+     228: aload         10
+     230: invokevirtual #27                 // Method com/google/gson/JsonElement.isJsonArray:()Z
+     233: ifeq          353
+     236: aload         10
+     238: invokevirtual #28                 // Method com/google/gson/JsonElement.getAsJsonArray:()Lcom/google/gson/JsonArray;
+     241: astore        11
+     243: aload         11
+     245: invokevirtual #29                 // Method com/google/gson/JsonArray.iterator:()Ljava/util/Iterator;
+     248: astore        12
+     250: aload         12
+     252: invokeinterface #10,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     257: ifeq          353
+     260: aload         12
+     262: invokeinterface #11,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     267: checkcast     #16                 // class com/google/gson/JsonElement
+     270: astore        13
+     272: aconst_null
+     273: astore        14
+     275: aload         5
+     277: aload         13
+     279: new           #30                 // class basemod/patches/com/megacrit/cardcrawl/core/CardCrawlGame/LoadPlayerSaves$1
+     282: dup
+     283: invokespecial #31                 // Method basemod/patches/com/megacrit/cardcrawl/core/CardCrawlGame/LoadPlayerSaves$1."<init>":()V
+     286: invokevirtual #32                 // Method basemod/patches/com/megacrit/cardcrawl/core/CardCrawlGame/LoadPlayerSaves$1.getType:()Ljava/lang/reflect/Type;
+     289: invokevirtual #33                 // Method com/google/gson/Gson.fromJson:(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;)Ljava/lang/Object;
+     292: checkcast     #34                 // class basemod/abstracts/AbstractCardModifier
+     295: astore        14
+     297: goto          337
+     300: astore        15
+     302: getstatic     #36                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     305: new           #37                 // class java/lang/StringBuilder
+     308: dup
+     309: invokespecial #38                 // Method java/lang/StringBuilder."<init>":()V
+     312: ldc           #39                 // String Unable to load cardmod:
+     314: invokevirtual #40                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     317: aload         13
+     319: invokevirtual #41                 // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+     322: invokevirtual #42                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     325: invokevirtual #43                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+     328: aload         9
+     330: invokestatic  #44                 // Method getErrorMod:()Lbasemod/abstracts/AbstractCardModifier;
+     333: invokevirtual #45                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     336: pop
+     337: aload         14
+     339: ifnull        350
+     342: aload         9
+     344: aload         14
+     346: invokevirtual #45                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     349: pop
+     350: goto          250
+     353: aload         8
+     355: iconst_1
+     356: invokestatic  #46                 // Method basemod/helpers/CardModifierManager.removeAllModifiers:(Lcom/megacrit/cardcrawl/cards/AbstractCard;Z)V
+     359: aload         9
+     361: invokevirtual #9                  // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     364: astore        11
+     366: aload         11
+     368: invokeinterface #10,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     373: ifeq          401
+     376: aload         11
+     378: invokeinterface #11,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     383: checkcast     #34                 // class basemod/abstracts/AbstractCardModifier
+     386: astore        12
+     388: aload         8
+     390: aload         12
+     392: invokevirtual #47                 // Method basemod/abstracts/AbstractCardModifier.makeCopy:()Lbasemod/abstracts/AbstractCardModifier;
+     395: invokestatic  #48                 // Method basemod/helpers/CardModifierManager.addModifier:(Lcom/megacrit/cardcrawl/cards/AbstractCard;Lbasemod/abstracts/AbstractCardModifier;)V
+     398: goto          366
+     401: iinc          3, 1
+     404: goto          168
+     407: getstatic     #49                 // Field basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves.modRelicSaves:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     410: getstatic     #3                  // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveFile:Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+     413: invokevirtual #4                  // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     416: checkcast     #5                  // class basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement
+     419: astore        7
+     421: iconst_0
+     422: istore_3
+     423: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     426: getfield      #50                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+     429: invokevirtual #9                  // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     432: astore        8
+     434: aload         8
+     436: invokeinterface #10,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     441: ifeq          507
+     444: aload         8
+     446: invokeinterface #11,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     451: checkcast     #51                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+     454: astore        9
+     456: aload         9
+     458: instanceof    #13                 // class basemod/abstracts/CustomSavableRaw
+     461: ifeq          501
+     464: aload         9
+     466: checkcast     #13                 // class basemod/abstracts/CustomSavableRaw
+     469: aload         7
+     471: ifnull        483
+     474: iload_3
+     475: aload         7
+     477: invokevirtual #14                 // Method basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement.size:()I
+     480: if_icmplt     487
+     483: aconst_null
+     484: goto          496
+     487: aload         7
+     489: iload_3
+     490: invokevirtual #15                 // Method basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement.get:(I)Ljava/lang/Object;
+     493: checkcast     #16                 // class com/google/gson/JsonElement
+     496: invokeinterface #17,  2           // InterfaceMethod basemod/abstracts/CustomSavableRaw.onLoadRaw:(Lcom/google/gson/JsonElement;)V
+     501: iinc          3, 1
+     504: goto          434
+     507: getstatic     #52                 // Field basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves.modPotionSaves:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     510: getstatic     #3                  // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveFile:Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+     513: invokevirtual #4                  // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     516: checkcast     #5                  // class basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement
+     519: astore        8
+     521: iconst_0
+     522: istore_3
+     523: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     526: getfield      #53                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.potions:Ljava/util/ArrayList;
+     529: invokevirtual #9                  // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     532: astore        9
+     534: aload         9
+     536: invokeinterface #10,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     541: ifeq          607
+     544: aload         9
+     546: invokeinterface #11,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     551: checkcast     #54                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     554: astore        10
+     556: aload         10
+     558: instanceof    #13                 // class basemod/abstracts/CustomSavableRaw
+     561: ifeq          601
+     564: aload         10
+     566: checkcast     #13                 // class basemod/abstracts/CustomSavableRaw
+     569: aload         8
+     571: ifnull        583
+     574: iload_3
+     575: aload         8
+     577: invokevirtual #14                 // Method basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement.size:()I
+     580: if_icmplt     587
+     583: aconst_null
+     584: goto          596
+     587: aload         8
+     589: iload_3
+     590: invokevirtual #15                 // Method basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfJsonElement.get:(I)Ljava/lang/Object;
+     593: checkcast     #16                 // class com/google/gson/JsonElement
+     596: invokeinterface #17,  2           // InterfaceMethod basemod/abstracts/CustomSavableRaw.onLoadRaw:(Lcom/google/gson/JsonElement;)V
+     601: iinc          3, 1
+     604: goto          534
+     607: getstatic     #55                 // Field basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves.eventSaves:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     610: getstatic     #3                  // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveFile:Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+     613: invokevirtual #4                  // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     616: checkcast     #56                 // class basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$ArrayListOfString
+     619: astore        9
+     621: aload         9
+     623: ifnull        644
+     626: getstatic     #57                 // Field basemod/patches/com/megacrit/cardcrawl/characters/AbstractPlayer/SeenEvents.seenEvents:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     629: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     632: invokevirtual #4                  // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     635: checkcast     #58                 // class java/util/HashSet
+     638: aload         9
+     640: invokevirtual #59                 // Method java/util/HashSet.addAll:(Ljava/util/Collection;)Z
+     643: pop
+     644: getstatic     #60                 // Field basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves.modSaves:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     647: getstatic     #3                  // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveFile:Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+     650: invokevirtual #4                  // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     653: checkcast     #61                 // class basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$HashMapOfJsonElement
+     656: astore        10
+     658: invokestatic  #62                 // Method basemod/BaseMod.getSaveFields:()Ljava/util/Map;
+     661: invokeinterface #63,  1           // InterfaceMethod java/util/Map.entrySet:()Ljava/util/Set;
+     666: invokeinterface #64,  1           // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+     671: astore        11
+     673: aload         11
+     675: invokeinterface #10,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     680: ifeq          737
+     683: aload         11
+     685: invokeinterface #11,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     690: checkcast     #65                 // class java/util/Map$Entry
+     693: astore        12
+     695: aload         12
+     697: invokeinterface #66,  1           // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+     702: checkcast     #13                 // class basemod/abstracts/CustomSavableRaw
+     705: aload         10
+     707: ifnonnull     714
+     710: aconst_null
+     711: goto          729
+     714: aload         10
+     716: aload         12
+     718: invokeinterface #67,  1           // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     723: invokevirtual #68                 // Method basemod/patches/com/megacrit/cardcrawl/saveAndContinue/SaveFile/ModSaves$HashMapOfJsonElement.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     726: checkcast     #16                 // class com/google/gson/JsonElement
+     729: invokeinterface #17,  2           // InterfaceMethod basemod/abstracts/CustomSavableRaw.onLoadRaw:(Lcom/google/gson/JsonElement;)V
+     734: goto          673
+     737: return
+    Exception table:
+       from    to  target type
+         275   297   300   Class java/lang/Exception
+
+  public static basemod.abstracts.AbstractCardModifier getErrorMod();
+    descriptor: ()Lbasemod/abstracts/AbstractCardModifier;
+    Code:
+       0: new           #69                 // class basemod/patches/com/megacrit/cardcrawl/core/CardCrawlGame/LoadPlayerSaves$MadnessMod
+       3: dup
+       4: aconst_null
+       5: invokespecial #70                 // Method basemod/patches/com/megacrit/cardcrawl/core/CardCrawlGame/LoadPlayerSaves$MadnessMod."<init>":(Lbasemod/patches/com/megacrit/cardcrawl/core/CardCrawlGame/LoadPlayerSaves$1;)V
+       8: areturn
+}

@@ -1,0 +1,1960 @@
+Compiled from "InputSettingsScreen.java"
+public class com.megacrit.cardcrawl.screens.options.InputSettingsScreen implements com.megacrit.cardcrawl.screens.options.RemapInputElementListener,com.megacrit.cardcrawl.helpers.HitboxListener,com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener {
+  private static final com.megacrit.cardcrawl.localization.UIStrings uiStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/UIStrings;
+
+  public static final java.lang.String[] TEXT;
+    descriptor: [Ljava/lang/String;
+
+  private static final java.lang.String TAB_HEADER;
+    descriptor: Ljava/lang/String;
+
+  private static final java.lang.String GAME_SETTINNGS_TAB_HEADER;
+    descriptor: Ljava/lang/String;
+
+  private static final java.lang.String RETURN_BUTTON_TEXT;
+    descriptor: Ljava/lang/String;
+
+  private static final boolean ALLOW_OVERSCROLL;
+    descriptor: Z
+
+  private static final int BG_RAW_WIDTH;
+    descriptor: I
+
+  private static final int BG_RAW_HEIGHT;
+    descriptor: I
+
+  private static final float SHOW_X;
+    descriptor: F
+
+  private static final float HIDE_X;
+    descriptor: F
+
+  private static final float GAME_SETTINGS_BUTTON_WIDTH;
+    descriptor: F
+
+  private static final float ROW_X_POSITION;
+    descriptor: F
+
+  private static final float ROW_TABLE_VERTICAL_EXTRA_PADDING;
+    descriptor: F
+
+  private static final float ROW_PADDING;
+    descriptor: F
+
+  private static final float ROW_Y_DIFF;
+    descriptor: F
+
+  private static final float SCROLL_CONTAINER_VISIBLE_HEIGHT;
+    descriptor: F
+
+  private static final float SCROLL_CONTAINER_BOTTOM;
+    descriptor: F
+
+  private static final float SCROLL_CONTAINER_TOP;
+    descriptor: F
+
+  private static final float SCROLLBAR_X;
+    descriptor: F
+
+  private static final float SCROLLBAR_Y;
+    descriptor: F
+
+  private static final float SCROLLBAR_HEIGHT;
+    descriptor: F
+
+  private static final float RESET_BUTTON_CY;
+    descriptor: F
+
+  public com.megacrit.cardcrawl.screens.mainMenu.MenuCancelButton button;
+    descriptor: Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+
+  private com.megacrit.cardcrawl.screens.mainMenu.ScrollBar scrollBar;
+    descriptor: Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+
+  private com.megacrit.cardcrawl.helpers.Hitbox resetButtonHb;
+    descriptor: Lcom/megacrit/cardcrawl/helpers/Hitbox;
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.screens.options.RemapInputElement> elements;
+    descriptor: Ljava/util/ArrayList;
+
+  private com.megacrit.cardcrawl.helpers.Hitbox gameSettingsHb;
+    descriptor: Lcom/megacrit/cardcrawl/helpers/Hitbox;
+
+  private com.megacrit.cardcrawl.screens.options.GiantToggleButton controllerEnabledToggleButton;
+    descriptor: Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+
+  private com.megacrit.cardcrawl.screens.options.GiantToggleButton touchscreenModeButton;
+    descriptor: Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+
+  private float screenX;
+    descriptor: F
+
+  private float targetX;
+    descriptor: F
+
+  private float maxScrollAmount;
+    descriptor: F
+
+  private float targetScrollOffset;
+    descriptor: F
+
+  private float visibleScrollOffset;
+    descriptor: F
+
+  public boolean screenUp;
+    descriptor: Z
+
+  private com.megacrit.cardcrawl.helpers.Hitbox elementHb;
+    descriptor: Lcom/megacrit/cardcrawl/helpers/Hitbox;
+
+  public com.megacrit.cardcrawl.screens.options.InputSettingsScreen();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #2                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #3                  // class com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton
+       8: dup
+       9: invokespecial #4                  // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton."<init>":()V
+      12: putfield      #5                  // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+      15: aload_0
+      16: new           #6                  // class com/megacrit/cardcrawl/screens/mainMenu/ScrollBar
+      19: dup
+      20: aload_0
+      21: getstatic     #7                  // Field SCROLLBAR_X:F
+      24: getstatic     #8                  // Field SCROLLBAR_Y:F
+      27: getstatic     #9                  // Field SCROLLBAR_HEIGHT:F
+      30: invokespecial #10                 // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar."<init>":(Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBarListener;FFF)V
+      33: putfield      #11                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+      36: aload_0
+      37: new           #12                 // class com/megacrit/cardcrawl/helpers/Hitbox
+      40: dup
+      41: ldc           #13                 // float 300.0f
+      43: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      46: fmul
+      47: ldc           #15                 // float 72.0f
+      49: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      52: fmul
+      53: invokespecial #16                 // Method com/megacrit/cardcrawl/helpers/Hitbox."<init>":(FF)V
+      56: putfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      59: aload_0
+      60: new           #18                 // class java/util/ArrayList
+      63: dup
+      64: invokespecial #19                 // Method java/util/ArrayList."<init>":()V
+      67: putfield      #20                 // Field elements:Ljava/util/ArrayList;
+      70: aload_0
+      71: new           #12                 // class com/megacrit/cardcrawl/helpers/Hitbox
+      74: dup
+      75: getstatic     #21                 // Field GAME_SETTINGS_BUTTON_WIDTH:F
+      78: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      81: ldc           #15                 // float 72.0f
+      83: fmul
+      84: invokespecial #16                 // Method com/megacrit/cardcrawl/helpers/Hitbox."<init>":(FF)V
+      87: putfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      90: aload_0
+      91: aconst_null
+      92: putfield      #23                 // Field touchscreenModeButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+      95: aload_0
+      96: getstatic     #24                 // Field HIDE_X:F
+      99: putfield      #25                 // Field screenX:F
+     102: aload_0
+     103: getstatic     #24                 // Field HIDE_X:F
+     106: putfield      #26                 // Field targetX:F
+     109: aload_0
+     110: fconst_0
+     111: putfield      #27                 // Field targetScrollOffset:F
+     114: aload_0
+     115: fconst_0
+     116: putfield      #28                 // Field visibleScrollOffset:F
+     119: aload_0
+     120: iconst_0
+     121: putfield      #29                 // Field screenUp:Z
+     124: aload_0
+     125: aconst_null
+     126: putfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     129: getstatic     #31                 // Field com/megacrit/cardcrawl/core/Settings.isConsoleBuild:Z
+     132: ifeq          185
+     135: aload_0
+     136: new           #32                 // class com/megacrit/cardcrawl/screens/options/GiantToggleButton
+     139: dup
+     140: getstatic     #33                 // Field com/megacrit/cardcrawl/screens/options/GiantToggleButton$ToggleType.CONTROLLER_ENABLED:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton$ToggleType;
+     143: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     146: i2f
+     147: ldc           #35                 // float 0.6f
+     149: fmul
+     150: getstatic     #36                 // Field RESET_BUTTON_CY:F
+     153: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     156: bipush        48
+     158: aaload
+     159: invokespecial #38                 // Method com/megacrit/cardcrawl/screens/options/GiantToggleButton."<init>":(Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton$ToggleType;FFLjava/lang/String;)V
+     162: putfield      #39                 // Field controllerEnabledToggleButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+     165: aload_0
+     166: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     169: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     172: i2f
+     173: ldc           #40                 // float 0.35f
+     175: fmul
+     176: getstatic     #36                 // Field RESET_BUTTON_CY:F
+     179: invokevirtual #41                 // Method com/megacrit/cardcrawl/helpers/Hitbox.move:(FF)V
+     182: goto          262
+     185: aload_0
+     186: new           #32                 // class com/megacrit/cardcrawl/screens/options/GiantToggleButton
+     189: dup
+     190: getstatic     #33                 // Field com/megacrit/cardcrawl/screens/options/GiantToggleButton$ToggleType.CONTROLLER_ENABLED:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton$ToggleType;
+     193: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     196: i2f
+     197: ldc           #42                 // float 0.42f
+     199: fmul
+     200: getstatic     #36                 // Field RESET_BUTTON_CY:F
+     203: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     206: bipush        48
+     208: aaload
+     209: invokespecial #38                 // Method com/megacrit/cardcrawl/screens/options/GiantToggleButton."<init>":(Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton$ToggleType;FFLjava/lang/String;)V
+     212: putfield      #39                 // Field controllerEnabledToggleButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+     215: aload_0
+     216: new           #32                 // class com/megacrit/cardcrawl/screens/options/GiantToggleButton
+     219: dup
+     220: getstatic     #43                 // Field com/megacrit/cardcrawl/screens/options/GiantToggleButton$ToggleType.TOUCHSCREEN_ENABLED:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton$ToggleType;
+     223: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     226: i2f
+     227: ldc           #44                 // float 0.65f
+     229: fmul
+     230: getstatic     #36                 // Field RESET_BUTTON_CY:F
+     233: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     236: bipush        49
+     238: aaload
+     239: invokespecial #38                 // Method com/megacrit/cardcrawl/screens/options/GiantToggleButton."<init>":(Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton$ToggleType;FFLjava/lang/String;)V
+     242: putfield      #23                 // Field touchscreenModeButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+     245: aload_0
+     246: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     249: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     252: i2f
+     253: ldc           #45                 // float 0.25f
+     255: fmul
+     256: getstatic     #36                 // Field RESET_BUTTON_CY:F
+     259: invokevirtual #41                 // Method com/megacrit/cardcrawl/helpers/Hitbox.move:(FF)V
+     262: return
+
+  public void open();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: iconst_1
+       2: invokevirtual #46                 // Method open:(Z)V
+       5: return
+
+  public void open(boolean);
+    descriptor: (Z)V
+    Code:
+       0: aload_0
+       1: fconst_0
+       2: putfield      #26                 // Field targetX:F
+       5: aload_0
+       6: fconst_0
+       7: putfield      #27                 // Field targetScrollOffset:F
+      10: aload_0
+      11: fconst_0
+      12: putfield      #28                 // Field visibleScrollOffset:F
+      15: iload_1
+      16: ifeq          32
+      19: aload_0
+      20: getfield      #5                  // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+      23: getstatic     #47                 // Field RETURN_BUTTON_TEXT:Ljava/lang/String;
+      26: invokevirtual #48                 // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.show:(Ljava/lang/String;)V
+      29: goto          42
+      32: aload_0
+      33: getfield      #5                  // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+      36: getstatic     #47                 // Field RETURN_BUTTON_TEXT:Ljava/lang/String;
+      39: invokevirtual #49                 // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.showInstantly:(Ljava/lang/String;)V
+      42: aload_0
+      43: iconst_1
+      44: putfield      #29                 // Field screenUp:Z
+      47: getstatic     #50                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+      50: getstatic     #51                 // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen.INPUT_SETTINGS:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen;
+      53: putfield      #52                 // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.screen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen;
+      56: aload_0
+      57: invokespecial #53                 // Method refreshData:()V
+      60: aload_0
+      61: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      64: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      67: i2f
+      68: fconst_2
+      69: fdiv
+      70: ldc           #54                 // float 438.0f
+      72: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      75: fmul
+      76: fsub
+      77: getstatic     #55                 // Field com/megacrit/cardcrawl/core/Settings.OPTION_Y:F
+      80: ldc           #56                 // float 382.0f
+      82: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      85: fmul
+      86: fadd
+      87: invokevirtual #41                 // Method com/megacrit/cardcrawl/helpers/Hitbox.move:(FF)V
+      90: aload_0
+      91: getfield      #11                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+      94: iconst_0
+      95: putfield      #57                 // Field com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.isBackgroundVisible:Z
+      98: aload_0
+      99: getfield      #11                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+     102: getstatic     #7                  // Field SCROLLBAR_X:F
+     105: getstatic     #8                  // Field SCROLLBAR_Y:F
+     108: invokevirtual #58                 // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.setCenter:(FF)V
+     111: invokestatic  #59                 // Method com/megacrit/cardcrawl/core/CardCrawlGame.isInARun:()Z
+     114: ifeq          123
+     117: getstatic     #60                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen.INPUT_SETTINGS:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+     120: putstatic     #61                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.screen:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+     123: return
+
+  private void refreshData();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: aconst_null
+       2: putfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+       5: aload_0
+       6: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+       9: invokevirtual #62                 // Method java/util/ArrayList.clear:()V
+      12: aload_0
+      13: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+      16: new           #63                 // class com/megacrit/cardcrawl/screens/options/RemapInputElementHeader
+      19: dup
+      20: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+      23: iconst_3
+      24: aaload
+      25: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+      28: iconst_4
+      29: aaload
+      30: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+      33: iconst_5
+      34: aaload
+      35: invokespecial #64                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElementHeader."<init>":(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+      38: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      41: pop
+      42: getstatic     #66                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+      45: ifeq          543
+      48: aload_0
+      49: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+      52: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+      55: dup
+      56: aload_0
+      57: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+      60: bipush        28
+      62: aaload
+      63: getstatic     #68                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.confirm:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+      66: getstatic     #69                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.select:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      69: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+      72: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      75: pop
+      76: aload_0
+      77: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+      80: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+      83: dup
+      84: aload_0
+      85: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+      88: bipush        29
+      90: aaload
+      91: getstatic     #71                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.cancel:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+      94: getstatic     #72                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.cancel:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      97: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     100: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     103: pop
+     104: aload_0
+     105: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     108: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     111: dup
+     112: aload_0
+     113: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     116: bipush        30
+     118: aaload
+     119: aconst_null
+     120: getstatic     #73                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.topPanel:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     123: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     126: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     129: pop
+     130: aload_0
+     131: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     134: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     137: dup
+     138: aload_0
+     139: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     142: bipush        31
+     144: aaload
+     145: getstatic     #74                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.endTurn:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     148: getstatic     #75                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.proceed:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     151: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     154: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     157: pop
+     158: aload_0
+     159: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     162: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     165: dup
+     166: aload_0
+     167: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     170: bipush        32
+     172: aaload
+     173: getstatic     #76                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.masterDeck:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     176: getstatic     #77                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.pageLeftViewDeck:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     179: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     182: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     185: pop
+     186: aload_0
+     187: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     190: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     193: dup
+     194: aload_0
+     195: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     198: bipush        33
+     200: aaload
+     201: getstatic     #78                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.exhaustPile:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     204: getstatic     #79                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.pageRightViewExhaust:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     207: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     210: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     213: pop
+     214: aload_0
+     215: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     218: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     221: dup
+     222: aload_0
+     223: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     226: bipush        34
+     228: aaload
+     229: getstatic     #80                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.map:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     232: getstatic     #81                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.map:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     235: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     238: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     241: pop
+     242: aload_0
+     243: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     246: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     249: dup
+     250: aload_0
+     251: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     254: bipush        35
+     256: aaload
+     257: aconst_null
+     258: getstatic     #82                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.settings:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     261: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     264: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     267: pop
+     268: aload_0
+     269: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     272: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     275: dup
+     276: aload_0
+     277: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     280: bipush        36
+     282: aaload
+     283: getstatic     #83                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.drawPile:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     286: getstatic     #84                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.drawPile:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     289: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     292: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     295: pop
+     296: aload_0
+     297: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     300: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     303: dup
+     304: aload_0
+     305: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     308: bipush        37
+     310: aaload
+     311: getstatic     #85                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.discardPile:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     314: getstatic     #86                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.discardPile:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     317: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     320: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     323: pop
+     324: aload_0
+     325: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     328: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     331: dup
+     332: aload_0
+     333: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     336: bipush        38
+     338: aaload
+     339: getstatic     #87                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.up:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     342: getstatic     #88                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     345: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     348: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     351: pop
+     352: aload_0
+     353: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     356: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     359: dup
+     360: aload_0
+     361: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     364: bipush        39
+     366: aaload
+     367: getstatic     #89                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.down:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     370: getstatic     #90                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.down:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     373: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     376: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     379: pop
+     380: aload_0
+     381: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     384: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     387: dup
+     388: aload_0
+     389: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     392: bipush        40
+     394: aaload
+     395: getstatic     #91                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.left:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     398: getstatic     #92                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.left:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     401: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     404: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     407: pop
+     408: aload_0
+     409: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     412: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     415: dup
+     416: aload_0
+     417: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     420: bipush        41
+     422: aaload
+     423: getstatic     #93                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.right:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     426: getstatic     #94                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.right:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     429: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     432: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     435: pop
+     436: aload_0
+     437: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     440: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     443: dup
+     444: aload_0
+     445: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     448: bipush        42
+     450: aaload
+     451: aconst_null
+     452: getstatic     #95                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altUp:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     455: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     458: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     461: pop
+     462: aload_0
+     463: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     466: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     469: dup
+     470: aload_0
+     471: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     474: bipush        43
+     476: aaload
+     477: aconst_null
+     478: getstatic     #96                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altDown:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     481: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     484: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     487: pop
+     488: aload_0
+     489: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     492: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     495: dup
+     496: aload_0
+     497: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     500: bipush        44
+     502: aaload
+     503: aconst_null
+     504: getstatic     #97                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altLeft:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     507: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     510: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     513: pop
+     514: aload_0
+     515: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     518: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     521: dup
+     522: aload_0
+     523: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     526: bipush        45
+     528: aaload
+     529: aconst_null
+     530: getstatic     #98                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altRight:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     533: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     536: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     539: pop
+     540: goto          1182
+     543: aload_0
+     544: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     547: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     550: dup
+     551: aload_0
+     552: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     555: bipush        7
+     557: aaload
+     558: getstatic     #68                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.confirm:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     561: getstatic     #69                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.select:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     564: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     567: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     570: pop
+     571: aload_0
+     572: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     575: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     578: dup
+     579: aload_0
+     580: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     583: bipush        8
+     585: aaload
+     586: getstatic     #71                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.cancel:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     589: getstatic     #72                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.cancel:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     592: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     595: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     598: pop
+     599: aload_0
+     600: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     603: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     606: dup
+     607: aload_0
+     608: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     611: bipush        9
+     613: aaload
+     614: getstatic     #80                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.map:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     617: getstatic     #81                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.map:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     620: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     623: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     626: pop
+     627: aload_0
+     628: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     631: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     634: dup
+     635: aload_0
+     636: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     639: bipush        10
+     641: aaload
+     642: getstatic     #76                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.masterDeck:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     645: getstatic     #77                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.pageLeftViewDeck:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     648: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     651: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     654: pop
+     655: aload_0
+     656: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     659: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     662: dup
+     663: aload_0
+     664: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     667: bipush        11
+     669: aaload
+     670: getstatic     #83                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.drawPile:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     673: getstatic     #84                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.drawPile:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     676: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     679: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     682: pop
+     683: aload_0
+     684: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     687: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     690: dup
+     691: aload_0
+     692: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     695: bipush        12
+     697: aaload
+     698: getstatic     #85                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.discardPile:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     701: getstatic     #86                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.discardPile:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     704: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     707: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     710: pop
+     711: aload_0
+     712: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     715: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     718: dup
+     719: aload_0
+     720: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     723: bipush        13
+     725: aaload
+     726: getstatic     #78                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.exhaustPile:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     729: getstatic     #79                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.pageRightViewExhaust:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     732: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     735: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     738: pop
+     739: aload_0
+     740: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     743: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     746: dup
+     747: aload_0
+     748: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     751: bipush        14
+     753: aaload
+     754: getstatic     #74                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.endTurn:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     757: getstatic     #75                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.proceed:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     760: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     763: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     766: pop
+     767: aload_0
+     768: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     771: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     774: dup
+     775: aload_0
+     776: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     779: bipush        50
+     781: aaload
+     782: getstatic     #99                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.peek:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     785: getstatic     #84                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.drawPile:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     788: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     791: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     794: pop
+     795: aload_0
+     796: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     799: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     802: dup
+     803: aload_0
+     804: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     807: bipush        38
+     809: aaload
+     810: getstatic     #87                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.up:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     813: getstatic     #88                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     816: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     819: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     822: pop
+     823: aload_0
+     824: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     827: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     830: dup
+     831: aload_0
+     832: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     835: bipush        39
+     837: aaload
+     838: getstatic     #89                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.down:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     841: getstatic     #90                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.down:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     844: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     847: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     850: pop
+     851: aload_0
+     852: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     855: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     858: dup
+     859: aload_0
+     860: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     863: bipush        15
+     865: aaload
+     866: getstatic     #91                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.left:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     869: getstatic     #92                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.left:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     872: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     875: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     878: pop
+     879: aload_0
+     880: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     883: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     886: dup
+     887: aload_0
+     888: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     891: bipush        16
+     893: aaload
+     894: getstatic     #93                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.right:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     897: getstatic     #94                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.right:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     900: invokespecial #70                 // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;)V
+     903: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     906: pop
+     907: aload_0
+     908: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     911: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     914: dup
+     915: aload_0
+     916: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     919: bipush        17
+     921: aaload
+     922: getstatic     #100                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCard_1:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     925: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+     928: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     931: pop
+     932: aload_0
+     933: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     936: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     939: dup
+     940: aload_0
+     941: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     944: bipush        18
+     946: aaload
+     947: getstatic     #102                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCard_2:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     950: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+     953: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     956: pop
+     957: aload_0
+     958: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     961: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     964: dup
+     965: aload_0
+     966: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     969: bipush        19
+     971: aaload
+     972: getstatic     #103                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCard_3:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     975: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+     978: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     981: pop
+     982: aload_0
+     983: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     986: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     989: dup
+     990: aload_0
+     991: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+     994: bipush        20
+     996: aaload
+     997: getstatic     #104                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCard_4:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+    1000: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+    1003: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+    1006: pop
+    1007: aload_0
+    1008: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+    1011: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+    1014: dup
+    1015: aload_0
+    1016: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+    1019: bipush        21
+    1021: aaload
+    1022: getstatic     #105                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCard_5:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+    1025: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+    1028: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+    1031: pop
+    1032: aload_0
+    1033: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+    1036: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+    1039: dup
+    1040: aload_0
+    1041: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+    1044: bipush        22
+    1046: aaload
+    1047: getstatic     #106                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCard_6:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+    1050: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+    1053: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+    1056: pop
+    1057: aload_0
+    1058: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+    1061: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+    1064: dup
+    1065: aload_0
+    1066: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+    1069: bipush        23
+    1071: aaload
+    1072: getstatic     #107                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCard_7:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+    1075: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+    1078: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+    1081: pop
+    1082: aload_0
+    1083: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+    1086: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+    1089: dup
+    1090: aload_0
+    1091: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+    1094: bipush        24
+    1096: aaload
+    1097: getstatic     #108                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCard_8:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+    1100: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+    1103: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+    1106: pop
+    1107: aload_0
+    1108: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+    1111: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+    1114: dup
+    1115: aload_0
+    1116: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+    1119: bipush        25
+    1121: aaload
+    1122: getstatic     #109                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCard_9:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+    1125: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+    1128: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+    1131: pop
+    1132: aload_0
+    1133: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+    1136: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+    1139: dup
+    1140: aload_0
+    1141: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+    1144: bipush        26
+    1146: aaload
+    1147: getstatic     #110                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCard_10:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+    1150: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+    1153: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+    1156: pop
+    1157: aload_0
+    1158: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+    1161: new           #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+    1164: dup
+    1165: aload_0
+    1166: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+    1169: bipush        27
+    1171: aaload
+    1172: getstatic     #111                // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.releaseCard:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+    1175: invokespecial #101                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement."<init>":(Lcom/megacrit/cardcrawl/screens/options/RemapInputElementListener;Ljava/lang/String;Lcom/megacrit/cardcrawl/helpers/input/InputAction;)V
+    1178: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+    1181: pop
+    1182: aload_0
+    1183: getstatic     #112                // Field ROW_Y_DIFF:F
+    1186: aload_0
+    1187: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+    1190: invokevirtual #113                // Method java/util/ArrayList.size:()I
+    1193: i2f
+    1194: fmul
+    1195: fconst_2
+    1196: getstatic     #114                // Field ROW_TABLE_VERTICAL_EXTRA_PADDING:F
+    1199: fmul
+    1200: fadd
+    1201: getstatic     #115                // Field SCROLL_CONTAINER_VISIBLE_HEIGHT:F
+    1204: fsub
+    1205: putfield      #116                // Field maxScrollAmount:F
+    1208: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #117                // Method updateControllerInput:()V
+       4: aload_0
+       5: getfield      #5                  // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+       8: invokevirtual #118                // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.update:()V
+      11: aload_0
+      12: getfield      #39                 // Field controllerEnabledToggleButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+      15: invokevirtual #119                // Method com/megacrit/cardcrawl/screens/options/GiantToggleButton.update:()V
+      18: getstatic     #31                 // Field com/megacrit/cardcrawl/core/Settings.isConsoleBuild:Z
+      21: ifne          31
+      24: aload_0
+      25: getfield      #23                 // Field touchscreenModeButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+      28: invokevirtual #119                // Method com/megacrit/cardcrawl/screens/options/GiantToggleButton.update:()V
+      31: aload_0
+      32: invokespecial #120                // Method updateScrolling:()V
+      35: aload_0
+      36: getfield      #5                  // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+      39: getfield      #121                // Field com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      42: getfield      #122                // Field com/megacrit/cardcrawl/helpers/Hitbox.clicked:Z
+      45: ifne          63
+      48: getstatic     #123                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.pressedEscape:Z
+      51: ifne          63
+      54: getstatic     #72                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.cancel:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      57: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+      60: ifeq          92
+      63: invokestatic  #59                 // Method com/megacrit/cardcrawl/core/CardCrawlGame.isInARun:()Z
+      66: ifeq          75
+      69: invokestatic  #125                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.closeCurrentScreen:()V
+      72: goto          88
+      75: iconst_0
+      76: putstatic     #123                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.pressedEscape:Z
+      79: getstatic     #50                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+      82: getstatic     #126                // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen.MAIN_MENU:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen;
+      85: putfield      #52                 // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.screen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen;
+      88: aload_0
+      89: invokevirtual #127                // Method hide:()V
+      92: aload_0
+      93: invokespecial #128                // Method updateKeyPositions:()V
+      96: aload_0
+      97: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     100: invokevirtual #129                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     103: astore_1
+     104: aload_1
+     105: invokeinterface #130,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     110: ifeq          130
+     113: aload_1
+     114: invokeinterface #131,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     119: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     122: astore_2
+     123: aload_2
+     124: invokevirtual #132                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement.update:()V
+     127: goto          104
+     130: getstatic     #66                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+     133: ifeq          153
+     136: getstatic     #77                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.pageLeftViewDeck:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     139: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     142: ifeq          153
+     145: aload_0
+     146: aload_0
+     147: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     150: invokevirtual #133                // Method clicked:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     153: aload_0
+     154: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     157: aload_0
+     158: invokevirtual #134                // Method com/megacrit/cardcrawl/helpers/Hitbox.encapsulatedUpdate:(Lcom/megacrit/cardcrawl/helpers/HitboxListener;)V
+     161: aload_0
+     162: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     165: aload_0
+     166: invokevirtual #134                // Method com/megacrit/cardcrawl/helpers/Hitbox.encapsulatedUpdate:(Lcom/megacrit/cardcrawl/helpers/HitboxListener;)V
+     169: aload_0
+     170: aload_0
+     171: getfield      #25                 // Field screenX:F
+     174: aload_0
+     175: getfield      #26                 // Field targetX:F
+     178: invokestatic  #135                // Method com/megacrit/cardcrawl/helpers/MathHelper.uiLerpSnap:(FF)F
+     181: putfield      #25                 // Field screenX:F
+     184: aload_0
+     185: getfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     188: ifnull        204
+     191: getstatic     #66                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+     194: ifeq          204
+     197: aload_0
+     198: getfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     201: invokestatic  #136                // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     204: aload_0
+     205: getfield      #11                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+     208: invokevirtual #137                // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.update:()Z
+     211: pop
+     212: return
+
+  private void updateControllerInput();
+    descriptor: ()V
+    Code:
+       0: getstatic     #66                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+       3: ifne          7
+       6: return
+       7: getstatic     #138                // Field com/megacrit/cardcrawl/screens/options/InputSettingsScreen$HighlightType.INPUT:Lcom/megacrit/cardcrawl/screens/options/InputSettingsScreen$HighlightType;
+      10: astore_1
+      11: iconst_0
+      12: istore_2
+      13: iconst_0
+      14: istore_3
+      15: aload_0
+      16: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+      19: invokevirtual #129                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      22: astore        4
+      24: aload         4
+      26: invokeinterface #130,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      31: ifeq          76
+      34: aload         4
+      36: invokeinterface #131,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      41: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+      44: astore        5
+      46: aload         5
+      48: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      51: invokevirtual #140                // Method com/megacrit/cardcrawl/helpers/Hitbox.update:()V
+      54: aload         5
+      56: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      59: getfield      #141                // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+      62: ifeq          70
+      65: iconst_1
+      66: istore_2
+      67: goto          76
+      70: iinc          3, 1
+      73: goto          24
+      76: aload_0
+      77: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      80: getfield      #141                // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+      83: ifeq          95
+      86: getstatic     #142                // Field com/megacrit/cardcrawl/screens/options/InputSettingsScreen$HighlightType.RESET:Lcom/megacrit/cardcrawl/screens/options/InputSettingsScreen$HighlightType;
+      89: astore_1
+      90: iconst_1
+      91: istore_2
+      92: goto          136
+      95: aload_0
+      96: getfield      #39                 // Field controllerEnabledToggleButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+      99: getfield      #143                // Field com/megacrit/cardcrawl/screens/options/GiantToggleButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     102: getfield      #141                // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     105: ifeq          117
+     108: getstatic     #144                // Field com/megacrit/cardcrawl/screens/options/InputSettingsScreen$HighlightType.CONTROLLER_ON_TOGGLE:Lcom/megacrit/cardcrawl/screens/options/InputSettingsScreen$HighlightType;
+     111: astore_1
+     112: iconst_1
+     113: istore_2
+     114: goto          136
+     117: aload_0
+     118: getfield      #23                 // Field touchscreenModeButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+     121: getfield      #143                // Field com/megacrit/cardcrawl/screens/options/GiantToggleButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     124: getfield      #141                // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     127: ifeq          136
+     130: getstatic     #145                // Field com/megacrit/cardcrawl/screens/options/InputSettingsScreen$HighlightType.TOUCHSCREEN_ON_TOGGLE:Lcom/megacrit/cardcrawl/screens/options/InputSettingsScreen$HighlightType;
+     133: astore_1
+     134: iconst_1
+     135: istore_2
+     136: iload_2
+     137: ifne          162
+     140: iconst_1
+     141: istore_3
+     142: aload_0
+     143: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     146: iconst_1
+     147: invokevirtual #146                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     150: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     153: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     156: invokestatic  #136                // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     159: goto          616
+     162: getstatic     #147                // Field com/megacrit/cardcrawl/screens/options/InputSettingsScreen$1.$SwitchMap$com$megacrit$cardcrawl$screens$options$InputSettingsScreen$HighlightType:[I
+     165: aload_1
+     166: invokevirtual #148                // Method com/megacrit/cardcrawl/screens/options/InputSettingsScreen$HighlightType.ordinal:()I
+     169: iaload
+     170: tableswitch   { // 1 to 3
+
+                     1: 196
+
+                     2: 352
+
+                     3: 508
+               default: 616
+          }
+     196: getstatic     #88                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     199: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     202: ifne          214
+     205: getstatic     #95                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altUp:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     208: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     211: ifeq          262
+     214: iinc          3, -1
+     217: iload_3
+     218: iconst_1
+     219: if_icmpge     224
+     222: iconst_1
+     223: istore_3
+     224: aload_0
+     225: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     228: iload_3
+     229: invokevirtual #146                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     232: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     235: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     238: invokestatic  #136                // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     241: aload_0
+     242: aload_0
+     243: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     246: iload_3
+     247: invokevirtual #146                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     250: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     253: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     256: putfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     259: goto          616
+     262: getstatic     #90                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.down:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     265: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     268: ifne          280
+     271: getstatic     #96                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altDown:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     274: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     277: ifeq          616
+     280: iinc          3, 1
+     283: iload_3
+     284: aload_0
+     285: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     288: invokevirtual #113                // Method java/util/ArrayList.size:()I
+     291: iconst_1
+     292: isub
+     293: if_icmple     314
+     296: aload_0
+     297: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     300: invokestatic  #136                // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     303: aload_0
+     304: aload_0
+     305: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     308: putfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     311: goto          616
+     314: aload_0
+     315: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     318: iload_3
+     319: invokevirtual #146                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     322: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     325: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     328: invokestatic  #136                // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     331: aload_0
+     332: aload_0
+     333: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     336: iload_3
+     337: invokevirtual #146                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     340: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     343: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     346: putfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     349: goto          616
+     352: getstatic     #88                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     355: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     358: ifne          370
+     361: getstatic     #95                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altUp:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     364: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     367: ifeq          424
+     370: aload_0
+     371: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     374: aload_0
+     375: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     378: invokevirtual #113                // Method java/util/ArrayList.size:()I
+     381: iconst_1
+     382: isub
+     383: invokevirtual #146                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     386: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     389: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     392: invokestatic  #136                // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     395: aload_0
+     396: aload_0
+     397: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     400: aload_0
+     401: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     404: invokevirtual #113                // Method java/util/ArrayList.size:()I
+     407: iconst_1
+     408: isub
+     409: invokevirtual #146                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     412: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     415: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     418: putfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     421: goto          616
+     424: getstatic     #94                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.right:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     427: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     430: ifne          442
+     433: getstatic     #98                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altRight:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     436: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     439: ifeq          466
+     442: aload_0
+     443: getfield      #39                 // Field controllerEnabledToggleButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+     446: getfield      #143                // Field com/megacrit/cardcrawl/screens/options/GiantToggleButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     449: invokestatic  #136                // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     452: aload_0
+     453: aload_0
+     454: getfield      #39                 // Field controllerEnabledToggleButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+     457: getfield      #143                // Field com/megacrit/cardcrawl/screens/options/GiantToggleButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     460: putfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     463: goto          616
+     466: getstatic     #94                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.right:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     469: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     472: ifne          484
+     475: getstatic     #98                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altRight:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     478: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     481: ifeq          616
+     484: aload_0
+     485: getfield      #23                 // Field touchscreenModeButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+     488: getfield      #143                // Field com/megacrit/cardcrawl/screens/options/GiantToggleButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     491: invokestatic  #136                // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     494: aload_0
+     495: aload_0
+     496: getfield      #23                 // Field touchscreenModeButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+     499: getfield      #143                // Field com/megacrit/cardcrawl/screens/options/GiantToggleButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     502: putfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     505: goto          616
+     508: getstatic     #88                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     511: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     514: ifne          526
+     517: getstatic     #95                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altUp:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     520: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     523: ifeq          580
+     526: aload_0
+     527: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     530: aload_0
+     531: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     534: invokevirtual #113                // Method java/util/ArrayList.size:()I
+     537: iconst_1
+     538: isub
+     539: invokevirtual #146                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     542: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     545: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     548: invokestatic  #136                // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     551: aload_0
+     552: aload_0
+     553: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     556: aload_0
+     557: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+     560: invokevirtual #113                // Method java/util/ArrayList.size:()I
+     563: iconst_1
+     564: isub
+     565: invokevirtual #146                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     568: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     571: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     574: putfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     577: goto          616
+     580: getstatic     #92                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.left:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     583: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     586: ifne          598
+     589: getstatic     #97                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altLeft:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     592: invokevirtual #124                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     595: ifeq          616
+     598: aload_0
+     599: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     602: invokestatic  #136                // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     605: aload_0
+     606: aload_0
+     607: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     610: putfield      #30                 // Field elementHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     613: goto          616
+     616: aload_0
+     617: invokespecial #149                // Method updateControllerScrolling:()V
+     620: return
+
+  private void updateControllerScrolling();
+    descriptor: ()V
+    Code:
+       0: getstatic     #150                // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+       3: invokeinterface #151,  1          // InterfaceMethod com/badlogic/gdx/Input.getY:()I
+       8: i2f
+       9: getstatic     #152                // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      12: i2f
+      13: ldc           #44                 // float 0.65f
+      15: fmul
+      16: fcmpl
+      17: ifle          58
+      20: aload_0
+      21: dup
+      22: getfield      #27                 // Field targetScrollOffset:F
+      25: getstatic     #153                // Field com/megacrit/cardcrawl/core/Settings.SCROLL_SPEED:F
+      28: ldc           #154                // float 3.0f
+      30: fdiv
+      31: fadd
+      32: putfield      #27                 // Field targetScrollOffset:F
+      35: aload_0
+      36: getfield      #27                 // Field targetScrollOffset:F
+      39: aload_0
+      40: getfield      #116                // Field maxScrollAmount:F
+      43: fcmpl
+      44: ifle          107
+      47: aload_0
+      48: aload_0
+      49: getfield      #116                // Field maxScrollAmount:F
+      52: putfield      #27                 // Field targetScrollOffset:F
+      55: goto          107
+      58: getstatic     #150                // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      61: invokeinterface #151,  1          // InterfaceMethod com/badlogic/gdx/Input.getY:()I
+      66: i2f
+      67: getstatic     #152                // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      70: i2f
+      71: ldc           #40                 // float 0.35f
+      73: fmul
+      74: fcmpg
+      75: ifge          107
+      78: aload_0
+      79: dup
+      80: getfield      #27                 // Field targetScrollOffset:F
+      83: getstatic     #153                // Field com/megacrit/cardcrawl/core/Settings.SCROLL_SPEED:F
+      86: ldc           #154                // float 3.0f
+      88: fdiv
+      89: fsub
+      90: putfield      #27                 // Field targetScrollOffset:F
+      93: aload_0
+      94: getfield      #27                 // Field targetScrollOffset:F
+      97: fconst_0
+      98: fcmpg
+      99: ifge          107
+     102: aload_0
+     103: fconst_0
+     104: putfield      #27                 // Field targetScrollOffset:F
+     107: return
+
+  private void updateScrolling();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #27                 // Field targetScrollOffset:F
+       4: fstore_1
+       5: getstatic     #155                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.scrolledDown:Z
+       8: ifeq          23
+      11: fload_1
+      12: getstatic     #153                // Field com/megacrit/cardcrawl/core/Settings.SCROLL_SPEED:F
+      15: ldc           #154                // float 3.0f
+      17: fmul
+      18: fadd
+      19: fstore_1
+      20: goto          38
+      23: getstatic     #156                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.scrolledUp:Z
+      26: ifeq          38
+      29: fload_1
+      30: getstatic     #153                // Field com/megacrit/cardcrawl/core/Settings.SCROLL_SPEED:F
+      33: ldc           #154                // float 3.0f
+      35: fmul
+      36: fsub
+      37: fstore_1
+      38: fload_1
+      39: aload_0
+      40: getfield      #27                 // Field targetScrollOffset:F
+      43: fcmpl
+      44: ifeq          75
+      47: aload_0
+      48: aload_0
+      49: getfield      #27                 // Field targetScrollOffset:F
+      52: fload_1
+      53: invokestatic  #157                // Method com/megacrit/cardcrawl/helpers/MathHelper.scrollSnapLerpSpeed:(FF)F
+      56: putfield      #27                 // Field targetScrollOffset:F
+      59: aload_0
+      60: aload_0
+      61: getfield      #27                 // Field targetScrollOffset:F
+      64: fconst_0
+      65: aload_0
+      66: getfield      #116                // Field maxScrollAmount:F
+      69: invokestatic  #158                // Method com/badlogic/gdx/math/MathUtils.clamp:(FFF)F
+      72: putfield      #27                 // Field targetScrollOffset:F
+      75: aload_0
+      76: invokespecial #159                // Method updateBarPosition:()V
+      79: return
+
+  public void hide();
+    descriptor: ()V
+    Code:
+       0: getstatic     #160                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+       3: ldc           #161                // String DECK_CLOSE
+       5: ldc           #162                // float 0.1f
+       7: invokevirtual #163                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;F)J
+      10: pop2
+      11: aload_0
+      12: getstatic     #24                 // Field HIDE_X:F
+      15: putfield      #26                 // Field targetX:F
+      18: aload_0
+      19: getfield      #5                  // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+      22: invokevirtual #164                // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.hide:()V
+      25: aload_0
+      26: iconst_0
+      27: putfield      #29                 // Field screenUp:Z
+      30: invokestatic  #165                // Method com/megacrit/cardcrawl/helpers/input/InputActionSet.save:()V
+      33: invokestatic  #166                // Method com/megacrit/cardcrawl/helpers/controller/CInputActionSet.save:()V
+      36: getstatic     #50                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+      39: getfield      #167                // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.panelScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuPanelScreen;
+      42: invokevirtual #168                // Method com/megacrit/cardcrawl/screens/mainMenu/MenuPanelScreen.refresh:()V
+      45: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_1
+       1: getstatic     #169                // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+       4: invokevirtual #170                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+       7: aload_0
+       8: aload_1
+       9: getstatic     #171                // Field com/megacrit/cardcrawl/helpers/ImageMaster.INPUT_SETTINGS_BG:Lcom/badlogic/gdx/graphics/Texture;
+      12: invokespecial #172                // Method renderFullscreenBackground:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/Texture;)V
+      15: aload_0
+      16: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+      19: invokevirtual #129                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      22: astore_2
+      23: aload_2
+      24: invokeinterface #130,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      29: ifeq          50
+      32: aload_2
+      33: invokeinterface #131,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      38: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+      41: astore_3
+      42: aload_3
+      43: aload_1
+      44: invokevirtual #173                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      47: goto          23
+      50: aload_0
+      51: aload_1
+      52: invokespecial #174                // Method renderResetDefaultButton:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      55: aload_0
+      56: aload_1
+      57: getstatic     #175                // Field com/megacrit/cardcrawl/helpers/ImageMaster.INPUT_SETTINGS_EDGES:Lcom/badlogic/gdx/graphics/Texture;
+      60: invokespecial #172                // Method renderFullscreenBackground:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/Texture;)V
+      63: aload_0
+      64: getfield      #11                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+      67: aload_1
+      68: invokevirtual #176                // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      71: aload_0
+      72: aload_1
+      73: invokespecial #177                // Method renderHeader:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      76: getstatic     #66                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+      79: ifeq          160
+      82: aload_1
+      83: getstatic     #77                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.pageLeftViewDeck:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      86: invokevirtual #178                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.getKeyImg:()Lcom/badlogic/gdx/graphics/Texture;
+      89: aload_0
+      90: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      93: getfield      #179                // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+      96: ldc           #180                // float 32.0f
+      98: fsub
+      99: getstatic     #181                // Field com/megacrit/cardcrawl/helpers/FontHelper.panelNameFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     102: getstatic     #182                // Field GAME_SETTINNGS_TAB_HEADER:Ljava/lang/String;
+     105: ldc           #183                // float 99999.0f
+     107: fconst_2
+     108: invokestatic  #184                // Method com/megacrit/cardcrawl/helpers/FontHelper.getSmartWidth:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FF)F
+     111: fconst_2
+     112: fdiv
+     113: fsub
+     114: ldc           #185                // float 42.0f
+     116: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     119: fmul
+     120: fsub
+     121: getstatic     #55                 // Field com/megacrit/cardcrawl/core/Settings.OPTION_Y:F
+     124: ldc           #180                // float 32.0f
+     126: fsub
+     127: ldc           #186                // float 379.0f
+     129: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     132: fmul
+     133: fadd
+     134: ldc           #180                // float 32.0f
+     136: ldc           #180                // float 32.0f
+     138: ldc           #187                // float 64.0f
+     140: ldc           #187                // float 64.0f
+     142: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     145: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     148: fconst_0
+     149: iconst_0
+     150: iconst_0
+     151: bipush        64
+     153: bipush        64
+     155: iconst_0
+     156: iconst_0
+     157: invokevirtual #188                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     160: aload_0
+     161: getfield      #39                 // Field controllerEnabledToggleButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+     164: aload_1
+     165: invokevirtual #189                // Method com/megacrit/cardcrawl/screens/options/GiantToggleButton.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     168: getstatic     #31                 // Field com/megacrit/cardcrawl/core/Settings.isConsoleBuild:Z
+     171: ifne          182
+     174: aload_0
+     175: getfield      #23                 // Field touchscreenModeButton:Lcom/megacrit/cardcrawl/screens/options/GiantToggleButton;
+     178: aload_1
+     179: invokevirtual #189                // Method com/megacrit/cardcrawl/screens/options/GiantToggleButton.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     182: aload_0
+     183: getfield      #5                  // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+     186: aload_1
+     187: invokevirtual #190                // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     190: return
+
+  private void updateKeyPositions();
+    descriptor: ()V
+    Code:
+       0: getstatic     #191                // Field ROW_X_POSITION:F
+       3: fstore_1
+       4: getstatic     #192                // Field SCROLL_CONTAINER_TOP:F
+       7: getstatic     #114                // Field ROW_TABLE_VERTICAL_EXTRA_PADDING:F
+      10: fsub
+      11: getstatic     #112                // Field ROW_Y_DIFF:F
+      14: fconst_2
+      15: fdiv
+      16: fsub
+      17: fstore_2
+      18: getstatic     #193                // Field com/megacrit/cardcrawl/core/Settings.isSixteenByTen:Z
+      21: ifeq          33
+      24: fload_2
+      25: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      28: ldc           #194                // float 4.0f
+      30: fmul
+      31: fsub
+      32: fstore_2
+      33: aload_0
+      34: aload_0
+      35: getfield      #28                 // Field visibleScrollOffset:F
+      38: aload_0
+      39: getfield      #27                 // Field targetScrollOffset:F
+      42: invokestatic  #157                // Method com/megacrit/cardcrawl/helpers/MathHelper.scrollSnapLerpSpeed:(FF)F
+      45: putfield      #28                 // Field visibleScrollOffset:F
+      48: fload_2
+      49: aload_0
+      50: getfield      #28                 // Field visibleScrollOffset:F
+      53: fadd
+      54: fstore_2
+      55: getstatic     #192                // Field SCROLL_CONTAINER_TOP:F
+      58: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      61: ldc           #195                // float 10.0f
+      63: fmul
+      64: fsub
+      65: fstore_3
+      66: getstatic     #196                // Field SCROLL_CONTAINER_BOTTOM:F
+      69: getstatic     #197                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.ROW_HEIGHT:F
+      72: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      75: ldc           #195                // float 10.0f
+      77: fmul
+      78: fsub
+      79: fsub
+      80: fstore        4
+      82: aload_0
+      83: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+      86: invokevirtual #129                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      89: astore        5
+      91: aload         5
+      93: invokeinterface #130,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      98: ifeq          178
+     101: aload         5
+     103: invokeinterface #131,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     108: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+     111: astore        6
+     113: aload         6
+     115: fload_1
+     116: fload_2
+     117: invokevirtual #198                // Method com/megacrit/cardcrawl/screens/options/RemapInputElement.move:(FF)V
+     120: fload         4
+     122: aload         6
+     124: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     127: getfield      #199                // Field com/megacrit/cardcrawl/helpers/Hitbox.y:F
+     130: fcmpg
+     131: ifge          151
+     134: aload         6
+     136: getfield      #139                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     139: getfield      #199                // Field com/megacrit/cardcrawl/helpers/Hitbox.y:F
+     142: fload_3
+     143: fcmpg
+     144: ifge          151
+     147: iconst_1
+     148: goto          152
+     151: iconst_0
+     152: istore        7
+     154: aload         6
+     156: iload         7
+     158: ifne          165
+     161: iconst_1
+     162: goto          166
+     165: iconst_0
+     166: putfield      #200                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.isHidden:Z
+     169: fload_2
+     170: getstatic     #112                // Field ROW_Y_DIFF:F
+     173: fsub
+     174: fstore_2
+     175: goto          91
+     178: return
+
+  private void renderHeader(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+       4: getfield      #141                // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+       7: ifeq          16
+      10: getstatic     #201                // Field com/megacrit/cardcrawl/core/Settings.GOLD_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      13: goto          19
+      16: getstatic     #202                // Field com/badlogic/gdx/graphics/Color.LIGHT_GRAY:Lcom/badlogic/gdx/graphics/Color;
+      19: astore_2
+      20: aload_1
+      21: getstatic     #181                // Field com/megacrit/cardcrawl/helpers/FontHelper.panelNameFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      24: getstatic     #182                // Field GAME_SETTINNGS_TAB_HEADER:Ljava/lang/String;
+      27: aload_0
+      28: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      31: getfield      #179                // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+      34: aload_0
+      35: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      38: getfield      #203                // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+      41: aload_2
+      42: invokestatic  #204                // Method com/megacrit/cardcrawl/helpers/FontHelper.renderFontCentered:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FFLcom/badlogic/gdx/graphics/Color;)V
+      45: aload_0
+      46: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      49: aload_1
+      50: invokevirtual #205                // Method com/megacrit/cardcrawl/helpers/Hitbox.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      53: aload_1
+      54: getstatic     #181                // Field com/megacrit/cardcrawl/helpers/FontHelper.panelNameFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      57: getstatic     #206                // Field TAB_HEADER:Ljava/lang/String;
+      60: aload_0
+      61: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      64: getfield      #179                // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+      67: ldc           #207                // float 396.0f
+      69: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      72: fmul
+      73: fadd
+      74: aload_0
+      75: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      78: getfield      #203                // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+      81: getstatic     #201                // Field com/megacrit/cardcrawl/core/Settings.GOLD_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      84: invokestatic  #204                // Method com/megacrit/cardcrawl/helpers/FontHelper.renderFontCentered:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FFLcom/badlogic/gdx/graphics/Color;)V
+      87: return
+
+  private void renderFullscreenBackground(com.badlogic.gdx.graphics.g2d.SpriteBatch, com.badlogic.gdx.graphics.Texture);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/Texture;)V
+    Code:
+       0: aload_1
+       1: aload_2
+       2: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+       5: i2f
+       6: fconst_2
+       7: fdiv
+       8: ldc           #208                // float 960.0f
+      10: fsub
+      11: getstatic     #55                 // Field com/megacrit/cardcrawl/core/Settings.OPTION_Y:F
+      14: ldc           #209                // float 540.0f
+      16: fsub
+      17: ldc           #208                // float 960.0f
+      19: ldc           #209                // float 540.0f
+      21: ldc           #210                // float 1920.0f
+      23: ldc           #211                // float 1080.0f
+      25: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      28: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      31: fconst_0
+      32: iconst_0
+      33: iconst_0
+      34: sipush        1920
+      37: sipush        1080
+      40: iconst_0
+      41: iconst_0
+      42: invokevirtual #188                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+      45: return
+
+  private void renderResetDefaultButton(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+       4: getfield      #141                // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+       7: ifeq          16
+      10: getstatic     #212                // Field com/megacrit/cardcrawl/core/Settings.GREEN_TEXT_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      13: goto          19
+      16: getstatic     #213                // Field com/megacrit/cardcrawl/core/Settings.CREAM_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      19: astore_2
+      20: aload_1
+      21: getstatic     #214                // Field com/megacrit/cardcrawl/helpers/FontHelper.panelEndTurnFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      24: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+      27: bipush        6
+      29: aaload
+      30: aload_0
+      31: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      34: getfield      #179                // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+      37: aload_0
+      38: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      41: getfield      #203                // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+      44: aload_2
+      45: invokestatic  #204                // Method com/megacrit/cardcrawl/helpers/FontHelper.renderFontCentered:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FFLcom/badlogic/gdx/graphics/Color;)V
+      48: aload_0
+      49: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      52: aload_1
+      53: invokevirtual #205                // Method com/megacrit/cardcrawl/helpers/Hitbox.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      56: return
+
+  public void didStartRemapping(com.megacrit.cardcrawl.screens.options.RemapInputElement);
+    descriptor: (Lcom/megacrit/cardcrawl/screens/options/RemapInputElement;)V
+    Code:
+       0: aload_0
+       1: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+       4: invokevirtual #129                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       7: astore_2
+       8: aload_2
+       9: invokeinterface #130,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      14: ifeq          44
+      17: aload_2
+      18: invokeinterface #131,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      23: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+      26: astore_3
+      27: aload_3
+      28: aload_3
+      29: aload_1
+      30: if_acmpne     37
+      33: iconst_1
+      34: goto          38
+      37: iconst_0
+      38: putfield      #215                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.hasInputFocus:Z
+      41: goto          8
+      44: return
+
+  public boolean willRemap(com.megacrit.cardcrawl.screens.options.RemapInputElement, int, int);
+    descriptor: (Lcom/megacrit/cardcrawl/screens/options/RemapInputElement;II)Z
+    Code:
+       0: iload_2
+       1: iload_3
+       2: if_icmpne     7
+       5: iconst_1
+       6: ireturn
+       7: aload_0
+       8: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+      11: invokevirtual #129                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      14: astore        4
+      16: aload         4
+      18: invokeinterface #130,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      23: ifeq          70
+      26: aload         4
+      28: invokeinterface #131,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      33: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+      36: astore        5
+      38: aload         5
+      40: getfield      #216                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.action:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+      43: ifnull        67
+      46: aload         5
+      48: getfield      #216                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.action:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+      51: invokevirtual #217                // Method com/megacrit/cardcrawl/helpers/input/InputAction.getKey:()I
+      54: iload_3
+      55: if_icmpne     67
+      58: aload         5
+      60: getfield      #216                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.action:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+      63: iload_2
+      64: invokevirtual #218                // Method com/megacrit/cardcrawl/helpers/input/InputAction.remap:(I)V
+      67: goto          16
+      70: iconst_1
+      71: ireturn
+
+  public boolean willRemapController(com.megacrit.cardcrawl.screens.options.RemapInputElement, int, int);
+    descriptor: (Lcom/megacrit/cardcrawl/screens/options/RemapInputElement;II)Z
+    Code:
+       0: iload_2
+       1: iload_3
+       2: if_icmpne     7
+       5: iconst_1
+       6: ireturn
+       7: aload_0
+       8: getfield      #20                 // Field elements:Ljava/util/ArrayList;
+      11: invokevirtual #129                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      14: astore        4
+      16: aload         4
+      18: invokeinterface #130,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      23: ifeq          70
+      26: aload         4
+      28: invokeinterface #131,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      33: checkcast     #67                 // class com/megacrit/cardcrawl/screens/options/RemapInputElement
+      36: astore        5
+      38: aload         5
+      40: getfield      #219                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.cAction:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      43: ifnull        67
+      46: aload         5
+      48: getfield      #219                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.cAction:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      51: invokevirtual #220                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.getKey:()I
+      54: iload_3
+      55: if_icmpne     67
+      58: aload         5
+      60: getfield      #219                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.cAction:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      63: iload_2
+      64: invokevirtual #221                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.remap:(I)V
+      67: goto          16
+      70: iconst_1
+      71: ireturn
+
+  public void hoverStarted(com.megacrit.cardcrawl.helpers.Hitbox);
+    descriptor: (Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+    Code:
+       0: getstatic     #160                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+       3: ldc           #222                // String UI_HOVER
+       5: invokevirtual #223                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+       8: pop2
+       9: return
+
+  public void startClicking(com.megacrit.cardcrawl.helpers.Hitbox);
+    descriptor: (Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+    Code:
+       0: getstatic     #160                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+       3: ldc           #224                // String UI_CLICK_1
+       5: invokevirtual #223                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+       8: pop2
+       9: return
+
+  public void clicked(com.megacrit.cardcrawl.helpers.Hitbox);
+    descriptor: (Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+    Code:
+       0: aload_1
+       1: aload_0
+       2: getfield      #17                 // Field resetButtonHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+       5: if_acmpne     34
+       8: getstatic     #160                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+      11: ldc           #225                // String END_TURN
+      13: invokevirtual #223                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+      16: pop2
+      17: invokestatic  #226                // Method com/megacrit/cardcrawl/helpers/input/InputActionSet.resetToDefaults:()V
+      20: invokestatic  #227                // Method com/megacrit/cardcrawl/helpers/controller/CInputActionSet.resetToDefaults:()V
+      23: aload_0
+      24: invokespecial #53                 // Method refreshData:()V
+      27: aload_0
+      28: invokespecial #128                // Method updateKeyPositions:()V
+      31: goto          116
+      34: aload_1
+      35: aload_0
+      36: getfield      #22                 // Field gameSettingsHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      39: if_acmpne     116
+      42: invokestatic  #59                 // Method com/megacrit/cardcrawl/core/CardCrawlGame.isInARun:()Z
+      45: ifeq          58
+      48: getstatic     #228                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.settingsScreen:Lcom/megacrit/cardcrawl/screens/options/SettingsScreen;
+      51: iconst_0
+      52: invokevirtual #229                // Method com/megacrit/cardcrawl/screens/options/SettingsScreen.open:(Z)V
+      55: goto          116
+      58: getstatic     #160                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+      61: ldc           #225                // String END_TURN
+      63: invokevirtual #223                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+      66: pop2
+      67: getstatic     #50                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+      70: iconst_1
+      71: putfield      #230                // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.isSettingsUp:Z
+      74: iconst_0
+      75: putstatic     #123                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.pressedEscape:Z
+      78: getstatic     #50                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+      81: getfield      #231                // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.statsScreen:Lcom/megacrit/cardcrawl/screens/stats/StatsScreen;
+      84: invokevirtual #232                // Method com/megacrit/cardcrawl/screens/stats/StatsScreen.hide:()V
+      87: getstatic     #50                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+      90: getfield      #233                // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.cancelButton:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+      93: invokevirtual #164                // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.hide:()V
+      96: getstatic     #234                // Field com/megacrit/cardcrawl/core/CardCrawlGame.cancelButton:Lcom/megacrit/cardcrawl/ui/buttons/CancelButton;
+      99: getstatic     #235                // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.TEXT:[Ljava/lang/String;
+     102: iconst_2
+     103: aaload
+     104: invokevirtual #236                // Method com/megacrit/cardcrawl/ui/buttons/CancelButton.showInstantly:(Ljava/lang/String;)V
+     107: getstatic     #50                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+     110: getstatic     #237                // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen.SETTINGS:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen;
+     113: putfield      #52                 // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.screen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen;
+     116: return
+
+  public void scrolledUsingBar(float);
+    descriptor: (F)V
+    Code:
+       0: aload_0
+       1: fconst_0
+       2: aload_0
+       3: getfield      #116                // Field maxScrollAmount:F
+       6: fload_1
+       7: invokestatic  #238                // Method com/megacrit/cardcrawl/helpers/MathHelper.valueFromPercentBetween:(FFF)F
+      10: putfield      #27                 // Field targetScrollOffset:F
+      13: aload_0
+      14: getfield      #11                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+      17: fload_1
+      18: invokevirtual #239                // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.parentScrolledToPercent:(F)V
+      21: return
+
+  private void updateBarPosition();
+    descriptor: ()V
+    Code:
+       0: fconst_0
+       1: aload_0
+       2: getfield      #116                // Field maxScrollAmount:F
+       5: aload_0
+       6: getfield      #27                 // Field targetScrollOffset:F
+       9: invokestatic  #240                // Method com/megacrit/cardcrawl/helpers/MathHelper.percentFromValueBetween:(FFF)F
+      12: fstore_1
+      13: aload_0
+      14: getfield      #11                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+      17: fload_1
+      18: invokevirtual #239                // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.parentScrolledToPercent:(F)V
+      21: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #241                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #242                // String InputSettingsScreen
+       5: invokevirtual #243                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getUIString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/UIStrings;
+       8: putstatic     #244                // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      11: getstatic     #244                // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      14: getfield      #245                // Field com/megacrit/cardcrawl/localization/UIStrings.TEXT:[Ljava/lang/String;
+      17: putstatic     #37                 // Field TEXT:[Ljava/lang/String;
+      20: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+      23: iconst_0
+      24: aaload
+      25: putstatic     #206                // Field TAB_HEADER:Ljava/lang/String;
+      28: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+      31: iconst_1
+      32: aaload
+      33: putstatic     #182                // Field GAME_SETTINNGS_TAB_HEADER:Ljava/lang/String;
+      36: getstatic     #37                 // Field TEXT:[Ljava/lang/String;
+      39: iconst_2
+      40: aaload
+      41: putstatic     #47                 // Field RETURN_BUTTON_TEXT:Ljava/lang/String;
+      44: ldc           #246                // float -1100.0f
+      46: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      49: fmul
+      50: putstatic     #24                 // Field HIDE_X:F
+      53: ldc           #247                // float 360.0f
+      55: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      58: fmul
+      59: putstatic     #21                 // Field GAME_SETTINGS_BUTTON_WIDTH:F
+      62: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      65: i2f
+      66: fconst_2
+      67: fdiv
+      68: ldc           #248                // float 37.0f
+      70: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      73: fmul
+      74: fsub
+      75: putstatic     #191                // Field ROW_X_POSITION:F
+      78: ldc           #195                // float 10.0f
+      80: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      83: fmul
+      84: putstatic     #114                // Field ROW_TABLE_VERTICAL_EXTRA_PADDING:F
+      87: fconst_0
+      88: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      91: fmul
+      92: putstatic     #249                // Field ROW_PADDING:F
+      95: getstatic     #197                // Field com/megacrit/cardcrawl/screens/options/RemapInputElement.ROW_HEIGHT:F
+      98: getstatic     #249                // Field ROW_PADDING:F
+     101: fadd
+     102: putstatic     #112                // Field ROW_Y_DIFF:F
+     105: ldc           #250                // float 651.0f
+     107: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     110: fmul
+     111: putstatic     #115                // Field SCROLL_CONTAINER_VISIBLE_HEIGHT:F
+     114: getstatic     #55                 // Field com/megacrit/cardcrawl/core/Settings.OPTION_Y:F
+     117: ldc           #247                // float 360.0f
+     119: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     122: fmul
+     123: fsub
+     124: putstatic     #196                // Field SCROLL_CONTAINER_BOTTOM:F
+     127: getstatic     #196                // Field SCROLL_CONTAINER_BOTTOM:F
+     130: getstatic     #115                // Field SCROLL_CONTAINER_VISIBLE_HEIGHT:F
+     133: fadd
+     134: putstatic     #192                // Field SCROLL_CONTAINER_TOP:F
+     137: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     140: i2f
+     141: fconst_2
+     142: fdiv
+     143: ldc           #251                // float 576.0f
+     145: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     148: fmul
+     149: fadd
+     150: putstatic     #7                  // Field SCROLLBAR_X:F
+     153: getstatic     #152                // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     156: iconst_2
+     157: idiv
+     158: i2f
+     159: ldc           #252                // float 61.0f
+     161: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     164: fmul
+     165: fsub
+     166: putstatic     #8                  // Field SCROLLBAR_Y:F
+     169: ldc           #253                // float 584.0f
+     171: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     174: fmul
+     175: putstatic     #9                  // Field SCROLLBAR_HEIGHT:F
+     178: getstatic     #193                // Field com/megacrit/cardcrawl/core/Settings.isSixteenByTen:Z
+     181: ifeq          189
+     184: ldc           #254                // float 100.0f
+     186: goto          191
+     189: ldc           #255                // float 70.0f
+     191: getstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     194: fmul
+     195: putstatic     #36                 // Field RESET_BUTTON_CY:F
+     198: return
+}

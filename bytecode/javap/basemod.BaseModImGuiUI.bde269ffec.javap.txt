@@ -1,0 +1,1909 @@
+Compiled from "BaseModImGuiUI.java"
+class basemod.BaseModImGuiUI {
+  private boolean firstTime;
+    descriptor: Z
+
+  private final imgui.type.ImBoolean SHOW_DEMO_WINDOW;
+    descriptor: Limgui/type/ImBoolean;
+
+  private imgui.type.ImBoolean showSearch;
+    descriptor: Limgui/type/ImBoolean;
+
+  private imgui.type.ImBoolean showActionQueue;
+    descriptor: Limgui/type/ImBoolean;
+
+  private final imgui.type.ImInt iData;
+    descriptor: Limgui/type/ImInt;
+
+  private java.lang.String modIDFilter;
+    descriptor: Ljava/lang/String;
+
+  private final imgui.ImGuiTextFilter cardFilter;
+    descriptor: Limgui/ImGuiTextFilter;
+
+  private java.lang.String selectedCardId;
+    descriptor: Ljava/lang/String;
+
+  private final imgui.type.ImInt cardCount;
+    descriptor: Limgui/type/ImInt;
+
+  private final imgui.type.ImInt cardUpgrades;
+    descriptor: Limgui/type/ImInt;
+
+  private final imgui.ImGuiTextFilter relicFilter;
+    descriptor: Limgui/ImGuiTextFilter;
+
+  private java.lang.String selectedRelicId;
+    descriptor: Ljava/lang/String;
+
+  private final imgui.ImGuiTextFilter potionFilter;
+    descriptor: Limgui/ImGuiTextFilter;
+
+  private java.lang.String selectedPotionId;
+    descriptor: Ljava/lang/String;
+
+  private java.util.List<com.megacrit.cardcrawl.potions.AbstractPotion> allPotions;
+    descriptor: Ljava/util/List;
+
+  basemod.BaseModImGuiUI();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: iconst_1
+       6: putfield      #2                  // Field firstTime:Z
+       9: aload_0
+      10: new           #3                  // class imgui/type/ImBoolean
+      13: dup
+      14: iconst_0
+      15: invokespecial #4                  // Method imgui/type/ImBoolean."<init>":(Z)V
+      18: putfield      #5                  // Field SHOW_DEMO_WINDOW:Limgui/type/ImBoolean;
+      21: aload_0
+      22: aconst_null
+      23: putfield      #6                  // Field showSearch:Limgui/type/ImBoolean;
+      26: aload_0
+      27: aconst_null
+      28: putfield      #7                  // Field showActionQueue:Limgui/type/ImBoolean;
+      31: aload_0
+      32: new           #8                  // class imgui/type/ImInt
+      35: dup
+      36: invokespecial #9                  // Method imgui/type/ImInt."<init>":()V
+      39: putfield      #10                 // Field iData:Limgui/type/ImInt;
+      42: aload_0
+      43: ldc           #11                 // String ##ALL
+      45: putfield      #12                 // Field modIDFilter:Ljava/lang/String;
+      48: aload_0
+      49: new           #13                 // class imgui/ImGuiTextFilter
+      52: dup
+      53: invokespecial #14                 // Method imgui/ImGuiTextFilter."<init>":()V
+      56: putfield      #15                 // Field cardFilter:Limgui/ImGuiTextFilter;
+      59: aload_0
+      60: aconst_null
+      61: putfield      #16                 // Field selectedCardId:Ljava/lang/String;
+      64: aload_0
+      65: new           #8                  // class imgui/type/ImInt
+      68: dup
+      69: iconst_1
+      70: invokespecial #17                 // Method imgui/type/ImInt."<init>":(I)V
+      73: putfield      #18                 // Field cardCount:Limgui/type/ImInt;
+      76: aload_0
+      77: new           #8                  // class imgui/type/ImInt
+      80: dup
+      81: iconst_0
+      82: invokespecial #17                 // Method imgui/type/ImInt."<init>":(I)V
+      85: putfield      #19                 // Field cardUpgrades:Limgui/type/ImInt;
+      88: aload_0
+      89: new           #13                 // class imgui/ImGuiTextFilter
+      92: dup
+      93: invokespecial #14                 // Method imgui/ImGuiTextFilter."<init>":()V
+      96: putfield      #20                 // Field relicFilter:Limgui/ImGuiTextFilter;
+      99: aload_0
+     100: aconst_null
+     101: putfield      #21                 // Field selectedRelicId:Ljava/lang/String;
+     104: aload_0
+     105: new           #13                 // class imgui/ImGuiTextFilter
+     108: dup
+     109: invokespecial #14                 // Method imgui/ImGuiTextFilter."<init>":()V
+     112: putfield      #22                 // Field potionFilter:Limgui/ImGuiTextFilter;
+     115: aload_0
+     116: aconst_null
+     117: putfield      #23                 // Field selectedPotionId:Ljava/lang/String;
+     120: aload_0
+     121: aconst_null
+     122: putfield      #24                 // Field allPotions:Ljava/util/List;
+     125: return
+
+  void receiveImGui();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #6                  // Field showSearch:Limgui/type/ImBoolean;
+       4: ifnonnull     45
+       7: aload_0
+       8: new           #3                  // class imgui/type/ImBoolean
+      11: dup
+      12: ldc           #25                 // String imgui-search
+      14: invokestatic  #26                 // Method basemod/BaseMod.getBoolean:(Ljava/lang/String;)Ljava/lang/Boolean;
+      17: invokevirtual #27                 // Method java/lang/Boolean.booleanValue:()Z
+      20: invokespecial #4                  // Method imgui/type/ImBoolean."<init>":(Z)V
+      23: putfield      #6                  // Field showSearch:Limgui/type/ImBoolean;
+      26: aload_0
+      27: new           #3                  // class imgui/type/ImBoolean
+      30: dup
+      31: ldc           #28                 // String imgui-actionqueue
+      33: invokestatic  #26                 // Method basemod/BaseMod.getBoolean:(Ljava/lang/String;)Ljava/lang/Boolean;
+      36: invokevirtual #27                 // Method java/lang/Boolean.booleanValue:()Z
+      39: invokespecial #4                  // Method imgui/type/ImBoolean."<init>":(Z)V
+      42: putfield      #7                  // Field showActionQueue:Limgui/type/ImBoolean;
+      45: aload_0
+      46: getfield      #6                  // Field showSearch:Limgui/type/ImBoolean;
+      49: invokevirtual #29                 // Method imgui/type/ImBoolean.get:()Z
+      52: istore_1
+      53: aload_0
+      54: getfield      #7                  // Field showActionQueue:Limgui/type/ImBoolean;
+      57: invokevirtual #29                 // Method imgui/type/ImBoolean.get:()Z
+      60: istore_2
+      61: invokestatic  #30                 // Method imgui/ImGui.getMainViewport:()Limgui/ImGuiViewport;
+      64: invokevirtual #31                 // Method imgui/ImGuiViewport.getPos:()Limgui/ImVec2;
+      67: astore_3
+      68: aload_3
+      69: getfield      #32                 // Field imgui/ImVec2.x:F
+      72: ldc           #33                 // float 7.0f
+      74: fadd
+      75: aload_3
+      76: getfield      #34                 // Field imgui/ImVec2.y:F
+      79: ldc           #35                 // float 70.0f
+      81: fadd
+      82: iconst_4
+      83: invokestatic  #37                 // Method imgui/ImGui.setNextWindowPos:(FFI)V
+      86: ldc           #38                 // float 465.0f
+      88: ldc           #38                 // float 465.0f
+      90: iconst_4
+      91: invokestatic  #39                 // Method imgui/ImGui.setNextWindowSize:(FFI)V
+      94: ldc           #40                 // String BaseMod
+      96: invokestatic  #41                 // Method imgui/ImGui.begin:(Ljava/lang/String;)Z
+      99: ifeq          145
+     102: ldc           #42                 // String Demo
+     104: aload_0
+     105: getfield      #5                  // Field SHOW_DEMO_WINDOW:Limgui/type/ImBoolean;
+     108: invokestatic  #43                 // Method imgui/ImGui.checkbox:(Ljava/lang/String;Limgui/type/ImBoolean;)Z
+     111: pop
+     112: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+     115: ldc           #45                 // String Search
+     117: aload_0
+     118: getfield      #6                  // Field showSearch:Limgui/type/ImBoolean;
+     121: invokestatic  #43                 // Method imgui/ImGui.checkbox:(Ljava/lang/String;Limgui/type/ImBoolean;)Z
+     124: pop
+     125: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+     128: ldc           #46                 // String Action Queue
+     130: aload_0
+     131: getfield      #7                  // Field showActionQueue:Limgui/type/ImBoolean;
+     134: invokestatic  #43                 // Method imgui/ImGui.checkbox:(Ljava/lang/String;Limgui/type/ImBoolean;)Z
+     137: pop
+     138: invokestatic  #47                 // Method imgui/ImGui.separator:()V
+     141: aload_0
+     142: invokespecial #48                 // Method combatPanel:()V
+     145: invokestatic  #49                 // Method imgui/ImGui.end:()V
+     148: aload_0
+     149: getfield      #6                  // Field showSearch:Limgui/type/ImBoolean;
+     152: invokevirtual #29                 // Method imgui/type/ImBoolean.get:()Z
+     155: ifeq          162
+     158: aload_0
+     159: invokespecial #50                 // Method searchWindow:()V
+     162: aload_0
+     163: getfield      #7                  // Field showActionQueue:Limgui/type/ImBoolean;
+     166: invokevirtual #29                 // Method imgui/type/ImBoolean.get:()Z
+     169: ifeq          176
+     172: aload_0
+     173: invokespecial #51                 // Method actionQueueWindow:()V
+     176: aload_0
+     177: getfield      #2                  // Field firstTime:Z
+     180: ifeq          193
+     183: aload_0
+     184: iconst_0
+     185: putfield      #2                  // Field firstTime:Z
+     188: ldc           #40                 // String BaseMod
+     190: invokestatic  #52                 // Method imgui/ImGui.setWindowFocus:(Ljava/lang/String;)V
+     193: aload_0
+     194: getfield      #5                  // Field SHOW_DEMO_WINDOW:Limgui/type/ImBoolean;
+     197: invokevirtual #29                 // Method imgui/type/ImBoolean.get:()Z
+     200: ifeq          210
+     203: aload_0
+     204: getfield      #5                  // Field SHOW_DEMO_WINDOW:Limgui/type/ImBoolean;
+     207: invokestatic  #53                 // Method imgui/ImGui.showDemoWindow:(Limgui/type/ImBoolean;)V
+     210: iload_1
+     211: aload_0
+     212: getfield      #6                  // Field showSearch:Limgui/type/ImBoolean;
+     215: invokevirtual #29                 // Method imgui/type/ImBoolean.get:()Z
+     218: if_icmpeq     236
+     221: ldc           #25                 // String imgui-search
+     223: aload_0
+     224: getfield      #6                  // Field showSearch:Limgui/type/ImBoolean;
+     227: invokevirtual #29                 // Method imgui/type/ImBoolean.get:()Z
+     230: invokestatic  #54                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     233: invokestatic  #55                 // Method basemod/BaseMod.setBoolean:(Ljava/lang/String;Ljava/lang/Boolean;)V
+     236: iload_2
+     237: aload_0
+     238: getfield      #7                  // Field showActionQueue:Limgui/type/ImBoolean;
+     241: invokevirtual #29                 // Method imgui/type/ImBoolean.get:()Z
+     244: if_icmpeq     262
+     247: ldc           #28                 // String imgui-actionqueue
+     249: aload_0
+     250: getfield      #7                  // Field showActionQueue:Limgui/type/ImBoolean;
+     253: invokevirtual #29                 // Method imgui/type/ImBoolean.get:()Z
+     256: invokestatic  #54                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     259: invokestatic  #55                 // Method basemod/BaseMod.setBoolean:(Ljava/lang/String;Ljava/lang/Boolean;)V
+     262: return
+
+  private void combatPanel();
+    descriptor: ()V
+    Code:
+       0: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: ifnonnull     10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: invokestatic  #57                 // Method imgui/ImGui.beginDisabled:(Z)V
+      14: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      17: ifnonnull     24
+      20: iconst_0
+      21: invokestatic  #58                 // Method imgui/ImGui.setNextItemOpen:(Z)V
+      24: ldc           #59                 // String Player
+      26: invokestatic  #60                 // Method imgui/ImGui.collapsingHeader:(Ljava/lang/String;)Z
+      29: ifeq          39
+      32: aload_0
+      33: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      36: invokespecial #61                 // Method playerInfo:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer;)V
+      39: invokestatic  #62                 // Method imgui/ImGui.endDisabled:()V
+      42: aload_0
+      43: invokespecial #63                 // Method inCombat:()Z
+      46: ifne          53
+      49: iconst_1
+      50: goto          54
+      53: iconst_0
+      54: invokestatic  #57                 // Method imgui/ImGui.beginDisabled:(Z)V
+      57: aload_0
+      58: invokespecial #63                 // Method inCombat:()Z
+      61: ifne          68
+      64: iconst_0
+      65: invokestatic  #58                 // Method imgui/ImGui.setNextItemOpen:(Z)V
+      68: ldc           #64                 // String Monsters
+      70: invokestatic  #60                 // Method imgui/ImGui.collapsingHeader:(Ljava/lang/String;)Z
+      73: ifeq          156
+      76: aconst_null
+      77: astore_1
+      78: ldc           #65                 // String Open All
+      80: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+      83: ifeq          91
+      86: iconst_1
+      87: invokestatic  #54                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      90: astore_1
+      91: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+      94: ldc           #67                 // String Close All
+      96: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+      99: ifeq          107
+     102: iconst_0
+     103: invokestatic  #54                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     106: astore_1
+     107: iconst_0
+     108: istore_2
+     109: invokestatic  #68                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     112: getfield      #69                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+     115: getfield      #70                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+     118: invokevirtual #71                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     121: astore_3
+     122: aload_3
+     123: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     128: ifeq          156
+     131: aload_3
+     132: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     137: checkcast     #74                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     140: astore        4
+     142: aload_0
+     143: iload_2
+     144: aload         4
+     146: aload_1
+     147: invokespecial #75                 // Method monsterInfo:(ILcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/Boolean;)V
+     150: iinc          2, 1
+     153: goto          122
+     156: invokestatic  #62                 // Method imgui/ImGui.endDisabled:()V
+     159: return
+
+  private void playerInfo(com.megacrit.cardcrawl.characters.AbstractPlayer);
+    descriptor: (Lcom/megacrit/cardcrawl/characters/AbstractPlayer;)V
+    Code:
+       0: ldc           #76                 // String emerald
+       2: getstatic     #77                 // Field com/megacrit/cardcrawl/core/Settings.hasEmeraldKey:Z
+       5: invokestatic  #78                 // Method imgui/ImGui.checkbox:(Ljava/lang/String;Z)Z
+       8: ifeq          25
+      11: getstatic     #77                 // Field com/megacrit/cardcrawl/core/Settings.hasEmeraldKey:Z
+      14: ifne          21
+      17: iconst_1
+      18: goto          22
+      21: iconst_0
+      22: putstatic     #77                 // Field com/megacrit/cardcrawl/core/Settings.hasEmeraldKey:Z
+      25: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+      28: ldc           #79                 // String ruby
+      30: getstatic     #80                 // Field com/megacrit/cardcrawl/core/Settings.hasRubyKey:Z
+      33: invokestatic  #78                 // Method imgui/ImGui.checkbox:(Ljava/lang/String;Z)Z
+      36: ifeq          53
+      39: getstatic     #80                 // Field com/megacrit/cardcrawl/core/Settings.hasRubyKey:Z
+      42: ifne          49
+      45: iconst_1
+      46: goto          50
+      49: iconst_0
+      50: putstatic     #80                 // Field com/megacrit/cardcrawl/core/Settings.hasRubyKey:Z
+      53: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+      56: ldc           #81                 // String sapphire
+      58: getstatic     #82                 // Field com/megacrit/cardcrawl/core/Settings.hasSapphireKey:Z
+      61: invokestatic  #78                 // Method imgui/ImGui.checkbox:(Ljava/lang/String;Z)Z
+      64: ifeq          81
+      67: getstatic     #82                 // Field com/megacrit/cardcrawl/core/Settings.hasSapphireKey:Z
+      70: ifne          77
+      73: iconst_1
+      74: goto          78
+      77: iconst_0
+      78: putstatic     #82                 // Field com/megacrit/cardcrawl/core/Settings.hasSapphireKey:Z
+      81: aload_0
+      82: getfield      #10                 // Field iData:Limgui/type/ImInt;
+      85: aload_1
+      86: getfield      #83                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.gold:I
+      89: invokevirtual #84                 // Method imgui/type/ImInt.set:(I)V
+      92: ldc           #85                 // String Gold
+      94: aload_0
+      95: getfield      #10                 // Field iData:Limgui/type/ImInt;
+      98: iconst_1
+      99: bipush        100
+     101: invokestatic  #86                 // Method imgui/ImGui.inputInt:(Ljava/lang/String;Limgui/type/ImInt;II)Z
+     104: pop
+     105: aload_0
+     106: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     109: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     112: ifge          123
+     115: aload_0
+     116: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     119: iconst_0
+     120: invokevirtual #84                 // Method imgui/type/ImInt.set:(I)V
+     123: aload_0
+     124: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     127: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     130: aload_1
+     131: getfield      #83                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.gold:I
+     134: if_icmpeq     156
+     137: aload_1
+     138: aload_0
+     139: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     142: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     145: putfield      #83                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.gold:I
+     148: aload_1
+     149: aload_1
+     150: getfield      #83                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.gold:I
+     153: putfield      #88                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.displayGold:I
+     156: aload_0
+     157: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     160: aload_1
+     161: getfield      #89                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+     164: invokevirtual #84                 // Method imgui/type/ImInt.set:(I)V
+     167: ldc           #90                 // String Max HP
+     169: aload_0
+     170: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     173: iconst_1
+     174: bipush        10
+     176: invokestatic  #86                 // Method imgui/ImGui.inputInt:(Ljava/lang/String;Limgui/type/ImInt;II)Z
+     179: pop
+     180: aload_0
+     181: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     184: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     187: iconst_1
+     188: if_icmpge     199
+     191: aload_0
+     192: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     195: iconst_1
+     196: invokevirtual #84                 // Method imgui/type/ImInt.set:(I)V
+     199: aload_0
+     200: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     203: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     206: aload_1
+     207: getfield      #89                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+     210: if_icmpeq     256
+     213: aload_1
+     214: aload_0
+     215: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     218: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     221: putfield      #89                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+     224: aload_1
+     225: aload_1
+     226: getfield      #91                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentHealth:I
+     229: aload_1
+     230: getfield      #89                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+     233: invokestatic  #92                 // Method java/lang/Integer.min:(II)I
+     236: putfield      #91                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentHealth:I
+     239: aload_1
+     240: invokevirtual #93                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.healthBarUpdatedEvent:()V
+     243: aload_1
+     244: ldc           #94                 // class com/megacrit/cardcrawl/core/AbstractCreature
+     246: ldc           #95                 // String healthBarAnimTimer
+     248: ldc           #96                 // float 0.2f
+     250: invokestatic  #97                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+     253: invokestatic  #98                 // Method basemod/ReflectionHacks.setPrivate:(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;Ljava/lang/Object;)V
+     256: aload_0
+     257: aload_1
+     258: invokespecial #99                 // Method creatureHP:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+     261: aload_0
+     262: aload_1
+     263: invokespecial #100                // Method creatureBlock:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+     266: aload_0
+     267: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     270: getstatic     #101                // Field com/megacrit/cardcrawl/ui/panels/EnergyPanel.totalCount:I
+     273: invokevirtual #84                 // Method imgui/type/ImInt.set:(I)V
+     276: ldc           #102                // String Energy
+     278: aload_0
+     279: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     282: iconst_1
+     283: bipush        10
+     285: invokestatic  #86                 // Method imgui/ImGui.inputInt:(Ljava/lang/String;Limgui/type/ImInt;II)Z
+     288: pop
+     289: aload_0
+     290: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     293: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     296: ifge          307
+     299: aload_0
+     300: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     303: iconst_0
+     304: invokevirtual #84                 // Method imgui/type/ImInt.set:(I)V
+     307: aload_0
+     308: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     311: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     314: getstatic     #101                // Field com/megacrit/cardcrawl/ui/panels/EnergyPanel.totalCount:I
+     317: if_icmpeq     337
+     320: aload_0
+     321: getfield      #10                 // Field iData:Limgui/type/ImInt;
+     324: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     327: putstatic     #101                // Field com/megacrit/cardcrawl/ui/panels/EnergyPanel.totalCount:I
+     330: aload_1
+     331: getfield      #103                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     334: invokevirtual #104                // Method com/megacrit/cardcrawl/cards/CardGroup.glowCheck:()V
+     337: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+     340: ldc           #105                // String Infinite
+     342: getstatic     #106                // Field basemod/DevConsole.infiniteEnergy:Z
+     345: invokestatic  #78                 // Method imgui/ImGui.checkbox:(Ljava/lang/String;Z)Z
+     348: ifeq          377
+     351: getstatic     #106                // Field basemod/DevConsole.infiniteEnergy:Z
+     354: ifne          361
+     357: iconst_1
+     358: goto          362
+     361: iconst_0
+     362: putstatic     #106                // Field basemod/DevConsole.infiniteEnergy:Z
+     365: getstatic     #106                // Field basemod/DevConsole.infiniteEnergy:Z
+     368: ifeq          377
+     371: sipush        9999
+     374: invokestatic  #107                // Method com/megacrit/cardcrawl/ui/panels/EnergyPanel.setEnergy:(I)V
+     377: aload_0
+     378: aload_1
+     379: invokespecial #108                // Method creaturePowers:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+     382: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     385: getfield      #109                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     388: getfield      #110                // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     391: astore_2
+     392: ldc           #111                // String Deck (%d)###deck
+     394: iconst_1
+     395: anewarray     #112                // class java/lang/Object
+     398: dup
+     399: iconst_0
+     400: aload_2
+     401: invokevirtual #113                // Method java/util/ArrayList.size:()I
+     404: invokestatic  #114                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     407: aastore
+     408: invokestatic  #115                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     411: invokestatic  #116                // Method imgui/ImGui.treeNode:(Ljava/lang/String;)Z
+     414: ifeq          612
+     417: ldc           #117                // String deck cards
+     419: iconst_4
+     420: sipush        128
+     423: invokestatic  #119                // Method imgui/ImGui.beginTable:(Ljava/lang/String;II)Z
+     426: ifeq          609
+     429: ldc           #120                // String index
+     431: bipush        16
+     433: invokestatic  #122                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;I)V
+     436: ldc           #123                // String card name
+     438: invokestatic  #124                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;)V
+     441: ldc           #125                // String upgrade
+     443: bipush        16
+     445: invokestatic  #122                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;I)V
+     448: ldc           #126                // String discard
+     450: bipush        16
+     452: invokestatic  #122                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;I)V
+     455: iconst_0
+     456: istore_3
+     457: iload_3
+     458: aload_2
+     459: invokevirtual #113                // Method java/util/ArrayList.size:()I
+     462: if_icmpge     606
+     465: aload_2
+     466: iload_3
+     467: invokevirtual #127                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     470: checkcast     #128                // class com/megacrit/cardcrawl/cards/AbstractCard
+     473: astore        4
+     475: invokestatic  #129                // Method imgui/ImGui.tableNextRow:()V
+     478: iconst_0
+     479: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+     482: pop
+     483: iload_3
+     484: iconst_1
+     485: iadd
+     486: invokestatic  #131                // Method java/lang/Integer.toString:(I)Ljava/lang/String;
+     489: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+     492: iconst_1
+     493: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+     496: pop
+     497: aload         4
+     499: getfield      #133                // Field com/megacrit/cardcrawl/cards/AbstractCard.name:Ljava/lang/String;
+     502: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+     505: iconst_2
+     506: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+     509: pop
+     510: aload         4
+     512: invokevirtual #134                // Method com/megacrit/cardcrawl/cards/AbstractCard.canUpgrade:()Z
+     515: ifne          522
+     518: iconst_1
+     519: goto          523
+     522: iconst_0
+     523: invokestatic  #57                 // Method imgui/ImGui.beginDisabled:(Z)V
+     526: new           #135                // class java/lang/StringBuilder
+     529: dup
+     530: invokespecial #136                // Method java/lang/StringBuilder."<init>":()V
+     533: ldc           #137                // String Upgrade##upgrade
+     535: invokevirtual #138                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     538: iload_3
+     539: invokevirtual #139                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     542: invokevirtual #140                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     545: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     548: ifeq          556
+     551: aload         4
+     553: invokevirtual #141                // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+     556: invokestatic  #62                 // Method imgui/ImGui.endDisabled:()V
+     559: iconst_3
+     560: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+     563: pop
+     564: new           #135                // class java/lang/StringBuilder
+     567: dup
+     568: invokespecial #136                // Method java/lang/StringBuilder."<init>":()V
+     571: ldc           #142                // String Remove##remove
+     573: invokevirtual #138                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     576: iload_3
+     577: invokevirtual #139                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     580: invokevirtual #140                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     583: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     586: ifeq          600
+     589: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     592: getfield      #109                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     595: aload         4
+     597: invokevirtual #143                // Method com/megacrit/cardcrawl/cards/CardGroup.removeCard:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     600: iinc          3, 1
+     603: goto          457
+     606: invokestatic  #144                // Method imgui/ImGui.endTable:()V
+     609: invokestatic  #145                // Method imgui/ImGui.treePop:()V
+     612: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     615: getfield      #103                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     618: getfield      #110                // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     621: astore_2
+     622: ldc           #146                // String Hand (%d)###hand
+     624: iconst_1
+     625: anewarray     #112                // class java/lang/Object
+     628: dup
+     629: iconst_0
+     630: aload_2
+     631: invokevirtual #113                // Method java/util/ArrayList.size:()I
+     634: invokestatic  #114                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     637: aastore
+     638: invokestatic  #115                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     641: invokestatic  #116                // Method imgui/ImGui.treeNode:(Ljava/lang/String;)Z
+     644: ifeq          903
+     647: ldc           #147                // String Draw Card
+     649: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     652: ifeq          667
+     655: aload_0
+     656: new           #148                // class com/megacrit/cardcrawl/actions/common/DrawCardAction
+     659: dup
+     660: iconst_1
+     661: invokespecial #149                // Method com/megacrit/cardcrawl/actions/common/DrawCardAction."<init>":(I)V
+     664: invokespecial #150                // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     667: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+     670: ldc           #151                // String Discard All
+     672: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     675: ifeq          696
+     678: aload_0
+     679: new           #152                // class com/megacrit/cardcrawl/actions/common/DiscardAction
+     682: dup
+     683: aload_1
+     684: aload_1
+     685: aload_2
+     686: invokevirtual #113                // Method java/util/ArrayList.size:()I
+     689: iconst_0
+     690: invokespecial #153                // Method com/megacrit/cardcrawl/actions/common/DiscardAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;IZ)V
+     693: invokespecial #150                // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     696: ldc           #154                // String hand cards
+     698: iconst_4
+     699: sipush        128
+     702: invokestatic  #119                // Method imgui/ImGui.beginTable:(Ljava/lang/String;II)Z
+     705: ifeq          900
+     708: ldc           #120                // String index
+     710: bipush        16
+     712: invokestatic  #122                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;I)V
+     715: ldc           #123                // String card name
+     717: invokestatic  #124                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;)V
+     720: ldc           #125                // String upgrade
+     722: bipush        16
+     724: invokestatic  #122                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;I)V
+     727: ldc           #126                // String discard
+     729: bipush        16
+     731: invokestatic  #122                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;I)V
+     734: iconst_0
+     735: istore_3
+     736: iload_3
+     737: aload_2
+     738: invokevirtual #113                // Method java/util/ArrayList.size:()I
+     741: if_icmpge     897
+     744: aload_2
+     745: iload_3
+     746: invokevirtual #127                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     749: checkcast     #128                // class com/megacrit/cardcrawl/cards/AbstractCard
+     752: astore        4
+     754: invokestatic  #129                // Method imgui/ImGui.tableNextRow:()V
+     757: iconst_0
+     758: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+     761: pop
+     762: iload_3
+     763: iconst_1
+     764: iadd
+     765: invokestatic  #131                // Method java/lang/Integer.toString:(I)Ljava/lang/String;
+     768: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+     771: iconst_1
+     772: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+     775: pop
+     776: aload         4
+     778: getfield      #133                // Field com/megacrit/cardcrawl/cards/AbstractCard.name:Ljava/lang/String;
+     781: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+     784: iconst_2
+     785: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+     788: pop
+     789: aload         4
+     791: invokevirtual #134                // Method com/megacrit/cardcrawl/cards/AbstractCard.canUpgrade:()Z
+     794: ifne          801
+     797: iconst_1
+     798: goto          802
+     801: iconst_0
+     802: invokestatic  #57                 // Method imgui/ImGui.beginDisabled:(Z)V
+     805: new           #135                // class java/lang/StringBuilder
+     808: dup
+     809: invokespecial #136                // Method java/lang/StringBuilder."<init>":()V
+     812: ldc           #137                // String Upgrade##upgrade
+     814: invokevirtual #138                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     817: iload_3
+     818: invokevirtual #139                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     821: invokevirtual #140                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     824: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     827: ifeq          845
+     830: aload         4
+     832: invokevirtual #141                // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+     835: aload         4
+     837: invokevirtual #155                // Method com/megacrit/cardcrawl/cards/AbstractCard.superFlash:()V
+     840: aload         4
+     842: invokevirtual #156                // Method com/megacrit/cardcrawl/cards/AbstractCard.applyPowers:()V
+     845: invokestatic  #62                 // Method imgui/ImGui.endDisabled:()V
+     848: iconst_3
+     849: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+     852: pop
+     853: new           #135                // class java/lang/StringBuilder
+     856: dup
+     857: invokespecial #136                // Method java/lang/StringBuilder."<init>":()V
+     860: ldc           #157                // String Discard##discard
+     862: invokevirtual #138                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     865: iload_3
+     866: invokevirtual #139                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     869: invokevirtual #140                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     872: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     875: ifeq          891
+     878: aload_0
+     879: new           #158                // class com/megacrit/cardcrawl/actions/common/DiscardSpecificCardAction
+     882: dup
+     883: aload         4
+     885: invokespecial #159                // Method com/megacrit/cardcrawl/actions/common/DiscardSpecificCardAction."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     888: invokespecial #150                // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     891: iinc          3, 1
+     894: goto          736
+     897: invokestatic  #144                // Method imgui/ImGui.endTable:()V
+     900: invokestatic  #145                // Method imgui/ImGui.treePop:()V
+     903: return
+
+  private void monsterInfo(int, com.megacrit.cardcrawl.monsters.AbstractMonster, java.lang.Boolean);
+    descriptor: (ILcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/Boolean;)V
+    Code:
+       0: aload_2
+       1: ifnull        11
+       4: aload_2
+       5: invokevirtual #160                // Method com/megacrit/cardcrawl/monsters/AbstractMonster.isDeadOrEscaped:()Z
+       8: ifeq          12
+      11: return
+      12: aload_3
+      13: ifnull        23
+      16: aload_3
+      17: invokevirtual #27                 // Method java/lang/Boolean.booleanValue:()Z
+      20: invokestatic  #58                 // Method imgui/ImGui.setNextItemOpen:(Z)V
+      23: iload_1
+      24: i2l
+      25: aload_2
+      26: getfield      #161                // Field com/megacrit/cardcrawl/monsters/AbstractMonster.name:Ljava/lang/String;
+      29: invokestatic  #162                // Method imgui/ImGui.treeNode:(JLjava/lang/String;)Z
+      32: ifeq          53
+      35: aload_0
+      36: aload_2
+      37: invokespecial #99                 // Method creatureHP:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+      40: aload_0
+      41: aload_2
+      42: invokespecial #100                // Method creatureBlock:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+      45: aload_0
+      46: aload_2
+      47: invokespecial #108                // Method creaturePowers:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+      50: invokestatic  #145                // Method imgui/ImGui.treePop:()V
+      53: return
+
+  private void creatureHP(com.megacrit.cardcrawl.core.AbstractCreature);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field iData:Limgui/type/ImInt;
+       4: aload_1
+       5: getfield      #163                // Field com/megacrit/cardcrawl/core/AbstractCreature.currentHealth:I
+       8: invokevirtual #84                 // Method imgui/type/ImInt.set:(I)V
+      11: ldc           #164                // String HP
+      13: aload_0
+      14: getfield      #10                 // Field iData:Limgui/type/ImInt;
+      17: invokevirtual #165                // Method imgui/type/ImInt.getData:()[I
+      20: iconst_1
+      21: aload_1
+      22: getfield      #166                // Field com/megacrit/cardcrawl/core/AbstractCreature.maxHealth:I
+      25: invokestatic  #167                // Method imgui/ImGui.sliderInt:(Ljava/lang/String;[III)Z
+      28: pop
+      29: aload_0
+      30: getfield      #10                 // Field iData:Limgui/type/ImInt;
+      33: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+      36: aload_1
+      37: getfield      #163                // Field com/megacrit/cardcrawl/core/AbstractCreature.currentHealth:I
+      40: if_icmpeq     71
+      43: aload_1
+      44: aload_0
+      45: getfield      #10                 // Field iData:Limgui/type/ImInt;
+      48: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+      51: putfield      #163                // Field com/megacrit/cardcrawl/core/AbstractCreature.currentHealth:I
+      54: aload_1
+      55: invokevirtual #168                // Method com/megacrit/cardcrawl/core/AbstractCreature.healthBarUpdatedEvent:()V
+      58: aload_1
+      59: ldc           #94                 // class com/megacrit/cardcrawl/core/AbstractCreature
+      61: ldc           #95                 // String healthBarAnimTimer
+      63: ldc           #96                 // float 0.2f
+      65: invokestatic  #97                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+      68: invokestatic  #98                 // Method basemod/ReflectionHacks.setPrivate:(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;Ljava/lang/Object;)V
+      71: aload_1
+      72: instanceof    #74                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+      75: ifeq          101
+      78: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+      81: ldc           #169                // String Kill
+      83: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+      86: ifeq          101
+      89: aload_0
+      90: new           #170                // class com/megacrit/cardcrawl/actions/common/InstantKillAction
+      93: dup
+      94: aload_1
+      95: invokespecial #171                // Method com/megacrit/cardcrawl/actions/common/InstantKillAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+      98: invokespecial #150                // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     101: return
+
+  private void creatureBlock(com.megacrit.cardcrawl.core.AbstractCreature);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field iData:Limgui/type/ImInt;
+       4: aload_1
+       5: getfield      #172                // Field com/megacrit/cardcrawl/core/AbstractCreature.currentBlock:I
+       8: invokevirtual #84                 // Method imgui/type/ImInt.set:(I)V
+      11: ldc           #173                // String Block
+      13: iconst_4
+      14: aload_0
+      15: getfield      #10                 // Field iData:Limgui/type/ImInt;
+      18: ldc           #175                // float 0.25f
+      20: iconst_0
+      21: sipush        999
+      24: ldc           #176                // String %d
+      26: bipush        16
+      28: invokestatic  #178                // Method imgui/ImGui.dragScalar:(Ljava/lang/String;ILimgui/type/ImInt;FIILjava/lang/String;I)Z
+      31: pop
+      32: aload_0
+      33: getfield      #10                 // Field iData:Limgui/type/ImInt;
+      36: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+      39: aload_1
+      40: getfield      #172                // Field com/megacrit/cardcrawl/core/AbstractCreature.currentBlock:I
+      43: if_icmpeq     84
+      46: aload_1
+      47: getfield      #172                // Field com/megacrit/cardcrawl/core/AbstractCreature.currentBlock:I
+      50: ifgt          73
+      53: ldc           #94                 // class com/megacrit/cardcrawl/core/AbstractCreature
+      55: ldc           #179                // String gainBlockAnimation
+      57: iconst_0
+      58: anewarray     #180                // class java/lang/Class
+      61: invokestatic  #181                // Method basemod/ReflectionHacks.privateMethod:(Ljava/lang/Class;Ljava/lang/String;[Ljava/lang/Class;)Lbasemod/ReflectionHacks$RMethod;
+      64: aload_1
+      65: iconst_0
+      66: anewarray     #112                // class java/lang/Object
+      69: invokevirtual #182                // Method basemod/ReflectionHacks$RMethod.invoke:(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+      72: pop
+      73: aload_1
+      74: aload_0
+      75: getfield      #10                 // Field iData:Limgui/type/ImInt;
+      78: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+      81: putfield      #172                // Field com/megacrit/cardcrawl/core/AbstractCreature.currentBlock:I
+      84: return
+
+  private void creaturePowers(com.megacrit.cardcrawl.core.AbstractCreature);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+    Code:
+       0: aload_1
+       1: getfield      #183                // Field com/megacrit/cardcrawl/core/AbstractCreature.powers:Ljava/util/ArrayList;
+       4: invokevirtual #184                // Method java/util/ArrayList.isEmpty:()Z
+       7: ifne          168
+      10: ldc           #185                // String Powers
+      12: invokestatic  #116                // Method imgui/ImGui.treeNode:(Ljava/lang/String;)Z
+      15: ifeq          168
+      18: ldc           #186                // String powers
+      20: iconst_3
+      21: sipush        128
+      24: invokestatic  #119                // Method imgui/ImGui.beginTable:(Ljava/lang/String;II)Z
+      27: ifeq          165
+      30: ldc           #187                // String amount
+      32: bipush        16
+      34: invokestatic  #122                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;I)V
+      37: ldc           #188                // String power name
+      39: invokestatic  #124                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;)V
+      42: ldc           #189                // String remove
+      44: bipush        16
+      46: invokestatic  #122                // Method imgui/ImGui.tableSetupColumn:(Ljava/lang/String;I)V
+      49: iconst_0
+      50: istore_2
+      51: aload_1
+      52: getfield      #183                // Field com/megacrit/cardcrawl/core/AbstractCreature.powers:Ljava/util/ArrayList;
+      55: invokevirtual #71                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      58: astore_3
+      59: aload_3
+      60: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      65: ifeq          162
+      68: aload_3
+      69: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      74: checkcast     #190                // class com/megacrit/cardcrawl/powers/AbstractPower
+      77: astore        4
+      79: invokestatic  #129                // Method imgui/ImGui.tableNextRow:()V
+      82: iconst_0
+      83: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+      86: pop
+      87: aload         4
+      89: getfield      #191                // Field com/megacrit/cardcrawl/powers/AbstractPower.amount:I
+      92: invokestatic  #131                // Method java/lang/Integer.toString:(I)Ljava/lang/String;
+      95: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+      98: iconst_1
+      99: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+     102: pop
+     103: aload         4
+     105: getfield      #192                // Field com/megacrit/cardcrawl/powers/AbstractPower.name:Ljava/lang/String;
+     108: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+     111: iconst_2
+     112: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+     115: pop
+     116: new           #135                // class java/lang/StringBuilder
+     119: dup
+     120: invokespecial #136                // Method java/lang/StringBuilder."<init>":()V
+     123: ldc           #142                // String Remove##remove
+     125: invokevirtual #138                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     128: iload_2
+     129: invokevirtual #139                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     132: invokevirtual #140                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     135: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     138: ifeq          156
+     141: aload_0
+     142: new           #193                // class com/megacrit/cardcrawl/actions/common/RemoveSpecificPowerAction
+     145: dup
+     146: aload_1
+     147: aload_1
+     148: aload         4
+     150: invokespecial #194                // Method com/megacrit/cardcrawl/actions/common/RemoveSpecificPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;)V
+     153: invokespecial #150                // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     156: iinc          2, 1
+     159: goto          59
+     162: invokestatic  #144                // Method imgui/ImGui.endTable:()V
+     165: invokestatic  #145                // Method imgui/ImGui.treePop:()V
+     168: return
+
+  private void actionQueueWindow();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #30                 // Method imgui/ImGui.getMainViewport:()Limgui/ImGuiViewport;
+       3: invokevirtual #31                 // Method imgui/ImGuiViewport.getPos:()Limgui/ImVec2;
+       6: astore_1
+       7: aload_1
+       8: getfield      #32                 // Field imgui/ImVec2.x:F
+      11: ldc           #195                // float 1560.0f
+      13: fadd
+      14: aload_1
+      15: getfield      #34                 // Field imgui/ImVec2.y:F
+      18: ldc           #196                // float 160.0f
+      20: fadd
+      21: iconst_4
+      22: invokestatic  #37                 // Method imgui/ImGui.setNextWindowPos:(FFI)V
+      25: ldc           #197                // float 340.0f
+      27: ldc           #198                // float 270.0f
+      29: iconst_4
+      30: invokestatic  #39                 // Method imgui/ImGui.setNextWindowSize:(FFI)V
+      33: ldc           #46                 // String Action Queue
+      35: aload_0
+      36: getfield      #7                  // Field showActionQueue:Limgui/type/ImBoolean;
+      39: invokestatic  #199                // Method imgui/ImGui.begin:(Ljava/lang/String;Limgui/type/ImBoolean;)Z
+      42: ifeq          189
+      45: getstatic     #200                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      48: getfield      #201                // Field com/megacrit/cardcrawl/actions/GameActionManager.actions:Ljava/util/ArrayList;
+      51: invokevirtual #184                // Method java/util/ArrayList.isEmpty:()Z
+      54: ifeq          62
+      57: ldc           #202                // String Empty
+      59: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+      62: ldc           #203                // String action queue
+      64: iconst_3
+      65: sipush        128
+      68: invokestatic  #119                // Method imgui/ImGui.beginTable:(Ljava/lang/String;II)Z
+      71: ifeq          189
+      74: getstatic     #200                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      77: getfield      #204                // Field com/megacrit/cardcrawl/actions/GameActionManager.currentAction:Lcom/megacrit/cardcrawl/actions/AbstractGameAction;
+      80: ifnull        107
+      83: aload_0
+      84: iconst_m1
+      85: getstatic     #200                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      88: getfield      #204                // Field com/megacrit/cardcrawl/actions/GameActionManager.currentAction:Lcom/megacrit/cardcrawl/actions/AbstractGameAction;
+      91: invokespecial #205                // Method actionRow:(ILcom/megacrit/cardcrawl/actions/AbstractGameAction;)Z
+      94: ifeq          107
+      97: getstatic     #200                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     100: getfield      #204                // Field com/megacrit/cardcrawl/actions/GameActionManager.currentAction:Lcom/megacrit/cardcrawl/actions/AbstractGameAction;
+     103: iconst_1
+     104: putfield      #206                // Field com/megacrit/cardcrawl/actions/AbstractGameAction.isDone:Z
+     107: new           #207                // class java/util/ArrayList
+     110: dup
+     111: invokespecial #208                // Method java/util/ArrayList."<init>":()V
+     114: astore_2
+     115: iconst_0
+     116: istore_3
+     117: getstatic     #200                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     120: getfield      #201                // Field com/megacrit/cardcrawl/actions/GameActionManager.actions:Ljava/util/ArrayList;
+     123: invokevirtual #71                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     126: astore        4
+     128: aload         4
+     130: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     135: ifeq          175
+     138: aload         4
+     140: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     145: checkcast     #209                // class com/megacrit/cardcrawl/actions/AbstractGameAction
+     148: astore        5
+     150: aload_0
+     151: iload_3
+     152: aload         5
+     154: invokespecial #205                // Method actionRow:(ILcom/megacrit/cardcrawl/actions/AbstractGameAction;)Z
+     157: ifeq          169
+     160: aload_2
+     161: aload         5
+     163: invokeinterface #210,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     168: pop
+     169: iinc          3, 1
+     172: goto          128
+     175: getstatic     #200                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     178: getfield      #201                // Field com/megacrit/cardcrawl/actions/GameActionManager.actions:Ljava/util/ArrayList;
+     181: aload_2
+     182: invokevirtual #211                // Method java/util/ArrayList.removeAll:(Ljava/util/Collection;)Z
+     185: pop
+     186: invokestatic  #144                // Method imgui/ImGui.endTable:()V
+     189: invokestatic  #49                 // Method imgui/ImGui.end:()V
+     192: return
+
+  private boolean actionRow(int, com.megacrit.cardcrawl.actions.AbstractGameAction);
+    descriptor: (ILcom/megacrit/cardcrawl/actions/AbstractGameAction;)Z
+    Code:
+       0: invokestatic  #129                // Method imgui/ImGui.tableNextRow:()V
+       3: iconst_0
+       4: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+       7: pop
+       8: aload_2
+       9: invokevirtual #212                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+      12: invokevirtual #213                // Method java/lang/Class.getSimpleName:()Ljava/lang/String;
+      15: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+      18: iconst_1
+      19: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+      22: pop
+      23: aload_2
+      24: ldc           #209                // class com/megacrit/cardcrawl/actions/AbstractGameAction
+      26: ldc           #214                // String duration
+      28: invokestatic  #215                // Method basemod/ReflectionHacks.getPrivate:(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;
+      31: checkcast     #216                // class java/lang/Float
+      34: invokevirtual #217                // Method java/lang/Float.floatValue:()F
+      37: fstore_3
+      38: fload_3
+      39: invokestatic  #218                // Method java/lang/Float.toString:(F)Ljava/lang/String;
+      42: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+      45: iconst_2
+      46: invokestatic  #130                // Method imgui/ImGui.tableSetColumnIndex:(I)Z
+      49: pop
+      50: new           #135                // class java/lang/StringBuilder
+      53: dup
+      54: invokespecial #136                // Method java/lang/StringBuilder."<init>":()V
+      57: ldc           #142                // String Remove##remove
+      59: invokevirtual #138                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      62: iload_1
+      63: invokevirtual #139                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      66: invokevirtual #140                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      69: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+      72: ireturn
+
+  private void searchWindow();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #30                 // Method imgui/ImGui.getMainViewport:()Limgui/ImGuiViewport;
+       3: invokevirtual #31                 // Method imgui/ImGuiViewport.getPos:()Limgui/ImVec2;
+       6: astore_1
+       7: aload_1
+       8: getfield      #32                 // Field imgui/ImVec2.x:F
+      11: ldc           #33                 // float 7.0f
+      13: fadd
+      14: aload_1
+      15: getfield      #34                 // Field imgui/ImVec2.y:F
+      18: ldc           #219                // float 550.0f
+      20: fadd
+      21: iconst_4
+      22: invokestatic  #37                 // Method imgui/ImGui.setNextWindowPos:(FFI)V
+      25: ldc           #38                 // float 465.0f
+      27: ldc           #220                // float 255.0f
+      29: iconst_4
+      30: invokestatic  #39                 // Method imgui/ImGui.setNextWindowSize:(FFI)V
+      33: ldc           #45                 // String Search
+      35: aload_0
+      36: getfield      #6                  // Field showSearch:Limgui/type/ImBoolean;
+      39: invokestatic  #199                // Method imgui/ImGui.begin:(Ljava/lang/String;Limgui/type/ImBoolean;)Z
+      42: ifeq          68
+      45: ldc           #221                // String SearchTabBar
+      47: invokestatic  #222                // Method imgui/ImGui.beginTabBar:(Ljava/lang/String;)Z
+      50: ifeq          68
+      53: aload_0
+      54: invokespecial #223                // Method cardSearchTab:()V
+      57: aload_0
+      58: invokespecial #224                // Method relicSearchTab:()V
+      61: aload_0
+      62: invokespecial #225                // Method potionSearchTab:()V
+      65: invokestatic  #226                // Method imgui/ImGui.endTabBar:()V
+      68: invokestatic  #49                 // Method imgui/ImGui.end:()V
+      71: return
+
+  private void cardSearchTab();
+    descriptor: ()V
+    Code:
+       0: ldc           #227                // String Cards
+       2: invokestatic  #228                // Method imgui/ImGui.beginTabItem:(Ljava/lang/String;)Z
+       5: ifeq          677
+       8: invokestatic  #229                // Method com/megacrit/cardcrawl/helpers/CardLibrary.getAllCards:()Ljava/util/ArrayList;
+      11: astore_1
+      12: aload_1
+      13: invokevirtual #230                // Method java/util/ArrayList.stream:()Ljava/util/stream/Stream;
+      16: aload_0
+      17: invokedynamic #231,  0            // InvokeDynamic #0:apply:(Lbasemod/BaseModImGuiUI;)Ljava/util/function/Function;
+      22: invokeinterface #232,  2          // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+      27: invokeinterface #233,  1          // InterfaceMethod java/util/stream/Stream.distinct:()Ljava/util/stream/Stream;
+      32: invokestatic  #234                // Method java/util/stream/Collectors.toList:()Ljava/util/stream/Collector;
+      35: invokeinterface #235,  2          // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/stream/Collector;)Ljava/lang/Object;
+      40: checkcast     #236                // class java/util/List
+      43: astore_2
+      44: aload_2
+      45: iconst_0
+      46: ldc           #11                 // String ##ALL
+      48: invokeinterface #237,  3          // InterfaceMethod java/util/List.add:(ILjava/lang/Object;)V
+      53: ldc           #238                // float 90.0f
+      55: invokestatic  #239                // Method imgui/ImGui.pushItemWidth:(F)V
+      58: ldc           #240                // String ##modid
+      60: aload_0
+      61: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+      64: invokestatic  #241                // Method imgui/ImGui.beginCombo:(Ljava/lang/String;Ljava/lang/String;)Z
+      67: ifeq          138
+      70: aload_2
+      71: invokeinterface #242,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      76: astore_3
+      77: aload_3
+      78: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      83: ifeq          135
+      86: aload_3
+      87: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      92: checkcast     #243                // class java/lang/String
+      95: astore        4
+      97: aload_0
+      98: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     101: aload         4
+     103: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     106: istore        5
+     108: aload         4
+     110: iload         5
+     112: invokestatic  #245                // Method imgui/ImGui.selectable:(Ljava/lang/String;Z)Z
+     115: ifeq          124
+     118: aload_0
+     119: aload         4
+     121: putfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     124: iload         5
+     126: ifeq          132
+     129: invokestatic  #246                // Method imgui/ImGui.setItemDefaultFocus:()V
+     132: goto          77
+     135: invokestatic  #247                // Method imgui/ImGui.endCombo:()V
+     138: invokestatic  #248                // Method imgui/ImGui.popItemWidth:()V
+     141: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+     144: ldc           #249                // float -1.0f
+     146: invokestatic  #239                // Method imgui/ImGui.pushItemWidth:(F)V
+     149: aload_0
+     150: getfield      #15                 // Field cardFilter:Limgui/ImGuiTextFilter;
+     153: ldc           #250                // String ##
+     155: invokevirtual #251                // Method imgui/ImGuiTextFilter.draw:(Ljava/lang/String;)Z
+     158: pop
+     159: invokestatic  #252                // Method imgui/ImGui.getCursorPosY:()F
+     162: fstore_3
+     163: invokestatic  #253                // Method imgui/ImGui.getWindowHeight:()F
+     166: fstore        4
+     168: invokestatic  #254                // Method imgui/ImGui.getStyle:()Limgui/ImGuiStyle;
+     171: invokevirtual #255                // Method imgui/ImGuiStyle.getWindowPaddingY:()F
+     174: fstore        5
+     176: invokestatic  #256                // Method imgui/ImGui.getFrameHeightWithSpacing:()F
+     179: fstore        6
+     181: ldc_w         #257                // String ##all cards
+     184: ldc_w         #258                // float -1.4E-45f
+     187: fload         4
+     189: fload_3
+     190: fsub
+     191: fload         5
+     193: fsub
+     194: fload         6
+     196: fconst_2
+     197: fmul
+     198: fsub
+     199: invokestatic  #259                // Method imgui/ImGui.beginListBox:(Ljava/lang/String;FF)Z
+     202: ifeq          449
+     205: new           #260                // class imgui/ImVec2
+     208: dup
+     209: invokespecial #261                // Method imgui/ImVec2."<init>":()V
+     212: astore        7
+     214: aload_1
+     215: invokevirtual #71                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     218: astore        8
+     220: aload         8
+     222: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     227: ifeq          446
+     230: aload         8
+     232: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     237: checkcast     #128                // class com/megacrit/cardcrawl/cards/AbstractCard
+     240: astore        9
+     242: aload_0
+     243: getfield      #15                 // Field cardFilter:Limgui/ImGuiTextFilter;
+     246: aload         9
+     248: getfield      #133                // Field com/megacrit/cardcrawl/cards/AbstractCard.name:Ljava/lang/String;
+     251: invokevirtual #262                // Method imgui/ImGuiTextFilter.passFilter:(Ljava/lang/String;)Z
+     254: ifne          272
+     257: aload_0
+     258: getfield      #15                 // Field cardFilter:Limgui/ImGuiTextFilter;
+     261: aload         9
+     263: getfield      #263                // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+     266: invokevirtual #262                // Method imgui/ImGuiTextFilter.passFilter:(Ljava/lang/String;)Z
+     269: ifeq          443
+     272: ldc           #11                 // String ##ALL
+     274: aload_0
+     275: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     278: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     281: ifne          303
+     284: aload_0
+     285: aload         9
+     287: getfield      #263                // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+     290: invokespecial #264                // Method getModID:(Ljava/lang/String;)Ljava/lang/String;
+     293: aload_0
+     294: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     297: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     300: ifeq          443
+     303: aload_0
+     304: getfield      #16                 // Field selectedCardId:Ljava/lang/String;
+     307: ifnull        329
+     310: aload_0
+     311: getfield      #16                 // Field selectedCardId:Ljava/lang/String;
+     314: aload         9
+     316: getfield      #263                // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+     319: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     322: ifeq          329
+     325: iconst_1
+     326: goto          330
+     329: iconst_0
+     330: istore        10
+     332: ldc_w         #265                // String %s###%s
+     335: iconst_2
+     336: anewarray     #112                // class java/lang/Object
+     339: dup
+     340: iconst_0
+     341: aload         9
+     343: getfield      #133                // Field com/megacrit/cardcrawl/cards/AbstractCard.name:Ljava/lang/String;
+     346: aastore
+     347: dup
+     348: iconst_1
+     349: aload         9
+     351: getfield      #263                // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+     354: aastore
+     355: invokestatic  #115                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     358: iload         10
+     360: invokestatic  #245                // Method imgui/ImGui.selectable:(Ljava/lang/String;Z)Z
+     363: ifeq          375
+     366: aload_0
+     367: aload         9
+     369: getfield      #263                // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+     372: putfield      #16                 // Field selectedCardId:Ljava/lang/String;
+     375: aload         9
+     377: getfield      #133                // Field com/megacrit/cardcrawl/cards/AbstractCard.name:Ljava/lang/String;
+     380: aload         9
+     382: getfield      #263                // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+     385: invokestatic  #266                // Method java/util/Objects.equals:(Ljava/lang/Object;Ljava/lang/Object;)Z
+     388: ifne          435
+     391: ldc_w         #267                // String id: %s
+     394: iconst_1
+     395: anewarray     #112                // class java/lang/Object
+     398: dup
+     399: iconst_0
+     400: aload         9
+     402: getfield      #263                // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+     405: aastore
+     406: invokestatic  #115                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     409: astore        11
+     411: aload         7
+     413: aload         11
+     415: invokestatic  #268                // Method imgui/ImGui.calcTextSize:(Limgui/ImVec2;Ljava/lang/String;)V
+     418: invokestatic  #269                // Method imgui/ImGui.getWindowContentRegionMaxX:()F
+     421: aload         7
+     423: getfield      #32                 // Field imgui/ImVec2.x:F
+     426: fsub
+     427: invokestatic  #270                // Method imgui/ImGui.sameLine:(F)V
+     430: aload         11
+     432: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+     435: iload         10
+     437: ifeq          443
+     440: invokestatic  #246                // Method imgui/ImGui.setItemDefaultFocus:()V
+     443: goto          220
+     446: invokestatic  #271                // Method imgui/ImGui.endListBox:()V
+     449: ldc           #238                // float 90.0f
+     451: invokestatic  #239                // Method imgui/ImGui.pushItemWidth:(F)V
+     454: ldc_w         #272                // String Count
+     457: aload_0
+     458: getfield      #18                 // Field cardCount:Limgui/type/ImInt;
+     461: invokestatic  #273                // Method imgui/ImGui.inputInt:(Ljava/lang/String;Limgui/type/ImInt;)Z
+     464: pop
+     465: aload_0
+     466: getfield      #18                 // Field cardCount:Limgui/type/ImInt;
+     469: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     472: iconst_1
+     473: if_icmpge     484
+     476: aload_0
+     477: getfield      #18                 // Field cardCount:Limgui/type/ImInt;
+     480: iconst_1
+     481: invokevirtual #84                 // Method imgui/type/ImInt.set:(I)V
+     484: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+     487: ldc_w         #274                // String Upgrades
+     490: aload_0
+     491: getfield      #19                 // Field cardUpgrades:Limgui/type/ImInt;
+     494: invokestatic  #273                // Method imgui/ImGui.inputInt:(Ljava/lang/String;Limgui/type/ImInt;)Z
+     497: pop
+     498: invokestatic  #248                // Method imgui/ImGui.popItemWidth:()V
+     501: aload_0
+     502: getfield      #16                 // Field selectedCardId:Ljava/lang/String;
+     505: ifnull        515
+     508: aload_0
+     509: invokespecial #63                 // Method inCombat:()Z
+     512: ifne          519
+     515: iconst_1
+     516: goto          520
+     519: iconst_0
+     520: invokestatic  #57                 // Method imgui/ImGui.beginDisabled:(Z)V
+     523: ldc_w         #275                // String Add to hand
+     526: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     529: ifeq          566
+     532: aload_0
+     533: new           #276                // class com/megacrit/cardcrawl/actions/common/MakeTempCardInHandAction
+     536: dup
+     537: aload_0
+     538: aload_0
+     539: getfield      #16                 // Field selectedCardId:Ljava/lang/String;
+     542: aload_0
+     543: getfield      #19                 // Field cardUpgrades:Limgui/type/ImInt;
+     546: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     549: invokespecial #277                // Method getCardAndUpgrade:(Ljava/lang/String;I)Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     552: aload_0
+     553: getfield      #18                 // Field cardCount:Limgui/type/ImInt;
+     556: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     559: iconst_1
+     560: invokespecial #278                // Method com/megacrit/cardcrawl/actions/common/MakeTempCardInHandAction."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;IZ)V
+     563: invokespecial #150                // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     566: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+     569: invokestatic  #62                 // Method imgui/ImGui.endDisabled:()V
+     572: aload_0
+     573: getfield      #16                 // Field selectedCardId:Ljava/lang/String;
+     576: ifnull        585
+     579: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     582: ifnonnull     589
+     585: iconst_1
+     586: goto          590
+     589: iconst_0
+     590: invokestatic  #57                 // Method imgui/ImGui.beginDisabled:(Z)V
+     593: ldc_w         #279                // String Add to deck
+     596: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     599: ifeq          671
+     602: aload_0
+     603: getfield      #16                 // Field selectedCardId:Ljava/lang/String;
+     606: invokestatic  #280                // Method com/megacrit/cardcrawl/unlock/UnlockTracker.markCardAsSeen:(Ljava/lang/String;)V
+     609: iconst_0
+     610: istore        7
+     612: iload         7
+     614: aload_0
+     615: getfield      #18                 // Field cardCount:Limgui/type/ImInt;
+     618: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     621: if_icmpge     671
+     624: getstatic     #281                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+     627: new           #282                // class com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndObtainEffect
+     630: dup
+     631: aload_0
+     632: aload_0
+     633: getfield      #16                 // Field selectedCardId:Ljava/lang/String;
+     636: aload_0
+     637: getfield      #19                 // Field cardUpgrades:Limgui/type/ImInt;
+     640: invokevirtual #87                 // Method imgui/type/ImInt.get:()I
+     643: invokespecial #277                // Method getCardAndUpgrade:(Ljava/lang/String;I)Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     646: getstatic     #283                // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     649: i2f
+     650: fconst_2
+     651: fdiv
+     652: getstatic     #284                // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     655: i2f
+     656: fconst_2
+     657: fdiv
+     658: invokespecial #285                // Method com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndObtainEffect."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;FF)V
+     661: invokevirtual #286                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     664: pop
+     665: iinc          7, 1
+     668: goto          612
+     671: invokestatic  #62                 // Method imgui/ImGui.endDisabled:()V
+     674: invokestatic  #287                // Method imgui/ImGui.endTabItem:()V
+     677: return
+
+  private void relicSearchTab();
+    descriptor: ()V
+    Code:
+       0: ldc_w         #288                // String Relics
+       3: invokestatic  #228                // Method imgui/ImGui.beginTabItem:(Ljava/lang/String;)Z
+       6: ifeq          539
+       9: invokestatic  #289                // Method basemod/BaseMod.listAllRelicIDs:()Ljava/util/ArrayList;
+      12: astore_1
+      13: aload_1
+      14: invokeinterface #290,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+      19: aload_0
+      20: invokedynamic #291,  0            // InvokeDynamic #1:apply:(Lbasemod/BaseModImGuiUI;)Ljava/util/function/Function;
+      25: invokeinterface #232,  2          // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+      30: invokeinterface #233,  1          // InterfaceMethod java/util/stream/Stream.distinct:()Ljava/util/stream/Stream;
+      35: invokestatic  #234                // Method java/util/stream/Collectors.toList:()Ljava/util/stream/Collector;
+      38: invokeinterface #235,  2          // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/stream/Collector;)Ljava/lang/Object;
+      43: checkcast     #236                // class java/util/List
+      46: astore_2
+      47: aload_2
+      48: iconst_0
+      49: ldc           #11                 // String ##ALL
+      51: invokeinterface #237,  3          // InterfaceMethod java/util/List.add:(ILjava/lang/Object;)V
+      56: ldc           #238                // float 90.0f
+      58: invokestatic  #239                // Method imgui/ImGui.pushItemWidth:(F)V
+      61: ldc           #240                // String ##modid
+      63: aload_0
+      64: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+      67: invokestatic  #241                // Method imgui/ImGui.beginCombo:(Ljava/lang/String;Ljava/lang/String;)Z
+      70: ifeq          141
+      73: aload_2
+      74: invokeinterface #242,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      79: astore_3
+      80: aload_3
+      81: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      86: ifeq          138
+      89: aload_3
+      90: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      95: checkcast     #243                // class java/lang/String
+      98: astore        4
+     100: aload_0
+     101: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     104: aload         4
+     106: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     109: istore        5
+     111: aload         4
+     113: iload         5
+     115: invokestatic  #245                // Method imgui/ImGui.selectable:(Ljava/lang/String;Z)Z
+     118: ifeq          127
+     121: aload_0
+     122: aload         4
+     124: putfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     127: iload         5
+     129: ifeq          135
+     132: invokestatic  #246                // Method imgui/ImGui.setItemDefaultFocus:()V
+     135: goto          80
+     138: invokestatic  #247                // Method imgui/ImGui.endCombo:()V
+     141: invokestatic  #248                // Method imgui/ImGui.popItemWidth:()V
+     144: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+     147: ldc           #249                // float -1.0f
+     149: invokestatic  #239                // Method imgui/ImGui.pushItemWidth:(F)V
+     152: aload_0
+     153: getfield      #20                 // Field relicFilter:Limgui/ImGuiTextFilter;
+     156: ldc           #250                // String ##
+     158: invokevirtual #251                // Method imgui/ImGuiTextFilter.draw:(Ljava/lang/String;)Z
+     161: pop
+     162: invokestatic  #252                // Method imgui/ImGui.getCursorPosY:()F
+     165: fstore_3
+     166: invokestatic  #253                // Method imgui/ImGui.getWindowHeight:()F
+     169: fstore        4
+     171: invokestatic  #254                // Method imgui/ImGui.getStyle:()Limgui/ImGuiStyle;
+     174: invokevirtual #255                // Method imgui/ImGuiStyle.getWindowPaddingY:()F
+     177: fstore        5
+     179: invokestatic  #256                // Method imgui/ImGui.getFrameHeightWithSpacing:()F
+     182: fstore        6
+     184: ldc_w         #292                // String ##all relics
+     187: ldc_w         #258                // float -1.4E-45f
+     190: fload         4
+     192: fload_3
+     193: fsub
+     194: fload         5
+     196: fsub
+     197: fload         6
+     199: fsub
+     200: invokestatic  #259                // Method imgui/ImGui.beginListBox:(Ljava/lang/String;FF)Z
+     203: ifeq          459
+     206: new           #260                // class imgui/ImVec2
+     209: dup
+     210: invokespecial #261                // Method imgui/ImVec2."<init>":()V
+     213: astore        7
+     215: aload_1
+     216: invokeinterface #242,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     221: astore        8
+     223: aload         8
+     225: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     230: ifeq          456
+     233: aload         8
+     235: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     240: checkcast     #243                // class java/lang/String
+     243: astore        9
+     245: aload         9
+     247: invokestatic  #293                // Method com/megacrit/cardcrawl/helpers/RelicLibrary.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+     250: astore        10
+     252: aload_0
+     253: getfield      #20                 // Field relicFilter:Limgui/ImGuiTextFilter;
+     256: aload         10
+     258: getfield      #294                // Field com/megacrit/cardcrawl/relics/AbstractRelic.name:Ljava/lang/String;
+     261: invokevirtual #262                // Method imgui/ImGuiTextFilter.passFilter:(Ljava/lang/String;)Z
+     264: ifne          282
+     267: aload_0
+     268: getfield      #20                 // Field relicFilter:Limgui/ImGuiTextFilter;
+     271: aload         10
+     273: getfield      #295                // Field com/megacrit/cardcrawl/relics/AbstractRelic.relicId:Ljava/lang/String;
+     276: invokevirtual #262                // Method imgui/ImGuiTextFilter.passFilter:(Ljava/lang/String;)Z
+     279: ifeq          453
+     282: ldc           #11                 // String ##ALL
+     284: aload_0
+     285: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     288: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     291: ifne          313
+     294: aload_0
+     295: aload         10
+     297: getfield      #295                // Field com/megacrit/cardcrawl/relics/AbstractRelic.relicId:Ljava/lang/String;
+     300: invokespecial #264                // Method getModID:(Ljava/lang/String;)Ljava/lang/String;
+     303: aload_0
+     304: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     307: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     310: ifeq          453
+     313: aload_0
+     314: getfield      #21                 // Field selectedRelicId:Ljava/lang/String;
+     317: ifnull        339
+     320: aload_0
+     321: getfield      #21                 // Field selectedRelicId:Ljava/lang/String;
+     324: aload         10
+     326: getfield      #295                // Field com/megacrit/cardcrawl/relics/AbstractRelic.relicId:Ljava/lang/String;
+     329: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     332: ifeq          339
+     335: iconst_1
+     336: goto          340
+     339: iconst_0
+     340: istore        11
+     342: ldc_w         #265                // String %s###%s
+     345: iconst_2
+     346: anewarray     #112                // class java/lang/Object
+     349: dup
+     350: iconst_0
+     351: aload         10
+     353: getfield      #294                // Field com/megacrit/cardcrawl/relics/AbstractRelic.name:Ljava/lang/String;
+     356: aastore
+     357: dup
+     358: iconst_1
+     359: aload         10
+     361: getfield      #295                // Field com/megacrit/cardcrawl/relics/AbstractRelic.relicId:Ljava/lang/String;
+     364: aastore
+     365: invokestatic  #115                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     368: iload         11
+     370: invokestatic  #245                // Method imgui/ImGui.selectable:(Ljava/lang/String;Z)Z
+     373: ifeq          385
+     376: aload_0
+     377: aload         10
+     379: getfield      #295                // Field com/megacrit/cardcrawl/relics/AbstractRelic.relicId:Ljava/lang/String;
+     382: putfield      #21                 // Field selectedRelicId:Ljava/lang/String;
+     385: aload         10
+     387: getfield      #294                // Field com/megacrit/cardcrawl/relics/AbstractRelic.name:Ljava/lang/String;
+     390: aload         10
+     392: getfield      #295                // Field com/megacrit/cardcrawl/relics/AbstractRelic.relicId:Ljava/lang/String;
+     395: invokestatic  #266                // Method java/util/Objects.equals:(Ljava/lang/Object;Ljava/lang/Object;)Z
+     398: ifne          445
+     401: ldc_w         #267                // String id: %s
+     404: iconst_1
+     405: anewarray     #112                // class java/lang/Object
+     408: dup
+     409: iconst_0
+     410: aload         10
+     412: getfield      #295                // Field com/megacrit/cardcrawl/relics/AbstractRelic.relicId:Ljava/lang/String;
+     415: aastore
+     416: invokestatic  #115                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     419: astore        12
+     421: aload         7
+     423: aload         12
+     425: invokestatic  #268                // Method imgui/ImGui.calcTextSize:(Limgui/ImVec2;Ljava/lang/String;)V
+     428: invokestatic  #269                // Method imgui/ImGui.getWindowContentRegionMaxX:()F
+     431: aload         7
+     433: getfield      #32                 // Field imgui/ImVec2.x:F
+     436: fsub
+     437: invokestatic  #270                // Method imgui/ImGui.sameLine:(F)V
+     440: aload         12
+     442: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+     445: iload         11
+     447: ifeq          453
+     450: invokestatic  #246                // Method imgui/ImGui.setItemDefaultFocus:()V
+     453: goto          223
+     456: invokestatic  #271                // Method imgui/ImGui.endListBox:()V
+     459: aload_0
+     460: getfield      #21                 // Field selectedRelicId:Ljava/lang/String;
+     463: ifnull        484
+     466: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     469: ifnull        484
+     472: getstatic     #296                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.currMapNode:Lcom/megacrit/cardcrawl/map/MapRoomNode;
+     475: ifnull        484
+     478: invokestatic  #68                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     481: ifnonnull     488
+     484: iconst_1
+     485: goto          489
+     488: iconst_0
+     489: invokestatic  #57                 // Method imgui/ImGui.beginDisabled:(Z)V
+     492: ldc_w         #297                // String Obtain
+     495: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     498: ifeq          533
+     501: aload_0
+     502: getfield      #21                 // Field selectedRelicId:Ljava/lang/String;
+     505: invokestatic  #293                // Method com/megacrit/cardcrawl/helpers/RelicLibrary.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+     508: invokevirtual #298                // Method com/megacrit/cardcrawl/relics/AbstractRelic.makeCopy:()Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+     511: astore        7
+     513: invokestatic  #68                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     516: getstatic     #283                // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     519: i2f
+     520: fconst_2
+     521: fdiv
+     522: getstatic     #284                // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     525: i2f
+     526: fconst_2
+     527: fdiv
+     528: aload         7
+     530: invokevirtual #299                // Method com/megacrit/cardcrawl/rooms/AbstractRoom.spawnRelicAndObtain:(FFLcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+     533: invokestatic  #62                 // Method imgui/ImGui.endDisabled:()V
+     536: invokestatic  #287                // Method imgui/ImGui.endTabItem:()V
+     539: return
+
+  private void potionSearchTab();
+    descriptor: ()V
+    Code:
+       0: ldc_w         #300                // String Potions
+       3: invokestatic  #228                // Method imgui/ImGui.beginTabItem:(Ljava/lang/String;)Z
+       6: ifeq          551
+       9: getstatic     #301                // Field com/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass.IRONCLAD:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      12: iconst_1
+      13: invokestatic  #302                // Method com/megacrit/cardcrawl/helpers/PotionHelper.getPotions:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Z)Ljava/util/ArrayList;
+      16: astore_1
+      17: aload_0
+      18: getfield      #24                 // Field allPotions:Ljava/util/List;
+      21: ifnonnull     55
+      24: aload_0
+      25: aload_1
+      26: invokeinterface #290,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+      31: invokedynamic #303,  0            // InvokeDynamic #2:apply:()Ljava/util/function/Function;
+      36: invokeinterface #232,  2          // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+      41: invokestatic  #234                // Method java/util/stream/Collectors.toList:()Ljava/util/stream/Collector;
+      44: invokeinterface #235,  2          // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/stream/Collector;)Ljava/lang/Object;
+      49: checkcast     #236                // class java/util/List
+      52: putfield      #24                 // Field allPotions:Ljava/util/List;
+      55: aload_1
+      56: invokeinterface #290,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+      61: aload_0
+      62: invokedynamic #291,  0            // InvokeDynamic #1:apply:(Lbasemod/BaseModImGuiUI;)Ljava/util/function/Function;
+      67: invokeinterface #232,  2          // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+      72: invokeinterface #233,  1          // InterfaceMethod java/util/stream/Stream.distinct:()Ljava/util/stream/Stream;
+      77: invokestatic  #234                // Method java/util/stream/Collectors.toList:()Ljava/util/stream/Collector;
+      80: invokeinterface #235,  2          // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/stream/Collector;)Ljava/lang/Object;
+      85: checkcast     #236                // class java/util/List
+      88: astore_2
+      89: aload_2
+      90: iconst_0
+      91: ldc           #11                 // String ##ALL
+      93: invokeinterface #237,  3          // InterfaceMethod java/util/List.add:(ILjava/lang/Object;)V
+      98: ldc           #238                // float 90.0f
+     100: invokestatic  #239                // Method imgui/ImGui.pushItemWidth:(F)V
+     103: ldc           #240                // String ##modid
+     105: aload_0
+     106: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     109: invokestatic  #241                // Method imgui/ImGui.beginCombo:(Ljava/lang/String;Ljava/lang/String;)Z
+     112: ifeq          183
+     115: aload_2
+     116: invokeinterface #242,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     121: astore_3
+     122: aload_3
+     123: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     128: ifeq          180
+     131: aload_3
+     132: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     137: checkcast     #243                // class java/lang/String
+     140: astore        4
+     142: aload_0
+     143: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     146: aload         4
+     148: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     151: istore        5
+     153: aload         4
+     155: iload         5
+     157: invokestatic  #245                // Method imgui/ImGui.selectable:(Ljava/lang/String;Z)Z
+     160: ifeq          169
+     163: aload_0
+     164: aload         4
+     166: putfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     169: iload         5
+     171: ifeq          177
+     174: invokestatic  #246                // Method imgui/ImGui.setItemDefaultFocus:()V
+     177: goto          122
+     180: invokestatic  #247                // Method imgui/ImGui.endCombo:()V
+     183: invokestatic  #248                // Method imgui/ImGui.popItemWidth:()V
+     186: invokestatic  #44                 // Method imgui/ImGui.sameLine:()V
+     189: ldc           #249                // float -1.0f
+     191: invokestatic  #239                // Method imgui/ImGui.pushItemWidth:(F)V
+     194: aload_0
+     195: getfield      #22                 // Field potionFilter:Limgui/ImGuiTextFilter;
+     198: ldc           #250                // String ##
+     200: invokevirtual #251                // Method imgui/ImGuiTextFilter.draw:(Ljava/lang/String;)Z
+     203: pop
+     204: invokestatic  #252                // Method imgui/ImGui.getCursorPosY:()F
+     207: fstore_3
+     208: invokestatic  #253                // Method imgui/ImGui.getWindowHeight:()F
+     211: fstore        4
+     213: invokestatic  #254                // Method imgui/ImGui.getStyle:()Limgui/ImGuiStyle;
+     216: invokevirtual #255                // Method imgui/ImGuiStyle.getWindowPaddingY:()F
+     219: fstore        5
+     221: invokestatic  #256                // Method imgui/ImGui.getFrameHeightWithSpacing:()F
+     224: fstore        6
+     226: ldc_w         #304                // String ##all potions
+     229: ldc_w         #258                // float -1.4E-45f
+     232: fload         4
+     234: fload_3
+     235: fsub
+     236: fload         5
+     238: fsub
+     239: fload         6
+     241: fsub
+     242: invokestatic  #259                // Method imgui/ImGui.beginListBox:(Ljava/lang/String;FF)Z
+     245: ifeq          497
+     248: new           #260                // class imgui/ImVec2
+     251: dup
+     252: invokespecial #261                // Method imgui/ImVec2."<init>":()V
+     255: astore        7
+     257: aload_0
+     258: getfield      #24                 // Field allPotions:Ljava/util/List;
+     261: invokeinterface #242,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     266: astore        8
+     268: aload         8
+     270: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     275: ifeq          494
+     278: aload         8
+     280: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     285: checkcast     #305                // class com/megacrit/cardcrawl/potions/AbstractPotion
+     288: astore        9
+     290: aload_0
+     291: getfield      #22                 // Field potionFilter:Limgui/ImGuiTextFilter;
+     294: aload         9
+     296: getfield      #306                // Field com/megacrit/cardcrawl/potions/AbstractPotion.name:Ljava/lang/String;
+     299: invokevirtual #262                // Method imgui/ImGuiTextFilter.passFilter:(Ljava/lang/String;)Z
+     302: ifne          320
+     305: aload_0
+     306: getfield      #22                 // Field potionFilter:Limgui/ImGuiTextFilter;
+     309: aload         9
+     311: getfield      #307                // Field com/megacrit/cardcrawl/potions/AbstractPotion.ID:Ljava/lang/String;
+     314: invokevirtual #262                // Method imgui/ImGuiTextFilter.passFilter:(Ljava/lang/String;)Z
+     317: ifeq          491
+     320: ldc           #11                 // String ##ALL
+     322: aload_0
+     323: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     326: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     329: ifne          351
+     332: aload_0
+     333: aload         9
+     335: getfield      #307                // Field com/megacrit/cardcrawl/potions/AbstractPotion.ID:Ljava/lang/String;
+     338: invokespecial #264                // Method getModID:(Ljava/lang/String;)Ljava/lang/String;
+     341: aload_0
+     342: getfield      #12                 // Field modIDFilter:Ljava/lang/String;
+     345: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     348: ifeq          491
+     351: aload_0
+     352: getfield      #23                 // Field selectedPotionId:Ljava/lang/String;
+     355: ifnull        377
+     358: aload_0
+     359: getfield      #23                 // Field selectedPotionId:Ljava/lang/String;
+     362: aload         9
+     364: getfield      #307                // Field com/megacrit/cardcrawl/potions/AbstractPotion.ID:Ljava/lang/String;
+     367: invokevirtual #244                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     370: ifeq          377
+     373: iconst_1
+     374: goto          378
+     377: iconst_0
+     378: istore        10
+     380: ldc_w         #265                // String %s###%s
+     383: iconst_2
+     384: anewarray     #112                // class java/lang/Object
+     387: dup
+     388: iconst_0
+     389: aload         9
+     391: getfield      #306                // Field com/megacrit/cardcrawl/potions/AbstractPotion.name:Ljava/lang/String;
+     394: aastore
+     395: dup
+     396: iconst_1
+     397: aload         9
+     399: getfield      #307                // Field com/megacrit/cardcrawl/potions/AbstractPotion.ID:Ljava/lang/String;
+     402: aastore
+     403: invokestatic  #115                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     406: iload         10
+     408: invokestatic  #245                // Method imgui/ImGui.selectable:(Ljava/lang/String;Z)Z
+     411: ifeq          423
+     414: aload_0
+     415: aload         9
+     417: getfield      #307                // Field com/megacrit/cardcrawl/potions/AbstractPotion.ID:Ljava/lang/String;
+     420: putfield      #23                 // Field selectedPotionId:Ljava/lang/String;
+     423: aload         9
+     425: getfield      #306                // Field com/megacrit/cardcrawl/potions/AbstractPotion.name:Ljava/lang/String;
+     428: aload         9
+     430: getfield      #307                // Field com/megacrit/cardcrawl/potions/AbstractPotion.ID:Ljava/lang/String;
+     433: invokestatic  #266                // Method java/util/Objects.equals:(Ljava/lang/Object;Ljava/lang/Object;)Z
+     436: ifne          483
+     439: ldc_w         #267                // String id: %s
+     442: iconst_1
+     443: anewarray     #112                // class java/lang/Object
+     446: dup
+     447: iconst_0
+     448: aload         9
+     450: getfield      #307                // Field com/megacrit/cardcrawl/potions/AbstractPotion.ID:Ljava/lang/String;
+     453: aastore
+     454: invokestatic  #115                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     457: astore        11
+     459: aload         7
+     461: aload         11
+     463: invokestatic  #268                // Method imgui/ImGui.calcTextSize:(Limgui/ImVec2;Ljava/lang/String;)V
+     466: invokestatic  #269                // Method imgui/ImGui.getWindowContentRegionMaxX:()F
+     469: aload         7
+     471: getfield      #32                 // Field imgui/ImVec2.x:F
+     474: fsub
+     475: invokestatic  #270                // Method imgui/ImGui.sameLine:(F)V
+     478: aload         11
+     480: invokestatic  #132                // Method imgui/ImGui.text:(Ljava/lang/String;)V
+     483: iload         10
+     485: ifeq          491
+     488: invokestatic  #246                // Method imgui/ImGui.setItemDefaultFocus:()V
+     491: goto          268
+     494: invokestatic  #271                // Method imgui/ImGui.endListBox:()V
+     497: aload_0
+     498: getfield      #23                 // Field selectedPotionId:Ljava/lang/String;
+     501: ifnull        510
+     504: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     507: ifnonnull     514
+     510: iconst_1
+     511: goto          515
+     514: iconst_0
+     515: invokestatic  #57                 // Method imgui/ImGui.beginDisabled:(Z)V
+     518: ldc_w         #297                // String Obtain
+     521: invokestatic  #66                 // Method imgui/ImGui.button:(Ljava/lang/String;)Z
+     524: ifeq          545
+     527: aload_0
+     528: getfield      #23                 // Field selectedPotionId:Ljava/lang/String;
+     531: invokestatic  #308                // Method com/megacrit/cardcrawl/helpers/PotionHelper.getPotion:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     534: astore        7
+     536: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     539: aload         7
+     541: invokevirtual #309                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.obtainPotion:(Lcom/megacrit/cardcrawl/potions/AbstractPotion;)Z
+     544: pop
+     545: invokestatic  #62                 // Method imgui/ImGui.endDisabled:()V
+     548: invokestatic  #287                // Method imgui/ImGui.endTabItem:()V
+     551: return
+
+  private java.lang.String getModID(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/String;
+    Code:
+       0: aload_1
+       1: bipush        58
+       3: invokevirtual #310                // Method java/lang/String.indexOf:(I)I
+       6: istore_2
+       7: iload_2
+       8: ifge          15
+      11: ldc_w         #311                // String Base game
+      14: areturn
+      15: aload_1
+      16: iconst_0
+      17: iload_2
+      18: invokevirtual #312                // Method java/lang/String.substring:(II)Ljava/lang/String;
+      21: areturn
+
+  private com.megacrit.cardcrawl.cards.AbstractCard getCardAndUpgrade(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)Lcom/megacrit/cardcrawl/cards/AbstractCard;
+    Code:
+       0: aload_1
+       1: invokestatic  #313                // Method com/megacrit/cardcrawl/helpers/CardLibrary.getCard:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/cards/AbstractCard;
+       4: astore_3
+       5: aload_3
+       6: ifnull        33
+       9: aload_3
+      10: invokevirtual #314                // Method com/megacrit/cardcrawl/cards/AbstractCard.makeCopy:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      13: astore_3
+      14: iconst_0
+      15: istore        4
+      17: iload         4
+      19: iload_2
+      20: if_icmpge     33
+      23: aload_3
+      24: invokevirtual #141                // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+      27: iinc          4, 1
+      30: goto          17
+      33: aload_3
+      34: areturn
+
+  private void addToTop(com.megacrit.cardcrawl.actions.AbstractGameAction);
+    descriptor: (Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+    Code:
+       0: getstatic     #200                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       3: aload_1
+       4: invokevirtual #315                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+       7: return
+
+  private boolean inCombat();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #296                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.currMapNode:Lcom/megacrit/cardcrawl/map/MapRoomNode;
+       3: ifnull        28
+       6: invokestatic  #68                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+       9: ifnull        28
+      12: invokestatic  #68                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      15: getfield      #316                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      18: getstatic     #317                // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMBAT:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      21: if_acmpne     28
+      24: iconst_1
+      25: goto          29
+      28: iconst_0
+      29: ireturn
+
+  private java.lang.String lambda$cardSearchTab$0(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getfield      #263                // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+       5: invokespecial #264                // Method getModID:(Ljava/lang/String;)Ljava/lang/String;
+       8: areturn
+}

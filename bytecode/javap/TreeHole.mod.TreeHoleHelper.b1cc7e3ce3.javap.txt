@@ -1,0 +1,487 @@
+Compiled from "TreeHoleHelper.java"
+public class TreeHole.mod.TreeHoleHelper {
+  private static final java.util.HashMap<java.lang.String, TreeHole.mod.TreeHoleBase> map;
+    descriptor: Ljava/util/HashMap;
+
+  public TreeHole.mod.TreeHoleHelper();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static boolean isDungeonSameID(java.lang.String);
+    descriptor: (Ljava/lang/String;)Z
+    Code:
+       0: getstatic     #2                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.id:Ljava/lang/String;
+       3: ifnonnull     8
+       6: iconst_0
+       7: ireturn
+       8: getstatic     #2                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.id:Ljava/lang/String;
+      11: aload_0
+      12: invokevirtual #3                  // Method java/lang/String.startsWith:(Ljava/lang/String;)Z
+      15: ireturn
+
+  public static void addTreeHole(java.lang.String, TreeHole.mod.TreeHoleBase);
+    descriptor: (Ljava/lang/String;LTreeHole/mod/TreeHoleBase;)V
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: aload_1
+       5: invokevirtual #5                  // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+       8: pop
+       9: iconst_1
+      10: putstatic     #6                  // Field TreeHole/patches/TreeHolePatch.hasModAdded:Z
+      13: return
+
+  public static TreeHole.mod.TreeHoleBase getTreeHole(java.lang.String);
+    descriptor: (Ljava/lang/String;)LTreeHole/mod/TreeHoleBase;
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: areturn
+
+  public static int getCurrentType();
+    descriptor: ()I
+    Code:
+       0: getstatic     #9                  // Field TreeHole/patches/TreeHolePatch.currentType:I
+       3: ireturn
+
+  public static int getModSize();
+    descriptor: ()I
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: invokevirtual #10                 // Method java/util/HashMap.size:()I
+       6: ireturn
+
+  public static int getSharedEventSize();
+    descriptor: ()I
+    Code:
+       0: iconst_0
+       1: istore_0
+       2: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       5: invokevirtual #11                 // Method java/util/HashMap.values:()Ljava/util/Collection;
+       8: invokeinterface #12,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      13: astore_1
+      14: aload_1
+      15: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      20: ifeq          46
+      23: aload_1
+      24: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      29: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      32: astore_2
+      33: aload_2
+      34: invokevirtual #15                 // Method TreeHole/mod/TreeHoleBase.enableSharedTreeHoleEvent:()Z
+      37: ifeq          43
+      40: iinc          0, 1
+      43: goto          14
+      46: iload_0
+      47: ireturn
+
+  public static void enterTreeHole(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)V
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokestatic  #16                 // Method TreeHole/patches/TreeHolePatch.enterTreeHole:(Ljava/lang/String;I)V
+       5: return
+
+  public static void outerTreeHole();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #17                 // Method TreeHole/patches/TreeHolePatch.outerTreeHole:()V
+       3: return
+
+  public static boolean hasEnteredCurrentRoom();
+    descriptor: ()Z
+    Code:
+       0: invokestatic  #18                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrMapNode:()Lcom/megacrit/cardcrawl/map/MapRoomNode;
+       3: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+       6: invokestatic  #18                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrMapNode:()Lcom/megacrit/cardcrawl/map/MapRoomNode;
+       9: getfield      #20                 // Field com/megacrit/cardcrawl/map/MapRoomNode.y:I
+      12: invokestatic  #21                 // Method TreeHole/patches/TreeHolePatch.enteredTreeHole:(II)Z
+      15: ireturn
+
+  public static java.util.ArrayList<java.lang.String> getIDs();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #22                 // class java/util/ArrayList
+       3: dup
+       4: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       7: invokevirtual #23                 // Method java/util/HashMap.keySet:()Ljava/util/Set;
+      10: invokespecial #24                 // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+      13: areturn
+
+  public static java.util.ArrayList<java.lang.String> getSharedIDs();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #22                 // class java/util/ArrayList
+       3: dup
+       4: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       7: invokevirtual #23                 // Method java/util/HashMap.keySet:()Ljava/util/Set;
+      10: invokespecial #24                 // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+      13: astore_0
+      14: aload_0
+      15: invokevirtual #25                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      18: astore_1
+      19: aload_1
+      20: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      25: ifeq          65
+      28: aload_1
+      29: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      34: checkcast     #26                 // class java/lang/String
+      37: astore_2
+      38: getstatic     #4                  // Field map:Ljava/util/HashMap;
+      41: aload_2
+      42: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      45: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      48: astore_3
+      49: aload_3
+      50: invokevirtual #15                 // Method TreeHole/mod/TreeHoleBase.enableSharedTreeHoleEvent:()Z
+      53: ifne          62
+      56: aload_1
+      57: invokeinterface #27,  1           // InterfaceMethod java/util/Iterator.remove:()V
+      62: goto          19
+      65: aload_0
+      66: areturn
+
+  public static boolean contains(java.lang.String);
+    descriptor: (Ljava/lang/String;)Z
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: invokevirtual #23                 // Method java/util/HashMap.keySet:()Ljava/util/Set;
+       6: invokeinterface #28,  1           // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+      11: astore_1
+      12: aload_1
+      13: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      18: ifeq          44
+      21: aload_1
+      22: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      27: checkcast     #26                 // class java/lang/String
+      30: astore_2
+      31: aload_2
+      32: aload_0
+      33: invokevirtual #29                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      36: ifeq          41
+      39: iconst_1
+      40: ireturn
+      41: goto          12
+      44: iconst_0
+      45: ireturn
+
+  public static com.megacrit.cardcrawl.dungeons.AbstractDungeon getDungeon(java.lang.String, com.megacrit.cardcrawl.characters.AbstractPlayer, java.util.ArrayList<java.lang.String>, int);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/characters/AbstractPlayer;Ljava/util/ArrayList;I)Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon;
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore        4
+      12: aload         4
+      14: ifnull        26
+      17: aload         4
+      19: aload_1
+      20: aload_2
+      21: iload_3
+      22: invokevirtual #30                 // Method TreeHole/mod/TreeHoleBase.getDungeon:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer;Ljava/util/ArrayList;I)Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon;
+      25: areturn
+      26: aconst_null
+      27: areturn
+
+  public static com.megacrit.cardcrawl.dungeons.AbstractDungeon getDungeon(java.lang.String, com.megacrit.cardcrawl.characters.AbstractPlayer, com.megacrit.cardcrawl.saveAndContinue.SaveFile, int);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/characters/AbstractPlayer;Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;I)Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon;
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore        4
+      12: aload         4
+      14: ifnull        26
+      17: aload         4
+      19: aload_1
+      20: aload_2
+      21: iload_3
+      22: invokevirtual #31                 // Method TreeHole/mod/TreeHoleBase.getDungeon:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer;Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;I)Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon;
+      25: areturn
+      26: aconst_null
+      27: areturn
+
+  public static void triggerWhenEnterTreeHole(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)V
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore_2
+      11: aload_2
+      12: ifnull        20
+      15: aload_2
+      16: iload_1
+      17: invokevirtual #32                 // Method TreeHole/mod/TreeHoleBase.triggerWhenEnterTreeHole:(I)V
+      20: return
+
+  public static boolean isBoss(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)Z
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore_2
+      11: aload_2
+      12: ifnull        21
+      15: aload_2
+      16: iload_1
+      17: invokevirtual #33                 // Method TreeHole/mod/TreeHoleBase.isBoss:(I)Z
+      20: ireturn
+      21: iconst_1
+      22: ireturn
+
+  public static int getBossEnterY(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)I
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore_2
+      11: aload_2
+      12: ifnull        21
+      15: aload_2
+      16: iload_1
+      17: invokevirtual #34                 // Method TreeHole/mod/TreeHoleBase.getBossEnterY:(I)I
+      20: ireturn
+      21: bipush        15
+      23: ireturn
+
+  public static java.lang.String getLevelNum(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)Ljava/lang/String;
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore_2
+      11: aload_2
+      12: ifnull        21
+      15: aload_2
+      16: iload_1
+      17: invokevirtual #35                 // Method TreeHole/mod/TreeHoleBase.getLevelNum:(I)Ljava/lang/String;
+      20: areturn
+      21: ldc           #36                 // String
+      23: areturn
+
+  public static java.lang.String getLevelName(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)Ljava/lang/String;
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore_2
+      11: aload_2
+      12: ifnull        21
+      15: aload_2
+      16: iload_1
+      17: invokevirtual #37                 // Method TreeHole/mod/TreeHoleBase.getLevelName:(I)Ljava/lang/String;
+      20: areturn
+      21: ldc           #36                 // String
+      23: areturn
+
+  public static float getMapSize(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)F
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore_2
+      11: aload_2
+      12: ifnull        21
+      15: aload_2
+      16: iload_1
+      17: invokevirtual #38                 // Method TreeHole/mod/TreeHoleBase.getMapSize:(I)F
+      20: freturn
+      21: ldc           #39                 // float -560.0f
+      23: getstatic     #40                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      26: fmul
+      27: freturn
+
+  public static float getScrollLimit(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)F
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore_2
+      11: aload_2
+      12: ifnull        21
+      15: aload_2
+      16: iload_1
+      17: invokevirtual #41                 // Method TreeHole/mod/TreeHoleBase.getScrollLimit:(I)F
+      20: freturn
+      21: ldc           #42                 // float -350.0f
+      23: getstatic     #40                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      26: fmul
+      27: freturn
+
+  public static java.util.ArrayList<java.lang.String> getEnterOptions();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #22                 // class java/util/ArrayList
+       3: dup
+       4: invokespecial #43                 // Method java/util/ArrayList."<init>":()V
+       7: astore_0
+       8: invokestatic  #44                 // Method getSharedIDs:()Ljava/util/ArrayList;
+      11: invokevirtual #25                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      14: astore_1
+      15: aload_1
+      16: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      21: ifeq          57
+      24: aload_1
+      25: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      30: checkcast     #26                 // class java/lang/String
+      33: astore_2
+      34: getstatic     #4                  // Field map:Ljava/util/HashMap;
+      37: aload_2
+      38: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      41: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      44: astore_3
+      45: aload_0
+      46: aload_3
+      47: invokevirtual #45                 // Method TreeHole/mod/TreeHoleBase.getEnterOption:()Ljava/lang/String;
+      50: invokevirtual #46                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      53: pop
+      54: goto          15
+      57: aload_0
+      58: areturn
+
+  public static com.megacrit.cardcrawl.events.AbstractEvent treeHoleEnterEvent(java.lang.String, com.megacrit.cardcrawl.random.Random);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/random/Random;)Lcom/megacrit/cardcrawl/events/AbstractEvent;
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore_2
+      11: aload_2
+      12: ifnull        21
+      15: aload_2
+      16: aload_1
+      17: invokevirtual #47                 // Method TreeHole/mod/TreeHoleBase.treeHoleEnterEvent:(Lcom/megacrit/cardcrawl/random/Random;)Lcom/megacrit/cardcrawl/events/AbstractEvent;
+      20: areturn
+      21: aconst_null
+      22: areturn
+
+  public static com.megacrit.cardcrawl.events.AbstractEvent treeHoleOuterEvent(java.lang.String, com.megacrit.cardcrawl.random.Random);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/random/Random;)Lcom/megacrit/cardcrawl/events/AbstractEvent;
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      10: astore_2
+      11: aload_2
+      12: ifnull        21
+      15: aload_2
+      16: aload_1
+      17: invokevirtual #48                 // Method TreeHole/mod/TreeHoleBase.treeHoleOuterEvent:(Lcom/megacrit/cardcrawl/random/Random;)Lcom/megacrit/cardcrawl/events/AbstractEvent;
+      20: areturn
+      21: aconst_null
+      22: areturn
+
+  public static com.megacrit.cardcrawl.events.AbstractEvent getOnlyEvent(com.megacrit.cardcrawl.random.Random);
+    descriptor: (Lcom/megacrit/cardcrawl/random/Random;)Lcom/megacrit/cardcrawl/events/AbstractEvent;
+    Code:
+       0: invokestatic  #44                 // Method getSharedIDs:()Ljava/util/ArrayList;
+       3: invokevirtual #25                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       6: astore_1
+       7: aload_1
+       8: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          43
+      16: aload_1
+      17: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #26                 // class java/lang/String
+      25: astore_2
+      26: getstatic     #4                  // Field map:Ljava/util/HashMap;
+      29: aload_2
+      30: invokevirtual #7                  // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      33: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      36: astore_3
+      37: aload_3
+      38: aload_0
+      39: invokevirtual #47                 // Method TreeHole/mod/TreeHoleBase.treeHoleEnterEvent:(Lcom/megacrit/cardcrawl/random/Random;)Lcom/megacrit/cardcrawl/events/AbstractEvent;
+      42: areturn
+      43: aconst_null
+      44: areturn
+
+  public static boolean anySharedEventEnabled();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: invokevirtual #11                 // Method java/util/HashMap.values:()Ljava/util/Collection;
+       6: invokeinterface #12,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      11: astore_0
+      12: aload_0
+      13: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      18: ifeq          43
+      21: aload_0
+      22: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      27: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      30: astore_1
+      31: aload_1
+      32: invokevirtual #15                 // Method TreeHole/mod/TreeHoleBase.enableSharedTreeHoleEvent:()Z
+      35: ifeq          40
+      38: iconst_1
+      39: ireturn
+      40: goto          12
+      43: iconst_0
+      44: ireturn
+
+  public static boolean anyEndingEnabled();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       3: invokevirtual #11                 // Method java/util/HashMap.values:()Ljava/util/Collection;
+       6: invokeinterface #12,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      11: astore_0
+      12: aload_0
+      13: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      18: ifeq          43
+      21: aload_0
+      22: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      27: checkcast     #8                  // class TreeHole/mod/TreeHoleBase
+      30: astore_1
+      31: aload_1
+      32: invokevirtual #49                 // Method TreeHole/mod/TreeHoleBase.enableTheEndingTreeHole:()Z
+      35: ifeq          40
+      38: iconst_1
+      39: ireturn
+      40: goto          12
+      43: iconst_0
+      44: ireturn
+
+  public static java.util.ArrayList<TreeHole.mod.TreeHoleBase> getAllBases();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #22                 // class java/util/ArrayList
+       3: dup
+       4: getstatic     #4                  // Field map:Ljava/util/HashMap;
+       7: invokevirtual #11                 // Method java/util/HashMap.values:()Ljava/util/Collection;
+      10: invokespecial #24                 // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+      13: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: new           #50                 // class java/util/HashMap
+       3: dup
+       4: invokespecial #51                 // Method java/util/HashMap."<init>":()V
+       7: putstatic     #4                  // Field map:Ljava/util/HashMap;
+      10: return
+}

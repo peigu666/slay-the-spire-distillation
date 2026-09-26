@@ -1,0 +1,638 @@
+Compiled from "DevConsole.java"
+public class basemod.DevConsole implements basemod.interfaces.PostEnergyRechargeSubscriber,basemod.interfaces.PostInitializeSubscriber,basemod.interfaces.PostRenderSubscriber,basemod.interfaces.PostUpdateSubscriber,basemod.interfaces.TextReceiver {
+  public static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  private static final int HISTORY_SIZE;
+    descriptor: I
+
+  public static final float CONSOLE_X;
+    descriptor: F
+
+  public static final float CONSOLE_Y;
+    descriptor: F
+
+  public static final float CONSOLE_W;
+    descriptor: F
+
+  public static final float CONSOLE_H;
+    descriptor: F
+
+  public static final float CONSOLE_PAD_X;
+    descriptor: F
+
+  public static final int CONSOLE_TEXT_SIZE;
+    descriptor: I
+
+  private static final int MAX_LINES;
+    descriptor: I
+
+  public static final java.lang.String PATTERN;
+    descriptor: Ljava/lang/String;
+
+  public static final java.lang.String PROMPT;
+    descriptor: Ljava/lang/String;
+
+  public static com.badlogic.gdx.graphics.g2d.BitmapFont consoleFont;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+
+  public static com.badlogic.gdx.graphics.Texture consoleBackground;
+    descriptor: Lcom/badlogic/gdx/graphics/Texture;
+
+  public static boolean infiniteEnergy;
+    descriptor: Z
+
+  public static boolean forceUnlocks;
+    descriptor: Z
+
+  public static int unlockLevel;
+    descriptor: I
+
+  public static boolean enabled;
+    descriptor: Z
+
+  public static boolean visible;
+    descriptor: Z
+
+  public static int toggleKey;
+    descriptor: I
+
+  public static basemod.DevConsole$KeyWithMods newToggleKey;
+    descriptor: Lbasemod/DevConsole$KeyWithMods;
+
+  public static java.lang.String currentText;
+    descriptor: Ljava/lang/String;
+
+  private static boolean wasBackspace;
+    descriptor: Z
+
+  public static int priorKey;
+    descriptor: I
+
+  public static int nextKey;
+    descriptor: I
+
+  public static basemod.DevConsole$PriorCommandsList priorCommands;
+    descriptor: Lbasemod/DevConsole$PriorCommandsList;
+
+  public static java.util.ArrayList<java.lang.String> log;
+    descriptor: Ljava/util/ArrayList;
+
+  public static java.util.ArrayList<java.lang.Boolean> prompted;
+    descriptor: Ljava/util/ArrayList;
+
+  public static int commandPos;
+    descriptor: I
+
+  public basemod.DevConsole();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: invokestatic  #2                  // Method basemod/BaseMod.subscribe:(Lbasemod/interfaces/ISubscriber;)V
+       8: new           #3                  // class basemod/DevConsole$PriorCommandsList
+      11: dup
+      12: invokespecial #4                  // Method basemod/DevConsole$PriorCommandsList."<init>":()V
+      15: putstatic     #5                  // Field priorCommands:Lbasemod/DevConsole$PriorCommandsList;
+      18: iconst_m1
+      19: putstatic     #6                  // Field commandPos:I
+      22: new           #7                  // class java/util/ArrayList
+      25: dup
+      26: getstatic     #5                  // Field priorCommands:Lbasemod/DevConsole$PriorCommandsList;
+      29: invokespecial #8                  // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+      32: putstatic     #9                  // Field log:Ljava/util/ArrayList;
+      35: new           #7                  // class java/util/ArrayList
+      38: dup
+      39: getstatic     #9                  // Field log:Ljava/util/ArrayList;
+      42: invokevirtual #10                 // Method java/util/ArrayList.size:()I
+      45: iconst_1
+      46: invokestatic  #11                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      49: invokestatic  #12                 // Method java/util/Collections.nCopies:(ILjava/lang/Object;)Ljava/util/List;
+      52: invokespecial #8                  // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+      55: putstatic     #13                 // Field prompted:Ljava/util/ArrayList;
+      58: invokestatic  #14                 // Method basemod/AutoComplete.init:()V
+      61: invokestatic  #15                 // Method basemod/devcommands/ConsoleCommand.initialize:()V
+      64: return
+
+  public static void execute();
+    descriptor: ()V
+    Code:
+       0: getstatic     #16                 // Field currentText:Ljava/lang/String;
+       3: invokevirtual #17                 // Method java/lang/String.trim:()Ljava/lang/String;
+       6: ldc           #19                 // String [\\s]+
+       8: invokevirtual #20                 // Method java/lang/String.split:(Ljava/lang/String;)[Ljava/lang/String;
+      11: astore_0
+      12: getstatic     #5                  // Field priorCommands:Lbasemod/DevConsole$PriorCommandsList;
+      15: invokevirtual #21                 // Method basemod/DevConsole$PriorCommandsList.size:()I
+      18: ifeq          40
+      21: getstatic     #5                  // Field priorCommands:Lbasemod/DevConsole$PriorCommandsList;
+      24: iconst_0
+      25: invokevirtual #22                 // Method basemod/DevConsole$PriorCommandsList.get:(I)Ljava/lang/Object;
+      28: checkcast     #23                 // class java/lang/String
+      31: getstatic     #16                 // Field currentText:Ljava/lang/String;
+      34: invokevirtual #24                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      37: ifne          50
+      40: getstatic     #5                  // Field priorCommands:Lbasemod/DevConsole$PriorCommandsList;
+      43: iconst_0
+      44: getstatic     #16                 // Field currentText:Ljava/lang/String;
+      47: invokevirtual #25                 // Method basemod/DevConsole$PriorCommandsList.add:(ILjava/lang/String;)V
+      50: getstatic     #9                  // Field log:Ljava/util/ArrayList;
+      53: iconst_0
+      54: getstatic     #16                 // Field currentText:Ljava/lang/String;
+      57: invokevirtual #26                 // Method java/util/ArrayList.add:(ILjava/lang/Object;)V
+      60: getstatic     #13                 // Field prompted:Ljava/util/ArrayList;
+      63: iconst_0
+      64: iconst_1
+      65: invokestatic  #11                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      68: invokevirtual #26                 // Method java/util/ArrayList.add:(ILjava/lang/Object;)V
+      71: iconst_m1
+      72: putstatic     #6                  // Field commandPos:I
+      75: ldc           #27                 // String
+      77: putstatic     #16                 // Field currentText:Ljava/lang/String;
+      80: aload_0
+      81: arraylength
+      82: iconst_1
+      83: if_icmpge     87
+      86: return
+      87: iconst_0
+      88: istore_1
+      89: iload_1
+      90: aload_0
+      91: arraylength
+      92: if_icmpge     110
+      95: aload_0
+      96: iload_1
+      97: aload_0
+      98: iload_1
+      99: aaload
+     100: invokevirtual #17                 // Method java/lang/String.trim:()Ljava/lang/String;
+     103: aastore
+     104: iinc          1, 1
+     107: goto          89
+     110: aload_0
+     111: invokestatic  #28                 // Method basemod/devcommands/ConsoleCommand.execute:([Ljava/lang/String;)V
+     114: return
+
+  public static void couldNotParse();
+    descriptor: ()V
+    Code:
+       0: ldc           #29                 // String could not parse previous command
+       2: invokestatic  #30                 // Method log:(Ljava/lang/String;)V
+       5: return
+
+  public void receivePostEnergyRecharge();
+    descriptor: ()V
+    Code:
+       0: getstatic     #31                 // Field infiniteEnergy:Z
+       3: ifeq          12
+       6: sipush        9999
+       9: invokestatic  #32                 // Method com/megacrit/cardcrawl/ui/panels/EnergyPanel.setEnergy:(I)V
+      12: return
+
+  public void receivePostInitialize();
+    descriptor: ()V
+    Code:
+       0: new           #33                 // class com/badlogic/gdx/graphics/g2d/freetype/FreeTypeFontGenerator
+       3: dup
+       4: getstatic     #34                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+       7: ldc           #35                 // String font/Kreon-Regular.ttf
+       9: invokeinterface #36,  2           // InterfaceMethod com/badlogic/gdx/Files.internal:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+      14: invokespecial #37                 // Method com/badlogic/gdx/graphics/g2d/freetype/FreeTypeFontGenerator."<init>":(Lcom/badlogic/gdx/files/FileHandle;)V
+      17: astore_1
+      18: new           #38                 // class com/badlogic/gdx/graphics/g2d/freetype/FreeTypeFontGenerator$FreeTypeFontParameter
+      21: dup
+      22: invokespecial #39                 // Method com/badlogic/gdx/graphics/g2d/freetype/FreeTypeFontGenerator$FreeTypeFontParameter."<init>":()V
+      25: astore_2
+      26: aload_2
+      27: ldc           #40                 // float 30.0f
+      29: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      32: fmul
+      33: f2i
+      34: putfield      #42                 // Field com/badlogic/gdx/graphics/g2d/freetype/FreeTypeFontGenerator$FreeTypeFontParameter.size:I
+      37: aload_1
+      38: aload_2
+      39: invokevirtual #43                 // Method com/badlogic/gdx/graphics/g2d/freetype/FreeTypeFontGenerator.generateFont:(Lcom/badlogic/gdx/graphics/g2d/freetype/FreeTypeFontGenerator$FreeTypeFontParameter;)Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      42: putstatic     #44                 // Field consoleFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      45: aload_1
+      46: invokevirtual #45                 // Method com/badlogic/gdx/graphics/g2d/freetype/FreeTypeFontGenerator.dispose:()V
+      49: ldc           #46                 // String img/ConsoleBackground.png
+      51: invokestatic  #47                 // Method com/megacrit/cardcrawl/helpers/ImageMaster.loadImage:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Texture;
+      54: putstatic     #48                 // Field consoleBackground:Lcom/badlogic/gdx/graphics/Texture;
+      57: invokestatic  #49                 // Method basemod/AutoComplete.postInit:()V
+      60: return
+
+  public static void log(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: getstatic     #9                  // Field log:Ljava/util/ArrayList;
+       3: iconst_0
+       4: aload_0
+       5: invokevirtual #26                 // Method java/util/ArrayList.add:(ILjava/lang/Object;)V
+       8: getstatic     #13                 // Field prompted:Ljava/util/ArrayList;
+      11: iconst_0
+      12: iconst_0
+      13: invokestatic  #11                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      16: invokevirtual #26                 // Method java/util/ArrayList.add:(ILjava/lang/Object;)V
+      19: return
+
+  public static void log(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)V
+    Code:
+       0: aload_0
+       1: invokeinterface #50,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+       6: astore_1
+       7: aload_1
+       8: invokeinterface #51,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          33
+      16: aload_1
+      17: invokeinterface #52,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: astore_2
+      23: aload_2
+      24: invokevirtual #53                 // Method java/lang/Object.toString:()Ljava/lang/String;
+      27: invokestatic  #30                 // Method log:(Ljava/lang/String;)V
+      30: goto          7
+      33: return
+
+  public void receivePostRender(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: getstatic     #54                 // Field visible:Z
+       3: ifeq          244
+       6: getstatic     #44                 // Field consoleFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+       9: ifnull        244
+      12: getstatic     #9                  // Field log:Ljava/util/ArrayList;
+      15: invokevirtual #10                 // Method java/util/ArrayList.size:()I
+      18: iconst_1
+      19: iadd
+      20: istore_2
+      21: iload_2
+      22: bipush        8
+      24: if_icmple     30
+      27: bipush        8
+      29: istore_2
+      30: aload_1
+      31: getstatic     #48                 // Field consoleBackground:Lcom/badlogic/gdx/graphics/Texture;
+      34: ldc           #55                 // float 200.0f
+      36: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      39: fmul
+      40: ldc           #55                 // float 200.0f
+      42: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      45: fmul
+      46: ldc           #56                 // float 800.0f
+      48: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      51: fmul
+      52: ldc           #57                 // float 40.0f
+      54: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      57: fmul
+      58: ldc           #40                 // float 30.0f
+      60: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      63: fmul
+      64: iload_2
+      65: iconst_1
+      66: isub
+      67: i2f
+      68: fmul
+      69: fadd
+      70: invokevirtual #58                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFF)V
+      73: getstatic     #59                 // Field basemod/AutoComplete.enabled:Z
+      76: ifeq          83
+      79: aload_1
+      80: invokestatic  #60                 // Method basemod/AutoComplete.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      83: ldc           #55                 // float 200.0f
+      85: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      88: fmul
+      89: ldc           #61                 // float 15.0f
+      91: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      94: fmul
+      95: fadd
+      96: fstore_3
+      97: ldc           #55                 // float 200.0f
+      99: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     102: fmul
+     103: ldc           #40                 // float 30.0f
+     105: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     108: fmul
+     109: f2d
+     110: invokestatic  #62                 // Method java/lang/Math.floor:(D)D
+     113: d2f
+     114: fadd
+     115: fstore        4
+     117: getstatic     #44                 // Field consoleFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     120: aload_1
+     121: new           #63                 // class java/lang/StringBuilder
+     124: dup
+     125: invokespecial #64                 // Method java/lang/StringBuilder."<init>":()V
+     128: ldc           #65                 // String $>
+     130: invokevirtual #66                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     133: getstatic     #16                 // Field currentText:Ljava/lang/String;
+     136: invokevirtual #66                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     139: invokevirtual #67                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     142: fload_3
+     143: fload         4
+     145: invokevirtual #68                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.draw:(Lcom/badlogic/gdx/graphics/g2d/Batch;Ljava/lang/CharSequence;FF)Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     148: pop
+     149: iconst_0
+     150: istore        5
+     152: iload         5
+     154: iload_2
+     155: iconst_1
+     156: isub
+     157: if_icmpge     244
+     160: fload         4
+     162: ldc           #40                 // float 30.0f
+     164: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     167: fmul
+     168: f2d
+     169: invokestatic  #62                 // Method java/lang/Math.floor:(D)D
+     172: d2f
+     173: fadd
+     174: fstore        4
+     176: getstatic     #44                 // Field consoleFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     179: aload_1
+     180: new           #63                 // class java/lang/StringBuilder
+     183: dup
+     184: invokespecial #64                 // Method java/lang/StringBuilder."<init>":()V
+     187: getstatic     #13                 // Field prompted:Ljava/util/ArrayList;
+     190: iload         5
+     192: invokevirtual #69                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     195: checkcast     #70                 // class java/lang/Boolean
+     198: invokevirtual #71                 // Method java/lang/Boolean.booleanValue:()Z
+     201: ifeq          209
+     204: ldc           #65                 // String $>
+     206: goto          211
+     209: ldc           #27                 // String
+     211: invokevirtual #66                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     214: getstatic     #9                  // Field log:Ljava/util/ArrayList;
+     217: iload         5
+     219: invokevirtual #69                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     222: checkcast     #23                 // class java/lang/String
+     225: invokevirtual #66                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     228: invokevirtual #67                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     231: fload_3
+     232: fload         4
+     234: invokevirtual #68                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.draw:(Lcom/badlogic/gdx/graphics/g2d/Batch;Ljava/lang/CharSequence;FF)Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     237: pop
+     238: iinc          5, 1
+     241: goto          152
+     244: return
+
+  public java.lang.String getCurrentText();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #16                 // Field currentText:Ljava/lang/String;
+       3: areturn
+
+  public void setText(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: aload_1
+       1: putstatic     #16                 // Field currentText:Ljava/lang/String;
+       4: getstatic     #72                 // Field wasBackspace:Z
+       7: invokestatic  #73                 // Method basemod/AutoComplete.suggest:(Z)V
+      10: iconst_0
+      11: putstatic     #72                 // Field wasBackspace:Z
+      14: return
+
+  public boolean onPushBackspace();
+    descriptor: ()Z
+    Code:
+       0: iconst_1
+       1: putstatic     #72                 // Field wasBackspace:Z
+       4: iconst_0
+       5: ireturn
+
+  public boolean acceptCharacter(char);
+    descriptor: (C)Z
+    Code:
+       0: getstatic     #44                 // Field consoleFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+       3: invokevirtual #74                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.getData:()Lcom/badlogic/gdx/graphics/g2d/BitmapFont$BitmapFontData;
+       6: iload_1
+       7: invokevirtual #75                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont$BitmapFontData.hasGlyph:(C)Z
+      10: ifeq          63
+      13: getstatic     #76                 // Field newToggleKey:Lbasemod/DevConsole$KeyWithMods;
+      16: getfield      #77                 // Field basemod/DevConsole$KeyWithMods.keycode:I
+      19: invokestatic  #78                 // Method com/badlogic/gdx/Input$Keys.toString:(I)Ljava/lang/String;
+      22: ifnull        59
+      25: getstatic     #76                 // Field newToggleKey:Lbasemod/DevConsole$KeyWithMods;
+      28: getfield      #77                 // Field basemod/DevConsole$KeyWithMods.keycode:I
+      31: invokestatic  #78                 // Method com/badlogic/gdx/Input$Keys.toString:(I)Ljava/lang/String;
+      34: new           #63                 // class java/lang/StringBuilder
+      37: dup
+      38: invokespecial #64                 // Method java/lang/StringBuilder."<init>":()V
+      41: ldc           #27                 // String
+      43: invokevirtual #66                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      46: iload_1
+      47: invokevirtual #79                 // Method java/lang/StringBuilder.append:(C)Ljava/lang/StringBuilder;
+      50: invokevirtual #67                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      53: invokevirtual #24                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      56: ifne          63
+      59: iconst_1
+      60: goto          64
+      63: iconst_0
+      64: ireturn
+
+  public boolean onKeyUp(int);
+    descriptor: (I)Z
+    Code:
+       0: iload_1
+       1: bipush        66
+       3: if_icmpne     33
+       6: getstatic     #16                 // Field currentText:Ljava/lang/String;
+       9: invokevirtual #81                 // Method java/lang/String.length:()I
+      12: ifle          31
+      15: invokestatic  #82                 // Method execute:()V
+      18: getstatic     #59                 // Field basemod/AutoComplete.enabled:Z
+      21: ifeq          31
+      24: invokestatic  #83                 // Method basemod/AutoComplete.reset:()V
+      27: iconst_0
+      28: invokestatic  #73                 // Method basemod/AutoComplete.suggest:(Z)V
+      31: iconst_1
+      32: ireturn
+      33: iconst_0
+      34: ireturn
+
+  public boolean onKeyDown(int);
+    descriptor: (I)Z
+    Code:
+       0: iload_1
+       1: bipush        50
+       3: if_icmpne     46
+       6: invokestatic  #84                 // Method com/badlogic/gdx/scenes/scene2d/utils/UIUtils.ctrl:()Z
+       9: ifeq          46
+      12: getstatic     #85                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      15: ldc           #86                 // String PASTE
+      17: invokevirtual #87                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      20: getstatic     #88                 // Field com/badlogic/gdx/Gdx.app:Lcom/badlogic/gdx/Application;
+      23: invokeinterface #89,  1           // InterfaceMethod com/badlogic/gdx/Application.getClipboard:()Lcom/badlogic/gdx/utils/Clipboard;
+      28: astore_2
+      29: aload_0
+      30: aload_0
+      31: invokevirtual #90                 // Method getCurrentText:()Ljava/lang/String;
+      34: aload_2
+      35: invokeinterface #91,  1           // InterfaceMethod com/badlogic/gdx/utils/Clipboard.getContents:()Ljava/lang/String;
+      40: invokevirtual #92                 // Method java/lang/String.concat:(Ljava/lang/String;)Ljava/lang/String;
+      43: invokevirtual #93                 // Method setText:(Ljava/lang/String;)V
+      46: getstatic     #59                 // Field basemod/AutoComplete.enabled:Z
+      49: ifeq          237
+      52: iload_1
+      53: getstatic     #94                 // Field priorKey:I
+      56: if_icmpne     121
+      59: getstatic     #95                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      62: getstatic     #96                 // Field basemod/AutoComplete.selectKey:I
+      65: invokeinterface #97,  2           // InterfaceMethod com/badlogic/gdx/Input.isKeyPressed:(I)Z
+      70: ifeq          79
+      73: invokestatic  #98                 // Method basemod/AutoComplete.selectUp:()V
+      76: goto          119
+      79: getstatic     #6                  // Field commandPos:I
+      82: iconst_1
+      83: iadd
+      84: getstatic     #5                  // Field priorCommands:Lbasemod/DevConsole$PriorCommandsList;
+      87: invokevirtual #21                 // Method basemod/DevConsole$PriorCommandsList.size:()I
+      90: if_icmpge     119
+      93: getstatic     #6                  // Field commandPos:I
+      96: iconst_1
+      97: iadd
+      98: putstatic     #6                  // Field commandPos:I
+     101: getstatic     #5                  // Field priorCommands:Lbasemod/DevConsole$PriorCommandsList;
+     104: getstatic     #6                  // Field commandPos:I
+     107: invokevirtual #22                 // Method basemod/DevConsole$PriorCommandsList.get:(I)Ljava/lang/Object;
+     110: checkcast     #23                 // class java/lang/String
+     113: putstatic     #16                 // Field currentText:Ljava/lang/String;
+     116: invokestatic  #99                 // Method basemod/AutoComplete.resetAndSuggest:()V
+     119: iconst_1
+     120: ireturn
+     121: iload_1
+     122: getstatic     #100                // Field nextKey:I
+     125: if_icmpne     196
+     128: getstatic     #95                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+     131: getstatic     #96                 // Field basemod/AutoComplete.selectKey:I
+     134: invokeinterface #97,  2           // InterfaceMethod com/badlogic/gdx/Input.isKeyPressed:(I)Z
+     139: ifeq          148
+     142: invokestatic  #101                // Method basemod/AutoComplete.selectDown:()V
+     145: goto          194
+     148: getstatic     #6                  // Field commandPos:I
+     151: iconst_1
+     152: isub
+     153: ifge          168
+     156: ldc           #27                 // String
+     158: putstatic     #16                 // Field currentText:Ljava/lang/String;
+     161: iconst_m1
+     162: putstatic     #6                  // Field commandPos:I
+     165: goto          191
+     168: getstatic     #6                  // Field commandPos:I
+     171: iconst_1
+     172: isub
+     173: putstatic     #6                  // Field commandPos:I
+     176: getstatic     #5                  // Field priorCommands:Lbasemod/DevConsole$PriorCommandsList;
+     179: getstatic     #6                  // Field commandPos:I
+     182: invokevirtual #22                 // Method basemod/DevConsole$PriorCommandsList.get:(I)Ljava/lang/Object;
+     185: checkcast     #23                 // class java/lang/String
+     188: putstatic     #16                 // Field currentText:Ljava/lang/String;
+     191: invokestatic  #99                 // Method basemod/AutoComplete.resetAndSuggest:()V
+     194: iconst_1
+     195: ireturn
+     196: iload_1
+     197: getstatic     #102                // Field basemod/AutoComplete.fillKey1:I
+     200: if_icmpeq     210
+     203: iload_1
+     204: getstatic     #103                // Field basemod/AutoComplete.fillKey2:I
+     207: if_icmpne     215
+     210: invokestatic  #104                // Method basemod/AutoComplete.fillInSuggestion:()V
+     213: iconst_1
+     214: ireturn
+     215: iload_1
+     216: getstatic     #105                // Field basemod/AutoComplete.deleteTokenKey:I
+     219: if_icmpne     237
+     222: invokestatic  #106                // Method basemod/AutoComplete.removeOneTokenUsingSpaceAndIdDelimiter:()V
+     225: getstatic     #59                 // Field basemod/AutoComplete.enabled:Z
+     228: ifeq          235
+     231: iconst_0
+     232: invokestatic  #73                 // Method basemod/AutoComplete.suggest:(Z)V
+     235: iconst_1
+     236: ireturn
+     237: iconst_0
+     238: ireturn
+
+  public void receivePostUpdate();
+    descriptor: ()V
+    Code:
+       0: getstatic     #107                // Field enabled:Z
+       3: ifeq          74
+       6: getstatic     #76                 // Field newToggleKey:Lbasemod/DevConsole$KeyWithMods;
+       9: invokevirtual #108                // Method basemod/DevConsole$KeyWithMods.isJustPressed:()Z
+      12: ifeq          74
+      15: invokestatic  #83                 // Method basemod/AutoComplete.reset:()V
+      18: getstatic     #54                 // Field visible:Z
+      21: ifeq          40
+      24: ldc           #27                 // String
+      26: putstatic     #16                 // Field currentText:Ljava/lang/String;
+      29: iconst_m1
+      30: putstatic     #6                  // Field commandPos:I
+      33: aload_0
+      34: invokestatic  #109                // Method basemod/patches/com/megacrit/cardcrawl/helpers/input/ScrollInputProcessor/TextInput.stopTextReceiver:(Lbasemod/interfaces/TextReceiver;)V
+      37: goto          60
+      40: getstatic     #107                // Field enabled:Z
+      43: ifeq          60
+      46: aload_0
+      47: invokestatic  #110                // Method basemod/patches/com/megacrit/cardcrawl/helpers/input/ScrollInputProcessor/TextInput.startTextReceiver:(Lbasemod/interfaces/TextReceiver;)V
+      50: getstatic     #59                 // Field basemod/AutoComplete.enabled:Z
+      53: ifeq          60
+      56: iconst_0
+      57: invokestatic  #73                 // Method basemod/AutoComplete.suggest:(Z)V
+      60: getstatic     #54                 // Field visible:Z
+      63: ifne          70
+      66: iconst_1
+      67: goto          71
+      70: iconst_0
+      71: putstatic     #54                 // Field visible:Z
+      74: return
+
+  public boolean isDone();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #54                 // Field visible:Z
+       3: ifne          10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: ireturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #18                 // class basemod/DevConsole
+       2: invokevirtual #111                // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #112                // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #113                // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: aconst_null
+      12: putstatic     #44                 // Field consoleFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      15: aconst_null
+      16: putstatic     #48                 // Field consoleBackground:Lcom/badlogic/gdx/graphics/Texture;
+      19: iconst_0
+      20: putstatic     #31                 // Field infiniteEnergy:Z
+      23: iconst_0
+      24: putstatic     #114                // Field forceUnlocks:Z
+      27: iconst_m1
+      28: putstatic     #115                // Field unlockLevel:I
+      31: iconst_0
+      32: putstatic     #107                // Field enabled:Z
+      35: iconst_0
+      36: putstatic     #54                 // Field visible:Z
+      39: iconst_0
+      40: putstatic     #116                // Field toggleKey:I
+      43: new           #117                // class basemod/DevConsole$KeyWithMods
+      46: dup
+      47: bipush        68
+      49: invokespecial #118                // Method basemod/DevConsole$KeyWithMods."<init>":(I)V
+      52: putstatic     #76                 // Field newToggleKey:Lbasemod/DevConsole$KeyWithMods;
+      55: ldc           #27                 // String
+      57: putstatic     #16                 // Field currentText:Ljava/lang/String;
+      60: iconst_0
+      61: putstatic     #72                 // Field wasBackspace:Z
+      64: bipush        19
+      66: putstatic     #94                 // Field priorKey:I
+      69: bipush        20
+      71: putstatic     #100                // Field nextKey:I
+      74: return
+}

@@ -22,10 +22,11 @@ import zipfile
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
 
-SCHEMA = "1.0"
+SCHEMA = "1.1"
+PACK_VERSION = "1.1.0"
 ROLE_FILES = {
     "base_game": "base_game_api.types.jsonl",
     "modthespire": "modthespire_api.types.jsonl",
@@ -182,6 +183,175 @@ def cp_class(cp: Sequence[Any], index: int) -> str:
     return str(value).replace("/", ".")
 
 
+JVM_OPCODES = {
+    0: "nop", 1: "aconst_null", 2: "iconst_m1", 3: "iconst_0", 4: "iconst_1",
+    5: "iconst_2", 6: "iconst_3", 7: "iconst_4", 8: "iconst_5", 9: "lconst_0",
+    10: "lconst_1", 11: "fconst_0", 12: "fconst_1", 13: "fconst_2", 14: "dconst_0",
+    15: "dconst_1", 16: "bipush", 17: "sipush", 18: "ldc", 19: "ldc_w",
+    20: "ldc2_w", 21: "iload", 22: "lload", 23: "fload", 24: "dload", 25: "aload",
+    26: "iload_0", 27: "iload_1", 28: "iload_2", 29: "iload_3", 30: "lload_0",
+    31: "lload_1", 32: "lload_2", 33: "lload_3", 34: "fload_0", 35: "fload_1",
+    36: "fload_2", 37: "fload_3", 38: "dload_0", 39: "dload_1", 40: "dload_2",
+    41: "dload_3", 42: "aload_0", 43: "aload_1", 44: "aload_2", 45: "aload_3",
+    46: "iaload", 47: "laload", 48: "faload", 49: "daload", 50: "aaload",
+    51: "baload", 52: "caload", 53: "saload", 54: "istore", 55: "lstore",
+    56: "fstore", 57: "dstore", 58: "astore", 59: "istore_0", 60: "istore_1",
+    61: "istore_2", 62: "istore_3", 63: "lstore_0", 64: "lstore_1", 65: "lstore_2",
+    66: "lstore_3", 67: "fstore_0", 68: "fstore_1", 69: "fstore_2", 70: "fstore_3",
+    71: "dstore_0", 72: "dstore_1", 73: "dstore_2", 74: "dstore_3", 75: "astore_0",
+    76: "astore_1", 77: "astore_2", 78: "astore_3", 79: "iastore", 80: "lastore",
+    81: "fastore", 82: "dastore", 83: "aastore", 84: "bastore", 85: "castore",
+    86: "sastore", 87: "pop", 88: "pop2", 89: "dup", 90: "dup_x1", 91: "dup_x2",
+    92: "dup2", 93: "dup2_x1", 94: "dup2_x2", 95: "swap", 96: "iadd", 97: "ladd",
+    98: "fadd", 99: "dadd", 100: "isub", 101: "lsub", 102: "fsub", 103: "dsub",
+    104: "imul", 105: "lmul", 106: "fmul", 107: "dmul", 108: "idiv", 109: "ldiv",
+    110: "fdiv", 111: "ddiv", 112: "irem", 113: "lrem", 114: "frem", 115: "drem",
+    116: "ineg", 117: "lneg", 118: "fneg", 119: "dneg", 120: "ishl", 121: "lshl",
+    122: "ishr", 123: "lshr", 124: "iushr", 125: "lushr", 126: "iand", 127: "land",
+    128: "ior", 129: "lor", 130: "ixor", 131: "lxor", 132: "iinc", 133: "i2l",
+    134: "i2f", 135: "i2d", 136: "l2i", 137: "l2f", 138: "l2d", 139: "f2i",
+    140: "f2l", 141: "f2d", 142: "d2i", 143: "d2l", 144: "d2f", 145: "i2b",
+    146: "i2c", 147: "i2s", 148: "lcmp", 149: "fcmpl", 150: "fcmpg", 151: "dcmpl",
+    152: "dcmpg", 153: "ifeq", 154: "ifne", 155: "iflt", 156: "ifge", 157: "ifgt",
+    158: "ifle", 159: "if_icmpeq", 160: "if_icmpne", 161: "if_icmplt", 162: "if_icmpge",
+    163: "if_icmpgt", 164: "if_icmple", 165: "if_acmpeq", 166: "if_acmpne", 167: "goto",
+    168: "jsr", 169: "ret", 170: "tableswitch", 171: "lookupswitch", 172: "ireturn",
+    173: "lreturn", 174: "freturn", 175: "dreturn", 176: "areturn", 177: "return",
+    178: "getstatic", 179: "putstatic", 180: "getfield", 181: "putfield",
+    182: "invokevirtual", 183: "invokespecial", 184: "invokestatic", 185: "invokeinterface",
+    186: "invokedynamic", 187: "new", 188: "newarray", 189: "anewarray", 190: "arraylength",
+    191: "athrow", 192: "checkcast", 193: "instanceof", 194: "monitorenter",
+    195: "monitorexit", 196: "wide", 197: "multianewarray", 198: "ifnull", 199: "ifnonnull",
+    200: "goto_w", 201: "jsr_w", 202: "breakpoint", 254: "impdep1", 255: "impdep2",
+}
+JVM_BRANCH_SHORT = set(range(153, 169)) | {198, 199}
+JVM_BRANCH_WIDE = {200, 201}
+JVM_CP_U2 = {19, 20, 178, 179, 180, 181, 182, 183, 184, 187, 189, 192, 193}
+JVM_LOCAL_U1 = set(range(21, 26)) | set(range(54, 59)) | {169}
+
+
+def _signed(data: bytes, pos: int, width: int) -> int:
+    return int.from_bytes(data[pos:pos + width], "big", signed=True)
+
+
+def disassemble_bytecode(code: bytes, cp: Sequence[Any]) -> List[Dict[str, Any]]:
+    """Decode JVM instructions without copying a JVM class-file library."""
+    instructions: List[Dict[str, Any]] = []
+    pos = 0
+    while pos < len(code):
+        start = pos
+        opcode = code[pos]
+        pos += 1
+        mnemonic = JVM_OPCODES.get(opcode, f"opcode_{opcode:02x}")
+        item: Dict[str, Any] = {
+            "offset": start,
+            "opcode": f"0x{opcode:02X}",
+            "mnemonic": mnemonic,
+        }
+        if opcode in JVM_LOCAL_U1:
+            item["local_index"] = code[pos] if pos < len(code) else None
+            pos += 1
+        elif opcode == 16:
+            item["value"] = _signed(code, pos, 1)
+            pos += 1
+        elif opcode == 17:
+            item["value"] = _signed(code, pos, 2)
+            pos += 2
+        elif opcode == 18:
+            index = code[pos] if pos < len(code) else 0
+            pos += 1
+            item["constant_pool_index"] = index
+            item["constant_pool_value"] = cp_value(cp, index)
+        elif opcode in JVM_CP_U2:
+            index = int.from_bytes(code[pos:pos + 2], "big") if pos + 2 <= len(code) else 0
+            pos += 2
+            item["constant_pool_index"] = index
+            item["constant_pool_value"] = cp_value(cp, index)
+        elif opcode == 132:
+            item["local_index"] = code[pos] if pos < len(code) else None
+            item["increment"] = _signed(code, pos + 1, 1)
+            pos += 2
+        elif opcode in JVM_BRANCH_SHORT:
+            delta = _signed(code, pos, 2)
+            pos += 2
+            item["branch_delta"] = delta
+            item["branch_target"] = start + delta
+        elif opcode in JVM_BRANCH_WIDE:
+            delta = _signed(code, pos, 4)
+            pos += 4
+            item["branch_delta"] = delta
+            item["branch_target"] = start + delta
+        elif opcode == 185:
+            index = int.from_bytes(code[pos:pos + 2], "big") if pos + 2 <= len(code) else 0
+            count = code[pos + 2] if pos + 2 < len(code) else 0
+            pos += 4
+            item.update({"constant_pool_index": index, "constant_pool_value": cp_value(cp, index), "argument_count": count})
+        elif opcode in {186}:
+            index = int.from_bytes(code[pos:pos + 2], "big") if pos + 2 <= len(code) else 0
+            pos += 4
+            item["constant_pool_index"] = index
+            item["constant_pool_value"] = cp_value(cp, index)
+        elif opcode == 188:
+            item["atype"] = code[pos] if pos < len(code) else None
+            pos += 1
+        elif opcode == 197:
+            index = int.from_bytes(code[pos:pos + 2], "big") if pos + 2 <= len(code) else 0
+            dimensions = code[pos + 2] if pos + 2 < len(code) else 0
+            pos += 3
+            item.update({"constant_pool_index": index, "constant_pool_value": cp_value(cp, index), "dimensions": dimensions})
+        elif opcode == 196:
+            widened_opcode = code[pos] if pos < len(code) else 0
+            pos += 1
+            item["widened_opcode"] = f"0x{widened_opcode:02X}"
+            item["widened_mnemonic"] = JVM_OPCODES.get(widened_opcode, f"opcode_{widened_opcode:02x}")
+            item["local_index"] = int.from_bytes(code[pos:pos + 2], "big") if pos + 2 <= len(code) else None
+            pos += 2
+            if widened_opcode == 132:
+                item["increment"] = _signed(code, pos, 2)
+                pos += 2
+        elif opcode in {170, 171}:
+            padding = (4 - (pos % 4)) % 4
+            pos += padding
+            default_delta = _signed(code, pos, 4)
+            pos += 4
+            item["padding"] = padding
+            item["default_target"] = start + default_delta
+            if opcode == 170:
+                low = _signed(code, pos, 4)
+                high = _signed(code, pos + 4, 4)
+                pos += 8
+                targets = []
+                for index in range(max(0, high - low + 1)):
+                    delta = _signed(code, pos, 4)
+                    pos += 4
+                    targets.append({"match": low + index, "target": start + delta})
+                item.update({"low": low, "high": high, "targets": targets})
+            else:
+                pair_count = _signed(code, pos, 4)
+                pos += 4
+                pairs = []
+                for _ in range(max(0, pair_count)):
+                    match = _signed(code, pos, 4)
+                    delta = _signed(code, pos + 4, 4)
+                    pos += 8
+                    pairs.append({"match": match, "target": start + delta})
+                item["pairs"] = pairs
+        elif opcode in {19, 20}:
+            # Handled above; retained as a guard for future opcode-table edits.
+            pass
+        elif opcode in {21, 22, 23, 24, 25, 54, 55, 56, 57, 58, 169}:
+            # Handled above; retained as a guard for future opcode-table edits.
+            pass
+        elif opcode in {0}:
+            pass
+        else:
+            # All remaining JVM instructions have no operands.
+            pass
+        item["bytecode_hex"] = code[start:pos].hex().upper()
+        instructions.append(item)
+    return instructions
+
+
 def annotation_value(reader: Reader, cp: Sequence[Any]) -> Any:
     tag = chr(reader.u1())
     if tag in "BCDFIJSZs":
@@ -226,7 +396,7 @@ def parameter_annotations_attribute(raw: bytes, cp: Sequence[Any]) -> List[List[
     return result
 
 
-def read_attributes(reader: Reader, cp: Sequence[Any]) -> Dict[str, Any]:
+def read_attributes(reader: Reader, cp: Sequence[Any], include_code_bytes: bool = False) -> Dict[str, Any]:
     result: Dict[str, Any] = {
         "signature": None,
         "constant_value": None,
@@ -269,9 +439,20 @@ def read_attributes(reader: Reader, cp: Sequence[Any]) -> Dict[str, Any]:
                 "length": code_length,
                 "sha256": hashlib.sha256(code).hexdigest().upper(),
             }
+            if include_code_bytes:
+                result["code"]["_bytes"] = code
             if sub.pos + 2 <= len(raw):
                 exception_count = sub.u2()
-                sub.bytes(exception_count * 8)
+                exceptions = []
+                for _ in range(exception_count):
+                    exceptions.append({
+                        "start_pc": sub.u2(),
+                        "end_pc": sub.u2(),
+                        "handler_pc": sub.u2(),
+                        "catch_type": sub.u2(),
+                    })
+                if include_code_bytes:
+                    result["code"]["exception_table"] = exceptions
                 if sub.pos + 2 <= len(raw):
                     nested = sub.u2()
                     for _ in range(nested):
@@ -303,7 +484,7 @@ def read_attributes(reader: Reader, cp: Sequence[Any]) -> Dict[str, Any]:
     return result
 
 
-def parse_class(data: bytes) -> Dict[str, Any]:
+def parse_class(data: bytes, include_code_bytes: bool = False) -> Dict[str, Any]:
     reader = Reader(data)
     if reader.u4() != 0xCAFEBABE:
         raise ValueError("invalid class file magic")
@@ -375,9 +556,12 @@ def parse_class(data: bytes) -> Dict[str, Any]:
         method_flags = reader.u2()
         name = cp_utf8(cp, reader.u2())
         descriptor = cp_utf8(cp, reader.u2())
-        attrs = read_attributes(reader, cp)
+        attrs = read_attributes(reader, cp, include_code_bytes=include_code_bytes)
         params, return_type = method_descriptor(descriptor)
         names = attrs.get("parameter_names", [])
+        code = attrs.get("code")
+        if include_code_bytes and code and "_bytes" in code:
+            code["instructions"] = disassemble_bytecode(code.pop("_bytes"), cp)
         methods.append({
             "name": name,
             "descriptor": descriptor,
@@ -390,7 +574,7 @@ def parse_class(data: bytes) -> Dict[str, Any]:
             "access": access_names(method_flags, "method"),
             "annotations": attrs.get("annotations", []),
             "parameter_annotations": attrs.get("parameter_annotations", []),
-            "code": attrs.get("code"),
+            "code": code,
         })
 
     attrs = read_attributes(reader, cp)
@@ -566,27 +750,38 @@ def discover_jars(game_root: Path, local_mods: Path, workshop_root: Path) -> Lis
     return specs
 
 
-def read_mod_metadata(zf: zipfile.ZipFile) -> Tuple[Optional[str], Dict[str, Any], List[str]]:
+def read_mod_metadata(zf: zipfile.ZipFile) -> Tuple[Optional[str], Dict[str, Any], List[str], str, Optional[Dict[str, Any]]]:
     candidates = [n for n in zf.namelist() if n.endswith("ModTheSpire.json")]
     if "ModTheSpire.json" in zf.namelist() and "ModTheSpire.json" not in candidates:
         candidates.insert(0, "ModTheSpire.json")
     metadata = None
     source = None
+    invalid_fallback: Optional[Dict[str, Any]] = None
     for name in candidates:
-        data = safe_json(zf.read(name))
+        raw = zf.read(name)
+        data = safe_json(raw)
         if isinstance(data, dict):
-            source = name
-            metadata = data
-            break
+            return source or name, data, candidates, "valid", invalid_fallback
+        if invalid_fallback is None:
+            invalid_fallback = {
+                "path": name,
+                "reason": "invalid_json",
+                "encoding": "utf-8",
+                "sha256": hashlib.sha256(raw).hexdigest().upper(),
+                "text": raw.decode("utf-8", errors="replace"),
+            }
     if metadata is None:
         for name in zf.namelist():
             if name.lower().endswith(".json") and "mod" in name.lower():
-                data = safe_json(zf.read(name))
+                raw = zf.read(name)
+                data = safe_json(raw)
                 if isinstance(data, dict) and "modid" in data:
                     source = name
                     metadata = data
-                    break
-    return source, metadata or {}, candidates
+                    return source, metadata, candidates, "valid_fallback_candidate", invalid_fallback
+    if invalid_fallback is not None:
+        return None, {}, candidates, "invalid_json", invalid_fallback
+    return None, {}, candidates, "missing", None
 
 
 def classify_role(spec: Dict[str, Any], full_name: str) -> str:
@@ -659,6 +854,319 @@ def mod_candidates(summaries: Sequence[Dict[str, Any]]) -> Dict[str, List[str]]:
     }
 
 
+def _annotation_type_name(value: Any) -> Optional[str]:
+    if not isinstance(value, dict):
+        return None
+    result = value.get("value")
+    if not isinstance(result, str):
+        return None
+    if result.startswith("[") or result.startswith("L"):
+        return descriptor_type(result)[0]
+    return result.replace("/", ".")
+
+
+def _annotation_target_values(value: Any) -> Iterable[Dict[str, Any]]:
+    if not isinstance(value, dict):
+        return
+    if value.get("kind") == "annotation":
+        nested = value.get("value")
+        if isinstance(nested, dict):
+            yield nested
+            for child in nested.get("elements", {}).values():
+                yield from _annotation_target_values(child)
+    elif value.get("kind") == "array":
+        for child in value.get("value", []):
+            yield from _annotation_target_values(child)
+
+
+def patch_targets_from_record(record: Dict[str, Any], spec: Dict[str, Any]) -> List[Dict[str, Any]]:
+    references: List[Dict[str, Any]] = []
+    members: List[Tuple[str, Dict[str, Any]]] = [("class", record)]
+    members.extend(("field", field) for field in record.get("fields", []))
+    members.extend(("method", method) for method in record.get("methods", []))
+    for member_kind, member in members:
+        for annotation in member.get("annotations", []):
+            annotation_type = annotation.get("type", "")
+            if "SpirePatch" not in annotation_type:
+                continue
+            element_sets = [annotation.get("elements", {})]
+            element_sets.extend(v for v in _annotation_target_values(annotation.get("elements", {}).get("value")))
+            for elements in element_sets:
+                target_class_value = elements.get("clz") or elements.get("cls")
+                target_method_value = elements.get("method")
+                target_class = _annotation_type_name(target_class_value)
+                target_method = _annotation_type_name(target_method_value)
+                if not target_class or not target_method:
+                    continue
+                parameters_value = elements.get("paramtypez") or elements.get("paramtypes")
+                parameter_values = []
+                if isinstance(parameters_value, dict) and parameters_value.get("kind") == "array":
+                    parameter_values = [_annotation_type_name(v) for v in parameters_value.get("value", [])]
+                elif parameters_value is not None:
+                    parameter_values = [_annotation_type_name(parameters_value)]
+                references.append({
+                    "patch_class": record["full_name"],
+                    "patch_member_kind": member_kind,
+                    "patch_member": member.get("name"),
+                    "patch_source_jar": spec["path"].name,
+                    "patch_source_jar_portable_path": spec["portable_path"],
+                    "patch_workshop_id": spec["workshop_id"],
+                    "annotation_type": annotation_type,
+                    "annotation_elements": elements,
+                    "target_class": target_class,
+                    "target_method": target_method,
+                    "target_parameter_types": [x for x in parameter_values if x],
+                })
+    return references
+
+
+def inventory_workshop_external_files(workshop_root: Path) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    records: List[Dict[str, Any]] = []
+    by_extension: Counter[str] = Counter()
+    by_workshop: Counter[str] = Counter()
+    total_bytes = 0
+    if not workshop_root.is_dir():
+        return records, {"file_count": 0, "total_bytes": 0, "by_extension": {}, "by_workshop_id": {}}
+    for path in sorted(workshop_root.rglob("*"), key=lambda item: item.as_posix().lower()):
+        if not path.is_file() or path.suffix.lower() == ".jar":
+            continue
+        relative = path.relative_to(workshop_root)
+        parts = relative.parts
+        workshop_id = parts[0] if parts and re.fullmatch(r"\d{8,}", parts[0]) else None
+        extension = path.suffix.lower() or "<none>"
+        size = path.stat().st_size
+        record = {
+            "schema_version": SCHEMA,
+            "workshop_id": workshop_id,
+            "portable_path": f"workshop/{relative.as_posix()}",
+            "path_at_generation": str(path),
+            "relative_path": relative.as_posix(),
+            "name": path.name,
+            "extension": extension,
+            "size": size,
+            "sha256": sha256_file(path),
+        }
+        records.append(record)
+        total_bytes += size
+        by_extension[extension] += 1
+        by_workshop[workshop_id or "<unknown>"] += 1
+    return records, {
+        "file_count": len(records),
+        "total_bytes": total_bytes,
+        "by_extension": dict(sorted(by_extension.items())),
+        "by_workshop_id": dict(sorted(by_workshop.items())),
+        "note": "Only external files outside Workshop JAR archives are indexed; file bytes are not copied into the knowledge pack.",
+    }
+
+
+def _safe_snapshot_name(class_name: str) -> str:
+    safe = re.sub(r"[^A-Za-z0-9._$-]", "_", class_name)
+    suffix = hashlib.sha256(class_name.encode("utf-8")).hexdigest()[:10]
+    return f"{safe}.{suffix}.javap.txt"
+
+
+def _method_matches_target(method: Dict[str, Any], target_method: str, parameter_types: Sequence[str]) -> bool:
+    normalized_method = "<init>" if target_method == "<ctor>" else target_method
+    if normalized_method in {"<class>", "<clinit>"} or method.get("name") != normalized_method:
+        return False
+    if not parameter_types:
+        return True
+    actual = [str(value).replace("/", ".") for value in method.get("parameter_types", [])]
+    expected = [str(value).replace("/", ".") for value in parameter_types]
+    return actual == expected
+
+
+def _choose_class_location(locations: Sequence[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    if not locations:
+        return None
+    rank = {"base_game": 0, "framework": 1, "local_mod": 2, "workshop_mod": 3}
+    return sorted(locations, key=lambda item: (rank.get(item["spec"]["scope"], 9), item["spec"]["portable_path"]))[0]
+
+
+def generate_bytecode_artifacts(
+    output: Path,
+    patch_references: Sequence[Dict[str, Any]],
+    class_locations: Dict[str, List[Dict[str, Any]]],
+    specs: Sequence[Dict[str, Any]],
+    javap_home: Optional[Path],
+) -> Dict[str, Any]:
+    bytecode_root = output / "bytecode"
+    javap_root = bytecode_root / "javap"
+    bytecode_root.mkdir(parents=True, exist_ok=True)
+    javap_root.mkdir(parents=True, exist_ok=True)
+    target_classes = sorted(set(item["target_class"] for item in patch_references))
+    parsed_targets: Dict[str, Dict[str, Any]] = {}
+    locations: Dict[str, Optional[Dict[str, Any]]] = {}
+    parse_errors: List[Dict[str, Any]] = []
+    for target_class in target_classes:
+        location = _choose_class_location(class_locations.get(target_class, []))
+        locations[target_class] = location
+        if location is None:
+            continue
+        try:
+            with zipfile.ZipFile(location["spec"]["path"]) as zf:
+                data = zf.read(location["entry"])
+            parsed_targets[target_class] = {
+                "record": parse_class(data, include_code_bytes=True),
+                "spec": location["spec"],
+                "entry": location["entry"],
+            }
+        except Exception as exc:
+            parse_errors.append({"target_class": target_class, "error": str(exc)})
+
+    javap_executable: Optional[Path] = None
+    if javap_home:
+        candidate = javap_home / "bin" / ("javap.exe" if os.name == "nt" else "javap")
+        if candidate.is_file():
+            javap_executable = candidate
+    if javap_executable is None:
+        found = shutil.which("javap")
+        if found:
+            javap_executable = Path(found)
+    javap_version = None
+    javap_errors: List[Dict[str, Any]] = []
+    javap_paths: Dict[str, str] = {}
+    if javap_executable:
+        try:
+            version_proc = subprocess.run([str(javap_executable), "-version"], capture_output=True, text=True, timeout=20)
+            javap_version = (version_proc.stdout or version_proc.stderr).strip().splitlines()[0] if (version_proc.stdout or version_proc.stderr).strip() else None
+        except (OSError, subprocess.SubprocessError) as exc:
+            javap_errors.append({"target_class": "<javap-version>", "error": str(exc)})
+        for target_class in target_classes:
+            location = locations.get(target_class)
+            if location is None:
+                continue
+            existing_snapshot = javap_root / _safe_snapshot_name(target_class)
+            if existing_snapshot.is_file():
+                javap_paths[target_class] = existing_snapshot.relative_to(output).as_posix()
+                continue
+            ordered_paths = [location["spec"]["path"]] + [spec["path"] for spec in specs if spec is not location["spec"]]
+            classpath = os.pathsep.join(str(path) for path in ordered_paths)
+            try:
+                proc = subprocess.run(
+                    [str(javap_executable), "-classpath", classpath, "-p", "-s", "-c", target_class],
+                    capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
+                )
+                if proc.returncode == 0:
+                    snapshot_path = javap_root / _safe_snapshot_name(target_class)
+                    snapshot_path.write_text(proc.stdout, encoding="utf-8")
+                    javap_paths[target_class] = snapshot_path.relative_to(output).as_posix()
+                else:
+                    javap_errors.append({"target_class": target_class, "error": (proc.stderr or proc.stdout).strip()})
+            except (OSError, subprocess.SubprocessError) as exc:
+                javap_errors.append({"target_class": target_class, "error": str(exc)})
+
+    instruction_path = bytecode_root / "instruction_snapshots.jsonl"
+    instruction_by_key: Dict[Tuple[str, str, str], Dict[str, Any]] = {}
+    with instruction_path.open("w", encoding="utf-8") as handle:
+        for target_class, parsed in sorted(parsed_targets.items()):
+            record = parsed["record"]
+            for method in record.get("methods", []):
+                key = (target_class, method["name"], method["descriptor"])
+                code = method.get("code")
+                code_metadata = None
+                if code:
+                    code_metadata = {key: value for key, value in code.items() if key != "instructions"}
+                snapshot_id = hashlib.sha256("|".join(key).encode("utf-8")).hexdigest()[:20]
+                item = {
+                    "schema_version": SCHEMA,
+                    "snapshot_id": snapshot_id,
+                    "target_class": target_class,
+                    "target_method": method["name"],
+                    "descriptor": method["descriptor"],
+                    "source_jar": parsed["spec"]["path"].name,
+                    "source_jar_portable_path": parsed["spec"]["portable_path"],
+                    "classfile": record.get("classfile"),
+                    "code": code_metadata,
+                    "javap_snapshot": javap_paths.get(target_class),
+                    "instruction_level": "JVM bytecode (Java IL equivalent; not .NET CLR IL)",
+                    "instructions": (code or {}).get("instructions", []) if code else [],
+                }
+                handle.write(json.dumps(item, ensure_ascii=False, separators=(",", ":")) + "\n")
+                instruction_by_key[key] = item
+
+    patch_target_path = output / "environment" / "patch_targets.jsonl"
+    status_counts: Counter[str] = Counter()
+    snapshot_counts: Counter[str] = Counter()
+    with patch_target_path.open("w", encoding="utf-8") as handle:
+        for reference in patch_references:
+            target_class = reference["target_class"]
+            parsed = parsed_targets.get(target_class)
+            location = locations.get(target_class)
+            output_item = dict(reference)
+            output_item["target_status"] = "missing_class" if parsed is None else "found"
+            output_item["target_source_jar"] = parsed["spec"]["path"].name if parsed else None
+            output_item["target_source_jar_portable_path"] = parsed["spec"]["portable_path"] if parsed else None
+            output_item["javap_snapshot"] = javap_paths.get(target_class)
+            output_item["instruction_snapshot_ids"] = []
+            if parsed is not None:
+                target_method = reference["target_method"]
+                if target_method in {"<class>", "<clinit>"}:
+                    output_item["target_status"] = "class_target"
+                else:
+                    matches = [
+                        method for method in parsed["record"].get("methods", [])
+                        if _method_matches_target(method, target_method, reference.get("target_parameter_types", []))
+                    ]
+                    if not matches:
+                        output_item["target_status"] = "method_not_found"
+                        output_item["available_method_descriptors"] = [
+                            method["descriptor"] for method in parsed["record"].get("methods", [])
+                            if method.get("name") == ("<init>" if target_method == "<ctor>" else target_method)
+                        ]
+                    else:
+                        output_item["matched_method_descriptors"] = [method["descriptor"] for method in matches]
+                        output_item["instruction_snapshot_ids"] = [
+                            instruction_by_key[(target_class, method["name"], method["descriptor"])]
+                            ["snapshot_id"] for method in matches
+                        ]
+            status_counts[output_item["target_status"]] += 1
+            snapshot_counts["with_javap"] += bool(output_item.get("javap_snapshot"))
+            snapshot_counts["with_instruction"] += bool(output_item.get("instruction_snapshot_ids"))
+            handle.write(json.dumps(output_item, ensure_ascii=False, separators=(",", ":")) + "\n")
+
+    if javap_errors:
+        (bytecode_root / "javap_errors.jsonl").write_text(
+            "\n".join(json.dumps(item, ensure_ascii=False, separators=(",", ":")) for item in javap_errors) + "\n",
+            encoding="utf-8",
+        )
+    summary = {
+        "schema_version": SCHEMA,
+        "patch_reference_count": len(patch_references),
+        "unique_target_class_count": len(target_classes),
+        "parsed_target_class_count": len(parsed_targets),
+        "missing_target_class_count": sum(1 for target in target_classes if target not in parsed_targets),
+        "instruction_snapshot_count": len(instruction_by_key),
+        "javap_snapshot_count": len(javap_paths),
+        "status_counts": dict(sorted(status_counts.items())),
+        "javap_version": javap_version,
+        "javap_executable_at_generation": str(javap_executable) if javap_executable else None,
+        "parse_errors": parse_errors,
+        "javap_error_count": len(javap_errors),
+        "files": {
+            "patch_targets": "environment/patch_targets.jsonl",
+            "instruction_snapshots": "bytecode/instruction_snapshots.jsonl",
+            "javap_snapshots": "bytecode/javap/",
+        },
+        "note": "For this Java game, instruction-level IL means JVM bytecode; no .NET CLR IL is present.",
+    }
+    (output / "environment" / "patch_target_summary.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    (bytecode_root / "README.md").write_text(
+        """# 补丁目标字节码快照
+
+`environment/patch_targets.jsonl` records which installed Mod patch annotations point to which target classes/methods.
+
+`instruction_snapshots.jsonl` contains parsed JVM instructions, offsets, operands, constant-pool references, branch targets, and method bytecode hashes. `javap/` contains the corresponding `javap -p -s -c` text snapshots when a JDK tool was available at generation time.
+
+Slay the Spire is a Java game, so these are JVM bytecode instructions (Java IL equivalent), not .NET CLR IL. Missing classes or methods remain recorded with an explicit status instead of being guessed.
+""",
+        encoding="utf-8",
+    )
+    return summary
+
+
 def generate_docs(root: Path, counts: Dict[str, Dict[str, int]], jars: List[Dict[str, Any]], catalog: List[Dict[str, Any]], java_info: Dict[str, Any], game_root: Path) -> None:
     base = next((j for j in jars if j["name"] == "desktop-1.0.jar"), None)
     basemod = next((m for m in catalog if m.get("jar_name") == "BaseMod.jar"), None)
@@ -687,8 +1195,9 @@ def generate_docs(root: Path, counts: Dict[str, Dict[str, int]], jars: List[Dict
 1. 先读本文件和 `manifest.json`，确认这是哪一套 JAR。
 2. 需要查本体类时，查 `api/base_game_api.types.jsonl`；需要编译 API 时分别查 `api/modthespire_api.types.jsonl`、`api/basemod_api.types.jsonl`、`api/stslib_api.types.jsonl`。
 3. 需要理解本机已经装了什么 Mod 时，查 `environment/mod_catalog.json` 和 `api/installed_mods_api.types.jsonl`；Mod 的 `ModTheSpire.json` 元数据、注解和资源路径也被索引。
-4. 遇到版本、类路径、资源路径或依赖问题，先查 `environment/jar_inventory.jsonl`、`environment/resource_inventory.jsonl` 和 `environment/workshop_manifest.json`。
-5. 需要快速定位类/成员时，用 `tools/query-sts-api.ps1`；需要判断当前 JAR 是否仍与本包一致时，用 `tools/verify-sts-pack.ps1`。
+4. 遇到版本、类路径、资源路径或依赖问题，先查 `environment/jar_inventory.jsonl`、`environment/resource_inventory.jsonl`、`environment/workshop_manifest.json` 和 `environment/workshop_external_files.jsonl`。
+5. 遇到补丁目标、Locator 或方法行为问题，查 `environment/patch_targets.jsonl`、`bytecode/instruction_snapshots.jsonl` 和对应的 `bytecode/javap/*.txt`。
+6. 需要快速定位类/成员时，用 `tools/query-sts-api.ps1`；需要查补丁目标字节码时，用 `tools/query-bytecode.ps1`；需要判断当前 JAR 是否仍与本包一致时，用 `tools/verify-sts-pack.ps1`。
 
 ## 证据优先级
 
@@ -701,13 +1210,17 @@ def generate_docs(root: Path, counts: Dict[str, Dict[str, int]], jars: List[Dict
 - `docs/PATCHING_GUIDE.md`：ModTheSpire 注解、Locator、插入/前后缀/替换/字节码补丁。
 - `docs/RESOURCE_AND_LOCALIZATION.md`：资源、语言包和 `loadCustomStrings` 的路径规则。
 - `docs/TROUBLESHOOTING.md`：日志、依赖、Java 版本和常见加载失败的证据化排查顺序。
+- `environment/workshop_external_files.jsonl`：Workshop JAR 外部图片、音频、配置和其他文件的路径/大小/SHA-256 清单。
+- `environment/patch_targets.jsonl`、`bytecode/`：补丁注解目标、`javap -p -s -c` 快照和指令级 JVM bytecode。
 - `sts_ai_knowledge_report.html`：无需服务器、双击即可使用的离线类/成员浏览器。
 - `templates/`：不依赖绝对路径的最小 Java 8 Mod 模板。
 
 ## 边界
 
-- 本包没有复制游戏 JAR、图片、音频或存档，只记录它们的哈希、类签名和资源索引；这样可以避免把资料包绑定到生成机的绝对路径，也避免把大体积二进制重复分发。
-- 类记录包含私有成员和方法代码长度/哈希，但不等同于可读的 Java 源码；行为判断需要结合局部 `javap -c`、运行日志或实际编译/运行结果。
+- 本包没有复制游戏 JAR、Workshop 外置图片、音频或存档，只记录它们的哈希、类签名和资源索引；这样可以避免把资料包绑定到生成机的绝对路径，也避免把大体积二进制重复分发。
+- 类记录包含私有成员和方法代码长度/哈希；补丁目标另外提供局部 `javap -p -s -c` 文本和解析后的 JVM 指令，但仍不等同于可读的 Java 源码。
+- Java Mod 的“IL”在本包中指 JVM bytecode 指令，不是 .NET CLR IL；目标类/方法不存在或无法解析时会保留明确的状态字段，不会假装生成快照。
+- 无效的 `ModTheSpire.json` 会在 `metadata_raw_fallback` 中保留 UTF-8 原文、路径和 SHA-256，供 AI 或人工回退判断。
 - `installed_mods` 是生成时本机目录中的快照；创意工坊更新后必须重新生成并重新校验。
 """
     (root / "AI_INGESTION_GUIDE.md").write_text(doc, encoding="utf-8")
@@ -802,14 +1315,14 @@ def generate_docs(root: Path, counts: Dict[str, Dict[str, int]], jars: List[Dict
 ## 写补丁的顺序
 
 1. 从 `api/base_game_api.types.jsonl` 找目标类和目标重载。
-2. 用 `tools/query-sts-api.ps1 -IncludeBody` 看方法的代码长度/哈希和补丁类已有的注解属性；必要时对本地 JAR 单独运行 `javap -c` 做行为确认。
+2. 用 `tools/query-sts-api.ps1 -IncludeBody` 看方法的代码长度/哈希和补丁类已有的注解属性；优先查 `environment/patch_targets.jsonl` 与 `bytecode/instruction_snapshots.jsonl`，再用对应的 `bytecode/javap/*.txt` 或 `tools/javap-type.ps1 -Bytecode` 做行为确认。
 3. 选择最小补丁：前缀/后缀优先，其次插入，最后才是 Instrument/Raw。
 4. 如果目标属于可选 Mod，填写 `requiredModId` 或 `optional`，并在 `ModTheSpire.json` 中区分硬依赖和可选依赖。
 5. 一次只引入一个补丁目标，启动后检查日志中的 patch 应用结果。
 
 ## Locator 不能靠猜
 
-插入点由字节码指令决定；源码行号、反编译出来的局部变量名和旧版教程都不能替代当前 JAR。类记录中的 `code.sha256` 只用于发现目标是否变了，不是可读源码。目标方法变更后应重新确定 Matcher/Locator，而不是只改注解名字。
+插入点由字节码指令决定；源码行号、反编译出来的局部变量名和旧版教程都不能替代当前 JAR。类记录中的 `code.sha256` 只用于发现目标是否变了；`bytecode/instruction_snapshots.jsonl` 才包含偏移、操作码、操作数、常量池引用和分支目标。目标方法变更后应重新确定 Matcher/Locator，而不是只改注解名字。
 
 ## 常见误区
 
@@ -826,7 +1339,7 @@ def generate_docs(root: Path, counts: Dict[str, Dict[str, int]], jars: List[Dict
 
 Mod JAR 内资源路径是相对于 JAR 根目录的正斜杠路径，代码通过 `Class.getResource`、`Gdx.files.internal`、`ImageMaster` 或 BaseMod 的加载器访问。不要把 `E:\\SteamLibrary...` 写进 Mod；把资源放在自己的前缀目录下，例如 `mymodResources/images/...` 和 `mymodResources/localization/eng/...`。
 
-本机已安装 Mod 的真实资源路径可查 `environment/resource_inventory.jsonl`，其中 `source_jar` 和 `resource_path` 能帮助 AI 复现现有项目的命名约定。
+本机已安装 Mod 的 JAR 内资源路径可查 `environment/resource_inventory.jsonl`；JAR 外部的 Workshop 图片、音频、配置和其他文件可查 `environment/workshop_external_files.jsonl`。两者都只提供路径和指纹，不把二进制内容复制进知识库。
 
 ## 字符串
 
@@ -864,6 +1377,8 @@ Mod JAR 内资源路径是相对于 JAR 根目录的正斜杠路径，代码通�
 ## 依赖顺序
 
 `ModTheSpire.json` 的 `dependencies` 是加载依赖；`optional_dependencies` 不应被当成硬依赖。先检查 `environment/mod_catalog.json` 的元数据，再检查实际 JAR 是否存在；只在类确实被引用时才把 StSLib 或其他 Mod 设为硬依赖。
+
+如果 `metadata_status` 为 `invalid_json`，不要把空的 `metadata` 当成“没有元数据”；读取同一条记录的 `metadata_raw_fallback.text`，并结合 `metadata_raw_fallback.sha256` 判断原文是否发生变化。
 
 ## 版本不一致时
 
@@ -932,7 +1447,8 @@ def write_verify_tool(root: Path) -> None:
 param(
     [Parameter(Mandatory = $true)] [string]$GameRoot,
     [Parameter(Mandatory = $true)] [string]$PackRoot,
-    [switch]$VerifyPackFiles
+    [switch]$VerifyPackFiles,
+    [switch]$VerifyWorkshopExternalFiles
 )
 
 $ErrorActionPreference = 'Stop'
@@ -958,6 +1474,24 @@ foreach ($jar in @($manifest.jars)) {
     $hash = (Get-FileHash -LiteralPath $actual -Algorithm SHA256).Hash.ToUpperInvariant()
     if (($item.Length -ne [int64]$jar.size) -or ($hash -ne ([string]$jar.sha256).ToUpperInvariant())) { $failures.Add("mismatch $($jar.name) [$portable]: sizeOk=$($item.Length -eq [int64]$jar.size) hashOk=$($hash -eq ([string]$jar.sha256).ToUpperInvariant())") }
     else { Write-Host "OK   $($jar.name) $hash" -ForegroundColor Green }
+}
+if ($VerifyWorkshopExternalFiles) {
+    $externalIndex = Join-Path $packRoot 'environment\workshop_external_files.jsonl'
+    if (-not (Test-Path -LiteralPath $externalIndex -PathType Leaf)) { $failures.Add("missing external Workshop index: $externalIndex") }
+    else {
+        foreach ($line in Get-Content -LiteralPath $externalIndex -Encoding UTF8) {
+            if ([string]::IsNullOrWhiteSpace($line)) { continue }
+            $entry = $line | ConvertFrom-Json
+            $portable = [string]$entry.portable_path
+            if ($portable -notlike 'workshop/*') { $failures.Add("invalid external Workshop path: $portable"); continue }
+            $relative = $portable.Substring(9) -replace '/', [IO.Path]::DirectorySeparatorChar
+            $actual = Join-Path $workshopRoot $relative
+            if (-not (Test-Path -LiteralPath $actual -PathType Leaf)) { $failures.Add("missing external Workshop file [$portable]: $actual"); continue }
+            $item = Get-Item -LiteralPath $actual
+            $hash = (Get-FileHash -LiteralPath $actual -Algorithm SHA256).Hash.ToUpperInvariant()
+            if ($item.Length -ne [int64]$entry.size -or $hash -ne ([string]$entry.sha256).ToUpperInvariant()) { $failures.Add("external Workshop mismatch: $portable") }
+        }
+    }
 }
 if ($VerifyPackFiles) {
     $index = Join-Path $packRoot 'ai_file_index.jsonl'
@@ -993,6 +1527,45 @@ if ($Bytecode) { $args += '-c' }
 $args += $TypeName
 & $javap @args
 exit $LASTEXITCODE
+''', encoding="utf-8")
+
+
+def write_bytecode_query_tool(root: Path) -> None:
+    (root / "tools" / "query-bytecode.ps1").write_text(r'''[CmdletBinding()]
+param(
+    [Parameter(Mandatory = $true)] [string]$PackRoot,
+    [string]$TargetClass,
+    [string]$TargetMethod,
+    [string]$PatchClass,
+    [switch]$IncludeInstructions
+)
+
+$ErrorActionPreference = 'Stop'
+$packRoot = [IO.Path]::GetFullPath($PackRoot)
+$targetFile = Join-Path $packRoot 'environment\patch_targets.jsonl'
+if (-not (Test-Path -LiteralPath $targetFile -PathType Leaf)) { throw "Patch target index not found: $targetFile" }
+$targetMatches = New-Object System.Collections.Generic.List[object]
+foreach ($line in Get-Content -LiteralPath $targetFile -Encoding UTF8) {
+    if ([string]::IsNullOrWhiteSpace($line)) { continue }
+    $item = $line | ConvertFrom-Json
+    if ($TargetClass -and $item.target_class -notlike $TargetClass) { continue }
+    if ($TargetMethod -and $item.target_method -notlike $TargetMethod) { continue }
+    if ($PatchClass -and $item.patch_class -notlike $PatchClass) { continue }
+    $targetMatches.Add($item)
+}
+if (-not $IncludeInstructions) { @($targetMatches.ToArray()) | ConvertTo-Json -Depth 100; exit 0 }
+$snapshotFile = Join-Path $packRoot 'bytecode\instruction_snapshots.jsonl'
+$wanted = @{}
+foreach ($item in $targetMatches) { foreach ($id in @($item.instruction_snapshot_ids)) { $wanted[[string]$id] = $true } }
+$snapshots = New-Object System.Collections.Generic.List[object]
+if (Test-Path -LiteralPath $snapshotFile -PathType Leaf) {
+    foreach ($line in Get-Content -LiteralPath $snapshotFile -Encoding UTF8) {
+        if ([string]::IsNullOrWhiteSpace($line)) { continue }
+        $item = $line | ConvertFrom-Json
+        if ($wanted.ContainsKey([string]$item.snapshot_id)) { $snapshots.Add($item) }
+    }
+}
+[pscustomobject][ordered]@{ patch_targets=@($targetMatches.ToArray()); instruction_snapshots=@($snapshots.ToArray()) } | ConvertTo-Json -Depth 100
 ''', encoding="utf-8")
 
 
@@ -1061,6 +1634,8 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
     resource_count = sum(int(item.get("resource_count", 0)) for item in jar_inventory)
     text_resource_count = sum(int(item.get("resource_text_count", 0)) for item in jar_inventory)
     workshop_count = sum(1 for item in jar_inventory if item.get("scope") == "workshop_mod")
+    framework_count = sum(1 for item in jar_inventory if item.get("scope") == "framework")
+    base_jar_count = sum(1 for item in jar_inventory if item.get("scope") == "base_game")
     local_count = sum(1 for item in jar_inventory if item.get("scope") == "local_mod")
     total_types = sum(int(data.get("types", 0)) for data in api_counts.values())
     base = jar_by_name("desktop-1.0.jar") or {}
@@ -1138,7 +1713,7 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
 <section class="stats">{stat_cards}</section>
 <div class="callout"><strong>分析边界：</strong>本报告按生成时本机的 `desktop-1.0.jar`、ModTheSpire、BaseMod、StSLib 与已安装 Mod 生成；当前 Steam Workshop API 分类的 {api_library_present}/{len(WORKSHOP_API_IDS)} 个项目也已纳入并在下方单独列出。API 记录保留私有成员、真实 JVM 描述符和方法代码哈希；本包不复制游戏二进制和图片，版本变化后应先用 SHA-256 校验并重新生成。</div>
 
-<section class="section"><h2 class="section-title">一、版本与文件指纹 <span>当前资料基线</span></h2><div class="panel"><table><thead><tr><th>角色</th><th>程序/文件</th><th>大小</th><th>SHA-256</th><th>元数据版本</th></tr></thead><tbody>{fingerprint_html}</tbody></table><div class="panel-pad" style="color:#778092;font-size:12px">本次快照还包含本地 Mod {local_count} 个、创意工坊 JAR {workshop_count} 个；完整清单见 <code>environment/jar_inventory.jsonl</code> 与 <code>environment/workshop_manifest.json</code>。</div></div></section>
+<section class="section"><h2 class="section-title">一、版本与文件指纹 <span>当前资料基线</span></h2><div class="panel"><table><thead><tr><th>角色</th><th>程序/文件</th><th>大小</th><th>SHA-256</th><th>元数据版本</th></tr></thead><tbody>{fingerprint_html}</tbody></table><div class="panel-pad" style="color:#778092;font-size:12px">JAR 快照共 {number(len(jar_inventory))} 个：本体 {base_jar_count}、框架 {framework_count}、本地 Mod {local_count}、Workshop Mod {workshop_count}。其中框架 JAR 来自 Workshop，但在报告中单独归类；完整清单见 <code>environment/jar_inventory.jsonl</code> 与 <code>environment/workshop_manifest.json</code>。</div></div></section>
 
 <section class="section" id="libraries"><h2 class="section-title">二、依赖库与框架清单 <span>{api_library_present}/{len(WORKSHOP_API_IDS)} 个 Workshop API 项目</span></h2><div class="panel"><table><thead><tr><th>分类</th><th>库/框架</th><th>实际 JAR</th><th>声明依赖</th><th>类型</th><th>状态</th></tr></thead><tbody>{api_library_html}</tbody></table><div class="panel-pad" style="color:#778092;font-size:12px">这里按 Steam Workshop 的 API 分类记录专用库、框架和可复用前置；其他普通内容 Mod 仍完整收录在 <code>api/installed_mods_api.types.jsonl</code> 与 <code>environment/mod_catalog.json</code>。同名 JAR 按 portable_path 区分。</div></div></section>
 
@@ -1260,6 +1835,8 @@ def build_pack(args: argparse.Namespace) -> None:
     api_handles: Dict[str, Any] = {}
     api_counts: Dict[str, Dict[str, int]] = defaultdict(lambda: {"types": 0, "methods": 0, "fields": 0, "bytes": 0})
     api_index: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
+    patch_references: List[Dict[str, Any]] = []
+    class_locations: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
     all_index_path = output / "environment" / "class_index.jsonl"
     all_index = all_index_path.open("w", encoding="utf-8")
     jar_inventory: List[Dict[str, Any]] = []
@@ -1282,7 +1859,7 @@ def build_pack(args: argparse.Namespace) -> None:
             role_counts: Counter[str] = Counter()
             with zipfile.ZipFile(path) as zf:
                 names = zf.namelist()
-                metadata_name, metadata, metadata_candidates = read_mod_metadata(zf)
+                metadata_name, metadata, metadata_candidates, metadata_status, metadata_raw_fallback = read_mod_metadata(zf)
                 manifest = {}
                 if "META-INF/MANIFEST.MF" in zf.namelist():
                     manifest = parse_manifest(zf.read("META-INF/MANIFEST.MF"))
@@ -1341,6 +1918,8 @@ def build_pack(args: argparse.Namespace) -> None:
                     summaries.append(summary)
                     api_index[role].append(summary)
                     all_index.write(json.dumps(summary, ensure_ascii=False, separators=(",", ":")) + "\n")
+                    class_locations[full_name].append({"spec": spec, "entry": class_name})
+                    patch_references.extend(patch_targets_from_record(record, spec))
 
                 for item in text_entries:
                     resource_text_handle.write(json.dumps(item, ensure_ascii=False, separators=(",", ":")) + "\n")
@@ -1359,6 +1938,8 @@ def build_pack(args: argparse.Namespace) -> None:
                     "manifest": manifest,
                     "mod_metadata_file": metadata_name,
                     "metadata_candidates": metadata_candidates,
+                    "metadata_status": metadata_status,
+                    "metadata_raw_fallback": metadata_raw_fallback,
                     "metadata": metadata,
                     "resource_paths": [x["resource_path"] for x in resource_entries],
                     "resource_text_count": len(text_entries),
@@ -1371,6 +1952,8 @@ def build_pack(args: argparse.Namespace) -> None:
                     "portable_path": spec["portable_path"],
                     "sha256": jar_hash,
                     "metadata_file": metadata_name,
+                    "metadata_status": metadata_status,
+                    "metadata_raw_fallback": metadata_raw_fallback,
                     "metadata": metadata,
                     "class_count": len(class_names),
                     "role_counts": dict(sorted(role_counts.items())),
@@ -1424,6 +2007,20 @@ def build_pack(args: argparse.Namespace) -> None:
         "note": "The ACF is an audit snapshot; the local JAR path and SHA-256 remain authoritative when verifying a pack.",
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+    external_files, external_summary = inventory_workshop_external_files(workshop_root)
+    (output / "environment" / "workshop_external_files.jsonl").write_text(
+        "\n".join(json.dumps(item, ensure_ascii=False, separators=(",", ":")) for item in external_files) + "\n",
+        encoding="utf-8",
+    )
+    (output / "environment" / "workshop_external_summary.json").write_text(
+        json.dumps({"schema_version": SCHEMA, **external_summary}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    bytecode_summary = generate_bytecode_artifacts(
+        output, patch_references, class_locations, specs,
+        Path(args.javap_home).expanduser().resolve() if args.javap_home else None,
+    )
+
     for role, filename in ROLE_FILES.items():
         entries = api_index.get(role, [])
         (output / "api" / filename.replace(".types.jsonl", ".index.json")).write_text(json.dumps({
@@ -1449,28 +2046,42 @@ def build_pack(args: argparse.Namespace) -> None:
         "workshop_root_at_generation": str(workshop_root),
         "game_app_id": "646570",
         "java": java_info,
+        "javap_home_at_generation": str(Path(args.javap_home).expanduser().resolve()) if args.javap_home else None,
         "framework_jars": sorted(FRAMEWORK_JARS),
         "api_parser": "generate_sts_pack.py / JVM class-file parser",
         "notes": [
             "Portable consumers should use portable_path and role; path_at_generation is audit-only.",
             "The base game API role is limited to com.megacrit.cardcrawl.*; bundled libraries are in third_party.",
             "Installed mod APIs include local mods and workshop jars present at generation time.",
+            "Workshop external files are indexed by path, size, and SHA-256; their binary contents are not copied.",
+            "Patch target records include raw annotation targets, javap snapshots, and parsed JVM bytecode instructions when available.",
+            "Invalid ModTheSpire.json files retain a metadata_raw_fallback field instead of being silently discarded.",
         ],
+        "workshop_external_files": {
+            "manifest": "environment/workshop_external_files.jsonl",
+            "summary": "environment/workshop_external_summary.json",
+            "file_count": external_summary["file_count"],
+            "total_bytes": external_summary["total_bytes"],
+        },
+        "patch_targets": bytecode_summary,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     generate_docs(output, api_counts, jar_inventory, catalog, java_info, game_root)
     write_query_tool(output)
     write_verify_tool(output)
     write_javap_tool(output)
+    write_bytecode_query_tool(output)
     write_html_report(output, api_counts, api_index, jar_inventory, game_version)
     write_template(output)
-    shutil.copy2(Path(__file__).resolve(), output / "tools" / "generate_sts_pack.py")
+    generator_copy = output / "tools" / "generate_sts_pack.py"
+    if Path(__file__).resolve() != generator_copy.resolve():
+        shutil.copy2(Path(__file__).resolve(), generator_copy)
 
     manifest = {
         "schema_version": SCHEMA,
         "pack_id": "slay-the-spire-ai-modding-knowledge",
-        "pack_version": "1.0.0",
-        "generated_by": "generate_sts_pack.py/1.0.0",
+        "pack_version": PACK_VERSION,
+        "generated_by": f"generate_sts_pack.py/{PACK_VERSION}",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "purpose": "Portable Slay the Spire Java ModTheSpire/BaseMod/StSLib mod-development knowledge pack",
         "game_profile": {
@@ -1488,9 +2099,11 @@ def build_pack(args: argparse.Namespace) -> None:
             "Do not infer method overloads from names; use descriptor and parameter_types.",
         ],
         "jars": jar_inventory,
+        "workshop_external_files": external_summary,
+        "patch_target_artifacts": bytecode_summary,
         "files": [
             "AI_INGESTION_GUIDE.md", "manifest.json", "ai_file_index.jsonl",
-            "environment/", "api/", "docs/", "templates/", "tools/", "resources/",
+            "environment/", "api/", "bytecode/", "docs/", "templates/", "tools/", "resources/",
         ],
     }
     (output / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -1518,6 +2131,7 @@ def main() -> None:
     parser.add_argument("--game-root", required=True)
     parser.add_argument("--local-mods")
     parser.add_argument("--workshop-root")
+    parser.add_argument("--javap-home", help="Optional JDK home used to capture javap -p -s -c snapshots")
     parser.add_argument("--output", required=True)
     parser.add_argument("--force", action="store_true")
     build_pack(parser.parse_args())

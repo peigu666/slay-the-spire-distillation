@@ -1,0 +1,343 @@
+Compiled from "ShowCardAndObtainEffect.java"
+public class com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect extends com.megacrit.cardcrawl.vfx.AbstractGameEffect {
+  private static final float EFFECT_DUR;
+    descriptor: F
+
+  private static final float FAST_DUR;
+    descriptor: F
+
+  private com.megacrit.cardcrawl.cards.AbstractCard card;
+    descriptor: Lcom/megacrit/cardcrawl/cards/AbstractCard;
+
+  private static final float PADDING;
+    descriptor: F
+
+  private boolean converge;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect(com.megacrit.cardcrawl.cards.AbstractCard, float, float, boolean);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;FFZ)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/vfx/AbstractGameEffect."<init>":()V
+       4: aload_1
+       5: getfield      #2                  // Field com/megacrit/cardcrawl/cards/AbstractCard.color:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+       8: getstatic     #3                  // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.CURSE:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+      11: if_acmpne     69
+      14: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      17: ldc           #6                  // String Omamori
+      19: invokevirtual #7                  // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+      22: ifeq          69
+      25: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      28: ldc           #6                  // String Omamori
+      30: invokevirtual #8                  // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+      33: getfield      #9                  // Field com/megacrit/cardcrawl/relics/AbstractRelic.counter:I
+      36: ifeq          69
+      39: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      42: ldc           #6                  // String Omamori
+      44: invokevirtual #8                  // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+      47: checkcast     #5                  // class com/megacrit/cardcrawl/relics/Omamori
+      50: invokevirtual #10                 // Method com/megacrit/cardcrawl/relics/Omamori.use:()V
+      53: aload_0
+      54: fconst_0
+      55: putfield      #11                 // Field duration:F
+      58: aload_0
+      59: iconst_1
+      60: putfield      #12                 // Field isDone:Z
+      63: aload_0
+      64: iload         4
+      66: putfield      #13                 // Field converge:Z
+      69: aload_1
+      70: getfield      #14                 // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+      73: invokestatic  #15                 // Method com/megacrit/cardcrawl/unlock/UnlockTracker.markCardAsSeen:(Ljava/lang/String;)V
+      76: aload_1
+      77: getfield      #14                 // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+      80: aload_1
+      81: getfield      #16                 // Field com/megacrit/cardcrawl/cards/AbstractCard.rarity:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+      84: aload_1
+      85: getfield      #2                  // Field com/megacrit/cardcrawl/cards/AbstractCard.color:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+      88: invokestatic  #17                 // Method com/megacrit/cardcrawl/helpers/CardHelper.obtain:(Ljava/lang/String;Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;)V
+      91: aload_0
+      92: aload_1
+      93: putfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      96: getstatic     #19                 // Field com/megacrit/cardcrawl/core/Settings.FAST_MODE:Z
+      99: ifeq          111
+     102: aload_0
+     103: ldc           #21                 // float 0.5f
+     105: putfield      #11                 // Field duration:F
+     108: goto          116
+     111: aload_0
+     112: fconst_2
+     113: putfield      #11                 // Field duration:F
+     116: aload_0
+     117: fload_2
+     118: fload_3
+     119: invokespecial #22                 // Method identifySpawnLocation:(FF)V
+     122: getstatic     #23                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectsQueue:Ljava/util/ArrayList;
+     125: new           #24                 // class com/megacrit/cardcrawl/vfx/combat/CardPoofEffect
+     128: dup
+     129: aload_1
+     130: getfield      #25                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     133: aload_1
+     134: getfield      #26                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_y:F
+     137: invokespecial #27                 // Method com/megacrit/cardcrawl/vfx/combat/CardPoofEffect."<init>":(FF)V
+     140: invokevirtual #28                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     143: pop
+     144: aload_1
+     145: ldc           #29                 // float 0.01f
+     147: putfield      #30                 // Field com/megacrit/cardcrawl/cards/AbstractCard.drawScale:F
+     150: aload_1
+     151: fconst_1
+     152: putfield      #31                 // Field com/megacrit/cardcrawl/cards/AbstractCard.targetDrawScale:F
+     155: return
+
+  public com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect(com.megacrit.cardcrawl.cards.AbstractCard, float, float);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;FF)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: fload_2
+       3: fload_3
+       4: iconst_1
+       5: invokespecial #32                 // Method "<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;FFZ)V
+       8: return
+
+  private void identifySpawnLocation(float, float);
+    descriptor: (FF)V
+    Code:
+       0: iconst_0
+       1: istore_3
+       2: getstatic     #33                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+       5: invokevirtual #34                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       8: astore        4
+      10: aload         4
+      12: invokeinterface #35,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      17: ifeq          46
+      20: aload         4
+      22: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      27: checkcast     #37                 // class com/megacrit/cardcrawl/vfx/AbstractGameEffect
+      30: astore        5
+      32: aload         5
+      34: instanceof    #20                 // class com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndObtainEffect
+      37: ifeq          43
+      40: iinc          3, 1
+      43: goto          10
+      46: aload_0
+      47: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      50: fload_1
+      51: putfield      #38                 // Field com/megacrit/cardcrawl/cards/AbstractCard.current_x:F
+      54: aload_0
+      55: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      58: fload_2
+      59: putfield      #39                 // Field com/megacrit/cardcrawl/cards/AbstractCard.current_y:F
+      62: aload_0
+      63: getfield      #13                 // Field converge:Z
+      66: ifeq          292
+      69: aload_0
+      70: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      73: getstatic     #40                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      76: i2f
+      77: ldc           #21                 // float 0.5f
+      79: fmul
+      80: putfield      #26                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_y:F
+      83: iload_3
+      84: tableswitch   { // 0 to 4
+
+                     0: 120
+
+                     1: 137
+
+                     2: 162
+
+                     3: 187
+
+                     4: 214
+               default: 241
+          }
+     120: aload_0
+     121: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     124: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     127: i2f
+     128: ldc           #21                 // float 0.5f
+     130: fmul
+     131: putfield      #25                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     134: goto          320
+     137: aload_0
+     138: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     141: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     144: i2f
+     145: ldc           #21                 // float 0.5f
+     147: fmul
+     148: getstatic     #42                 // Field PADDING:F
+     151: fsub
+     152: getstatic     #43                 // Field com/megacrit/cardcrawl/cards/AbstractCard.IMG_WIDTH:F
+     155: fsub
+     156: putfield      #25                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     159: goto          320
+     162: aload_0
+     163: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     166: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     169: i2f
+     170: ldc           #21                 // float 0.5f
+     172: fmul
+     173: getstatic     #42                 // Field PADDING:F
+     176: fadd
+     177: getstatic     #43                 // Field com/megacrit/cardcrawl/cards/AbstractCard.IMG_WIDTH:F
+     180: fadd
+     181: putfield      #25                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     184: goto          320
+     187: aload_0
+     188: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     191: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     194: i2f
+     195: ldc           #21                 // float 0.5f
+     197: fmul
+     198: getstatic     #42                 // Field PADDING:F
+     201: getstatic     #43                 // Field com/megacrit/cardcrawl/cards/AbstractCard.IMG_WIDTH:F
+     204: fadd
+     205: fconst_2
+     206: fmul
+     207: fsub
+     208: putfield      #25                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     211: goto          320
+     214: aload_0
+     215: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     218: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     221: i2f
+     222: ldc           #21                 // float 0.5f
+     224: fmul
+     225: getstatic     #42                 // Field PADDING:F
+     228: getstatic     #43                 // Field com/megacrit/cardcrawl/cards/AbstractCard.IMG_WIDTH:F
+     231: fadd
+     232: fconst_2
+     233: fmul
+     234: fadd
+     235: putfield      #25                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     238: goto          320
+     241: aload_0
+     242: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     245: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     248: i2f
+     249: ldc           #44                 // float 0.1f
+     251: fmul
+     252: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     255: i2f
+     256: ldc           #45                 // float 0.9f
+     258: fmul
+     259: invokestatic  #46                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     262: putfield      #25                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     265: aload_0
+     266: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     269: getstatic     #40                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     272: i2f
+     273: ldc           #47                 // float 0.2f
+     275: fmul
+     276: getstatic     #40                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     279: i2f
+     280: ldc           #48                 // float 0.8f
+     282: fmul
+     283: invokestatic  #46                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     286: putfield      #26                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_y:F
+     289: goto          320
+     292: aload_0
+     293: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     296: aload_0
+     297: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     300: getfield      #38                 // Field com/megacrit/cardcrawl/cards/AbstractCard.current_x:F
+     303: putfield      #25                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     306: aload_0
+     307: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     310: aload_0
+     311: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     314: getfield      #39                 // Field com/megacrit/cardcrawl/cards/AbstractCard.current_y:F
+     317: putfield      #26                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_y:F
+     320: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #11                 // Field duration:F
+       5: getstatic     #49                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+       8: invokeinterface #50,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      13: fsub
+      14: putfield      #11                 // Field duration:F
+      17: aload_0
+      18: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      21: invokevirtual #51                 // Method com/megacrit/cardcrawl/cards/AbstractCard.update:()V
+      24: aload_0
+      25: getfield      #11                 // Field duration:F
+      28: fconst_0
+      29: fcmpg
+      30: ifge          135
+      33: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      36: getfield      #52                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+      39: invokevirtual #34                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      42: astore_1
+      43: aload_1
+      44: invokeinterface #35,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      49: ifeq          73
+      52: aload_1
+      53: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      58: checkcast     #53                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+      61: astore_2
+      62: aload_2
+      63: aload_0
+      64: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      67: invokevirtual #54                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.onObtainCard:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      70: goto          43
+      73: aload_0
+      74: iconst_1
+      75: putfield      #12                 // Field isDone:Z
+      78: aload_0
+      79: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      82: invokevirtual #55                 // Method com/megacrit/cardcrawl/cards/AbstractCard.shrink:()V
+      85: invokestatic  #56                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      88: getfield      #57                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.souls:Lcom/megacrit/cardcrawl/cards/SoulGroup;
+      91: aload_0
+      92: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      95: iconst_1
+      96: invokevirtual #58                 // Method com/megacrit/cardcrawl/cards/SoulGroup.obtain:(Lcom/megacrit/cardcrawl/cards/AbstractCard;Z)V
+      99: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     102: getfield      #52                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+     105: invokevirtual #34                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     108: astore_1
+     109: aload_1
+     110: invokeinterface #35,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     115: ifeq          135
+     118: aload_1
+     119: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     124: checkcast     #53                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+     127: astore_2
+     128: aload_2
+     129: invokevirtual #59                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.onMasterDeckChange:()V
+     132: goto          109
+     135: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #12                 // Field isDone:Z
+       4: ifne          15
+       7: aload_0
+       8: getfield      #18                 // Field card:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      11: aload_1
+      12: invokevirtual #60                 // Method com/megacrit/cardcrawl/cards/AbstractCard.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      15: return
+
+  public void dispose();
+    descriptor: ()V
+    Code:
+       0: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #61                 // float 30.0f
+       2: getstatic     #62                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+       5: fmul
+       6: putstatic     #42                 // Field PADDING:F
+       9: return
+}

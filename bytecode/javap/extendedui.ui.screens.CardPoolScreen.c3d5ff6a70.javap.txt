@@ -1,0 +1,926 @@
+Compiled from "CardPoolScreen.java"
+public class extendedui.ui.screens.CardPoolScreen extends extendedui.ui.screens.EUIPoolScreen {
+  public static com.megacrit.cardcrawl.dungeons.AbstractDungeon$CurrentScreen CARD_POOL_SCREEN;
+    descriptor: Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+
+  public static extendedui.interfaces.markers.CustomCardPoolModule customModule;
+    descriptor: Lextendedui/interfaces/markers/CustomCardPoolModule;
+
+  protected final extendedui.ui.controls.EUIToggle upgradeToggle;
+    descriptor: Lextendedui/ui/controls/EUIToggle;
+
+  protected final extendedui.ui.controls.EUIToggle betaToggle;
+    descriptor: Lextendedui/ui/controls/EUIToggle;
+
+  protected final extendedui.ui.controls.EUIToggle colorlessToggle;
+    descriptor: Lextendedui/ui/controls/EUIToggle;
+
+  protected final extendedui.ui.controls.EUIButton swapRelicScreen;
+    descriptor: Lextendedui/ui/controls/EUIButton;
+
+  protected final extendedui.ui.controls.EUIButton swapPotionScreen;
+    descriptor: Lextendedui/ui/controls/EUIButton;
+
+  protected final extendedui.ui.controls.EUIContextMenu<extendedui.ui.screens.CardPoolScreen$DebugOption> contextMenu;
+    descriptor: Lextendedui/ui/controls/EUIContextMenu;
+
+  private com.megacrit.cardcrawl.cards.AbstractCard selected;
+    descriptor: Lcom/megacrit/cardcrawl/cards/AbstractCard;
+
+  private boolean betaToggleCache;
+    descriptor: Z
+
+  private boolean colorlessToggleCache;
+    descriptor: Z
+
+  public extendedui.ui.controls.EUICardGrid cardGrid;
+    descriptor: Lextendedui/ui/controls/EUICardGrid;
+
+  public extendedui.ui.screens.CardPoolScreen();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method extendedui/ui/screens/EUIPoolScreen."<init>":()V
+       4: aload_0
+       5: invokevirtual #2                  // Method resetGrid:()V
+       8: aload_0
+       9: new           #3                  // class extendedui/ui/controls/EUIToggle
+      12: dup
+      13: new           #4                  // class extendedui/ui/hitboxes/EUIHitbox
+      16: dup
+      17: getstatic     #5                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      20: ldc           #6                  // float 256.0f
+      22: fmul
+      23: getstatic     #5                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      26: ldc           #7                  // float 48.0f
+      28: fmul
+      29: invokespecial #8                  // Method extendedui/ui/hitboxes/EUIHitbox."<init>":(FF)V
+      32: invokespecial #9                  // Method extendedui/ui/controls/EUIToggle."<init>":(Lextendedui/ui/hitboxes/EUIHitbox;)V
+      35: getstatic     #10                 // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+      38: getfield      #11                 // Field extendedui/EUIRM$Images.greySquare:Lextendedui/ui/TextureCache;
+      41: invokevirtual #12                 // Method extendedui/ui/TextureCache.texture:()Lcom/badlogic/gdx/graphics/Texture;
+      44: getstatic     #13                 // Field com/badlogic/gdx/graphics/Color.DARK_GRAY:Lcom/badlogic/gdx/graphics/Color;
+      47: invokevirtual #14                 // Method extendedui/ui/controls/EUIToggle.setBackground:(Lcom/badlogic/gdx/graphics/Texture;Lcom/badlogic/gdx/graphics/Color;)Lextendedui/ui/controls/EUIToggle;
+      50: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      53: i2f
+      54: ldc           #16                 // float 0.075f
+      56: fmul
+      57: getstatic     #17                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      60: i2f
+      61: ldc           #18                 // float 0.8f
+      63: fmul
+      64: invokevirtual #19                 // Method extendedui/ui/controls/EUIToggle.setPosition:(FF)Lextendedui/ui/controls/EUIToggle;
+      67: getstatic     #20                 // Field com/megacrit/cardcrawl/helpers/FontHelper.cardDescFont_L:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      70: fconst_1
+      71: invokevirtual #21                 // Method extendedui/ui/controls/EUIToggle.setFont:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;F)Lextendedui/ui/controls/EUIToggle;
+      74: getstatic     #22                 // Field com/megacrit/cardcrawl/screens/SingleCardViewPopup.TEXT:[Ljava/lang/String;
+      77: bipush        6
+      79: aaload
+      80: invokevirtual #23                 // Method extendedui/ui/controls/EUIToggle.setText:(Ljava/lang/String;)Lextendedui/ui/controls/EUIToggle;
+      83: invokedynamic #24,  0             // InvokeDynamic #0:invoke:()Lextendedui/interfaces/delegates/ActionT1;
+      88: invokevirtual #25                 // Method extendedui/ui/controls/EUIToggle.setOnToggle:(Lextendedui/interfaces/delegates/ActionT1;)Lextendedui/ui/controls/EUIToggle;
+      91: putfield      #26                 // Field upgradeToggle:Lextendedui/ui/controls/EUIToggle;
+      94: aload_0
+      95: new           #3                  // class extendedui/ui/controls/EUIToggle
+      98: dup
+      99: new           #4                  // class extendedui/ui/hitboxes/EUIHitbox
+     102: dup
+     103: getstatic     #5                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     106: ldc           #6                  // float 256.0f
+     108: fmul
+     109: getstatic     #5                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     112: ldc           #7                  // float 48.0f
+     114: fmul
+     115: invokespecial #8                  // Method extendedui/ui/hitboxes/EUIHitbox."<init>":(FF)V
+     118: invokespecial #9                  // Method extendedui/ui/controls/EUIToggle."<init>":(Lextendedui/ui/hitboxes/EUIHitbox;)V
+     121: getstatic     #10                 // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+     124: getfield      #11                 // Field extendedui/EUIRM$Images.greySquare:Lextendedui/ui/TextureCache;
+     127: invokevirtual #12                 // Method extendedui/ui/TextureCache.texture:()Lcom/badlogic/gdx/graphics/Texture;
+     130: getstatic     #13                 // Field com/badlogic/gdx/graphics/Color.DARK_GRAY:Lcom/badlogic/gdx/graphics/Color;
+     133: invokevirtual #14                 // Method extendedui/ui/controls/EUIToggle.setBackground:(Lcom/badlogic/gdx/graphics/Texture;Lcom/badlogic/gdx/graphics/Color;)Lextendedui/ui/controls/EUIToggle;
+     136: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     139: i2f
+     140: ldc           #16                 // float 0.075f
+     142: fmul
+     143: getstatic     #17                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     146: i2f
+     147: ldc           #27                 // float 0.75f
+     149: fmul
+     150: invokevirtual #19                 // Method extendedui/ui/controls/EUIToggle.setPosition:(FF)Lextendedui/ui/controls/EUIToggle;
+     153: getstatic     #20                 // Field com/megacrit/cardcrawl/helpers/FontHelper.cardDescFont_L:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     156: fconst_1
+     157: invokevirtual #21                 // Method extendedui/ui/controls/EUIToggle.setFont:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;F)Lextendedui/ui/controls/EUIToggle;
+     160: getstatic     #22                 // Field com/megacrit/cardcrawl/screens/SingleCardViewPopup.TEXT:[Ljava/lang/String;
+     163: bipush        14
+     165: aaload
+     166: invokevirtual #23                 // Method extendedui/ui/controls/EUIToggle.setText:(Ljava/lang/String;)Lextendedui/ui/controls/EUIToggle;
+     169: aload_0
+     170: invokedynamic #28,  0             // InvokeDynamic #1:invoke:(Lextendedui/ui/screens/CardPoolScreen;)Lextendedui/interfaces/delegates/ActionT1;
+     175: invokevirtual #25                 // Method extendedui/ui/controls/EUIToggle.setOnToggle:(Lextendedui/interfaces/delegates/ActionT1;)Lextendedui/ui/controls/EUIToggle;
+     178: putfield      #29                 // Field betaToggle:Lextendedui/ui/controls/EUIToggle;
+     181: aload_0
+     182: new           #3                  // class extendedui/ui/controls/EUIToggle
+     185: dup
+     186: new           #4                  // class extendedui/ui/hitboxes/EUIHitbox
+     189: dup
+     190: getstatic     #5                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     193: ldc           #6                  // float 256.0f
+     195: fmul
+     196: getstatic     #5                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     199: ldc           #7                  // float 48.0f
+     201: fmul
+     202: invokespecial #8                  // Method extendedui/ui/hitboxes/EUIHitbox."<init>":(FF)V
+     205: invokespecial #9                  // Method extendedui/ui/controls/EUIToggle."<init>":(Lextendedui/ui/hitboxes/EUIHitbox;)V
+     208: getstatic     #10                 // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+     211: getfield      #11                 // Field extendedui/EUIRM$Images.greySquare:Lextendedui/ui/TextureCache;
+     214: invokevirtual #12                 // Method extendedui/ui/TextureCache.texture:()Lcom/badlogic/gdx/graphics/Texture;
+     217: getstatic     #13                 // Field com/badlogic/gdx/graphics/Color.DARK_GRAY:Lcom/badlogic/gdx/graphics/Color;
+     220: invokevirtual #14                 // Method extendedui/ui/controls/EUIToggle.setBackground:(Lcom/badlogic/gdx/graphics/Texture;Lcom/badlogic/gdx/graphics/Color;)Lextendedui/ui/controls/EUIToggle;
+     223: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     226: i2f
+     227: ldc           #16                 // float 0.075f
+     229: fmul
+     230: getstatic     #17                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     233: i2f
+     234: ldc           #30                 // float 0.7f
+     236: fmul
+     237: invokevirtual #19                 // Method extendedui/ui/controls/EUIToggle.setPosition:(FF)Lextendedui/ui/controls/EUIToggle;
+     240: getstatic     #20                 // Field com/megacrit/cardcrawl/helpers/FontHelper.cardDescFont_L:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     243: fconst_1
+     244: invokevirtual #21                 // Method extendedui/ui/controls/EUIToggle.setFont:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;F)Lextendedui/ui/controls/EUIToggle;
+     247: getstatic     #31                 // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     250: getfield      #32                 // Field extendedui/EUIRM$Strings.uipool_showColorless:Ljava/lang/String;
+     253: invokevirtual #23                 // Method extendedui/ui/controls/EUIToggle.setText:(Ljava/lang/String;)Lextendedui/ui/controls/EUIToggle;
+     256: aload_0
+     257: invokedynamic #33,  0             // InvokeDynamic #2:invoke:(Lextendedui/ui/screens/CardPoolScreen;)Lextendedui/interfaces/delegates/ActionT1;
+     262: invokevirtual #25                 // Method extendedui/ui/controls/EUIToggle.setOnToggle:(Lextendedui/interfaces/delegates/ActionT1;)Lextendedui/ui/controls/EUIToggle;
+     265: putfield      #34                 // Field colorlessToggle:Lextendedui/ui/controls/EUIToggle;
+     268: aload_0
+     269: new           #35                 // class extendedui/ui/controls/EUIButton
+     272: dup
+     273: getstatic     #10                 // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+     276: getfield      #36                 // Field extendedui/EUIRM$Images.hexagonalButton:Lextendedui/ui/TextureCache;
+     279: invokevirtual #12                 // Method extendedui/ui/TextureCache.texture:()Lcom/badlogic/gdx/graphics/Texture;
+     282: new           #4                  // class extendedui/ui/hitboxes/EUIHitbox
+     285: dup
+     286: ldc           #37                 // float 210.0f
+     288: invokestatic  #38                 // Method extendedui/EUIGameUtils.scale:(F)F
+     291: ldc           #39                 // float 43.0f
+     293: invokestatic  #38                 // Method extendedui/EUIGameUtils.scale:(F)F
+     296: invokespecial #8                  // Method extendedui/ui/hitboxes/EUIHitbox."<init>":(FF)V
+     299: invokespecial #40                 // Method extendedui/ui/controls/EUIButton."<init>":(Lcom/badlogic/gdx/graphics/Texture;Lextendedui/ui/hitboxes/EUIHitbox;)V
+     302: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     305: i2f
+     306: ldc           #16                 // float 0.075f
+     308: fmul
+     309: getstatic     #17                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     312: i2f
+     313: ldc           #41                 // float 0.9f
+     315: fmul
+     316: invokevirtual #42                 // Method extendedui/ui/controls/EUIButton.setPosition:(FF)Lextendedui/ui/controls/EUIButton;
+     319: getstatic     #43                 // Field com/megacrit/cardcrawl/helpers/FontHelper.buttonLabelFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     322: ldc           #18                 // float 0.8f
+     324: getstatic     #31                 // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     327: getfield      #44                 // Field extendedui/EUIRM$Strings.uipool_viewRelicPool:Ljava/lang/String;
+     330: invokevirtual #45                 // Method extendedui/ui/controls/EUIButton.setLabel:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;FLjava/lang/String;)Lextendedui/ui/controls/EUIButton;
+     333: getstatic     #46                 // Field com/badlogic/gdx/graphics/Color.GRAY:Lcom/badlogic/gdx/graphics/Color;
+     336: invokevirtual #47                 // Method extendedui/ui/controls/EUIButton.setColor:(Lcom/badlogic/gdx/graphics/Color;)Lextendedui/ui/controls/EUIButton;
+     339: getstatic     #10                 // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+     342: getfield      #48                 // Field extendedui/EUIRM$Images.hexagonalButtonBorder:Lextendedui/ui/TextureCache;
+     345: invokevirtual #12                 // Method extendedui/ui/TextureCache.texture:()Lcom/badlogic/gdx/graphics/Texture;
+     348: getstatic     #46                 // Field com/badlogic/gdx/graphics/Color.GRAY:Lcom/badlogic/gdx/graphics/Color;
+     351: invokevirtual #49                 // Method extendedui/ui/controls/EUIButton.setBorder:(Lcom/badlogic/gdx/graphics/Texture;Lcom/badlogic/gdx/graphics/Color;)Lextendedui/ui/controls/EUIButton;
+     354: invokedynamic #50,  0             // InvokeDynamic #3:invoke:()Lextendedui/interfaces/delegates/ActionT0;
+     359: invokevirtual #51                 // Method extendedui/ui/controls/EUIButton.setOnClick:(Lextendedui/interfaces/delegates/ActionT0;)Lextendedui/ui/controls/EUIButton;
+     362: putfield      #52                 // Field swapRelicScreen:Lextendedui/ui/controls/EUIButton;
+     365: aload_0
+     366: new           #35                 // class extendedui/ui/controls/EUIButton
+     369: dup
+     370: getstatic     #10                 // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+     373: getfield      #36                 // Field extendedui/EUIRM$Images.hexagonalButton:Lextendedui/ui/TextureCache;
+     376: invokevirtual #12                 // Method extendedui/ui/TextureCache.texture:()Lcom/badlogic/gdx/graphics/Texture;
+     379: new           #4                  // class extendedui/ui/hitboxes/EUIHitbox
+     382: dup
+     383: ldc           #37                 // float 210.0f
+     385: invokestatic  #38                 // Method extendedui/EUIGameUtils.scale:(F)F
+     388: ldc           #39                 // float 43.0f
+     390: invokestatic  #38                 // Method extendedui/EUIGameUtils.scale:(F)F
+     393: invokespecial #8                  // Method extendedui/ui/hitboxes/EUIHitbox."<init>":(FF)V
+     396: invokespecial #40                 // Method extendedui/ui/controls/EUIButton."<init>":(Lcom/badlogic/gdx/graphics/Texture;Lextendedui/ui/hitboxes/EUIHitbox;)V
+     399: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     402: i2f
+     403: ldc           #16                 // float 0.075f
+     405: fmul
+     406: getstatic     #17                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     409: i2f
+     410: ldc           #53                 // float 0.85f
+     412: fmul
+     413: invokevirtual #42                 // Method extendedui/ui/controls/EUIButton.setPosition:(FF)Lextendedui/ui/controls/EUIButton;
+     416: getstatic     #43                 // Field com/megacrit/cardcrawl/helpers/FontHelper.buttonLabelFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     419: ldc           #18                 // float 0.8f
+     421: getstatic     #31                 // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     424: getfield      #54                 // Field extendedui/EUIRM$Strings.uipool_viewPotionPool:Ljava/lang/String;
+     427: invokevirtual #45                 // Method extendedui/ui/controls/EUIButton.setLabel:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;FLjava/lang/String;)Lextendedui/ui/controls/EUIButton;
+     430: getstatic     #46                 // Field com/badlogic/gdx/graphics/Color.GRAY:Lcom/badlogic/gdx/graphics/Color;
+     433: invokevirtual #47                 // Method extendedui/ui/controls/EUIButton.setColor:(Lcom/badlogic/gdx/graphics/Color;)Lextendedui/ui/controls/EUIButton;
+     436: getstatic     #10                 // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+     439: getfield      #48                 // Field extendedui/EUIRM$Images.hexagonalButtonBorder:Lextendedui/ui/TextureCache;
+     442: invokevirtual #12                 // Method extendedui/ui/TextureCache.texture:()Lcom/badlogic/gdx/graphics/Texture;
+     445: getstatic     #46                 // Field com/badlogic/gdx/graphics/Color.GRAY:Lcom/badlogic/gdx/graphics/Color;
+     448: invokevirtual #49                 // Method extendedui/ui/controls/EUIButton.setBorder:(Lcom/badlogic/gdx/graphics/Texture;Lcom/badlogic/gdx/graphics/Color;)Lextendedui/ui/controls/EUIButton;
+     451: invokedynamic #55,  0             // InvokeDynamic #4:invoke:()Lextendedui/interfaces/delegates/ActionT0;
+     456: invokevirtual #51                 // Method extendedui/ui/controls/EUIButton.setOnClick:(Lextendedui/interfaces/delegates/ActionT0;)Lextendedui/ui/controls/EUIButton;
+     459: putfield      #56                 // Field swapPotionScreen:Lextendedui/ui/controls/EUIButton;
+     462: aload_0
+     463: new           #57                 // class extendedui/ui/controls/EUIContextMenu
+     466: dup
+     467: new           #4                  // class extendedui/ui/hitboxes/EUIHitbox
+     470: dup
+     471: fconst_0
+     472: fconst_0
+     473: fconst_0
+     474: fconst_0
+     475: invokespecial #58                 // Method extendedui/ui/hitboxes/EUIHitbox."<init>":(FFFF)V
+     478: invokedynamic #59,  0             // InvokeDynamic #5:invoke:()Lextendedui/interfaces/delegates/FuncT1;
+     483: invokespecial #60                 // Method extendedui/ui/controls/EUIContextMenu."<init>":(Lextendedui/ui/hitboxes/EUIHitbox;Lextendedui/interfaces/delegates/FuncT1;)V
+     486: aload_0
+     487: invokedynamic #61,  0             // InvokeDynamic #6:invoke:(Lextendedui/ui/screens/CardPoolScreen;)Lextendedui/interfaces/delegates/ActionT1;
+     492: invokevirtual #62                 // Method extendedui/ui/controls/EUIContextMenu.setOnChange:(Lextendedui/interfaces/delegates/ActionT1;)Lextendedui/ui/controls/EUIContextMenu;
+     495: getstatic     #63                 // Field extendedui/utilities/EUIFontHelper.tooltipFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     498: fconst_1
+     499: invokevirtual #64                 // Method extendedui/ui/controls/EUIContextMenu.setFontForRows:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;F)Lextendedui/ui/controls/EUIDropdown;
+     502: iconst_1
+     503: invokevirtual #65                 // Method extendedui/ui/controls/EUIDropdown.setCanAutosizeButton:(Z)Lextendedui/ui/controls/EUIDropdown;
+     506: checkcast     #57                 // class extendedui/ui/controls/EUIContextMenu
+     509: putfield      #66                 // Field contextMenu:Lextendedui/ui/controls/EUIContextMenu;
+     512: aload_0
+     513: invokestatic  #67                 // Method extendedui/EUI.isPlaytesterArt:()Z
+     516: putfield      #68                 // Field betaToggleCache:Z
+     519: aload_0
+     520: iconst_0
+     521: putfield      #69                 // Field colorlessToggleCache:Z
+     524: return
+
+  public static java.util.ArrayList<extendedui.ui.screens.CardPoolScreen$DebugOption> getOptions(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)Ljava/util/ArrayList;
+    Code:
+       0: iconst_4
+       1: anewarray     #70                 // class extendedui/ui/screens/CardPoolScreen$DebugOption
+       4: dup
+       5: iconst_0
+       6: getstatic     #71                 // Field extendedui/ui/screens/CardPoolScreen$DebugOption.enlargeCard:Lextendedui/ui/screens/CardPoolScreen$DebugOption;
+       9: aastore
+      10: dup
+      11: iconst_1
+      12: getstatic     #72                 // Field extendedui/ui/screens/CardPoolScreen$DebugOption.addToHand:Lextendedui/ui/screens/CardPoolScreen$DebugOption;
+      15: aastore
+      16: dup
+      17: iconst_2
+      18: getstatic     #73                 // Field extendedui/ui/screens/CardPoolScreen$DebugOption.addToDeck:Lextendedui/ui/screens/CardPoolScreen$DebugOption;
+      21: aastore
+      22: dup
+      23: iconst_3
+      24: getstatic     #74                 // Field extendedui/ui/screens/CardPoolScreen$DebugOption.removeFromPool:Lextendedui/ui/screens/CardPoolScreen$DebugOption;
+      27: aastore
+      28: invokestatic  #75                 // Method extendedui/EUIUtils.arrayList:([Ljava/lang/Object;)Ljava/util/ArrayList;
+      31: areturn
+
+  protected void addCopyToDeck(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: getstatic     #76                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+       3: new           #77                 // class com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndObtainEffect
+       6: dup
+       7: aload_1
+       8: invokevirtual #78                 // Method com/megacrit/cardcrawl/cards/AbstractCard.makeStatEquivalentCopy:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      11: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      14: i2f
+      15: ldc           #79                 // float 0.5f
+      17: fmul
+      18: getstatic     #17                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      21: i2f
+      22: ldc           #79                 // float 0.5f
+      24: fmul
+      25: invokespecial #80                 // Method com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndObtainEffect."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;FF)V
+      28: invokevirtual #81                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      31: pop
+      32: return
+
+  protected void addCopyToHand(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: invokestatic  #82                 // Method extendedui/EUIGameUtils.inBattle:()Z
+       3: ifeq          38
+       6: getstatic     #76                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+       9: new           #83                 // class com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndAddToHandEffect
+      12: dup
+      13: aload_1
+      14: invokevirtual #78                 // Method com/megacrit/cardcrawl/cards/AbstractCard.makeStatEquivalentCopy:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      17: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      20: i2f
+      21: ldc           #79                 // float 0.5f
+      23: fmul
+      24: getstatic     #17                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      27: i2f
+      28: ldc           #79                 // float 0.5f
+      30: fmul
+      31: invokespecial #84                 // Method com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndAddToHandEffect."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;FF)V
+      34: invokevirtual #81                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      37: pop
+      38: return
+
+  public void switchScreen();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #85                 // Method extendedui/ui/screens/EUIPoolScreen.switchScreen:()V
+       4: aload_0
+       5: aload_0
+       6: getfield      #29                 // Field betaToggle:Lextendedui/ui/controls/EUIToggle;
+       9: getfield      #86                 // Field extendedui/ui/controls/EUIToggle.toggled:Z
+      12: putfield      #68                 // Field betaToggleCache:Z
+      15: invokestatic  #87                 // Method extendedui/EUI.toggleBetaArtReset:()V
+      18: getstatic     #88                 // Field extendedui/EUI.globalCustomCardPoolModules:Ljava/util/ArrayList;
+      21: invokevirtual #89                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      24: astore_1
+      25: aload_1
+      26: invokeinterface #90,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      31: ifeq          53
+      34: aload_1
+      35: invokeinterface #91,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      40: checkcast     #92                 // class extendedui/interfaces/markers/CustomCardPoolModule
+      43: astore_2
+      44: aload_2
+      45: invokeinterface #93,  1           // InterfaceMethod extendedui/interfaces/markers/CustomCardPoolModule.onClose:()V
+      50: goto          25
+      53: getstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+      56: ifnull        67
+      59: getstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+      62: invokeinterface #93,  1           // InterfaceMethod extendedui/interfaces/markers/CustomCardPoolModule.onClose:()V
+      67: return
+
+  public com.megacrit.cardcrawl.dungeons.AbstractDungeon$CurrentScreen curScreen();
+    descriptor: ()Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+    Code:
+       0: getstatic     #95                 // Field CARD_POOL_SCREEN:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+       3: areturn
+
+  protected void onRightClick(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: getstatic     #96                 // Field extendedui/configuration/EUIConfiguration.enableCardPoolDebug:Lextendedui/configuration/STSConfigItem;
+       3: invokevirtual #97                 // Method extendedui/configuration/STSConfigItem.get:()Ljava/lang/Object;
+       6: checkcast     #98                 // class java/lang/Boolean
+       9: invokevirtual #99                 // Method java/lang/Boolean.booleanValue:()Z
+      12: ifeq          98
+      15: aload_0
+      16: aload_1
+      17: putfield      #100                // Field selected:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      20: aload_0
+      21: getfield      #66                 // Field contextMenu:Lextendedui/ui/controls/EUIContextMenu;
+      24: getstatic     #101                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+      27: i2f
+      28: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      31: i2f
+      32: ldc           #27                 // float 0.75f
+      34: fmul
+      35: fcmpl
+      36: ifle          57
+      39: getstatic     #101                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+      42: i2f
+      43: aload_0
+      44: getfield      #66                 // Field contextMenu:Lextendedui/ui/controls/EUIContextMenu;
+      47: getfield      #102                // Field extendedui/ui/controls/EUIContextMenu.hb:Lextendedui/ui/hitboxes/EUIHitbox;
+      50: getfield      #103                // Field extendedui/ui/hitboxes/EUIHitbox.width:F
+      53: fsub
+      54: goto          61
+      57: getstatic     #101                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+      60: i2f
+      61: getstatic     #104                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+      64: i2f
+      65: invokevirtual #105                // Method extendedui/ui/controls/EUIContextMenu.setPosition:(FF)Lextendedui/ui/controls/EUIContextMenu;
+      68: pop
+      69: aload_0
+      70: getfield      #66                 // Field contextMenu:Lextendedui/ui/controls/EUIContextMenu;
+      73: invokevirtual #106                // Method extendedui/ui/controls/EUIContextMenu.refreshText:()V
+      76: aload_0
+      77: getfield      #66                 // Field contextMenu:Lextendedui/ui/controls/EUIContextMenu;
+      80: aload_1
+      81: invokestatic  #107                // Method getOptions:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)Ljava/util/ArrayList;
+      84: invokevirtual #108                // Method extendedui/ui/controls/EUIContextMenu.setItems:(Ljava/util/List;)Lextendedui/ui/controls/EUIDropdown;
+      87: pop
+      88: aload_0
+      89: getfield      #66                 // Field contextMenu:Lextendedui/ui/controls/EUIContextMenu;
+      92: invokevirtual #109                // Method extendedui/ui/controls/EUIContextMenu.openOrCloseMenu:()V
+      95: goto          103
+      98: aload_0
+      99: aload_1
+     100: invokevirtual #110                // Method openPopup:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     103: return
+
+  protected void openPopup(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: aload_1
+       1: invokevirtual #111                // Method com/megacrit/cardcrawl/cards/AbstractCard.unhover:()V
+       4: getstatic     #112                // Field com/megacrit/cardcrawl/core/CardCrawlGame.cardPopup:Lcom/megacrit/cardcrawl/screens/SingleCardViewPopup;
+       7: aload_1
+       8: aload_0
+       9: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+      12: invokevirtual #114                // Method extendedui/ui/controls/EUICardGrid.makeCardGroup:()Lcom/megacrit/cardcrawl/cards/CardGroup;
+      15: invokevirtual #115                // Method com/megacrit/cardcrawl/screens/SingleCardViewPopup.open:(Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/cards/CardGroup;)V
+      18: return
+
+  public void openScreen(com.megacrit.cardcrawl.characters.AbstractPlayer, com.megacrit.cardcrawl.cards.CardGroup);
+    descriptor: (Lcom/megacrit/cardcrawl/characters/AbstractPlayer;Lcom/megacrit/cardcrawl/cards/CardGroup;)V
+    Code:
+       0: aload_0
+       1: invokespecial #116                // Method extendedui/ui/screens/EUIPoolScreen.reopen:()V
+       4: invokestatic  #117                // Method extendedui/EUIGameUtils.canReceiveAnyColorCard:()Z
+       7: istore_3
+       8: aload_1
+       9: ifnull        19
+      12: aload_1
+      13: invokevirtual #118                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getCardColor:()Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+      16: goto          22
+      19: getstatic     #119                // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.COLORLESS:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+      22: astore        4
+      24: aload_1
+      25: ifnull        32
+      28: iload_3
+      29: ifeq          36
+      32: iconst_1
+      33: goto          37
+      36: iconst_0
+      37: istore        5
+      39: aload_0
+      40: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+      43: invokevirtual #120                // Method extendedui/ui/controls/EUICardGrid.clear:()V
+      46: aload_0
+      47: getfield      #34                 // Field colorlessToggle:Lextendedui/ui/controls/EUIToggle;
+      50: iload_3
+      51: ifne          58
+      54: iconst_1
+      55: goto          59
+      58: iconst_0
+      59: invokevirtual #121                // Method extendedui/ui/controls/EUIToggle.setActive:(Z)Lextendedui/ui/EUIBase;
+      62: pop
+      63: aload_0
+      64: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+      67: aload_2
+      68: invokevirtual #122                // Method extendedui/ui/controls/EUICardGrid.setCardGroup:(Lcom/megacrit/cardcrawl/cards/CardGroup;)Lextendedui/ui/controls/EUICardGrid;
+      71: pop
+      72: getstatic     #123                // Field extendedui/EUI.cardFilters:Lextendedui/ui/cardFilter/CardKeywordFilters;
+      75: aload_0
+      76: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+      79: getfield      #124                // Field extendedui/ui/controls/EUICardGrid.group:Lextendedui/utilities/ItemGroup;
+      82: aload_0
+      83: aload         4
+      85: iload         5
+      87: invokedynamic #125,  0            // InvokeDynamic #7:invoke:(Lextendedui/ui/screens/CardPoolScreen;Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;Z)Lextendedui/interfaces/delegates/ActionT1;
+      92: aload         4
+      94: getstatic     #126                // Field extendedui/ui/cardFilter/GenericFilters.FILTERS_START_X:F
+      97: iload_3
+      98: ifne          105
+     101: iconst_1
+     102: goto          106
+     105: iconst_0
+     106: iconst_0
+     107: invokevirtual #127                // Method extendedui/ui/cardFilter/CardKeywordFilters.initializeForSort:(Lextendedui/utilities/ItemGroup;Lextendedui/interfaces/delegates/ActionT1;Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;FZZ)Lextendedui/ui/cardFilter/GenericFilters;
+     110: pop
+     111: getstatic     #128                // Field extendedui/EUI.cardCounters:Lextendedui/ui/cardFilter/CountingPanel;
+     114: aload_0
+     115: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+     118: getfield      #124                // Field extendedui/ui/controls/EUICardGrid.group:Lextendedui/utilities/ItemGroup;
+     121: getfield      #129                // Field extendedui/utilities/ItemGroup.group:Ljava/util/ArrayList;
+     124: invokedynamic #130,  0            // InvokeDynamic #8:invoke:()Lextendedui/interfaces/delegates/ActionT1;
+     129: invokevirtual #131                // Method extendedui/ui/cardFilter/CountingPanel.open:(Ljava/util/ArrayList;Lextendedui/interfaces/delegates/ActionT1;)V
+     132: getstatic     #88                 // Field extendedui/EUI.globalCustomCardPoolModules:Ljava/util/ArrayList;
+     135: invokevirtual #89                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     138: astore        6
+     140: aload         6
+     142: invokeinterface #90,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     147: ifeq          187
+     150: aload         6
+     152: invokeinterface #91,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     157: checkcast     #92                 // class extendedui/interfaces/markers/CustomCardPoolModule
+     160: astore        7
+     162: aload         7
+     164: aload_0
+     165: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+     168: getfield      #124                // Field extendedui/ui/controls/EUICardGrid.group:Lextendedui/utilities/ItemGroup;
+     171: getfield      #129                // Field extendedui/utilities/ItemGroup.group:Ljava/util/ArrayList;
+     174: aload         4
+     176: iload         5
+     178: aconst_null
+     179: invokeinterface #132,  5          // InterfaceMethod extendedui/interfaces/markers/CustomCardPoolModule.open:(Ljava/util/ArrayList;Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;ZLjava/lang/Object;)V
+     184: goto          140
+     187: aload_1
+     188: invokestatic  #133                // Method extendedui/EUI.getCustomCardPoolModule:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer;)Lextendedui/interfaces/markers/CustomCardPoolModule;
+     191: putstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+     194: getstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+     197: ifnull        223
+     200: getstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+     203: aload_0
+     204: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+     207: getfield      #124                // Field extendedui/ui/controls/EUICardGrid.group:Lextendedui/utilities/ItemGroup;
+     210: getfield      #129                // Field extendedui/utilities/ItemGroup.group:Ljava/util/ArrayList;
+     213: aload         4
+     215: iload         5
+     217: aconst_null
+     218: invokeinterface #132,  5          // InterfaceMethod extendedui/interfaces/markers/CustomCardPoolModule.open:(Ljava/util/ArrayList;Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;ZLjava/lang/Object;)V
+     223: aload_0
+     224: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+     227: getfield      #134                // Field extendedui/ui/controls/EUICardGrid.scrollBar:Lextendedui/ui/controls/EUIVerticalScrollBar;
+     230: aload_0
+     231: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+     234: getfield      #134                // Field extendedui/ui/controls/EUICardGrid.scrollBar:Lextendedui/ui/controls/EUIVerticalScrollBar;
+     237: getfield      #135                // Field extendedui/ui/controls/EUIVerticalScrollBar.currentScrollPercent:F
+     240: iconst_1
+     241: invokevirtual #136                // Method extendedui/ui/controls/EUIVerticalScrollBar.scroll:(FZ)V
+     244: aload_0
+     245: getfield      #29                 // Field betaToggle:Lextendedui/ui/controls/EUIToggle;
+     248: aload_0
+     249: getfield      #68                 // Field betaToggleCache:Z
+     252: invokevirtual #137                // Method extendedui/ui/controls/EUIToggle.toggleForce:(Z)V
+     255: aload_0
+     256: getfield      #34                 // Field colorlessToggle:Lextendedui/ui/controls/EUIToggle;
+     259: aload_0
+     260: getfield      #34                 // Field colorlessToggle:Lextendedui/ui/controls/EUIToggle;
+     263: getfield      #138                // Field extendedui/ui/controls/EUIToggle.isActive:Z
+     266: ifeq          280
+     269: aload_0
+     270: getfield      #69                 // Field colorlessToggleCache:Z
+     273: ifeq          280
+     276: iconst_1
+     277: goto          281
+     280: iconst_0
+     281: invokevirtual #137                // Method extendedui/ui/controls/EUIToggle.toggleForce:(Z)V
+     284: return
+
+  protected void removeCardFromPool(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: invokestatic  #139                // Method extendedui/EUIGameUtils.getGameCardPools:()Ljava/util/ArrayList;
+       3: invokevirtual #89                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       6: astore_2
+       7: aload_2
+       8: invokeinterface #90,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          38
+      16: aload_2
+      17: invokeinterface #91,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #140                // class com/megacrit/cardcrawl/cards/CardGroup
+      25: astore_3
+      26: aload_3
+      27: aload_1
+      28: getfield      #141                // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+      31: invokevirtual #142                // Method com/megacrit/cardcrawl/cards/CardGroup.removeCard:(Ljava/lang/String;)Z
+      34: pop
+      35: goto          7
+      38: invokestatic  #143                // Method extendedui/EUIGameUtils.getSourceCardPools:()Ljava/util/ArrayList;
+      41: invokevirtual #89                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      44: astore_2
+      45: aload_2
+      46: invokeinterface #90,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      51: ifeq          76
+      54: aload_2
+      55: invokeinterface #91,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      60: checkcast     #140                // class com/megacrit/cardcrawl/cards/CardGroup
+      63: astore_3
+      64: aload_3
+      65: aload_1
+      66: getfield      #141                // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+      69: invokevirtual #142                // Method com/megacrit/cardcrawl/cards/CardGroup.removeCard:(Ljava/lang/String;)Z
+      72: pop
+      73: goto          45
+      76: aload_0
+      77: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+      80: aload_1
+      81: invokevirtual #144                // Method extendedui/ui/controls/EUICardGrid.remove:(Ljava/lang/Object;)Lextendedui/ui/controls/EUIItemGrid;
+      84: pop
+      85: getstatic     #128                // Field extendedui/EUI.cardCounters:Lextendedui/ui/cardFilter/CountingPanel;
+      88: aload_0
+      89: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+      92: getfield      #124                // Field extendedui/ui/controls/EUICardGrid.group:Lextendedui/utilities/ItemGroup;
+      95: getfield      #129                // Field extendedui/utilities/ItemGroup.group:Ljava/util/ArrayList;
+      98: invokedynamic #145,  0            // InvokeDynamic #9:invoke:()Lextendedui/interfaces/delegates/ActionT1;
+     103: invokevirtual #131                // Method extendedui/ui/cardFilter/CountingPanel.open:(Ljava/util/ArrayList;Lextendedui/interfaces/delegates/ActionT1;)V
+     106: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+       4: aload_1
+       5: invokevirtual #146                // Method extendedui/ui/controls/EUICardGrid.tryRender:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)Z
+       8: pop
+       9: getstatic     #147                // Field extendedui/EUI.sortHeader:Lextendedui/ui/cardFilter/FilterSortHeader;
+      12: aload_1
+      13: invokevirtual #148                // Method extendedui/ui/cardFilter/FilterSortHeader.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      16: aload_0
+      17: getfield      #26                 // Field upgradeToggle:Lextendedui/ui/controls/EUIToggle;
+      20: aload_1
+      21: invokevirtual #149                // Method extendedui/ui/controls/EUIToggle.renderImpl:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      24: aload_0
+      25: getfield      #29                 // Field betaToggle:Lextendedui/ui/controls/EUIToggle;
+      28: aload_1
+      29: invokevirtual #149                // Method extendedui/ui/controls/EUIToggle.renderImpl:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      32: aload_0
+      33: getfield      #34                 // Field colorlessToggle:Lextendedui/ui/controls/EUIToggle;
+      36: aload_1
+      37: invokevirtual #150                // Method extendedui/ui/controls/EUIToggle.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      40: aload_0
+      41: getfield      #52                 // Field swapRelicScreen:Lextendedui/ui/controls/EUIButton;
+      44: aload_1
+      45: invokevirtual #151                // Method extendedui/ui/controls/EUIButton.renderImpl:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      48: aload_0
+      49: getfield      #56                 // Field swapPotionScreen:Lextendedui/ui/controls/EUIButton;
+      52: aload_1
+      53: invokevirtual #151                // Method extendedui/ui/controls/EUIButton.renderImpl:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      56: getstatic     #128                // Field extendedui/EUI.cardCounters:Lextendedui/ui/cardFilter/CountingPanel;
+      59: aload_1
+      60: invokevirtual #152                // Method extendedui/ui/cardFilter/CountingPanel.tryRender:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)Z
+      63: pop
+      64: getstatic     #123                // Field extendedui/EUI.cardFilters:Lextendedui/ui/cardFilter/CardKeywordFilters;
+      67: getfield      #153                // Field extendedui/ui/cardFilter/CardKeywordFilters.isActive:Z
+      70: ifne          89
+      73: getstatic     #154                // Field extendedui/EUI.openFiltersButton:Lextendedui/ui/controls/EUIButton;
+      76: aload_1
+      77: invokevirtual #155                // Method extendedui/ui/controls/EUIButton.tryRender:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)Z
+      80: pop
+      81: getstatic     #156                // Field extendedui/exporter/EUIExporter.exportButton:Lextendedui/ui/controls/EUIButton;
+      84: aload_1
+      85: invokevirtual #155                // Method extendedui/ui/controls/EUIButton.tryRender:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)Z
+      88: pop
+      89: getstatic     #88                 // Field extendedui/EUI.globalCustomCardPoolModules:Ljava/util/ArrayList;
+      92: invokevirtual #89                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      95: astore_2
+      96: aload_2
+      97: invokeinterface #90,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     102: ifeq          125
+     105: aload_2
+     106: invokeinterface #91,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     111: checkcast     #92                 // class extendedui/interfaces/markers/CustomCardPoolModule
+     114: astore_3
+     115: aload_3
+     116: aload_1
+     117: invokeinterface #157,  2          // InterfaceMethod extendedui/interfaces/markers/CustomCardPoolModule.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     122: goto          96
+     125: getstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+     128: ifnull        140
+     131: getstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+     134: aload_1
+     135: invokeinterface #157,  2          // InterfaceMethod extendedui/interfaces/markers/CustomCardPoolModule.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     140: aload_0
+     141: getfield      #66                 // Field contextMenu:Lextendedui/ui/controls/EUIContextMenu;
+     144: aload_1
+     145: invokevirtual #158                // Method extendedui/ui/controls/EUIContextMenu.tryRender:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)Z
+     148: pop
+     149: return
+
+  public void resetGrid();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: new           #159                // class extendedui/ui/controls/EUICardGrid
+       4: dup
+       5: invokespecial #160                // Method extendedui/ui/controls/EUICardGrid."<init>":()V
+       8: putfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+      11: aload_0
+      12: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+      15: iconst_1
+      16: invokevirtual #161                // Method extendedui/ui/controls/EUICardGrid.setCanRenderUpgrades:(Z)Lextendedui/ui/controls/EUICardGrid;
+      19: aload_0
+      20: invokedynamic #162,  0            // InvokeDynamic #10:invoke:(Lextendedui/ui/screens/CardPoolScreen;)Lextendedui/interfaces/delegates/ActionT1;
+      25: invokevirtual #163                // Method extendedui/ui/controls/EUICardGrid.setOnClick:(Lextendedui/interfaces/delegates/ActionT1;)Lextendedui/ui/controls/EUIItemGrid;
+      28: aload_0
+      29: invokedynamic #164,  0            // InvokeDynamic #11:invoke:(Lextendedui/ui/screens/CardPoolScreen;)Lextendedui/interfaces/delegates/ActionT1;
+      34: invokevirtual #165                // Method extendedui/ui/controls/EUIItemGrid.setOnRightClick:(Lextendedui/interfaces/delegates/ActionT1;)Lextendedui/ui/controls/EUIItemGrid;
+      37: getstatic     #17                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      40: i2f
+      41: ldc           #166                // float 0.66f
+      43: fmul
+      44: invokevirtual #167                // Method extendedui/ui/controls/EUIItemGrid.setVerticalStart:(F)Lextendedui/ui/controls/EUIItemGrid;
+      47: iconst_1
+      48: invokevirtual #168                // Method extendedui/ui/controls/EUIItemGrid.showScrollbar:(Z)Lextendedui/ui/controls/EUICanvas;
+      51: pop
+      52: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: getstatic     #123                // Field extendedui/EUI.cardFilters:Lextendedui/ui/cardFilter/CardKeywordFilters;
+       3: invokevirtual #169                // Method extendedui/ui/cardFilter/CardKeywordFilters.tryUpdate:()Z
+       6: ifne          165
+       9: getstatic     #170                // Field com/megacrit/cardcrawl/core/CardCrawlGame.isPopupOpen:Z
+      12: ifne          165
+      15: aload_0
+      16: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+      19: invokevirtual #171                // Method extendedui/ui/controls/EUICardGrid.tryUpdate:()Z
+      22: pop
+      23: aload_0
+      24: getfield      #26                 // Field upgradeToggle:Lextendedui/ui/controls/EUIToggle;
+      27: getstatic     #172                // Field com/megacrit/cardcrawl/screens/SingleCardViewPopup.isViewingUpgrade:Z
+      30: invokevirtual #173                // Method extendedui/ui/controls/EUIToggle.setToggle:(Z)Lextendedui/ui/controls/EUIToggle;
+      33: invokevirtual #174                // Method extendedui/ui/controls/EUIToggle.updateImpl:()V
+      36: aload_0
+      37: getfield      #29                 // Field betaToggle:Lextendedui/ui/controls/EUIToggle;
+      40: getstatic     #175                // Field com/megacrit/cardcrawl/core/Settings.PLAYTESTER_ART_MODE:Z
+      43: invokevirtual #173                // Method extendedui/ui/controls/EUIToggle.setToggle:(Z)Lextendedui/ui/controls/EUIToggle;
+      46: invokevirtual #174                // Method extendedui/ui/controls/EUIToggle.updateImpl:()V
+      49: aload_0
+      50: getfield      #34                 // Field colorlessToggle:Lextendedui/ui/controls/EUIToggle;
+      53: invokevirtual #176                // Method extendedui/ui/controls/EUIToggle.update:()V
+      56: aload_0
+      57: getfield      #52                 // Field swapRelicScreen:Lextendedui/ui/controls/EUIButton;
+      60: invokevirtual #177                // Method extendedui/ui/controls/EUIButton.updateImpl:()V
+      63: aload_0
+      64: getfield      #56                 // Field swapPotionScreen:Lextendedui/ui/controls/EUIButton;
+      67: invokevirtual #177                // Method extendedui/ui/controls/EUIButton.updateImpl:()V
+      70: getstatic     #147                // Field extendedui/EUI.sortHeader:Lextendedui/ui/cardFilter/FilterSortHeader;
+      73: invokevirtual #178                // Method extendedui/ui/cardFilter/FilterSortHeader.update:()V
+      76: getstatic     #154                // Field extendedui/EUI.openFiltersButton:Lextendedui/ui/controls/EUIButton;
+      79: invokevirtual #179                // Method extendedui/ui/controls/EUIButton.tryUpdate:()Z
+      82: pop
+      83: getstatic     #156                // Field extendedui/exporter/EUIExporter.exportButton:Lextendedui/ui/controls/EUIButton;
+      86: invokevirtual #179                // Method extendedui/ui/controls/EUIButton.tryUpdate:()Z
+      89: pop
+      90: getstatic     #128                // Field extendedui/EUI.cardCounters:Lextendedui/ui/cardFilter/CountingPanel;
+      93: invokevirtual #180                // Method extendedui/ui/cardFilter/CountingPanel.tryUpdate:()Z
+      96: pop
+      97: getstatic     #88                 // Field extendedui/EUI.globalCustomCardPoolModules:Ljava/util/ArrayList;
+     100: invokevirtual #89                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     103: astore_1
+     104: aload_1
+     105: invokeinterface #90,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     110: ifeq          132
+     113: aload_1
+     114: invokeinterface #91,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     119: checkcast     #92                 // class extendedui/interfaces/markers/CustomCardPoolModule
+     122: astore_2
+     123: aload_2
+     124: invokeinterface #181,  1          // InterfaceMethod extendedui/interfaces/markers/CustomCardPoolModule.update:()V
+     129: goto          104
+     132: getstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+     135: ifnull        146
+     138: getstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+     141: invokeinterface #181,  1          // InterfaceMethod extendedui/interfaces/markers/CustomCardPoolModule.update:()V
+     146: aload_0
+     147: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+     150: getfield      #182                // Field extendedui/ui/controls/EUICardGrid.hovered:Ljava/lang/Object;
+     153: ifnull        165
+     156: getstatic     #183                // Field com/megacrit/cardcrawl/core/CardCrawlGame.cursor:Lcom/megacrit/cardcrawl/core/GameCursor;
+     159: getstatic     #184                // Field com/megacrit/cardcrawl/core/GameCursor$CursorType.INSPECT:Lcom/megacrit/cardcrawl/core/GameCursor$CursorType;
+     162: invokevirtual #185                // Method com/megacrit/cardcrawl/core/GameCursor.changeType:(Lcom/megacrit/cardcrawl/core/GameCursor$CursorType;)V
+     165: aload_0
+     166: getfield      #66                 // Field contextMenu:Lextendedui/ui/controls/EUIContextMenu;
+     169: invokevirtual #186                // Method extendedui/ui/controls/EUIContextMenu.tryUpdate:()Z
+     172: pop
+     173: getstatic     #187                // Field extendedui/exporter/EUIExporter.exportDropdown:Lextendedui/ui/controls/EUIContextMenu;
+     176: invokevirtual #186                // Method extendedui/ui/controls/EUIContextMenu.tryUpdate:()Z
+     179: pop
+     180: return
+
+  private static void lambda$removeCardFromPool$8(extendedui.ui.cardFilter.CountingPanelCounter);
+    descriptor: (Lextendedui/ui/cardFilter/CountingPanelCounter;)V
+    Code:
+       0: getstatic     #123                // Field extendedui/EUI.cardFilters:Lextendedui/ui/cardFilter/CardKeywordFilters;
+       3: aload_0
+       4: getfield      #188                // Field extendedui/ui/cardFilter/CountingPanelCounter.type:Lextendedui/interfaces/markers/CountingPanelItem;
+       7: invokevirtual #189                // Method extendedui/ui/cardFilter/CardKeywordFilters.setSort:(Ljava/util/Comparator;)V
+      10: return
+
+  private static void lambda$openScreen$7(extendedui.ui.cardFilter.CountingPanelCounter);
+    descriptor: (Lextendedui/ui/cardFilter/CountingPanelCounter;)V
+    Code:
+       0: getstatic     #123                // Field extendedui/EUI.cardFilters:Lextendedui/ui/cardFilter/CardKeywordFilters;
+       3: aload_0
+       4: getfield      #188                // Field extendedui/ui/cardFilter/CountingPanelCounter.type:Lextendedui/interfaces/markers/CountingPanelItem;
+       7: invokevirtual #189                // Method extendedui/ui/cardFilter/CardKeywordFilters.setSort:(Ljava/util/Comparator;)V
+      10: return
+
+  private void lambda$openScreen$6(com.megacrit.cardcrawl.cards.AbstractCard$CardColor, boolean, extendedui.ui.cardFilter.FilterKeywordButton);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;ZLextendedui/ui/cardFilter/FilterKeywordButton;)V
+    Code:
+       0: getstatic     #88                 // Field extendedui/EUI.globalCustomCardPoolModules:Ljava/util/ArrayList;
+       3: invokevirtual #89                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       6: astore        4
+       8: aload         4
+      10: invokeinterface #90,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      15: ifeq          52
+      18: aload         4
+      20: invokeinterface #91,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #92                 // class extendedui/interfaces/markers/CustomCardPoolModule
+      28: astore        5
+      30: aload         5
+      32: getstatic     #123                // Field extendedui/EUI.cardFilters:Lextendedui/ui/cardFilter/CardKeywordFilters;
+      35: getfield      #190                // Field extendedui/ui/cardFilter/CardKeywordFilters.group:Lextendedui/utilities/ItemGroup;
+      38: getfield      #129                // Field extendedui/utilities/ItemGroup.group:Ljava/util/ArrayList;
+      41: aload_1
+      42: iload_2
+      43: aconst_null
+      44: invokeinterface #132,  5          // InterfaceMethod extendedui/interfaces/markers/CustomCardPoolModule.open:(Ljava/util/ArrayList;Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;ZLjava/lang/Object;)V
+      49: goto          8
+      52: getstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+      55: ifnull        78
+      58: getstatic     #94                 // Field customModule:Lextendedui/interfaces/markers/CustomCardPoolModule;
+      61: getstatic     #123                // Field extendedui/EUI.cardFilters:Lextendedui/ui/cardFilter/CardKeywordFilters;
+      64: getfield      #190                // Field extendedui/ui/cardFilter/CardKeywordFilters.group:Lextendedui/utilities/ItemGroup;
+      67: getfield      #129                // Field extendedui/utilities/ItemGroup.group:Ljava/util/ArrayList;
+      70: aload_1
+      71: iload_2
+      72: aconst_null
+      73: invokeinterface #132,  5          // InterfaceMethod extendedui/interfaces/markers/CustomCardPoolModule.open:(Ljava/util/ArrayList;Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;ZLjava/lang/Object;)V
+      78: aload_0
+      79: getfield      #113                // Field cardGrid:Lextendedui/ui/controls/EUICardGrid;
+      82: invokevirtual #191                // Method extendedui/ui/controls/EUICardGrid.forceUpdatePositions:()V
+      85: return
+
+  private void lambda$new$5(java.util.List);
+    descriptor: (Ljava/util/List;)V
+    Code:
+       0: aload_0
+       1: getfield      #100                // Field selected:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+       4: ifnull        50
+       7: aload_1
+       8: invokeinterface #192,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      13: astore_2
+      14: aload_2
+      15: invokeinterface #90,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      20: ifeq          50
+      23: aload_2
+      24: invokeinterface #91,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      29: checkcast     #70                 // class extendedui/ui/screens/CardPoolScreen$DebugOption
+      32: astore_3
+      33: aload_3
+      34: getfield      #193                // Field extendedui/ui/screens/CardPoolScreen$DebugOption.onSelect:Lextendedui/interfaces/delegates/ActionT2;
+      37: aload_0
+      38: aload_0
+      39: getfield      #100                // Field selected:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      42: invokeinterface #194,  3          // InterfaceMethod extendedui/interfaces/delegates/ActionT2.invoke:(Ljava/lang/Object;Ljava/lang/Object;)V
+      47: goto          14
+      50: return
+
+  private static java.lang.String lambda$new$4(extendedui.ui.screens.CardPoolScreen$DebugOption);
+    descriptor: (Lextendedui/ui/screens/CardPoolScreen$DebugOption;)Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #195                // Field extendedui/ui/screens/CardPoolScreen$DebugOption.name:Ljava/lang/String;
+       4: areturn
+
+  private static void lambda$new$3();
+    descriptor: ()V
+    Code:
+       0: getstatic     #196                // Field extendedui/EUI.potionScreen:Lextendedui/ui/screens/PotionPoolScreen;
+       3: getstatic     #197                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       6: invokestatic  #198                // Method extendedui/ui/panelitems/CardPoolPanelItem.getAllPotions:()Ljava/util/ArrayList;
+       9: invokevirtual #199                // Method extendedui/ui/screens/PotionPoolScreen.openScreen:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer;Ljava/util/ArrayList;)V
+      12: return
+
+  private static void lambda$new$2();
+    descriptor: ()V
+    Code:
+       0: getstatic     #200                // Field extendedui/EUI.relicScreen:Lextendedui/ui/screens/RelicPoolScreen;
+       3: getstatic     #197                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       6: invokestatic  #201                // Method extendedui/ui/panelitems/CardPoolPanelItem.getAllRelics:()Ljava/util/ArrayList;
+       9: invokevirtual #202                // Method extendedui/ui/screens/RelicPoolScreen.openScreen:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer;Ljava/util/ArrayList;)V
+      12: return
+
+  private void lambda$new$1(java.lang.Boolean);
+    descriptor: (Ljava/lang/Boolean;)V
+    Code:
+       0: getstatic     #123                // Field extendedui/EUI.cardFilters:Lextendedui/ui/cardFilter/CardKeywordFilters;
+       3: getfield      #203                // Field extendedui/ui/cardFilter/CardKeywordFilters.colorsDropdown:Lextendedui/ui/controls/EUIDropdown;
+       6: getstatic     #119                // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.COLORLESS:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+       9: aload_1
+      10: invokevirtual #99                 // Method java/lang/Boolean.booleanValue:()Z
+      13: iconst_1
+      14: invokevirtual #204                // Method extendedui/ui/controls/EUIDropdown.toggleSelection:(Ljava/lang/Object;ZZ)Lextendedui/ui/controls/EUIDropdown;
+      17: pop
+      18: getstatic     #123                // Field extendedui/EUI.cardFilters:Lextendedui/ui/cardFilter/CardKeywordFilters;
+      21: getfield      #203                // Field extendedui/ui/cardFilter/CardKeywordFilters.colorsDropdown:Lextendedui/ui/controls/EUIDropdown;
+      24: getstatic     #205                // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.CURSE:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+      27: aload_1
+      28: invokevirtual #99                 // Method java/lang/Boolean.booleanValue:()Z
+      31: iconst_1
+      32: invokevirtual #204                // Method extendedui/ui/controls/EUIDropdown.toggleSelection:(Ljava/lang/Object;ZZ)Lextendedui/ui/controls/EUIDropdown;
+      35: pop
+      36: aload_0
+      37: aload_1
+      38: invokevirtual #99                 // Method java/lang/Boolean.booleanValue:()Z
+      41: putfield      #69                 // Field colorlessToggleCache:Z
+      44: return
+
+  private void lambda$new$0(java.lang.Boolean);
+    descriptor: (Ljava/lang/Boolean;)V
+    Code:
+       0: aload_1
+       1: invokevirtual #99                 // Method java/lang/Boolean.booleanValue:()Z
+       4: invokestatic  #206                // Method extendedui/EUI.toggleBetaArt:(Z)V
+       7: aload_0
+       8: aload_1
+       9: invokevirtual #99                 // Method java/lang/Boolean.booleanValue:()Z
+      12: putfield      #68                 // Field betaToggleCache:Z
+      15: return
+}

@@ -1,0 +1,604 @@
+Compiled from "DialogWord.java"
+public class com.megacrit.cardcrawl.ui.DialogWord {
+  private com.badlogic.gdx.graphics.g2d.BitmapFont font;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+
+  private com.megacrit.cardcrawl.ui.DialogWord$WordEffect effect;
+    descriptor: Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+
+  private com.megacrit.cardcrawl.ui.DialogWord$WordColor wColor;
+    descriptor: Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+
+  public java.lang.String word;
+    descriptor: Ljava/lang/String;
+
+  public int line;
+    descriptor: I
+
+  private float x;
+    descriptor: F
+
+  private float y;
+    descriptor: F
+
+  private float target_x;
+    descriptor: F
+
+  private float target_y;
+    descriptor: F
+
+  private float offset_x;
+    descriptor: F
+
+  private float offset_y;
+    descriptor: F
+
+  private float timer;
+    descriptor: F
+
+  private com.badlogic.gdx.graphics.Color color;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private com.badlogic.gdx.graphics.Color targetColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private float scale;
+    descriptor: F
+
+  private float targetScale;
+    descriptor: F
+
+  private static final float BUMP_OFFSET;
+    descriptor: F
+
+  private static com.badlogic.gdx.graphics.g2d.GlyphLayout gl;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+
+  private static final float COLOR_LERP_SPEED;
+    descriptor: F
+
+  private static final float SHAKE_AMT;
+    descriptor: F
+
+  private static final float DIALOG_FADE_Y;
+    descriptor: F
+
+  private static final float WAVY_DIST;
+    descriptor: F
+
+  private static final float SHAKE_INTERVAL;
+    descriptor: F
+
+  public com.megacrit.cardcrawl.ui.DialogWord(com.badlogic.gdx.graphics.g2d.BitmapFont, java.lang.String, com.megacrit.cardcrawl.ui.DialogWord$AppearEffect, com.megacrit.cardcrawl.ui.DialogWord$WordEffect, com.megacrit.cardcrawl.ui.DialogWord$WordColor, float, float, int);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;Lcom/megacrit/cardcrawl/ui/DialogWord$AppearEffect;Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;FFI)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #2                  // Field line:I
+       9: aload_0
+      10: fconst_0
+      11: putfield      #3                  // Field timer:F
+      14: aload_0
+      15: fconst_1
+      16: putfield      #4                  // Field scale:F
+      19: aload_0
+      20: fconst_1
+      21: putfield      #5                  // Field targetScale:F
+      24: getstatic     #6                  // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+      27: ifnonnull     40
+      30: new           #7                  // class com/badlogic/gdx/graphics/g2d/GlyphLayout
+      33: dup
+      34: invokespecial #8                  // Method com/badlogic/gdx/graphics/g2d/GlyphLayout."<init>":()V
+      37: putstatic     #6                  // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+      40: aload_0
+      41: aload_1
+      42: putfield      #9                  // Field font:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      45: aload_0
+      46: aload         4
+      48: putfield      #10                 // Field effect:Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+      51: aload_0
+      52: aload         5
+      54: putfield      #11                 // Field wColor:Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+      57: aload_0
+      58: aload_2
+      59: putfield      #12                 // Field word:Ljava/lang/String;
+      62: aload_0
+      63: fload         6
+      65: putfield      #13                 // Field x:F
+      68: aload_0
+      69: fload         7
+      71: putfield      #14                 // Field y:F
+      74: aload_0
+      75: fload         6
+      77: putfield      #15                 // Field target_x:F
+      80: aload_0
+      81: fload         7
+      83: putfield      #16                 // Field target_y:F
+      86: aload_0
+      87: aload_0
+      88: invokespecial #17                 // Method getColor:()Lcom/badlogic/gdx/graphics/Color;
+      91: putfield      #18                 // Field targetColor:Lcom/badlogic/gdx/graphics/Color;
+      94: aload_0
+      95: iload         8
+      97: putfield      #2                  // Field line:I
+     100: aload_0
+     101: new           #19                 // class com/badlogic/gdx/graphics/Color
+     104: dup
+     105: aload_0
+     106: getfield      #18                 // Field targetColor:Lcom/badlogic/gdx/graphics/Color;
+     109: getfield      #20                 // Field com/badlogic/gdx/graphics/Color.r:F
+     112: aload_0
+     113: getfield      #18                 // Field targetColor:Lcom/badlogic/gdx/graphics/Color;
+     116: getfield      #21                 // Field com/badlogic/gdx/graphics/Color.g:F
+     119: aload_0
+     120: getfield      #18                 // Field targetColor:Lcom/badlogic/gdx/graphics/Color;
+     123: getfield      #22                 // Field com/badlogic/gdx/graphics/Color.b:F
+     126: fconst_0
+     127: invokespecial #23                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     130: putfield      #24                 // Field color:Lcom/badlogic/gdx/graphics/Color;
+     133: aload         4
+     135: getstatic     #25                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordEffect.WAVY:Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+     138: if_acmpeq     149
+     141: aload         4
+     143: getstatic     #26                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordEffect.SLOW_WAVY:Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+     146: if_acmpne     158
+     149: aload_0
+     150: ldc           #28                 // float 1.5707964f
+     152: invokestatic  #29                 // Method com/badlogic/gdx/math/MathUtils.random:(F)F
+     155: putfield      #3                  // Field timer:F
+     158: getstatic     #30                 // Field com/megacrit/cardcrawl/ui/DialogWord$1.$SwitchMap$com$megacrit$cardcrawl$ui$DialogWord$AppearEffect:[I
+     161: aload_3
+     162: invokevirtual #31                 // Method com/megacrit/cardcrawl/ui/DialogWord$AppearEffect.ordinal:()I
+     165: iaload
+     166: tableswitch   { // 1 to 3
+
+                     1: 192
+
+                     2: 195
+
+                     3: 215
+               default: 230
+          }
+     192: goto          230
+     195: aload_0
+     196: dup
+     197: getfield      #14                 // Field y:F
+     200: getstatic     #32                 // Field BUMP_OFFSET:F
+     203: fsub
+     204: putfield      #14                 // Field y:F
+     207: aload_0
+     208: fconst_0
+     209: putfield      #4                  // Field scale:F
+     212: goto          230
+     215: aload_0
+     216: dup
+     217: getfield      #14                 // Field y:F
+     220: getstatic     #32                 // Field BUMP_OFFSET:F
+     223: fsub
+     224: putfield      #14                 // Field y:F
+     227: goto          230
+     230: return
+
+  private com.badlogic.gdx.graphics.Color getColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #33                 // Field com/megacrit/cardcrawl/ui/DialogWord$1.$SwitchMap$com$megacrit$cardcrawl$ui$DialogWord$WordColor:[I
+       3: aload_0
+       4: getfield      #11                 // Field wColor:Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+       7: invokevirtual #34                 // Method com/megacrit/cardcrawl/ui/DialogWord$WordColor.ordinal:()I
+      10: iaload
+      11: tableswitch   { // 1 to 6
+
+                     1: 48
+
+                     2: 55
+
+                     3: 62
+
+                     4: 69
+
+                     5: 76
+
+                     6: 83
+               default: 90
+          }
+      48: getstatic     #35                 // Field com/megacrit/cardcrawl/core/Settings.RED_TEXT_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      51: invokevirtual #36                 // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      54: areturn
+      55: getstatic     #37                 // Field com/megacrit/cardcrawl/core/Settings.GREEN_TEXT_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      58: invokevirtual #36                 // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      61: areturn
+      62: getstatic     #38                 // Field com/megacrit/cardcrawl/core/Settings.BLUE_TEXT_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      65: invokevirtual #36                 // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      68: areturn
+      69: getstatic     #39                 // Field com/megacrit/cardcrawl/core/Settings.GOLD_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      72: invokevirtual #36                 // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      75: areturn
+      76: getstatic     #40                 // Field com/megacrit/cardcrawl/core/Settings.PURPLE_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      79: invokevirtual #36                 // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      82: areturn
+      83: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.CREAM_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      86: invokevirtual #36                 // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      89: areturn
+      90: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.CREAM_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      93: invokevirtual #36                 // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      96: areturn
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #13                 // Field x:F
+       4: aload_0
+       5: getfield      #15                 // Field target_x:F
+       8: fcmpl
+       9: ifeq          38
+      12: aload_0
+      13: aload_0
+      14: getfield      #13                 // Field x:F
+      17: aload_0
+      18: getfield      #15                 // Field target_x:F
+      21: getstatic     #42                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+      24: invokeinterface #43,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      29: ldc           #44                 // float 12.0f
+      31: fmul
+      32: invokestatic  #45                 // Method com/badlogic/gdx/math/MathUtils.lerp:(FFF)F
+      35: putfield      #13                 // Field x:F
+      38: aload_0
+      39: getfield      #14                 // Field y:F
+      42: aload_0
+      43: getfield      #16                 // Field target_y:F
+      46: fcmpl
+      47: ifeq          76
+      50: aload_0
+      51: aload_0
+      52: getfield      #14                 // Field y:F
+      55: aload_0
+      56: getfield      #16                 // Field target_y:F
+      59: getstatic     #42                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+      62: invokeinterface #43,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      67: ldc           #44                 // float 12.0f
+      69: fmul
+      70: invokestatic  #45                 // Method com/badlogic/gdx/math/MathUtils.lerp:(FFF)F
+      73: putfield      #14                 // Field y:F
+      76: aload_0
+      77: aload_0
+      78: getfield      #24                 // Field color:Lcom/badlogic/gdx/graphics/Color;
+      81: aload_0
+      82: getfield      #18                 // Field targetColor:Lcom/badlogic/gdx/graphics/Color;
+      85: getstatic     #42                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+      88: invokeinterface #43,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      93: ldc           #47                 // float 8.0f
+      95: fmul
+      96: invokevirtual #48                 // Method com/badlogic/gdx/graphics/Color.lerp:(Lcom/badlogic/gdx/graphics/Color;F)Lcom/badlogic/gdx/graphics/Color;
+      99: putfield      #24                 // Field color:Lcom/badlogic/gdx/graphics/Color;
+     102: aload_0
+     103: getfield      #4                  // Field scale:F
+     106: aload_0
+     107: getfield      #5                  // Field targetScale:F
+     110: fcmpl
+     111: ifeq          129
+     114: aload_0
+     115: aload_0
+     116: getfield      #4                  // Field scale:F
+     119: aload_0
+     120: getfield      #5                  // Field targetScale:F
+     123: invokestatic  #49                 // Method com/megacrit/cardcrawl/helpers/MathHelper.scaleLerpSnap:(FF)F
+     126: putfield      #4                  // Field scale:F
+     129: aload_0
+     130: invokespecial #50                 // Method applyEffects:()V
+     133: return
+
+  private void applyEffects();
+    descriptor: ()V
+    Code:
+       0: getstatic     #51                 // Field com/megacrit/cardcrawl/ui/DialogWord$1.$SwitchMap$com$megacrit$cardcrawl$ui$DialogWord$WordEffect:[I
+       3: aload_0
+       4: getfield      #10                 // Field effect:Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+       7: invokevirtual #52                 // Method com/megacrit/cardcrawl/ui/DialogWord$WordEffect.ordinal:()I
+      10: iaload
+      11: tableswitch   { // 1 to 3
+
+                     1: 36
+
+                     2: 99
+
+                     3: 142
+               default: 185
+          }
+      36: aload_0
+      37: dup
+      38: getfield      #3                  // Field timer:F
+      41: getstatic     #42                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+      44: invokeinterface #43,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      49: fsub
+      50: putfield      #3                  // Field timer:F
+      53: aload_0
+      54: getfield      #3                  // Field timer:F
+      57: fconst_0
+      58: fcmpg
+      59: ifge          185
+      62: aload_0
+      63: getstatic     #53                 // Field SHAKE_AMT:F
+      66: fneg
+      67: getstatic     #53                 // Field SHAKE_AMT:F
+      70: invokestatic  #54                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+      73: putfield      #55                 // Field offset_x:F
+      76: aload_0
+      77: getstatic     #53                 // Field SHAKE_AMT:F
+      80: fneg
+      81: getstatic     #53                 // Field SHAKE_AMT:F
+      84: invokestatic  #54                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+      87: putfield      #56                 // Field offset_y:F
+      90: aload_0
+      91: ldc           #57                 // float 0.02f
+      93: putfield      #3                  // Field timer:F
+      96: goto          185
+      99: aload_0
+     100: dup
+     101: getfield      #3                  // Field timer:F
+     104: getstatic     #42                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+     107: invokeinterface #43,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+     112: ldc           #58                 // float 6.0f
+     114: fmul
+     115: fadd
+     116: putfield      #3                  // Field timer:F
+     119: aload_0
+     120: aload_0
+     121: getfield      #3                  // Field timer:F
+     124: f2d
+     125: invokestatic  #59                 // Method java/lang/Math.cos:(D)D
+     128: d2f
+     129: getstatic     #60                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     132: fmul
+     133: ldc           #61                 // float 3.0f
+     135: fmul
+     136: putfield      #56                 // Field offset_y:F
+     139: goto          185
+     142: aload_0
+     143: dup
+     144: getfield      #3                  // Field timer:F
+     147: getstatic     #42                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+     150: invokeinterface #43,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+     155: ldc           #61                 // float 3.0f
+     157: fmul
+     158: fadd
+     159: putfield      #3                  // Field timer:F
+     162: aload_0
+     163: aload_0
+     164: getfield      #3                  // Field timer:F
+     167: f2d
+     168: invokestatic  #59                 // Method java/lang/Math.cos:(D)D
+     171: d2f
+     172: getstatic     #60                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     175: fmul
+     176: ldc           #62                 // float 1.5f
+     178: fmul
+     179: putfield      #56                 // Field offset_y:F
+     182: goto          185
+     185: return
+
+  public void dialogFadeOut();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: new           #19                 // class com/badlogic/gdx/graphics/Color
+       4: dup
+       5: fconst_0
+       6: fconst_0
+       7: fconst_0
+       8: fconst_0
+       9: invokespecial #23                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      12: putfield      #18                 // Field targetColor:Lcom/badlogic/gdx/graphics/Color;
+      15: aload_0
+      16: dup
+      17: getfield      #16                 // Field target_y:F
+      20: getstatic     #63                 // Field DIALOG_FADE_Y:F
+      23: fsub
+      24: putfield      #16                 // Field target_y:F
+      27: return
+
+  public void shiftY(float);
+    descriptor: (F)V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #16                 // Field target_y:F
+       5: fload_1
+       6: fadd
+       7: putfield      #16                 // Field target_y:F
+      10: return
+
+  public void shiftX(float);
+    descriptor: (F)V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #15                 // Field target_x:F
+       5: fload_1
+       6: fadd
+       7: putfield      #15                 // Field target_x:F
+      10: return
+
+  public void setX(float);
+    descriptor: (F)V
+    Code:
+       0: aload_0
+       1: fload_1
+       2: putfield      #15                 // Field target_x:F
+       5: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #9                  // Field font:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+       4: aload_0
+       5: getfield      #24                 // Field color:Lcom/badlogic/gdx/graphics/Color;
+       8: invokevirtual #64                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      11: aload_0
+      12: getfield      #9                  // Field font:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      15: invokevirtual #65                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.getData:()Lcom/badlogic/gdx/graphics/g2d/BitmapFont$BitmapFontData;
+      18: aload_0
+      19: getfield      #4                  // Field scale:F
+      22: invokevirtual #66                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont$BitmapFontData.setScale:(F)V
+      25: aload_0
+      26: getfield      #9                  // Field font:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      29: aload_1
+      30: aload_0
+      31: getfield      #12                 // Field word:Ljava/lang/String;
+      34: aload_0
+      35: getfield      #13                 // Field x:F
+      38: aload_0
+      39: getfield      #55                 // Field offset_x:F
+      42: fadd
+      43: aload_0
+      44: getfield      #14                 // Field y:F
+      47: aload_0
+      48: getfield      #56                 // Field offset_y:F
+      51: fadd
+      52: invokevirtual #67                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.draw:(Lcom/badlogic/gdx/graphics/g2d/Batch;Ljava/lang/CharSequence;FF)Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+      55: pop
+      56: aload_0
+      57: getfield      #9                  // Field font:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      60: invokevirtual #65                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.getData:()Lcom/badlogic/gdx/graphics/g2d/BitmapFont$BitmapFontData;
+      63: fconst_1
+      64: invokevirtual #66                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont$BitmapFontData.setScale:(F)V
+      67: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch, float);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;F)V
+    Code:
+       0: aload_0
+       1: getfield      #9                  // Field font:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+       4: aload_0
+       5: getfield      #24                 // Field color:Lcom/badlogic/gdx/graphics/Color;
+       8: invokevirtual #64                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      11: aload_0
+      12: getfield      #9                  // Field font:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      15: invokevirtual #65                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.getData:()Lcom/badlogic/gdx/graphics/g2d/BitmapFont$BitmapFontData;
+      18: aload_0
+      19: getfield      #4                  // Field scale:F
+      22: invokevirtual #66                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont$BitmapFontData.setScale:(F)V
+      25: aload_0
+      26: getfield      #9                  // Field font:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      29: aload_1
+      30: aload_0
+      31: getfield      #12                 // Field word:Ljava/lang/String;
+      34: aload_0
+      35: getfield      #13                 // Field x:F
+      38: aload_0
+      39: getfield      #55                 // Field offset_x:F
+      42: fadd
+      43: aload_0
+      44: getfield      #14                 // Field y:F
+      47: aload_0
+      48: getfield      #56                 // Field offset_y:F
+      51: fadd
+      52: fload_2
+      53: fadd
+      54: invokevirtual #67                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.draw:(Lcom/badlogic/gdx/graphics/g2d/Batch;Ljava/lang/CharSequence;FF)Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+      57: pop
+      58: aload_0
+      59: getfield      #9                  // Field font:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      62: invokevirtual #65                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont.getData:()Lcom/badlogic/gdx/graphics/g2d/BitmapFont$BitmapFontData;
+      65: fconst_1
+      66: invokevirtual #66                 // Method com/badlogic/gdx/graphics/g2d/BitmapFont$BitmapFontData.setScale:(F)V
+      69: return
+
+  public static com.megacrit.cardcrawl.ui.DialogWord$WordEffect identifyWordEffect(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+    Code:
+       0: aload_0
+       1: invokevirtual #68                 // Method java/lang/String.length:()I
+       4: iconst_2
+       5: if_icmple     66
+       8: aload_0
+       9: iconst_0
+      10: invokevirtual #69                 // Method java/lang/String.charAt:(I)C
+      13: bipush        64
+      15: if_icmpne     37
+      18: aload_0
+      19: aload_0
+      20: invokevirtual #68                 // Method java/lang/String.length:()I
+      23: iconst_1
+      24: isub
+      25: invokevirtual #69                 // Method java/lang/String.charAt:(I)C
+      28: bipush        64
+      30: if_icmpne     37
+      33: getstatic     #70                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordEffect.SHAKY:Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+      36: areturn
+      37: aload_0
+      38: iconst_0
+      39: invokevirtual #69                 // Method java/lang/String.charAt:(I)C
+      42: bipush        126
+      44: if_icmpne     66
+      47: aload_0
+      48: aload_0
+      49: invokevirtual #68                 // Method java/lang/String.length:()I
+      52: iconst_1
+      53: isub
+      54: invokevirtual #69                 // Method java/lang/String.charAt:(I)C
+      57: bipush        126
+      59: if_icmpne     66
+      62: getstatic     #25                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordEffect.WAVY:Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+      65: areturn
+      66: getstatic     #71                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordEffect.NONE:Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+      69: areturn
+
+  public static com.megacrit.cardcrawl.ui.DialogWord$WordColor identifyWordColor(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: invokevirtual #69                 // Method java/lang/String.charAt:(I)C
+       5: bipush        35
+       7: if_icmpne     84
+      10: aload_0
+      11: iconst_1
+      12: invokevirtual #69                 // Method java/lang/String.charAt:(I)C
+      15: lookupswitch  { // 5
+
+                    98: 72
+
+                   103: 68
+
+                   112: 80
+
+                   114: 64
+
+                   121: 76
+               default: 84
+          }
+      64: getstatic     #72                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordColor.RED:Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+      67: areturn
+      68: getstatic     #73                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordColor.GREEN:Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+      71: areturn
+      72: getstatic     #74                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordColor.BLUE:Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+      75: areturn
+      76: getstatic     #75                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordColor.GOLD:Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+      79: areturn
+      80: getstatic     #76                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordColor.PURPLE:Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+      83: areturn
+      84: getstatic     #77                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordColor.DEFAULT:Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+      87: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #78                 // float 20.0f
+       2: getstatic     #60                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+       5: fmul
+       6: putstatic     #32                 // Field BUMP_OFFSET:F
+       9: fconst_2
+      10: getstatic     #60                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      13: fmul
+      14: putstatic     #53                 // Field SHAKE_AMT:F
+      17: ldc           #79                 // float 50.0f
+      19: getstatic     #60                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      22: fmul
+      23: putstatic     #63                 // Field DIALOG_FADE_Y:F
+      26: return
+}

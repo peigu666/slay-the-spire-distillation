@@ -13,14 +13,14 @@
 ## 写补丁的顺序
 
 1. 从 `api/base_game_api.types.jsonl` 找目标类和目标重载。
-2. 用 `tools/query-sts-api.ps1 -IncludeBody` 看方法的代码长度/哈希和补丁类已有的注解属性；必要时对本地 JAR 单独运行 `javap -c` 做行为确认。
+2. 用 `tools/query-sts-api.ps1 -IncludeBody` 看方法的代码长度/哈希和补丁类已有的注解属性；优先查 `environment/patch_targets.jsonl` 与 `bytecode/instruction_snapshots.jsonl`，再用对应的 `bytecode/javap/*.txt` 或 `tools/javap-type.ps1 -Bytecode` 做行为确认。
 3. 选择最小补丁：前缀/后缀优先，其次插入，最后才是 Instrument/Raw。
 4. 如果目标属于可选 Mod，填写 `requiredModId` 或 `optional`，并在 `ModTheSpire.json` 中区分硬依赖和可选依赖。
 5. 一次只引入一个补丁目标，启动后检查日志中的 patch 应用结果。
 
 ## Locator 不能靠猜
 
-插入点由字节码指令决定；源码行号、反编译出来的局部变量名和旧版教程都不能替代当前 JAR。类记录中的 `code.sha256` 只用于发现目标是否变了，不是可读源码。目标方法变更后应重新确定 Matcher/Locator，而不是只改注解名字。
+插入点由字节码指令决定；源码行号、反编译出来的局部变量名和旧版教程都不能替代当前 JAR。类记录中的 `code.sha256` 只用于发现目标是否变了；`bytecode/instruction_snapshots.jsonl` 才包含偏移、操作码、操作数、常量池引用和分支目标。目标方法变更后应重新确定 Matcher/Locator，而不是只改注解名字。
 
 ## 常见误区
 

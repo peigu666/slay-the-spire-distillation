@@ -1,0 +1,981 @@
+Compiled from "AnimationState.java"
+public class com.esotericsoftware.spine.AnimationState {
+  private com.esotericsoftware.spine.AnimationStateData data;
+    descriptor: Lcom/esotericsoftware/spine/AnimationStateData;
+
+  private com.badlogic.gdx.utils.Array<com.esotericsoftware.spine.AnimationState$TrackEntry> tracks;
+    descriptor: Lcom/badlogic/gdx/utils/Array;
+
+  private final com.badlogic.gdx.utils.Array<com.esotericsoftware.spine.Event> events;
+    descriptor: Lcom/badlogic/gdx/utils/Array;
+
+  private final com.badlogic.gdx.utils.Array<com.esotericsoftware.spine.AnimationState$AnimationStateListener> listeners;
+    descriptor: Lcom/badlogic/gdx/utils/Array;
+
+  private float timeScale;
+    descriptor: F
+
+  private com.badlogic.gdx.utils.Pool<com.esotericsoftware.spine.AnimationState$TrackEntry> trackEntryPool;
+    descriptor: Lcom/badlogic/gdx/utils/Pool;
+
+  public com.esotericsoftware.spine.AnimationState();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #2                  // class com/badlogic/gdx/utils/Array
+       8: dup
+       9: invokespecial #3                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      12: putfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      15: aload_0
+      16: new           #2                  // class com/badlogic/gdx/utils/Array
+      19: dup
+      20: invokespecial #3                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      23: putfield      #5                  // Field events:Lcom/badlogic/gdx/utils/Array;
+      26: aload_0
+      27: new           #2                  // class com/badlogic/gdx/utils/Array
+      30: dup
+      31: invokespecial #3                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      34: putfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+      37: aload_0
+      38: fconst_1
+      39: putfield      #7                  // Field timeScale:F
+      42: aload_0
+      43: new           #8                  // class com/esotericsoftware/spine/AnimationState$1
+      46: dup
+      47: aload_0
+      48: invokespecial #9                  // Method com/esotericsoftware/spine/AnimationState$1."<init>":(Lcom/esotericsoftware/spine/AnimationState;)V
+      51: putfield      #10                 // Field trackEntryPool:Lcom/badlogic/gdx/utils/Pool;
+      54: return
+
+  public com.esotericsoftware.spine.AnimationState(com.esotericsoftware.spine.AnimationStateData);
+    descriptor: (Lcom/esotericsoftware/spine/AnimationStateData;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #2                  // class com/badlogic/gdx/utils/Array
+       8: dup
+       9: invokespecial #3                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      12: putfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      15: aload_0
+      16: new           #2                  // class com/badlogic/gdx/utils/Array
+      19: dup
+      20: invokespecial #3                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      23: putfield      #5                  // Field events:Lcom/badlogic/gdx/utils/Array;
+      26: aload_0
+      27: new           #2                  // class com/badlogic/gdx/utils/Array
+      30: dup
+      31: invokespecial #3                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      34: putfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+      37: aload_0
+      38: fconst_1
+      39: putfield      #7                  // Field timeScale:F
+      42: aload_0
+      43: new           #8                  // class com/esotericsoftware/spine/AnimationState$1
+      46: dup
+      47: aload_0
+      48: invokespecial #9                  // Method com/esotericsoftware/spine/AnimationState$1."<init>":(Lcom/esotericsoftware/spine/AnimationState;)V
+      51: putfield      #10                 // Field trackEntryPool:Lcom/badlogic/gdx/utils/Pool;
+      54: aload_1
+      55: ifnonnull     68
+      58: new           #11                 // class java/lang/IllegalArgumentException
+      61: dup
+      62: ldc           #12                 // String data cannot be null.
+      64: invokespecial #13                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      67: athrow
+      68: aload_0
+      69: aload_1
+      70: putfield      #14                 // Field data:Lcom/esotericsoftware/spine/AnimationStateData;
+      73: return
+
+  public void update(float);
+    descriptor: (F)V
+    Code:
+       0: fload_1
+       1: aload_0
+       2: getfield      #7                  // Field timeScale:F
+       5: fmul
+       6: fstore_1
+       7: iconst_0
+       8: istore_2
+       9: iload_2
+      10: aload_0
+      11: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      14: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+      17: if_icmpge     219
+      20: aload_0
+      21: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      24: iload_2
+      25: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+      28: checkcast     #17                 // class com/esotericsoftware/spine/AnimationState$TrackEntry
+      31: astore_3
+      32: aload_3
+      33: ifnonnull     39
+      36: goto          213
+      39: aload_3
+      40: getfield      #18                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.next:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      43: astore        4
+      45: aload         4
+      47: ifnull        128
+      50: aload_3
+      51: getfield      #19                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.lastTime:F
+      54: aload         4
+      56: getfield      #20                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.delay:F
+      59: fsub
+      60: fstore        5
+      62: fload         5
+      64: fconst_0
+      65: fcmpl
+      66: iflt          125
+      69: fload_1
+      70: aload         4
+      72: getfield      #21                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.timeScale:F
+      75: fmul
+      76: fstore        6
+      78: aload         4
+      80: fload         5
+      82: fload         6
+      84: fadd
+      85: putfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+      88: aload_3
+      89: dup
+      90: getfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+      93: fload_1
+      94: aload_3
+      95: getfield      #21                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.timeScale:F
+      98: fmul
+      99: fadd
+     100: putfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+     103: aload_0
+     104: iload_2
+     105: aload         4
+     107: invokespecial #23                 // Method setCurrent:(ILcom/esotericsoftware/spine/AnimationState$TrackEntry;)V
+     110: aload         4
+     112: dup
+     113: getfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+     116: fload         6
+     118: fsub
+     119: putfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+     122: aload         4
+     124: astore_3
+     125: goto          155
+     128: aload_3
+     129: getfield      #24                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.loop:Z
+     132: ifne          155
+     135: aload_3
+     136: getfield      #19                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.lastTime:F
+     139: aload_3
+     140: getfield      #25                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.endTime:F
+     143: fcmpl
+     144: iflt          155
+     147: aload_0
+     148: iload_2
+     149: invokevirtual #26                 // Method clearTrack:(I)V
+     152: goto          213
+     155: aload_3
+     156: dup
+     157: getfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+     160: fload_1
+     161: aload_3
+     162: getfield      #21                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.timeScale:F
+     165: fmul
+     166: fadd
+     167: putfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+     170: aload_3
+     171: getfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     174: ifnull        213
+     177: fload_1
+     178: aload_3
+     179: getfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     182: getfield      #21                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.timeScale:F
+     185: fmul
+     186: fstore        5
+     188: aload_3
+     189: getfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     192: dup
+     193: getfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+     196: fload         5
+     198: fadd
+     199: putfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+     202: aload_3
+     203: dup
+     204: getfield      #28                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mixTime:F
+     207: fload         5
+     209: fadd
+     210: putfield      #28                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mixTime:F
+     213: iinc          2, 1
+     216: goto          9
+     219: return
+
+  public void apply(com.esotericsoftware.spine.Skeleton);
+    descriptor: (Lcom/esotericsoftware/spine/Skeleton;)V
+    Code:
+       0: aload_0
+       1: getfield      #5                  // Field events:Lcom/badlogic/gdx/utils/Array;
+       4: astore_2
+       5: aload_0
+       6: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+       9: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+      12: istore_3
+      13: iconst_0
+      14: istore        4
+      16: iload         4
+      18: aload_0
+      19: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      22: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+      25: if_icmpge     471
+      28: aload_0
+      29: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      32: iload         4
+      34: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+      37: checkcast     #17                 // class com/esotericsoftware/spine/AnimationState$TrackEntry
+      40: astore        5
+      42: aload         5
+      44: ifnonnull     50
+      47: goto          465
+      50: aload_2
+      51: iconst_0
+      52: putfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+      55: aload         5
+      57: getfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+      60: fstore        6
+      62: aload         5
+      64: getfield      #19                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.lastTime:F
+      67: fstore        7
+      69: aload         5
+      71: getfield      #25                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.endTime:F
+      74: fstore        8
+      76: aload         5
+      78: getfield      #24                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.loop:Z
+      81: istore        9
+      83: iload         9
+      85: ifne          100
+      88: fload         6
+      90: fload         8
+      92: fcmpl
+      93: ifle          100
+      96: fload         8
+      98: fstore        6
+     100: aload         5
+     102: getfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     105: astore        10
+     107: aload         10
+     109: ifnonnull     136
+     112: aload         5
+     114: getfield      #29                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.animation:Lcom/esotericsoftware/spine/Animation;
+     117: aload_1
+     118: fload         7
+     120: fload         6
+     122: iload         9
+     124: aload_2
+     125: aload         5
+     127: getfield      #30                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mix:F
+     130: invokevirtual #31                 // Method com/esotericsoftware/spine/Animation.mix:(Lcom/esotericsoftware/spine/Skeleton;FFZLcom/badlogic/gdx/utils/Array;F)V
+     133: goto          250
+     136: aload         10
+     138: getfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+     141: fstore        11
+     143: aload         10
+     145: getfield      #24                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.loop:Z
+     148: ifne          169
+     151: fload         11
+     153: aload         10
+     155: getfield      #25                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.endTime:F
+     158: fcmpl
+     159: ifle          169
+     162: aload         10
+     164: getfield      #25                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.endTime:F
+     167: fstore        11
+     169: aload         10
+     171: getfield      #29                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.animation:Lcom/esotericsoftware/spine/Animation;
+     174: aload_1
+     175: fload         11
+     177: fload         11
+     179: aload         10
+     181: getfield      #24                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.loop:Z
+     184: aconst_null
+     185: invokevirtual #32                 // Method com/esotericsoftware/spine/Animation.apply:(Lcom/esotericsoftware/spine/Skeleton;FFZLcom/badlogic/gdx/utils/Array;)V
+     188: aload         5
+     190: getfield      #28                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mixTime:F
+     193: aload         5
+     195: getfield      #33                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mixDuration:F
+     198: fdiv
+     199: aload         5
+     201: getfield      #30                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mix:F
+     204: fmul
+     205: fstore        12
+     207: fload         12
+     209: fconst_1
+     210: fcmpl
+     211: iflt          232
+     214: fconst_1
+     215: fstore        12
+     217: aload_0
+     218: getfield      #10                 // Field trackEntryPool:Lcom/badlogic/gdx/utils/Pool;
+     221: aload         10
+     223: invokevirtual #34                 // Method com/badlogic/gdx/utils/Pool.free:(Ljava/lang/Object;)V
+     226: aload         5
+     228: aconst_null
+     229: putfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     232: aload         5
+     234: getfield      #29                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.animation:Lcom/esotericsoftware/spine/Animation;
+     237: aload_1
+     238: fload         7
+     240: fload         6
+     242: iload         9
+     244: aload_2
+     245: fload         12
+     247: invokevirtual #31                 // Method com/esotericsoftware/spine/Animation.mix:(Lcom/esotericsoftware/spine/Skeleton;FFZLcom/badlogic/gdx/utils/Array;F)V
+     250: iconst_0
+     251: istore        11
+     253: aload_2
+     254: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+     257: istore        12
+     259: iload         11
+     261: iload         12
+     263: if_icmpge     341
+     266: aload_2
+     267: iload         11
+     269: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+     272: checkcast     #35                 // class com/esotericsoftware/spine/Event
+     275: astore        13
+     277: aload         5
+     279: getfield      #36                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.listener:Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;
+     282: ifnull        299
+     285: aload         5
+     287: getfield      #36                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.listener:Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;
+     290: iload         4
+     292: aload         13
+     294: invokeinterface #37,  3           // InterfaceMethod com/esotericsoftware/spine/AnimationState$AnimationStateListener.event:(ILcom/esotericsoftware/spine/Event;)V
+     299: iconst_0
+     300: istore        14
+     302: iload         14
+     304: iload_3
+     305: if_icmpge     335
+     308: aload_0
+     309: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+     312: iload         14
+     314: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+     317: checkcast     #38                 // class com/esotericsoftware/spine/AnimationState$AnimationStateListener
+     320: iload         4
+     322: aload         13
+     324: invokeinterface #37,  3           // InterfaceMethod com/esotericsoftware/spine/AnimationState$AnimationStateListener.event:(ILcom/esotericsoftware/spine/Event;)V
+     329: iinc          14, 1
+     332: goto          302
+     335: iinc          11, 1
+     338: goto          259
+     341: iload         9
+     343: ifeq          363
+     346: fload         7
+     348: fload         8
+     350: frem
+     351: fload         6
+     353: fload         8
+     355: frem
+     356: fcmpl
+     357: ifle          455
+     360: goto          379
+     363: fload         7
+     365: fload         8
+     367: fcmpg
+     368: ifge          455
+     371: fload         6
+     373: fload         8
+     375: fcmpl
+     376: iflt          455
+     379: fload         6
+     381: fload         8
+     383: fdiv
+     384: f2i
+     385: istore        11
+     387: aload         5
+     389: getfield      #36                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.listener:Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;
+     392: ifnull        409
+     395: aload         5
+     397: getfield      #36                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.listener:Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;
+     400: iload         4
+     402: iload         11
+     404: invokeinterface #39,  3           // InterfaceMethod com/esotericsoftware/spine/AnimationState$AnimationStateListener.complete:(II)V
+     409: iconst_0
+     410: istore        12
+     412: aload_0
+     413: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+     416: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+     419: istore        13
+     421: iload         12
+     423: iload         13
+     425: if_icmpge     455
+     428: aload_0
+     429: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+     432: iload         12
+     434: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+     437: checkcast     #38                 // class com/esotericsoftware/spine/AnimationState$AnimationStateListener
+     440: iload         4
+     442: iload         11
+     444: invokeinterface #39,  3           // InterfaceMethod com/esotericsoftware/spine/AnimationState$AnimationStateListener.complete:(II)V
+     449: iinc          12, 1
+     452: goto          421
+     455: aload         5
+     457: aload         5
+     459: getfield      #22                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.time:F
+     462: putfield      #19                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.lastTime:F
+     465: iinc          4, 1
+     468: goto          16
+     471: return
+
+  public void clearTracks();
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: istore_1
+       2: aload_0
+       3: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+       6: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+       9: istore_2
+      10: iload_1
+      11: iload_2
+      12: if_icmpge     26
+      15: aload_0
+      16: iload_1
+      17: invokevirtual #26                 // Method clearTrack:(I)V
+      20: iinc          1, 1
+      23: goto          10
+      26: aload_0
+      27: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      30: invokevirtual #40                 // Method com/badlogic/gdx/utils/Array.clear:()V
+      33: return
+
+  public void clearTrack(int);
+    descriptor: (I)V
+    Code:
+       0: iload_1
+       1: aload_0
+       2: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+       5: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+       8: if_icmplt     12
+      11: return
+      12: aload_0
+      13: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      16: iload_1
+      17: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+      20: checkcast     #17                 // class com/esotericsoftware/spine/AnimationState$TrackEntry
+      23: astore_2
+      24: aload_2
+      25: ifnonnull     29
+      28: return
+      29: aload_2
+      30: getfield      #36                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.listener:Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;
+      33: ifnull        46
+      36: aload_2
+      37: getfield      #36                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.listener:Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;
+      40: iload_1
+      41: invokeinterface #41,  2           // InterfaceMethod com/esotericsoftware/spine/AnimationState$AnimationStateListener.end:(I)V
+      46: iconst_0
+      47: istore_3
+      48: aload_0
+      49: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+      52: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+      55: istore        4
+      57: iload_3
+      58: iload         4
+      60: if_icmpge     86
+      63: aload_0
+      64: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+      67: iload_3
+      68: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+      71: checkcast     #38                 // class com/esotericsoftware/spine/AnimationState$AnimationStateListener
+      74: iload_1
+      75: invokeinterface #41,  2           // InterfaceMethod com/esotericsoftware/spine/AnimationState$AnimationStateListener.end:(I)V
+      80: iinc          3, 1
+      83: goto          57
+      86: aload_0
+      87: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      90: iload_1
+      91: aconst_null
+      92: invokevirtual #42                 // Method com/badlogic/gdx/utils/Array.set:(ILjava/lang/Object;)V
+      95: aload_0
+      96: aload_2
+      97: invokespecial #43                 // Method freeAll:(Lcom/esotericsoftware/spine/AnimationState$TrackEntry;)V
+     100: aload_2
+     101: getfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     104: ifnull        118
+     107: aload_0
+     108: getfield      #10                 // Field trackEntryPool:Lcom/badlogic/gdx/utils/Pool;
+     111: aload_2
+     112: getfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     115: invokevirtual #34                 // Method com/badlogic/gdx/utils/Pool.free:(Ljava/lang/Object;)V
+     118: return
+
+  private void freeAll(com.esotericsoftware.spine.AnimationState$TrackEntry);
+    descriptor: (Lcom/esotericsoftware/spine/AnimationState$TrackEntry;)V
+    Code:
+       0: aload_1
+       1: ifnull        22
+       4: aload_1
+       5: getfield      #18                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.next:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+       8: astore_2
+       9: aload_0
+      10: getfield      #10                 // Field trackEntryPool:Lcom/badlogic/gdx/utils/Pool;
+      13: aload_1
+      14: invokevirtual #34                 // Method com/badlogic/gdx/utils/Pool.free:(Ljava/lang/Object;)V
+      17: aload_2
+      18: astore_1
+      19: goto          0
+      22: return
+
+  private com.esotericsoftware.spine.AnimationState$TrackEntry expandToIndex(int);
+    descriptor: (I)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+    Code:
+       0: iload_1
+       1: aload_0
+       2: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+       5: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+       8: if_icmpge     23
+      11: aload_0
+      12: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      15: iload_1
+      16: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+      19: checkcast     #17                 // class com/esotericsoftware/spine/AnimationState$TrackEntry
+      22: areturn
+      23: aload_0
+      24: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      27: iload_1
+      28: aload_0
+      29: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      32: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+      35: isub
+      36: iconst_1
+      37: iadd
+      38: invokevirtual #44                 // Method com/badlogic/gdx/utils/Array.ensureCapacity:(I)[Ljava/lang/Object;
+      41: pop
+      42: aload_0
+      43: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      46: iload_1
+      47: iconst_1
+      48: iadd
+      49: putfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+      52: aconst_null
+      53: areturn
+
+  private void setCurrent(int, com.esotericsoftware.spine.AnimationState$TrackEntry);
+    descriptor: (ILcom/esotericsoftware/spine/AnimationState$TrackEntry;)V
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokespecial #45                 // Method expandToIndex:(I)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+       5: astore_3
+       6: aload_3
+       7: ifnull        176
+      10: aload_3
+      11: getfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      14: astore        4
+      16: aload_3
+      17: aconst_null
+      18: putfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      21: aload_3
+      22: getfield      #36                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.listener:Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;
+      25: ifnull        38
+      28: aload_3
+      29: getfield      #36                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.listener:Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;
+      32: iload_1
+      33: invokeinterface #41,  2           // InterfaceMethod com/esotericsoftware/spine/AnimationState$AnimationStateListener.end:(I)V
+      38: iconst_0
+      39: istore        5
+      41: aload_0
+      42: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+      45: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+      48: istore        6
+      50: iload         5
+      52: iload         6
+      54: if_icmpge     81
+      57: aload_0
+      58: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+      61: iload         5
+      63: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+      66: checkcast     #38                 // class com/esotericsoftware/spine/AnimationState$AnimationStateListener
+      69: iload_1
+      70: invokeinterface #41,  2           // InterfaceMethod com/esotericsoftware/spine/AnimationState$AnimationStateListener.end:(I)V
+      75: iinc          5, 1
+      78: goto          50
+      81: aload_2
+      82: aload_0
+      83: getfield      #14                 // Field data:Lcom/esotericsoftware/spine/AnimationStateData;
+      86: aload_3
+      87: getfield      #29                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.animation:Lcom/esotericsoftware/spine/Animation;
+      90: aload_2
+      91: getfield      #29                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.animation:Lcom/esotericsoftware/spine/Animation;
+      94: invokevirtual #46                 // Method com/esotericsoftware/spine/AnimationStateData.getMix:(Lcom/esotericsoftware/spine/Animation;Lcom/esotericsoftware/spine/Animation;)F
+      97: putfield      #33                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mixDuration:F
+     100: aload_2
+     101: getfield      #33                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mixDuration:F
+     104: fconst_0
+     105: fcmpl
+     106: ifle          154
+     109: aload_2
+     110: fconst_0
+     111: putfield      #28                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mixTime:F
+     114: aload         4
+     116: ifnull        146
+     119: aload_3
+     120: getfield      #28                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mixTime:F
+     123: aload_3
+     124: getfield      #33                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.mixDuration:F
+     127: fdiv
+     128: ldc           #47                 // float 0.5f
+     130: fcmpg
+     131: ifge          146
+     134: aload_2
+     135: aload         4
+     137: putfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     140: aload_3
+     141: astore        4
+     143: goto          162
+     146: aload_2
+     147: aload_3
+     148: putfield      #27                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.previous:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     151: goto          162
+     154: aload_0
+     155: getfield      #10                 // Field trackEntryPool:Lcom/badlogic/gdx/utils/Pool;
+     158: aload_3
+     159: invokevirtual #34                 // Method com/badlogic/gdx/utils/Pool.free:(Ljava/lang/Object;)V
+     162: aload         4
+     164: ifnull        176
+     167: aload_0
+     168: getfield      #10                 // Field trackEntryPool:Lcom/badlogic/gdx/utils/Pool;
+     171: aload         4
+     173: invokevirtual #34                 // Method com/badlogic/gdx/utils/Pool.free:(Ljava/lang/Object;)V
+     176: aload_0
+     177: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+     180: iload_1
+     181: aload_2
+     182: invokevirtual #42                 // Method com/badlogic/gdx/utils/Array.set:(ILjava/lang/Object;)V
+     185: aload_2
+     186: getfield      #36                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.listener:Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;
+     189: ifnull        202
+     192: aload_2
+     193: getfield      #36                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.listener:Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;
+     196: iload_1
+     197: invokeinterface #48,  2           // InterfaceMethod com/esotericsoftware/spine/AnimationState$AnimationStateListener.start:(I)V
+     202: iconst_0
+     203: istore        4
+     205: aload_0
+     206: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+     209: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+     212: istore        5
+     214: iload         4
+     216: iload         5
+     218: if_icmpge     245
+     221: aload_0
+     222: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+     225: iload         4
+     227: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+     230: checkcast     #38                 // class com/esotericsoftware/spine/AnimationState$AnimationStateListener
+     233: iload_1
+     234: invokeinterface #48,  2           // InterfaceMethod com/esotericsoftware/spine/AnimationState$AnimationStateListener.start:(I)V
+     239: iinc          4, 1
+     242: goto          214
+     245: return
+
+  public com.esotericsoftware.spine.AnimationState$TrackEntry setAnimation(int, java.lang.String, boolean);
+    descriptor: (ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+    Code:
+       0: aload_0
+       1: getfield      #14                 // Field data:Lcom/esotericsoftware/spine/AnimationStateData;
+       4: invokevirtual #49                 // Method com/esotericsoftware/spine/AnimationStateData.getSkeletonData:()Lcom/esotericsoftware/spine/SkeletonData;
+       7: aload_2
+       8: invokevirtual #50                 // Method com/esotericsoftware/spine/SkeletonData.findAnimation:(Ljava/lang/String;)Lcom/esotericsoftware/spine/Animation;
+      11: astore        4
+      13: aload         4
+      15: ifnonnull     45
+      18: new           #11                 // class java/lang/IllegalArgumentException
+      21: dup
+      22: new           #51                 // class java/lang/StringBuilder
+      25: dup
+      26: invokespecial #52                 // Method java/lang/StringBuilder."<init>":()V
+      29: ldc           #53                 // String Animation not found:
+      31: invokevirtual #54                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      34: aload_2
+      35: invokevirtual #54                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      38: invokevirtual #55                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      41: invokespecial #13                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      44: athrow
+      45: aload_0
+      46: iload_1
+      47: aload         4
+      49: iload_3
+      50: invokevirtual #56                 // Method setAnimation:(ILcom/esotericsoftware/spine/Animation;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      53: areturn
+
+  public com.esotericsoftware.spine.AnimationState$TrackEntry setAnimation(int, com.esotericsoftware.spine.Animation, boolean);
+    descriptor: (ILcom/esotericsoftware/spine/Animation;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokespecial #45                 // Method expandToIndex:(I)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+       5: astore        4
+       7: aload         4
+       9: ifnull        21
+      12: aload_0
+      13: aload         4
+      15: getfield      #18                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.next:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      18: invokespecial #43                 // Method freeAll:(Lcom/esotericsoftware/spine/AnimationState$TrackEntry;)V
+      21: aload_0
+      22: getfield      #10                 // Field trackEntryPool:Lcom/badlogic/gdx/utils/Pool;
+      25: invokevirtual #57                 // Method com/badlogic/gdx/utils/Pool.obtain:()Ljava/lang/Object;
+      28: checkcast     #17                 // class com/esotericsoftware/spine/AnimationState$TrackEntry
+      31: astore        5
+      33: aload         5
+      35: aload_2
+      36: putfield      #29                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.animation:Lcom/esotericsoftware/spine/Animation;
+      39: aload         5
+      41: iload_3
+      42: putfield      #24                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.loop:Z
+      45: aload         5
+      47: aload_2
+      48: invokevirtual #58                 // Method com/esotericsoftware/spine/Animation.getDuration:()F
+      51: putfield      #25                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.endTime:F
+      54: aload_0
+      55: iload_1
+      56: aload         5
+      58: invokespecial #23                 // Method setCurrent:(ILcom/esotericsoftware/spine/AnimationState$TrackEntry;)V
+      61: aload         5
+      63: areturn
+
+  public com.esotericsoftware.spine.AnimationState$TrackEntry addAnimation(int, java.lang.String, boolean, float);
+    descriptor: (ILjava/lang/String;ZF)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+    Code:
+       0: aload_0
+       1: getfield      #14                 // Field data:Lcom/esotericsoftware/spine/AnimationStateData;
+       4: invokevirtual #49                 // Method com/esotericsoftware/spine/AnimationStateData.getSkeletonData:()Lcom/esotericsoftware/spine/SkeletonData;
+       7: aload_2
+       8: invokevirtual #50                 // Method com/esotericsoftware/spine/SkeletonData.findAnimation:(Ljava/lang/String;)Lcom/esotericsoftware/spine/Animation;
+      11: astore        5
+      13: aload         5
+      15: ifnonnull     45
+      18: new           #11                 // class java/lang/IllegalArgumentException
+      21: dup
+      22: new           #51                 // class java/lang/StringBuilder
+      25: dup
+      26: invokespecial #52                 // Method java/lang/StringBuilder."<init>":()V
+      29: ldc           #53                 // String Animation not found:
+      31: invokevirtual #54                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      34: aload_2
+      35: invokevirtual #54                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      38: invokevirtual #55                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      41: invokespecial #13                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      44: athrow
+      45: aload_0
+      46: iload_1
+      47: aload         5
+      49: iload_3
+      50: fload         4
+      52: invokevirtual #59                 // Method addAnimation:(ILcom/esotericsoftware/spine/Animation;ZF)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      55: areturn
+
+  public com.esotericsoftware.spine.AnimationState$TrackEntry addAnimation(int, com.esotericsoftware.spine.Animation, boolean, float);
+    descriptor: (ILcom/esotericsoftware/spine/Animation;ZF)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field trackEntryPool:Lcom/badlogic/gdx/utils/Pool;
+       4: invokevirtual #57                 // Method com/badlogic/gdx/utils/Pool.obtain:()Ljava/lang/Object;
+       7: checkcast     #17                 // class com/esotericsoftware/spine/AnimationState$TrackEntry
+      10: astore        5
+      12: aload         5
+      14: aload_2
+      15: putfield      #29                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.animation:Lcom/esotericsoftware/spine/Animation;
+      18: aload         5
+      20: iload_3
+      21: putfield      #24                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.loop:Z
+      24: aload         5
+      26: aload_2
+      27: invokevirtual #58                 // Method com/esotericsoftware/spine/Animation.getDuration:()F
+      30: putfield      #25                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.endTime:F
+      33: aload_0
+      34: iload_1
+      35: invokespecial #45                 // Method expandToIndex:(I)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      38: astore        6
+      40: aload         6
+      42: ifnull        73
+      45: aload         6
+      47: getfield      #18                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.next:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      50: ifnull        63
+      53: aload         6
+      55: getfield      #18                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.next:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      58: astore        6
+      60: goto          45
+      63: aload         6
+      65: aload         5
+      67: putfield      #18                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.next:Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      70: goto          83
+      73: aload_0
+      74: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      77: iload_1
+      78: aload         5
+      80: invokevirtual #42                 // Method com/badlogic/gdx/utils/Array.set:(ILjava/lang/Object;)V
+      83: fload         4
+      85: fconst_0
+      86: fcmpg
+      87: ifgt          125
+      90: aload         6
+      92: ifnull        122
+      95: fload         4
+      97: aload         6
+      99: getfield      #25                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.endTime:F
+     102: aload_0
+     103: getfield      #14                 // Field data:Lcom/esotericsoftware/spine/AnimationStateData;
+     106: aload         6
+     108: getfield      #29                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.animation:Lcom/esotericsoftware/spine/Animation;
+     111: aload_2
+     112: invokevirtual #46                 // Method com/esotericsoftware/spine/AnimationStateData.getMix:(Lcom/esotericsoftware/spine/Animation;Lcom/esotericsoftware/spine/Animation;)F
+     115: fsub
+     116: fadd
+     117: fstore        4
+     119: goto          125
+     122: fconst_0
+     123: fstore        4
+     125: aload         5
+     127: fload         4
+     129: putfield      #20                 // Field com/esotericsoftware/spine/AnimationState$TrackEntry.delay:F
+     132: aload         5
+     134: areturn
+
+  public com.esotericsoftware.spine.AnimationState$TrackEntry getCurrent(int);
+    descriptor: (I)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+    Code:
+       0: iload_1
+       1: aload_0
+       2: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+       5: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+       8: if_icmplt     13
+      11: aconst_null
+      12: areturn
+      13: aload_0
+      14: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      17: iload_1
+      18: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+      21: checkcast     #17                 // class com/esotericsoftware/spine/AnimationState$TrackEntry
+      24: areturn
+
+  public void addListener(com.esotericsoftware.spine.AnimationState$AnimationStateListener);
+    descriptor: (Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;)V
+    Code:
+       0: aload_1
+       1: ifnonnull     14
+       4: new           #11                 // class java/lang/IllegalArgumentException
+       7: dup
+       8: ldc           #60                 // String listener cannot be null.
+      10: invokespecial #13                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      13: athrow
+      14: aload_0
+      15: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+      18: aload_1
+      19: invokevirtual #61                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+      22: return
+
+  public void removeListener(com.esotericsoftware.spine.AnimationState$AnimationStateListener);
+    descriptor: (Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;)V
+    Code:
+       0: aload_0
+       1: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+       4: aload_1
+       5: iconst_1
+       6: invokevirtual #62                 // Method com/badlogic/gdx/utils/Array.removeValue:(Ljava/lang/Object;Z)Z
+       9: pop
+      10: return
+
+  public void clearListeners();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #6                  // Field listeners:Lcom/badlogic/gdx/utils/Array;
+       4: invokevirtual #40                 // Method com/badlogic/gdx/utils/Array.clear:()V
+       7: return
+
+  public float getTimeScale();
+    descriptor: ()F
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field timeScale:F
+       4: freturn
+
+  public void setTimeScale(float);
+    descriptor: (F)V
+    Code:
+       0: aload_0
+       1: fload_1
+       2: putfield      #7                  // Field timeScale:F
+       5: return
+
+  public com.esotericsoftware.spine.AnimationStateData getData();
+    descriptor: ()Lcom/esotericsoftware/spine/AnimationStateData;
+    Code:
+       0: aload_0
+       1: getfield      #14                 // Field data:Lcom/esotericsoftware/spine/AnimationStateData;
+       4: areturn
+
+  public void setData(com.esotericsoftware.spine.AnimationStateData);
+    descriptor: (Lcom/esotericsoftware/spine/AnimationStateData;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #14                 // Field data:Lcom/esotericsoftware/spine/AnimationStateData;
+       5: return
+
+  public com.badlogic.gdx.utils.Array<com.esotericsoftware.spine.AnimationState$TrackEntry> getTracks();
+    descriptor: ()Lcom/badlogic/gdx/utils/Array;
+    Code:
+       0: aload_0
+       1: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+       4: areturn
+
+  public java.lang.String toString();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: new           #51                 // class java/lang/StringBuilder
+       3: dup
+       4: bipush        64
+       6: invokespecial #63                 // Method java/lang/StringBuilder."<init>":(I)V
+       9: astore_1
+      10: iconst_0
+      11: istore_2
+      12: aload_0
+      13: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      16: getfield      #15                 // Field com/badlogic/gdx/utils/Array.size:I
+      19: istore_3
+      20: iload_2
+      21: iload_3
+      22: if_icmpge     76
+      25: aload_0
+      26: getfield      #4                  // Field tracks:Lcom/badlogic/gdx/utils/Array;
+      29: iload_2
+      30: invokevirtual #16                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+      33: checkcast     #17                 // class com/esotericsoftware/spine/AnimationState$TrackEntry
+      36: astore        4
+      38: aload         4
+      40: ifnonnull     46
+      43: goto          70
+      46: aload_1
+      47: invokevirtual #64                 // Method java/lang/StringBuilder.length:()I
+      50: ifle          60
+      53: aload_1
+      54: ldc           #65                 // String ,
+      56: invokevirtual #54                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      59: pop
+      60: aload_1
+      61: aload         4
+      63: invokevirtual #66                 // Method com/esotericsoftware/spine/AnimationState$TrackEntry.toString:()Ljava/lang/String;
+      66: invokevirtual #54                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      69: pop
+      70: iinc          2, 1
+      73: goto          20
+      76: aload_1
+      77: invokevirtual #64                 // Method java/lang/StringBuilder.length:()I
+      80: ifne          86
+      83: ldc           #67                 // String <none>
+      85: areturn
+      86: aload_1
+      87: invokevirtual #55                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      90: areturn
+}

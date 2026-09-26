@@ -1,0 +1,450 @@
+Compiled from "File.java"
+public class com.megacrit.cardcrawl.helpers.File {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  private java.lang.String filepath;
+    descriptor: Ljava/lang/String;
+
+  private byte[] data;
+    descriptor: [B
+
+  public com.megacrit.cardcrawl.helpers.File(java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #2                  // Field filepath:Ljava/lang/String;
+       9: aload_0
+      10: aload_2
+      11: getstatic     #3                  // Field java/nio/charset/StandardCharsets.UTF_8:Ljava/nio/charset/Charset;
+      14: invokevirtual #4                  // Method java/lang/String.getBytes:(Ljava/nio/charset/Charset;)[B
+      17: putfield      #5                  // Field data:[B
+      20: return
+
+  public java.lang.String getFilepath();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field filepath:Ljava/lang/String;
+       4: areturn
+
+  public void save();
+    descriptor: ()V
+    Code:
+       0: iconst_5
+       1: istore_1
+       2: getstatic     #6                  // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+       5: invokeinterface #7,  1            // InterfaceMethod com/badlogic/gdx/Files.getLocalStoragePath:()Ljava/lang/String;
+      10: astore_2
+      11: invokestatic  #8                  // Method java/nio/file/FileSystems.getDefault:()Ljava/nio/file/FileSystem;
+      14: new           #9                  // class java/lang/StringBuilder
+      17: dup
+      18: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+      21: aload_2
+      22: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      25: aload_0
+      26: getfield      #2                  // Field filepath:Ljava/lang/String;
+      29: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      32: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      35: iconst_0
+      36: anewarray     #13                 // class java/lang/String
+      39: invokevirtual #14                 // Method java/nio/file/FileSystem.getPath:(Ljava/lang/String;[Ljava/lang/String;)Ljava/nio/file/Path;
+      42: astore_3
+      43: invokestatic  #8                  // Method java/nio/file/FileSystems.getDefault:()Ljava/nio/file/FileSystem;
+      46: new           #9                  // class java/lang/StringBuilder
+      49: dup
+      50: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+      53: aload_2
+      54: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      57: aload_0
+      58: getfield      #2                  // Field filepath:Ljava/lang/String;
+      61: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      64: ldc           #15                 // String .backUp
+      66: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      69: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      72: iconst_0
+      73: anewarray     #13                 // class java/lang/String
+      76: invokevirtual #14                 // Method java/nio/file/FileSystem.getPath:(Ljava/lang/String;[Ljava/lang/String;)Ljava/nio/file/Path;
+      79: astore        4
+      81: aload_3
+      82: invokeinterface #16,  1           // InterfaceMethod java/nio/file/Path.getParent:()Ljava/nio/file/Path;
+      87: astore        5
+      89: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      92: new           #9                  // class java/lang/StringBuilder
+      95: dup
+      96: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+      99: ldc           #18                 // String Attempting to save file=
+     101: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     104: aload_3
+     105: invokevirtual #19                 // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+     108: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     111: invokeinterface #20,  2           // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;)V
+     116: aload         5
+     118: iconst_0
+     119: anewarray     #21                 // class java/nio/file/LinkOption
+     122: invokestatic  #22                 // Method java/nio/file/Files.exists:(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z
+     125: ifeq          153
+     128: aload_3
+     129: iconst_0
+     130: anewarray     #21                 // class java/nio/file/LinkOption
+     133: invokestatic  #22                 // Method java/nio/file/Files.exists:(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z
+     136: ifeq          180
+     139: aload_3
+     140: aload         4
+     142: iconst_5
+     143: invokestatic  #23                 // Method copyAndValidate:(Ljava/nio/file/Path;Ljava/nio/file/Path;I)V
+     146: aload_3
+     147: invokestatic  #24                 // Method deleteFile:(Ljava/nio/file/Path;)V
+     150: goto          180
+     153: aload         5
+     155: iconst_0
+     156: anewarray     #25                 // class java/nio/file/attribute/FileAttribute
+     159: invokestatic  #26                 // Method java/nio/file/Files.createDirectories:(Ljava/nio/file/Path;[Ljava/nio/file/attribute/FileAttribute;)Ljava/nio/file/Path;
+     162: pop
+     163: goto          180
+     166: astore        6
+     168: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+     171: ldc           #28                 // String Failed to create directory
+     173: aload         6
+     175: invokeinterface #29,  3           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     180: aload_3
+     181: aload_0
+     182: getfield      #5                  // Field data:[B
+     185: iconst_5
+     186: invokestatic  #30                 // Method writeAndValidate:(Ljava/nio/file/Path;[BI)Z
+     189: istore        6
+     191: iload         6
+     193: ifeq          228
+     196: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+     199: new           #9                  // class java/lang/StringBuilder
+     202: dup
+     203: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+     206: ldc           #31                 // String Successfully saved file=
+     208: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     211: aload_3
+     212: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+     217: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     220: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     223: invokeinterface #20,  2           // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;)V
+     228: return
+    Exception table:
+       from    to  target type
+         153   163   166   Class java/io/IOException
+
+  private static void copyAndValidate(java.nio.file.Path, java.nio.file.Path, int);
+    descriptor: (Ljava/nio/file/Path;Ljava/nio/file/Path;I)V
+    Code:
+       0: iconst_0
+       1: newarray       byte
+       3: astore_3
+       4: aload_0
+       5: invokestatic  #33                 // Method java/nio/file/Files.readAllBytes:(Ljava/nio/file/Path;)[B
+       8: astore_3
+       9: aload_0
+      10: aload_1
+      11: iconst_1
+      12: anewarray     #34                 // class java/nio/file/CopyOption
+      15: dup
+      16: iconst_0
+      17: getstatic     #35                 // Field java/nio/file/StandardCopyOption.REPLACE_EXISTING:Ljava/nio/file/StandardCopyOption;
+      20: aastore
+      21: invokestatic  #36                 // Method java/nio/file/Files.copy:(Ljava/nio/file/Path;Ljava/nio/file/Path;[Ljava/nio/file/CopyOption;)Ljava/nio/file/Path;
+      24: pop
+      25: goto          136
+      28: astore        4
+      30: iload_2
+      31: ifgt          88
+      34: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      37: new           #9                  // class java/lang/StringBuilder
+      40: dup
+      41: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+      44: ldc           #37                 // String Failed to copy
+      46: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      49: aload_0
+      50: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+      55: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      58: ldc           #38                 // String  to
+      60: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      63: aload_1
+      64: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+      69: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      72: ldc           #39                 // String , but the retry expired
+      74: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      77: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      80: aload         4
+      82: invokeinterface #29,  3           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;Ljava/lang/Throwable;)V
+      87: return
+      88: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      91: new           #9                  // class java/lang/StringBuilder
+      94: dup
+      95: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+      98: ldc           #40                 // String Failed to copy file=
+     100: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     103: aload_0
+     104: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+     109: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     112: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     115: aload         4
+     117: invokeinterface #29,  3           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     122: sipush        300
+     125: invokestatic  #41                 // Method sleep:(I)V
+     128: aload_0
+     129: aload_1
+     130: iload_2
+     131: iconst_1
+     132: isub
+     133: invokestatic  #23                 // Method copyAndValidate:(Ljava/nio/file/Path;Ljava/nio/file/Path;I)V
+     136: aload_1
+     137: aload_3
+     138: invokestatic  #42                 // Method validateWrite:(Ljava/nio/file/Path;[B)Ljava/lang/Exception;
+     141: astore        4
+     143: aload         4
+     145: ifnull        254
+     148: iload_2
+     149: ifgt          206
+     152: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+     155: new           #9                  // class java/lang/StringBuilder
+     158: dup
+     159: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+     162: ldc           #37                 // String Failed to copy
+     164: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     167: aload_0
+     168: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+     173: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     176: ldc           #38                 // String  to
+     178: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     181: aload_1
+     182: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+     187: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     190: ldc           #39                 // String , but the retry expired
+     192: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     195: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     198: aload         4
+     200: invokeinterface #29,  3           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     205: return
+     206: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+     209: new           #9                  // class java/lang/StringBuilder
+     212: dup
+     213: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+     216: ldc           #40                 // String Failed to copy file=
+     218: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     221: aload_0
+     222: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+     227: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     230: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     233: aload         4
+     235: invokeinterface #29,  3           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     240: sipush        300
+     243: invokestatic  #41                 // Method sleep:(I)V
+     246: aload_0
+     247: aload_1
+     248: iload_2
+     249: iconst_1
+     250: isub
+     251: invokestatic  #23                 // Method copyAndValidate:(Ljava/nio/file/Path;Ljava/nio/file/Path;I)V
+     254: return
+    Exception table:
+       from    to  target type
+           4    25    28   Class java/io/IOException
+
+  private static void sleep(int);
+    descriptor: (I)V
+    Code:
+       0: iload_0
+       1: i2l
+       2: invokestatic  #43                 // Method java/lang/Thread.sleep:(J)V
+       5: goto          18
+       8: astore_1
+       9: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      12: aload_1
+      13: invokeinterface #45,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/Object;)V
+      18: return
+    Exception table:
+       from    to  target type
+           0     5     8   Class java/lang/InterruptedException
+
+  private static void deleteFile(java.nio.file.Path);
+    descriptor: (Ljava/nio/file/Path;)V
+    Code:
+       0: aload_0
+       1: invokestatic  #46                 // Method java/nio/file/Files.delete:(Ljava/nio/file/Path;)V
+       4: goto          19
+       7: astore_1
+       8: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: ldc           #47                 // String Failed to delete
+      13: aload_1
+      14: invokeinterface #29,  3           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;Ljava/lang/Throwable;)V
+      19: return
+    Exception table:
+       from    to  target type
+           0     4     7   Class java/io/IOException
+
+  private static java.lang.Exception validateWrite(java.nio.file.Path, byte[]);
+    descriptor: (Ljava/nio/file/Path;[B)Ljava/lang/Exception;
+    Code:
+       0: aload_0
+       1: invokestatic  #33                 // Method java/nio/file/Files.readAllBytes:(Ljava/nio/file/Path;)[B
+       4: astore_2
+       5: goto          11
+       8: astore_3
+       9: aload_3
+      10: areturn
+      11: aload_2
+      12: aload_1
+      13: invokestatic  #48                 // Method java/util/Arrays.equals:([B[B)Z
+      16: istore_3
+      17: iload_3
+      18: ifne          63
+      21: new           #49                 // class com/megacrit/cardcrawl/helpers/FileWriteValidationError
+      24: dup
+      25: new           #9                  // class java/lang/StringBuilder
+      28: dup
+      29: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+      32: ldc           #50                 // String Not valid: written=
+      34: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      37: aload_2
+      38: invokestatic  #51                 // Method java/util/Arrays.toString:([B)Ljava/lang/String;
+      41: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      44: ldc           #52                 // String  vs inMemory=
+      46: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      49: aload_1
+      50: invokestatic  #51                 // Method java/util/Arrays.toString:([B)Ljava/lang/String;
+      53: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      56: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      59: invokespecial #53                 // Method com/megacrit/cardcrawl/helpers/FileWriteValidationError."<init>":(Ljava/lang/String;)V
+      62: areturn
+      63: aconst_null
+      64: areturn
+    Exception table:
+       from    to  target type
+           0     5     8   Class java/io/IOException
+
+  static boolean writeAndValidate(java.nio.file.Path, byte[], int);
+    descriptor: (Ljava/nio/file/Path;[BI)Z
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iconst_3
+       3: anewarray     #54                 // class java/nio/file/OpenOption
+       6: dup
+       7: iconst_0
+       8: getstatic     #55                 // Field java/nio/file/StandardOpenOption.CREATE:Ljava/nio/file/StandardOpenOption;
+      11: aastore
+      12: dup
+      13: iconst_1
+      14: getstatic     #56                 // Field java/nio/file/StandardOpenOption.WRITE:Ljava/nio/file/StandardOpenOption;
+      17: aastore
+      18: dup
+      19: iconst_2
+      20: getstatic     #57                 // Field java/nio/file/StandardOpenOption.SYNC:Ljava/nio/file/StandardOpenOption;
+      23: aastore
+      24: invokestatic  #58                 // Method java/nio/file/Files.write:(Ljava/nio/file/Path;[B[Ljava/nio/file/OpenOption;)Ljava/nio/file/Path;
+      27: pop
+      28: goto          129
+      31: astore_3
+      32: iload_2
+      33: ifgt          76
+      36: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      39: new           #9                  // class java/lang/StringBuilder
+      42: dup
+      43: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+      46: ldc           #60                 // String Failed to write file
+      48: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      51: aload_0
+      52: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+      57: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      60: ldc           #61                 // String , but the retry expired.
+      62: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      65: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      68: aload_3
+      69: invokeinterface #29,  3           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;Ljava/lang/Throwable;)V
+      74: iconst_0
+      75: ireturn
+      76: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      79: new           #9                  // class java/lang/StringBuilder
+      82: dup
+      83: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+      86: ldc           #62                 // String Failed to validate source=
+      88: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      91: aload_0
+      92: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+      97: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     100: ldc           #63                 // String , retrying...
+     102: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     105: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     108: aload_3
+     109: invokeinterface #29,  3           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     114: sipush        300
+     117: invokestatic  #41                 // Method sleep:(I)V
+     120: aload_0
+     121: aload_1
+     122: iload_2
+     123: iconst_1
+     124: isub
+     125: invokestatic  #30                 // Method writeAndValidate:(Ljava/nio/file/Path;[BI)Z
+     128: ireturn
+     129: aload_0
+     130: aload_1
+     131: invokestatic  #42                 // Method validateWrite:(Ljava/nio/file/Path;[B)Ljava/lang/Exception;
+     134: astore_3
+     135: aload_3
+     136: ifnull        236
+     139: iload_2
+     140: ifgt          183
+     143: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+     146: new           #9                  // class java/lang/StringBuilder
+     149: dup
+     150: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+     153: ldc           #60                 // String Failed to write file
+     155: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     158: aload_0
+     159: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+     164: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     167: ldc           #61                 // String , but the retry expired.
+     169: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     172: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     175: aload_3
+     176: invokeinterface #29,  3           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     181: iconst_0
+     182: ireturn
+     183: getstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+     186: new           #9                  // class java/lang/StringBuilder
+     189: dup
+     190: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+     193: ldc           #62                 // String Failed to validate source=
+     195: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     198: aload_0
+     199: invokeinterface #32,  1           // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+     204: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     207: ldc           #63                 // String , retrying...
+     209: invokevirtual #11                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     212: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     215: aload_3
+     216: invokeinterface #29,  3           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     221: sipush        300
+     224: invokestatic  #41                 // Method sleep:(I)V
+     227: aload_0
+     228: aload_1
+     229: iload_2
+     230: iconst_1
+     231: isub
+     232: invokestatic  #30                 // Method writeAndValidate:(Ljava/nio/file/Path;[BI)Z
+     235: ireturn
+     236: iconst_1
+     237: ireturn
+    Exception table:
+       from    to  target type
+           0    28    31   Class java/lang/Exception
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #64                 // class com/megacrit/cardcrawl/helpers/File
+       2: invokevirtual #65                 // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #66                 // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #17                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: return
+}

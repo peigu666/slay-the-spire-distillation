@@ -1,0 +1,677 @@
+Compiled from "HeadlessApplication.java"
+public class com.badlogic.gdx.backends.headless.HeadlessApplication implements com.badlogic.gdx.Application {
+  protected final com.badlogic.gdx.ApplicationListener listener;
+    descriptor: Lcom/badlogic/gdx/ApplicationListener;
+
+  protected java.lang.Thread mainLoopThread;
+    descriptor: Ljava/lang/Thread;
+
+  protected final com.badlogic.gdx.backends.headless.HeadlessFiles files;
+    descriptor: Lcom/badlogic/gdx/backends/headless/HeadlessFiles;
+
+  protected final com.badlogic.gdx.backends.headless.HeadlessNet net;
+    descriptor: Lcom/badlogic/gdx/backends/headless/HeadlessNet;
+
+  protected final com.badlogic.gdx.backends.headless.mock.audio.MockAudio audio;
+    descriptor: Lcom/badlogic/gdx/backends/headless/mock/audio/MockAudio;
+
+  protected final com.badlogic.gdx.backends.headless.mock.input.MockInput input;
+    descriptor: Lcom/badlogic/gdx/backends/headless/mock/input/MockInput;
+
+  protected final com.badlogic.gdx.backends.headless.mock.graphics.MockGraphics graphics;
+    descriptor: Lcom/badlogic/gdx/backends/headless/mock/graphics/MockGraphics;
+
+  protected boolean running;
+    descriptor: Z
+
+  protected final com.badlogic.gdx.utils.Array<java.lang.Runnable> runnables;
+    descriptor: Lcom/badlogic/gdx/utils/Array;
+
+  protected final com.badlogic.gdx.utils.Array<java.lang.Runnable> executedRunnables;
+    descriptor: Lcom/badlogic/gdx/utils/Array;
+
+  protected final com.badlogic.gdx.utils.Array<com.badlogic.gdx.LifecycleListener> lifecycleListeners;
+    descriptor: Lcom/badlogic/gdx/utils/Array;
+
+  protected int logLevel;
+    descriptor: I
+
+  protected com.badlogic.gdx.ApplicationLogger applicationLogger;
+    descriptor: Lcom/badlogic/gdx/ApplicationLogger;
+
+  private java.lang.String preferencesdir;
+    descriptor: Ljava/lang/String;
+
+  private final long renderInterval;
+    descriptor: J
+
+  com.badlogic.gdx.utils.ObjectMap<java.lang.String, com.badlogic.gdx.Preferences> preferences;
+    descriptor: Lcom/badlogic/gdx/utils/ObjectMap;
+
+  public com.badlogic.gdx.backends.headless.HeadlessApplication(com.badlogic.gdx.ApplicationListener);
+    descriptor: (Lcom/badlogic/gdx/ApplicationListener;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aconst_null
+       3: invokespecial #1                  // Method "<init>":(Lcom/badlogic/gdx/ApplicationListener;Lcom/badlogic/gdx/backends/headless/HeadlessApplicationConfiguration;)V
+       6: return
+
+  public com.badlogic.gdx.backends.headless.HeadlessApplication(com.badlogic.gdx.ApplicationListener, com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration);
+    descriptor: (Lcom/badlogic/gdx/ApplicationListener;Lcom/badlogic/gdx/backends/headless/HeadlessApplicationConfiguration;)V
+    Code:
+       0: aload_0
+       1: invokespecial #2                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: iconst_1
+       6: putfield      #3                  // Field running:Z
+       9: aload_0
+      10: new           #4                  // class com/badlogic/gdx/utils/Array
+      13: dup
+      14: invokespecial #5                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      17: putfield      #6                  // Field runnables:Lcom/badlogic/gdx/utils/Array;
+      20: aload_0
+      21: new           #4                  // class com/badlogic/gdx/utils/Array
+      24: dup
+      25: invokespecial #5                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      28: putfield      #7                  // Field executedRunnables:Lcom/badlogic/gdx/utils/Array;
+      31: aload_0
+      32: new           #4                  // class com/badlogic/gdx/utils/Array
+      35: dup
+      36: invokespecial #5                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      39: putfield      #8                  // Field lifecycleListeners:Lcom/badlogic/gdx/utils/Array;
+      42: aload_0
+      43: iconst_2
+      44: putfield      #10                 // Field logLevel:I
+      47: aload_0
+      48: new           #11                 // class com/badlogic/gdx/utils/ObjectMap
+      51: dup
+      52: invokespecial #12                 // Method com/badlogic/gdx/utils/ObjectMap."<init>":()V
+      55: putfield      #13                 // Field preferences:Lcom/badlogic/gdx/utils/ObjectMap;
+      58: aload_2
+      59: ifnonnull     70
+      62: new           #14                 // class com/badlogic/gdx/backends/headless/HeadlessApplicationConfiguration
+      65: dup
+      66: invokespecial #15                 // Method com/badlogic/gdx/backends/headless/HeadlessApplicationConfiguration."<init>":()V
+      69: astore_2
+      70: invokestatic  #16                 // Method com/badlogic/gdx/backends/headless/HeadlessNativesLoader.load:()V
+      73: aload_0
+      74: new           #17                 // class com/badlogic/gdx/backends/headless/HeadlessApplicationLogger
+      77: dup
+      78: invokespecial #18                 // Method com/badlogic/gdx/backends/headless/HeadlessApplicationLogger."<init>":()V
+      81: invokevirtual #19                 // Method setApplicationLogger:(Lcom/badlogic/gdx/ApplicationLogger;)V
+      84: aload_0
+      85: aload_1
+      86: putfield      #20                 // Field listener:Lcom/badlogic/gdx/ApplicationListener;
+      89: aload_0
+      90: new           #21                 // class com/badlogic/gdx/backends/headless/HeadlessFiles
+      93: dup
+      94: invokespecial #22                 // Method com/badlogic/gdx/backends/headless/HeadlessFiles."<init>":()V
+      97: putfield      #23                 // Field files:Lcom/badlogic/gdx/backends/headless/HeadlessFiles;
+     100: aload_0
+     101: new           #24                 // class com/badlogic/gdx/backends/headless/HeadlessNet
+     104: dup
+     105: invokespecial #25                 // Method com/badlogic/gdx/backends/headless/HeadlessNet."<init>":()V
+     108: putfield      #26                 // Field net:Lcom/badlogic/gdx/backends/headless/HeadlessNet;
+     111: aload_0
+     112: new           #27                 // class com/badlogic/gdx/backends/headless/mock/graphics/MockGraphics
+     115: dup
+     116: invokespecial #28                 // Method com/badlogic/gdx/backends/headless/mock/graphics/MockGraphics."<init>":()V
+     119: putfield      #29                 // Field graphics:Lcom/badlogic/gdx/backends/headless/mock/graphics/MockGraphics;
+     122: aload_0
+     123: new           #30                 // class com/badlogic/gdx/backends/headless/mock/audio/MockAudio
+     126: dup
+     127: invokespecial #31                 // Method com/badlogic/gdx/backends/headless/mock/audio/MockAudio."<init>":()V
+     130: putfield      #32                 // Field audio:Lcom/badlogic/gdx/backends/headless/mock/audio/MockAudio;
+     133: aload_0
+     134: new           #33                 // class com/badlogic/gdx/backends/headless/mock/input/MockInput
+     137: dup
+     138: invokespecial #34                 // Method com/badlogic/gdx/backends/headless/mock/input/MockInput."<init>":()V
+     141: putfield      #35                 // Field input:Lcom/badlogic/gdx/backends/headless/mock/input/MockInput;
+     144: aload_0
+     145: aload_2
+     146: getfield      #36                 // Field com/badlogic/gdx/backends/headless/HeadlessApplicationConfiguration.preferencesDirectory:Ljava/lang/String;
+     149: putfield      #37                 // Field preferencesdir:Ljava/lang/String;
+     152: aload_0
+     153: putstatic     #38                 // Field com/badlogic/gdx/Gdx.app:Lcom/badlogic/gdx/Application;
+     156: aload_0
+     157: getfield      #23                 // Field files:Lcom/badlogic/gdx/backends/headless/HeadlessFiles;
+     160: putstatic     #39                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+     163: aload_0
+     164: getfield      #26                 // Field net:Lcom/badlogic/gdx/backends/headless/HeadlessNet;
+     167: putstatic     #40                 // Field com/badlogic/gdx/Gdx.net:Lcom/badlogic/gdx/Net;
+     170: aload_0
+     171: getfield      #32                 // Field audio:Lcom/badlogic/gdx/backends/headless/mock/audio/MockAudio;
+     174: putstatic     #41                 // Field com/badlogic/gdx/Gdx.audio:Lcom/badlogic/gdx/Audio;
+     177: aload_0
+     178: getfield      #29                 // Field graphics:Lcom/badlogic/gdx/backends/headless/mock/graphics/MockGraphics;
+     181: putstatic     #42                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+     184: aload_0
+     185: getfield      #35                 // Field input:Lcom/badlogic/gdx/backends/headless/mock/input/MockInput;
+     188: putstatic     #43                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+     191: aload_0
+     192: aload_2
+     193: getfield      #44                 // Field com/badlogic/gdx/backends/headless/HeadlessApplicationConfiguration.renderInterval:F
+     196: fconst_0
+     197: fcmpl
+     198: ifle          212
+     201: aload_2
+     202: getfield      #44                 // Field com/badlogic/gdx/backends/headless/HeadlessApplicationConfiguration.renderInterval:F
+     205: ldc           #45                 // float 1.0E9f
+     207: fmul
+     208: f2l
+     209: goto          227
+     212: aload_2
+     213: getfield      #44                 // Field com/badlogic/gdx/backends/headless/HeadlessApplicationConfiguration.renderInterval:F
+     216: fconst_0
+     217: fcmpg
+     218: ifge          225
+     221: iconst_m1
+     222: goto          226
+     225: iconst_0
+     226: i2l
+     227: putfield      #46                 // Field renderInterval:J
+     230: aload_0
+     231: invokespecial #47                 // Method initialize:()V
+     234: return
+
+  private void initialize();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: new           #48                 // class com/badlogic/gdx/backends/headless/HeadlessApplication$1
+       4: dup
+       5: aload_0
+       6: ldc           #49                 // String HeadlessApplication
+       8: invokespecial #50                 // Method com/badlogic/gdx/backends/headless/HeadlessApplication$1."<init>":(Lcom/badlogic/gdx/backends/headless/HeadlessApplication;Ljava/lang/String;)V
+      11: putfield      #51                 // Field mainLoopThread:Ljava/lang/Thread;
+      14: aload_0
+      15: getfield      #51                 // Field mainLoopThread:Ljava/lang/Thread;
+      18: invokevirtual #52                 // Method java/lang/Thread.start:()V
+      21: return
+
+  void mainLoop();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field lifecycleListeners:Lcom/badlogic/gdx/utils/Array;
+       4: astore_1
+       5: aload_0
+       6: getfield      #20                 // Field listener:Lcom/badlogic/gdx/ApplicationListener;
+       9: invokeinterface #53,  1           // InterfaceMethod com/badlogic/gdx/ApplicationListener.create:()V
+      14: invokestatic  #54                 // Method com/badlogic/gdx/utils/TimeUtils.nanoTime:()J
+      17: aload_0
+      18: getfield      #46                 // Field renderInterval:J
+      21: ladd
+      22: lstore_2
+      23: aload_0
+      24: getfield      #46                 // Field renderInterval:J
+      27: l2f
+      28: fconst_0
+      29: fcmpl
+      30: iflt          129
+      33: aload_0
+      34: getfield      #3                  // Field running:Z
+      37: ifeq          129
+      40: invokestatic  #54                 // Method com/badlogic/gdx/utils/TimeUtils.nanoTime:()J
+      43: lstore        4
+      45: lload_2
+      46: lload         4
+      48: lcmp
+      49: ifle          80
+      52: lload_2
+      53: lload         4
+      55: lsub
+      56: ldc2_w        #55                 // long 1000000l
+      59: ldiv
+      60: invokestatic  #57                 // Method java/lang/Thread.sleep:(J)V
+      63: goto          68
+      66: astore        6
+      68: invokestatic  #54                 // Method com/badlogic/gdx/utils/TimeUtils.nanoTime:()J
+      71: aload_0
+      72: getfield      #46                 // Field renderInterval:J
+      75: ladd
+      76: lstore_2
+      77: goto          88
+      80: lload         4
+      82: aload_0
+      83: getfield      #46                 // Field renderInterval:J
+      86: ladd
+      87: lstore_2
+      88: aload_0
+      89: invokevirtual #59                 // Method executeRunnables:()Z
+      92: pop
+      93: aload_0
+      94: getfield      #29                 // Field graphics:Lcom/badlogic/gdx/backends/headless/mock/graphics/MockGraphics;
+      97: invokevirtual #60                 // Method com/badlogic/gdx/backends/headless/mock/graphics/MockGraphics.incrementFrameId:()V
+     100: aload_0
+     101: getfield      #20                 // Field listener:Lcom/badlogic/gdx/ApplicationListener;
+     104: invokeinterface #61,  1           // InterfaceMethod com/badlogic/gdx/ApplicationListener.render:()V
+     109: aload_0
+     110: getfield      #29                 // Field graphics:Lcom/badlogic/gdx/backends/headless/mock/graphics/MockGraphics;
+     113: invokevirtual #62                 // Method com/badlogic/gdx/backends/headless/mock/graphics/MockGraphics.updateTime:()V
+     116: aload_0
+     117: getfield      #3                  // Field running:Z
+     120: ifne          126
+     123: goto          129
+     126: goto          33
+     129: aload_1
+     130: dup
+     131: astore        4
+     133: monitorenter
+     134: aload_1
+     135: invokevirtual #63                 // Method com/badlogic/gdx/utils/Array.iterator:()Ljava/util/Iterator;
+     138: astore        5
+     140: aload         5
+     142: invokeinterface #64,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     147: ifeq          179
+     150: aload         5
+     152: invokeinterface #65,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     157: checkcast     #66                 // class com/badlogic/gdx/LifecycleListener
+     160: astore        6
+     162: aload         6
+     164: invokeinterface #67,  1           // InterfaceMethod com/badlogic/gdx/LifecycleListener.pause:()V
+     169: aload         6
+     171: invokeinterface #68,  1           // InterfaceMethod com/badlogic/gdx/LifecycleListener.dispose:()V
+     176: goto          140
+     179: aload         4
+     181: monitorexit
+     182: goto          193
+     185: astore        7
+     187: aload         4
+     189: monitorexit
+     190: aload         7
+     192: athrow
+     193: aload_0
+     194: getfield      #20                 // Field listener:Lcom/badlogic/gdx/ApplicationListener;
+     197: invokeinterface #69,  1           // InterfaceMethod com/badlogic/gdx/ApplicationListener.pause:()V
+     202: aload_0
+     203: getfield      #20                 // Field listener:Lcom/badlogic/gdx/ApplicationListener;
+     206: invokeinterface #70,  1           // InterfaceMethod com/badlogic/gdx/ApplicationListener.dispose:()V
+     211: return
+    Exception table:
+       from    to  target type
+          52    63    66   Class java/lang/InterruptedException
+         134   182   185   any
+         185   190   185   any
+
+  public boolean executeRunnables();
+    descriptor: ()Z
+    Code:
+       0: aload_0
+       1: getfield      #6                  // Field runnables:Lcom/badlogic/gdx/utils/Array;
+       4: dup
+       5: astore_1
+       6: monitorenter
+       7: aload_0
+       8: getfield      #6                  // Field runnables:Lcom/badlogic/gdx/utils/Array;
+      11: getfield      #71                 // Field com/badlogic/gdx/utils/Array.size:I
+      14: iconst_1
+      15: isub
+      16: istore_2
+      17: iload_2
+      18: iflt          42
+      21: aload_0
+      22: getfield      #7                  // Field executedRunnables:Lcom/badlogic/gdx/utils/Array;
+      25: aload_0
+      26: getfield      #6                  // Field runnables:Lcom/badlogic/gdx/utils/Array;
+      29: iload_2
+      30: invokevirtual #72                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+      33: invokevirtual #73                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+      36: iinc          2, -1
+      39: goto          17
+      42: aload_0
+      43: getfield      #6                  // Field runnables:Lcom/badlogic/gdx/utils/Array;
+      46: invokevirtual #74                 // Method com/badlogic/gdx/utils/Array.clear:()V
+      49: aload_1
+      50: monitorexit
+      51: goto          59
+      54: astore_3
+      55: aload_1
+      56: monitorexit
+      57: aload_3
+      58: athrow
+      59: aload_0
+      60: getfield      #7                  // Field executedRunnables:Lcom/badlogic/gdx/utils/Array;
+      63: getfield      #71                 // Field com/badlogic/gdx/utils/Array.size:I
+      66: ifne          71
+      69: iconst_0
+      70: ireturn
+      71: aload_0
+      72: getfield      #7                  // Field executedRunnables:Lcom/badlogic/gdx/utils/Array;
+      75: getfield      #71                 // Field com/badlogic/gdx/utils/Array.size:I
+      78: iconst_1
+      79: isub
+      80: istore_1
+      81: iload_1
+      82: iflt          107
+      85: aload_0
+      86: getfield      #7                  // Field executedRunnables:Lcom/badlogic/gdx/utils/Array;
+      89: iload_1
+      90: invokevirtual #75                 // Method com/badlogic/gdx/utils/Array.removeIndex:(I)Ljava/lang/Object;
+      93: checkcast     #76                 // class java/lang/Runnable
+      96: invokeinterface #77,  1           // InterfaceMethod java/lang/Runnable.run:()V
+     101: iinc          1, -1
+     104: goto          81
+     107: iconst_1
+     108: ireturn
+    Exception table:
+       from    to  target type
+           7    51    54   any
+          54    57    54   any
+
+  public com.badlogic.gdx.ApplicationListener getApplicationListener();
+    descriptor: ()Lcom/badlogic/gdx/ApplicationListener;
+    Code:
+       0: aload_0
+       1: getfield      #20                 // Field listener:Lcom/badlogic/gdx/ApplicationListener;
+       4: areturn
+
+  public com.badlogic.gdx.Graphics getGraphics();
+    descriptor: ()Lcom/badlogic/gdx/Graphics;
+    Code:
+       0: aload_0
+       1: getfield      #29                 // Field graphics:Lcom/badlogic/gdx/backends/headless/mock/graphics/MockGraphics;
+       4: areturn
+
+  public com.badlogic.gdx.Audio getAudio();
+    descriptor: ()Lcom/badlogic/gdx/Audio;
+    Code:
+       0: aload_0
+       1: getfield      #32                 // Field audio:Lcom/badlogic/gdx/backends/headless/mock/audio/MockAudio;
+       4: areturn
+
+  public com.badlogic.gdx.Input getInput();
+    descriptor: ()Lcom/badlogic/gdx/Input;
+    Code:
+       0: aload_0
+       1: getfield      #35                 // Field input:Lcom/badlogic/gdx/backends/headless/mock/input/MockInput;
+       4: areturn
+
+  public com.badlogic.gdx.Files getFiles();
+    descriptor: ()Lcom/badlogic/gdx/Files;
+    Code:
+       0: aload_0
+       1: getfield      #23                 // Field files:Lcom/badlogic/gdx/backends/headless/HeadlessFiles;
+       4: areturn
+
+  public com.badlogic.gdx.Net getNet();
+    descriptor: ()Lcom/badlogic/gdx/Net;
+    Code:
+       0: aload_0
+       1: getfield      #26                 // Field net:Lcom/badlogic/gdx/backends/headless/HeadlessNet;
+       4: areturn
+
+  public com.badlogic.gdx.Application$ApplicationType getType();
+    descriptor: ()Lcom/badlogic/gdx/Application$ApplicationType;
+    Code:
+       0: getstatic     #78                 // Field com/badlogic/gdx/Application$ApplicationType.HeadlessDesktop:Lcom/badlogic/gdx/Application$ApplicationType;
+       3: areturn
+
+  public int getVersion();
+    descriptor: ()I
+    Code:
+       0: iconst_0
+       1: ireturn
+
+  public long getJavaHeap();
+    descriptor: ()J
+    Code:
+       0: invokestatic  #79                 // Method java/lang/Runtime.getRuntime:()Ljava/lang/Runtime;
+       3: invokevirtual #80                 // Method java/lang/Runtime.totalMemory:()J
+       6: invokestatic  #79                 // Method java/lang/Runtime.getRuntime:()Ljava/lang/Runtime;
+       9: invokevirtual #81                 // Method java/lang/Runtime.freeMemory:()J
+      12: lsub
+      13: lreturn
+
+  public long getNativeHeap();
+    descriptor: ()J
+    Code:
+       0: aload_0
+       1: invokevirtual #82                 // Method getJavaHeap:()J
+       4: lreturn
+
+  public com.badlogic.gdx.Preferences getPreferences(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lcom/badlogic/gdx/Preferences;
+    Code:
+       0: aload_0
+       1: getfield      #13                 // Field preferences:Lcom/badlogic/gdx/utils/ObjectMap;
+       4: aload_1
+       5: invokevirtual #83                 // Method com/badlogic/gdx/utils/ObjectMap.containsKey:(Ljava/lang/Object;)Z
+       8: ifeq          23
+      11: aload_0
+      12: getfield      #13                 // Field preferences:Lcom/badlogic/gdx/utils/ObjectMap;
+      15: aload_1
+      16: invokevirtual #84                 // Method com/badlogic/gdx/utils/ObjectMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      19: checkcast     #85                 // class com/badlogic/gdx/Preferences
+      22: areturn
+      23: new           #86                 // class com/badlogic/gdx/backends/headless/HeadlessPreferences
+      26: dup
+      27: aload_1
+      28: aload_0
+      29: getfield      #37                 // Field preferencesdir:Ljava/lang/String;
+      32: invokespecial #87                 // Method com/badlogic/gdx/backends/headless/HeadlessPreferences."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+      35: astore_2
+      36: aload_0
+      37: getfield      #13                 // Field preferences:Lcom/badlogic/gdx/utils/ObjectMap;
+      40: aload_1
+      41: aload_2
+      42: invokevirtual #88                 // Method com/badlogic/gdx/utils/ObjectMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      45: pop
+      46: aload_2
+      47: areturn
+
+  public com.badlogic.gdx.utils.Clipboard getClipboard();
+    descriptor: ()Lcom/badlogic/gdx/utils/Clipboard;
+    Code:
+       0: aconst_null
+       1: areturn
+
+  public void postRunnable(java.lang.Runnable);
+    descriptor: (Ljava/lang/Runnable;)V
+    Code:
+       0: aload_0
+       1: getfield      #6                  // Field runnables:Lcom/badlogic/gdx/utils/Array;
+       4: dup
+       5: astore_2
+       6: monitorenter
+       7: aload_0
+       8: getfield      #6                  // Field runnables:Lcom/badlogic/gdx/utils/Array;
+      11: aload_1
+      12: invokevirtual #73                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+      15: aload_2
+      16: monitorexit
+      17: goto          25
+      20: astore_3
+      21: aload_2
+      22: monitorexit
+      23: aload_3
+      24: athrow
+      25: return
+    Exception table:
+       from    to  target type
+           7    17    20   any
+          20    23    20   any
+
+  public void debug(java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field logLevel:I
+       4: iconst_3
+       5: if_icmplt     19
+       8: aload_0
+       9: invokevirtual #89                 // Method getApplicationLogger:()Lcom/badlogic/gdx/ApplicationLogger;
+      12: aload_1
+      13: aload_2
+      14: invokeinterface #90,  3           // InterfaceMethod com/badlogic/gdx/ApplicationLogger.debug:(Ljava/lang/String;Ljava/lang/String;)V
+      19: return
+
+  public void debug(java.lang.String, java.lang.String, java.lang.Throwable);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field logLevel:I
+       4: iconst_3
+       5: if_icmplt     20
+       8: aload_0
+       9: invokevirtual #89                 // Method getApplicationLogger:()Lcom/badlogic/gdx/ApplicationLogger;
+      12: aload_1
+      13: aload_2
+      14: aload_3
+      15: invokeinterface #91,  4           // InterfaceMethod com/badlogic/gdx/ApplicationLogger.debug:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+      20: return
+
+  public void log(java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field logLevel:I
+       4: iconst_2
+       5: if_icmplt     19
+       8: aload_0
+       9: invokevirtual #89                 // Method getApplicationLogger:()Lcom/badlogic/gdx/ApplicationLogger;
+      12: aload_1
+      13: aload_2
+      14: invokeinterface #92,  3           // InterfaceMethod com/badlogic/gdx/ApplicationLogger.log:(Ljava/lang/String;Ljava/lang/String;)V
+      19: return
+
+  public void log(java.lang.String, java.lang.String, java.lang.Throwable);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field logLevel:I
+       4: iconst_2
+       5: if_icmplt     20
+       8: aload_0
+       9: invokevirtual #89                 // Method getApplicationLogger:()Lcom/badlogic/gdx/ApplicationLogger;
+      12: aload_1
+      13: aload_2
+      14: aload_3
+      15: invokeinterface #93,  4           // InterfaceMethod com/badlogic/gdx/ApplicationLogger.log:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+      20: return
+
+  public void error(java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field logLevel:I
+       4: iconst_1
+       5: if_icmplt     19
+       8: aload_0
+       9: invokevirtual #89                 // Method getApplicationLogger:()Lcom/badlogic/gdx/ApplicationLogger;
+      12: aload_1
+      13: aload_2
+      14: invokeinterface #94,  3           // InterfaceMethod com/badlogic/gdx/ApplicationLogger.error:(Ljava/lang/String;Ljava/lang/String;)V
+      19: return
+
+  public void error(java.lang.String, java.lang.String, java.lang.Throwable);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field logLevel:I
+       4: iconst_1
+       5: if_icmplt     20
+       8: aload_0
+       9: invokevirtual #89                 // Method getApplicationLogger:()Lcom/badlogic/gdx/ApplicationLogger;
+      12: aload_1
+      13: aload_2
+      14: aload_3
+      15: invokeinterface #95,  4           // InterfaceMethod com/badlogic/gdx/ApplicationLogger.error:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+      20: return
+
+  public void setLogLevel(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: iload_1
+       2: putfield      #10                 // Field logLevel:I
+       5: return
+
+  public int getLogLevel();
+    descriptor: ()I
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field logLevel:I
+       4: ireturn
+
+  public void setApplicationLogger(com.badlogic.gdx.ApplicationLogger);
+    descriptor: (Lcom/badlogic/gdx/ApplicationLogger;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #96                 // Field applicationLogger:Lcom/badlogic/gdx/ApplicationLogger;
+       5: return
+
+  public com.badlogic.gdx.ApplicationLogger getApplicationLogger();
+    descriptor: ()Lcom/badlogic/gdx/ApplicationLogger;
+    Code:
+       0: aload_0
+       1: getfield      #96                 // Field applicationLogger:Lcom/badlogic/gdx/ApplicationLogger;
+       4: areturn
+
+  public void exit();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: new           #97                 // class com/badlogic/gdx/backends/headless/HeadlessApplication$2
+       4: dup
+       5: aload_0
+       6: invokespecial #98                 // Method com/badlogic/gdx/backends/headless/HeadlessApplication$2."<init>":(Lcom/badlogic/gdx/backends/headless/HeadlessApplication;)V
+       9: invokevirtual #99                 // Method postRunnable:(Ljava/lang/Runnable;)V
+      12: return
+
+  public void addLifecycleListener(com.badlogic.gdx.LifecycleListener);
+    descriptor: (Lcom/badlogic/gdx/LifecycleListener;)V
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field lifecycleListeners:Lcom/badlogic/gdx/utils/Array;
+       4: dup
+       5: astore_2
+       6: monitorenter
+       7: aload_0
+       8: getfield      #8                  // Field lifecycleListeners:Lcom/badlogic/gdx/utils/Array;
+      11: aload_1
+      12: invokevirtual #73                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+      15: aload_2
+      16: monitorexit
+      17: goto          25
+      20: astore_3
+      21: aload_2
+      22: monitorexit
+      23: aload_3
+      24: athrow
+      25: return
+    Exception table:
+       from    to  target type
+           7    17    20   any
+          20    23    20   any
+
+  public void removeLifecycleListener(com.badlogic.gdx.LifecycleListener);
+    descriptor: (Lcom/badlogic/gdx/LifecycleListener;)V
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field lifecycleListeners:Lcom/badlogic/gdx/utils/Array;
+       4: dup
+       5: astore_2
+       6: monitorenter
+       7: aload_0
+       8: getfield      #8                  // Field lifecycleListeners:Lcom/badlogic/gdx/utils/Array;
+      11: aload_1
+      12: iconst_1
+      13: invokevirtual #100                // Method com/badlogic/gdx/utils/Array.removeValue:(Ljava/lang/Object;Z)Z
+      16: pop
+      17: aload_2
+      18: monitorexit
+      19: goto          27
+      22: astore_3
+      23: aload_2
+      24: monitorexit
+      25: aload_3
+      26: athrow
+      27: return
+    Exception table:
+       from    to  target type
+           7    19    22   any
+          22    25    22   any
+}

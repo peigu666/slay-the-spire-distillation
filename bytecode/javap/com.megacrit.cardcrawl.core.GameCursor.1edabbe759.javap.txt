@@ -1,0 +1,342 @@
+Compiled from "GameCursor.java"
+public class com.megacrit.cardcrawl.core.GameCursor {
+  private com.badlogic.gdx.graphics.Texture img;
+    descriptor: Lcom/badlogic/gdx/graphics/Texture;
+
+  private com.badlogic.gdx.graphics.Texture mImg;
+    descriptor: Lcom/badlogic/gdx/graphics/Texture;
+
+  public static final int W;
+    descriptor: I
+
+  public static boolean hidden;
+    descriptor: Z
+
+  private float rotation;
+    descriptor: F
+
+  private static final float OFFSET_X;
+    descriptor: F
+
+  private static final float OFFSET_Y;
+    descriptor: F
+
+  private static final float SHADOW_OFFSET_X;
+    descriptor: F
+
+  private static final float SHADOW_OFFSET_Y;
+    descriptor: F
+
+  private static final com.badlogic.gdx.graphics.Color SHADOW_COLOR;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private static final float TILT_ANGLE;
+    descriptor: F
+
+  private com.megacrit.cardcrawl.core.GameCursor$CursorType type;
+    descriptor: Lcom/megacrit/cardcrawl/core/GameCursor$CursorType;
+
+  public com.badlogic.gdx.graphics.Color color;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public com.megacrit.cardcrawl.core.GameCursor();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: getstatic     #2                  // Field com/megacrit/cardcrawl/core/GameCursor$CursorType.NORMAL:Lcom/megacrit/cardcrawl/core/GameCursor$CursorType;
+       8: putfield      #3                  // Field type:Lcom/megacrit/cardcrawl/core/GameCursor$CursorType;
+      11: aload_0
+      12: new           #4                  // class com/badlogic/gdx/graphics/Color
+      15: dup
+      16: fconst_1
+      17: fconst_1
+      18: fconst_1
+      19: fconst_0
+      20: invokespecial #5                  // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      23: putfield      #6                  // Field color:Lcom/badlogic/gdx/graphics/Color;
+      26: aload_0
+      27: ldc           #7                  // String images/ui/cursors/gold2.png
+      29: invokestatic  #8                  // Method com/megacrit/cardcrawl/helpers/ImageMaster.loadImage:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Texture;
+      32: putfield      #9                  // Field img:Lcom/badlogic/gdx/graphics/Texture;
+      35: aload_0
+      36: ldc           #10                 // String images/ui/cursors/magGlass2.png
+      38: invokestatic  #8                  // Method com/megacrit/cardcrawl/helpers/ImageMaster.loadImage:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Texture;
+      41: putfield      #11                 // Field mImg:Lcom/badlogic/gdx/graphics/Texture;
+      44: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: getstatic     #12                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.isMouseDown:Z
+       3: ifeq          15
+       6: aload_0
+       7: ldc           #14                 // float 6.0f
+       9: putfield      #15                 // Field rotation:F
+      12: goto          20
+      15: aload_0
+      16: fconst_0
+      17: putfield      #15                 // Field rotation:F
+      20: return
+
+  public void changeType(com.megacrit.cardcrawl.core.GameCursor$CursorType);
+    descriptor: (Lcom/megacrit/cardcrawl/core/GameCursor$CursorType;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #3                  // Field type:Lcom/megacrit/cardcrawl/core/GameCursor$CursorType;
+       5: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: getstatic     #16                 // Field hidden:Z
+       3: ifne          12
+       6: getstatic     #17                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+       9: ifeq          13
+      12: return
+      13: getstatic     #18                 // Field com/megacrit/cardcrawl/core/Settings.isTouchScreen:Z
+      16: ifeq          25
+      19: getstatic     #19                 // Field com/megacrit/cardcrawl/core/Settings.isDev:Z
+      22: ifeq          348
+      25: getstatic     #20                 // Field com/megacrit/cardcrawl/core/GameCursor$1.$SwitchMap$com$megacrit$cardcrawl$core$GameCursor$CursorType:[I
+      28: aload_0
+      29: getfield      #3                  // Field type:Lcom/megacrit/cardcrawl/core/GameCursor$CursorType;
+      32: invokevirtual #21                 // Method com/megacrit/cardcrawl/core/GameCursor$CursorType.ordinal:()I
+      35: iaload
+      36: lookupswitch  { // 2
+
+                     1: 64
+
+                     2: 201
+               default: 338
+          }
+      64: aload_1
+      65: getstatic     #22                 // Field SHADOW_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      68: invokevirtual #23                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      71: aload_1
+      72: aload_0
+      73: getfield      #9                  // Field img:Lcom/badlogic/gdx/graphics/Texture;
+      76: getstatic     #24                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+      79: i2f
+      80: ldc           #25                 // float 32.0f
+      82: fsub
+      83: getstatic     #26                 // Field SHADOW_OFFSET_X:F
+      86: fsub
+      87: getstatic     #27                 // Field OFFSET_X:F
+      90: fadd
+      91: getstatic     #28                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+      94: i2f
+      95: ldc           #25                 // float 32.0f
+      97: fsub
+      98: getstatic     #29                 // Field SHADOW_OFFSET_Y:F
+     101: fsub
+     102: getstatic     #30                 // Field OFFSET_Y:F
+     105: fadd
+     106: ldc           #25                 // float 32.0f
+     108: ldc           #25                 // float 32.0f
+     110: ldc           #31                 // float 64.0f
+     112: ldc           #31                 // float 64.0f
+     114: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     117: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     120: aload_0
+     121: getfield      #15                 // Field rotation:F
+     124: iconst_0
+     125: iconst_0
+     126: bipush        64
+     128: bipush        64
+     130: iconst_0
+     131: iconst_0
+     132: invokevirtual #33                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     135: aload_1
+     136: getstatic     #34                 // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+     139: invokevirtual #23                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     142: aload_1
+     143: aload_0
+     144: getfield      #9                  // Field img:Lcom/badlogic/gdx/graphics/Texture;
+     147: getstatic     #24                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+     150: i2f
+     151: ldc           #25                 // float 32.0f
+     153: fsub
+     154: getstatic     #27                 // Field OFFSET_X:F
+     157: fadd
+     158: getstatic     #28                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+     161: i2f
+     162: ldc           #25                 // float 32.0f
+     164: fsub
+     165: getstatic     #30                 // Field OFFSET_Y:F
+     168: fadd
+     169: ldc           #25                 // float 32.0f
+     171: ldc           #25                 // float 32.0f
+     173: ldc           #31                 // float 64.0f
+     175: ldc           #31                 // float 64.0f
+     177: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     180: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     183: aload_0
+     184: getfield      #15                 // Field rotation:F
+     187: iconst_0
+     188: iconst_0
+     189: bipush        64
+     191: bipush        64
+     193: iconst_0
+     194: iconst_0
+     195: invokevirtual #33                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     198: goto          338
+     201: aload_1
+     202: getstatic     #22                 // Field SHADOW_COLOR:Lcom/badlogic/gdx/graphics/Color;
+     205: invokevirtual #23                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     208: aload_1
+     209: aload_0
+     210: getfield      #11                 // Field mImg:Lcom/badlogic/gdx/graphics/Texture;
+     213: getstatic     #24                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+     216: i2f
+     217: ldc           #25                 // float 32.0f
+     219: fsub
+     220: getstatic     #26                 // Field SHADOW_OFFSET_X:F
+     223: fsub
+     224: getstatic     #27                 // Field OFFSET_X:F
+     227: fadd
+     228: getstatic     #28                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+     231: i2f
+     232: ldc           #25                 // float 32.0f
+     234: fsub
+     235: getstatic     #29                 // Field SHADOW_OFFSET_Y:F
+     238: fsub
+     239: getstatic     #30                 // Field OFFSET_Y:F
+     242: fadd
+     243: ldc           #25                 // float 32.0f
+     245: ldc           #25                 // float 32.0f
+     247: ldc           #31                 // float 64.0f
+     249: ldc           #31                 // float 64.0f
+     251: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     254: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     257: aload_0
+     258: getfield      #15                 // Field rotation:F
+     261: iconst_0
+     262: iconst_0
+     263: bipush        64
+     265: bipush        64
+     267: iconst_0
+     268: iconst_0
+     269: invokevirtual #33                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     272: aload_1
+     273: getstatic     #34                 // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+     276: invokevirtual #23                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     279: aload_1
+     280: aload_0
+     281: getfield      #11                 // Field mImg:Lcom/badlogic/gdx/graphics/Texture;
+     284: getstatic     #24                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+     287: i2f
+     288: ldc           #25                 // float 32.0f
+     290: fsub
+     291: getstatic     #27                 // Field OFFSET_X:F
+     294: fadd
+     295: getstatic     #28                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+     298: i2f
+     299: ldc           #25                 // float 32.0f
+     301: fsub
+     302: getstatic     #30                 // Field OFFSET_Y:F
+     305: fadd
+     306: ldc           #25                 // float 32.0f
+     308: ldc           #25                 // float 32.0f
+     310: ldc           #31                 // float 64.0f
+     312: ldc           #31                 // float 64.0f
+     314: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     317: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     320: aload_0
+     321: getfield      #15                 // Field rotation:F
+     324: iconst_0
+     325: iconst_0
+     326: bipush        64
+     328: bipush        64
+     330: iconst_0
+     331: iconst_0
+     332: invokevirtual #33                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     335: goto          338
+     338: aload_0
+     339: getstatic     #2                  // Field com/megacrit/cardcrawl/core/GameCursor$CursorType.NORMAL:Lcom/megacrit/cardcrawl/core/GameCursor$CursorType;
+     342: invokevirtual #35                 // Method changeType:(Lcom/megacrit/cardcrawl/core/GameCursor$CursorType;)V
+     345: goto          443
+     348: aload_0
+     349: getfield      #6                  // Field color:Lcom/badlogic/gdx/graphics/Color;
+     352: aload_0
+     353: getfield      #6                  // Field color:Lcom/badlogic/gdx/graphics/Color;
+     356: getfield      #36                 // Field com/badlogic/gdx/graphics/Color.a:F
+     359: fconst_0
+     360: invokestatic  #37                 // Method com/megacrit/cardcrawl/helpers/MathHelper.slowColorLerpSnap:(FF)F
+     363: putfield      #36                 // Field com/badlogic/gdx/graphics/Color.a:F
+     366: aload_1
+     367: aload_0
+     368: getfield      #6                  // Field color:Lcom/badlogic/gdx/graphics/Color;
+     371: invokevirtual #23                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     374: aload_1
+     375: getstatic     #38                 // Field com/megacrit/cardcrawl/helpers/ImageMaster.WOBBLY_ORB_VFX:Lcom/badlogic/gdx/graphics/Texture;
+     378: getstatic     #24                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+     381: i2f
+     382: ldc           #39                 // float 16.0f
+     384: fsub
+     385: getstatic     #27                 // Field OFFSET_X:F
+     388: fadd
+     389: ldc           #40                 // float 24.0f
+     391: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     394: fmul
+     395: fsub
+     396: getstatic     #28                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+     399: i2f
+     400: ldc           #39                 // float 16.0f
+     402: fsub
+     403: getstatic     #30                 // Field OFFSET_Y:F
+     406: fadd
+     407: ldc           #40                 // float 24.0f
+     409: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     412: fmul
+     413: fadd
+     414: ldc           #39                 // float 16.0f
+     416: ldc           #39                 // float 16.0f
+     418: ldc           #25                 // float 32.0f
+     420: ldc           #25                 // float 32.0f
+     422: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     425: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     428: aload_0
+     429: getfield      #15                 // Field rotation:F
+     432: iconst_0
+     433: iconst_0
+     434: bipush        32
+     436: bipush        32
+     438: iconst_0
+     439: iconst_0
+     440: invokevirtual #33                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     443: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: putstatic     #16                 // Field hidden:Z
+       4: ldc           #40                 // float 24.0f
+       6: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+       9: fmul
+      10: putstatic     #27                 // Field OFFSET_X:F
+      13: ldc           #41                 // float -24.0f
+      15: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      18: fmul
+      19: putstatic     #30                 // Field OFFSET_Y:F
+      22: ldc           #42                 // float -10.0f
+      24: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      27: fmul
+      28: putstatic     #26                 // Field SHADOW_OFFSET_X:F
+      31: ldc           #43                 // float 8.0f
+      33: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      36: fmul
+      37: putstatic     #29                 // Field SHADOW_OFFSET_Y:F
+      40: new           #4                  // class com/badlogic/gdx/graphics/Color
+      43: dup
+      44: fconst_0
+      45: fconst_0
+      46: fconst_0
+      47: ldc           #44                 // float 0.15f
+      49: invokespecial #5                  // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      52: putstatic     #22                 // Field SHADOW_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      55: return
+}

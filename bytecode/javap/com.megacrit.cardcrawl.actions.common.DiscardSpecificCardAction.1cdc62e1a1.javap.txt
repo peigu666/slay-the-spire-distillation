@@ -1,0 +1,78 @@
+Compiled from "DiscardSpecificCardAction.java"
+public class com.megacrit.cardcrawl.actions.common.DiscardSpecificCardAction extends com.megacrit.cardcrawl.actions.AbstractGameAction {
+  private com.megacrit.cardcrawl.cards.AbstractCard targetCard;
+    descriptor: Lcom/megacrit/cardcrawl/cards/AbstractCard;
+
+  private com.megacrit.cardcrawl.cards.CardGroup group;
+    descriptor: Lcom/megacrit/cardcrawl/cards/CardGroup;
+
+  public com.megacrit.cardcrawl.actions.common.DiscardSpecificCardAction(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/actions/AbstractGameAction."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #2                  // Field targetCard:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+       9: aload_0
+      10: getstatic     #3                  // Field com/megacrit/cardcrawl/actions/AbstractGameAction$ActionType.DISCARD:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      13: putfield      #4                  // Field actionType:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      16: aload_0
+      17: getstatic     #5                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_FAST:F
+      20: putfield      #6                  // Field duration:F
+      23: return
+
+  public com.megacrit.cardcrawl.actions.common.DiscardSpecificCardAction(com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.cards.CardGroup);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/cards/CardGroup;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/actions/AbstractGameAction."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #2                  // Field targetCard:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+       9: aload_0
+      10: aload_2
+      11: putfield      #7                  // Field group:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      14: aload_0
+      15: getstatic     #3                  // Field com/megacrit/cardcrawl/actions/AbstractGameAction$ActionType.DISCARD:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      18: putfield      #4                  // Field actionType:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      21: aload_0
+      22: getstatic     #5                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_FAST:F
+      25: putfield      #6                  // Field duration:F
+      28: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #6                  // Field duration:F
+       4: getstatic     #5                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_FAST:F
+       7: fcmpl
+       8: ifne          64
+      11: aload_0
+      12: getfield      #7                  // Field group:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      15: ifnonnull     28
+      18: aload_0
+      19: getstatic     #8                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      22: getfield      #9                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      25: putfield      #7                  // Field group:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      28: aload_0
+      29: getfield      #7                  // Field group:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      32: aload_0
+      33: getfield      #2                  // Field targetCard:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      36: invokevirtual #10                 // Method com/megacrit/cardcrawl/cards/CardGroup.contains:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)Z
+      39: ifeq          64
+      42: aload_0
+      43: getfield      #7                  // Field group:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      46: aload_0
+      47: getfield      #2                  // Field targetCard:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      50: invokevirtual #11                 // Method com/megacrit/cardcrawl/cards/CardGroup.moveToDiscardPile:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      53: iconst_0
+      54: invokestatic  #12                 // Method com/megacrit/cardcrawl/actions/GameActionManager.incrementDiscard:(Z)V
+      57: aload_0
+      58: getfield      #2                  // Field targetCard:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      61: invokevirtual #13                 // Method com/megacrit/cardcrawl/cards/AbstractCard.triggerOnManualDiscard:()V
+      64: aload_0
+      65: invokevirtual #14                 // Method tickDuration:()V
+      68: return
+}

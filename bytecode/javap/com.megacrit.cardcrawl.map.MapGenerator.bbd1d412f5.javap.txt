@@ -1,0 +1,1006 @@
+Compiled from "MapGenerator.java"
+public class com.megacrit.cardcrawl.map.MapGenerator {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  static final boolean $assertionsDisabled;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.map.MapGenerator();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>> generateDungeon(int, int, int, com.megacrit.cardcrawl.random.Random);
+    descriptor: (IIILcom/megacrit/cardcrawl/random/Random;)Ljava/util/ArrayList;
+    Code:
+       0: iload_0
+       1: iload_1
+       2: invokestatic  #2                  // Method createNodes:(II)Ljava/util/ArrayList;
+       5: astore        4
+       7: ldc           #4                  // String Uncertain Future
+       9: invokestatic  #5                  // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+      12: ifeq          27
+      15: aload         4
+      17: iconst_1
+      18: aload_3
+      19: invokestatic  #6                  // Method createPaths:(Ljava/util/ArrayList;ILcom/megacrit/cardcrawl/random/Random;)Ljava/util/ArrayList;
+      22: astore        4
+      24: goto          36
+      27: aload         4
+      29: iload_2
+      30: aload_3
+      31: invokestatic  #6                  // Method createPaths:(Ljava/util/ArrayList;ILcom/megacrit/cardcrawl/random/Random;)Ljava/util/ArrayList;
+      34: astore        4
+      36: aload         4
+      38: invokestatic  #7                  // Method filterRedundantEdgesFromRow:(Ljava/util/ArrayList;)Ljava/util/ArrayList;
+      41: astore        4
+      43: aload         4
+      45: areturn
+
+  private static java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>> filterRedundantEdgesFromRow(java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>>);
+    descriptor: (Ljava/util/ArrayList;)Ljava/util/ArrayList;
+    Code:
+       0: new           #8                  // class java/util/ArrayList
+       3: dup
+       4: invokespecial #9                  // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: new           #8                  // class java/util/ArrayList
+      11: dup
+      12: invokespecial #9                  // Method java/util/ArrayList."<init>":()V
+      15: astore_2
+      16: aload_0
+      17: iconst_0
+      18: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      21: checkcast     #8                  // class java/util/ArrayList
+      24: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      27: astore_3
+      28: aload_3
+      29: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      34: ifeq          207
+      37: aload_3
+      38: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      43: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+      46: astore        4
+      48: aload         4
+      50: invokevirtual #15                 // Method com/megacrit/cardcrawl/map/MapRoomNode.hasEdges:()Z
+      53: ifeq          204
+      56: aload         4
+      58: invokevirtual #16                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getEdges:()Ljava/util/ArrayList;
+      61: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      64: astore        5
+      66: aload         5
+      68: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      73: ifeq          162
+      76: aload         5
+      78: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      83: checkcast     #17                 // class com/megacrit/cardcrawl/map/MapEdge
+      86: astore        6
+      88: aload_1
+      89: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      92: astore        7
+      94: aload         7
+      96: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     101: ifeq          152
+     104: aload         7
+     106: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     111: checkcast     #17                 // class com/megacrit/cardcrawl/map/MapEdge
+     114: astore        8
+     116: aload         6
+     118: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     121: aload         8
+     123: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     126: if_icmpne     149
+     129: aload         6
+     131: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+     134: aload         8
+     136: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+     139: if_icmpne     149
+     142: aload_2
+     143: aload         6
+     145: invokevirtual #20                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     148: pop
+     149: goto          94
+     152: aload_1
+     153: aload         6
+     155: invokevirtual #20                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     158: pop
+     159: goto          66
+     162: aload_2
+     163: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     166: astore        5
+     168: aload         5
+     170: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     175: ifeq          200
+     178: aload         5
+     180: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     185: checkcast     #17                 // class com/megacrit/cardcrawl/map/MapEdge
+     188: astore        6
+     190: aload         4
+     192: aload         6
+     194: invokevirtual #21                 // Method com/megacrit/cardcrawl/map/MapRoomNode.delEdge:(Lcom/megacrit/cardcrawl/map/MapEdge;)V
+     197: goto          168
+     200: aload_2
+     201: invokevirtual #22                 // Method java/util/ArrayList.clear:()V
+     204: goto          28
+     207: aload_0
+     208: areturn
+
+  private static java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>> createNodes(int, int);
+    descriptor: (II)Ljava/util/ArrayList;
+    Code:
+       0: new           #8                  // class java/util/ArrayList
+       3: dup
+       4: invokespecial #9                  // Method java/util/ArrayList."<init>":()V
+       7: astore_2
+       8: iconst_0
+       9: istore_3
+      10: iload_3
+      11: iload_0
+      12: if_icmpge     68
+      15: new           #8                  // class java/util/ArrayList
+      18: dup
+      19: invokespecial #9                  // Method java/util/ArrayList."<init>":()V
+      22: astore        4
+      24: iconst_0
+      25: istore        5
+      27: iload         5
+      29: iload_1
+      30: if_icmpge     55
+      33: aload         4
+      35: new           #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+      38: dup
+      39: iload         5
+      41: iload_3
+      42: invokespecial #23                 // Method com/megacrit/cardcrawl/map/MapRoomNode."<init>":(II)V
+      45: invokevirtual #20                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      48: pop
+      49: iinc          5, 1
+      52: goto          27
+      55: aload_2
+      56: aload         4
+      58: invokevirtual #20                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      61: pop
+      62: iinc          3, 1
+      65: goto          10
+      68: aload_2
+      69: areturn
+
+  private static java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>> createPaths(java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>>, int, com.megacrit.cardcrawl.random.Random);
+    descriptor: (Ljava/util/ArrayList;ILcom/megacrit/cardcrawl/random/Random;)Ljava/util/ArrayList;
+    Code:
+       0: iconst_0
+       1: istore_3
+       2: aload_0
+       3: iload_3
+       4: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+       7: checkcast     #8                  // class java/util/ArrayList
+      10: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+      13: iconst_1
+      14: isub
+      15: istore        4
+      17: iconst_m1
+      18: istore        5
+      20: iconst_0
+      21: istore        6
+      23: iload         6
+      25: iload_1
+      26: if_icmpge     97
+      29: aload_2
+      30: iconst_0
+      31: iload         4
+      33: invokestatic  #25                 // Method randRange:(Lcom/megacrit/cardcrawl/random/Random;II)I
+      36: istore        7
+      38: iload         6
+      40: ifne          47
+      43: iload         7
+      45: istore        5
+      47: iload         7
+      49: iload         5
+      51: if_icmpne     72
+      54: iload         6
+      56: iconst_1
+      57: if_icmpne     72
+      60: aload_2
+      61: iconst_0
+      62: iload         4
+      64: invokestatic  #25                 // Method randRange:(Lcom/megacrit/cardcrawl/random/Random;II)I
+      67: istore        7
+      69: goto          47
+      72: aload_0
+      73: new           #17                 // class com/megacrit/cardcrawl/map/MapEdge
+      76: dup
+      77: iload         7
+      79: iconst_m1
+      80: iload         7
+      82: iconst_0
+      83: invokespecial #26                 // Method com/megacrit/cardcrawl/map/MapEdge."<init>":(IIII)V
+      86: aload_2
+      87: invokestatic  #27                 // Method _createPaths:(Ljava/util/ArrayList;Lcom/megacrit/cardcrawl/map/MapEdge;Lcom/megacrit/cardcrawl/random/Random;)Ljava/util/ArrayList;
+      90: pop
+      91: iinc          6, 1
+      94: goto          23
+      97: aload_0
+      98: areturn
+
+  private static com.megacrit.cardcrawl.map.MapEdge getMaxEdge(java.util.ArrayList<com.megacrit.cardcrawl.map.MapEdge>);
+    descriptor: (Ljava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapEdge;
+    Code:
+       0: aload_0
+       1: new           #28                 // class com/megacrit/cardcrawl/map/EdgeComparator
+       4: dup
+       5: invokespecial #29                 // Method com/megacrit/cardcrawl/map/EdgeComparator."<init>":()V
+       8: invokestatic  #30                 // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+      11: getstatic     #31                 // Field $assertionsDisabled:Z
+      14: ifne          34
+      17: aload_0
+      18: invokevirtual #32                 // Method java/util/ArrayList.isEmpty:()Z
+      21: ifeq          34
+      24: new           #33                 // class java/lang/AssertionError
+      27: dup
+      28: ldc           #34                 // String Somehow the edges are empty. This shouldn\'t happen.
+      30: invokespecial #35                 // Method java/lang/AssertionError."<init>":(Ljava/lang/Object;)V
+      33: athrow
+      34: aload_0
+      35: aload_0
+      36: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+      39: iconst_1
+      40: isub
+      41: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      44: checkcast     #17                 // class com/megacrit/cardcrawl/map/MapEdge
+      47: areturn
+
+  private static com.megacrit.cardcrawl.map.MapEdge getMinEdge(java.util.ArrayList<com.megacrit.cardcrawl.map.MapEdge>);
+    descriptor: (Ljava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapEdge;
+    Code:
+       0: aload_0
+       1: new           #28                 // class com/megacrit/cardcrawl/map/EdgeComparator
+       4: dup
+       5: invokespecial #29                 // Method com/megacrit/cardcrawl/map/EdgeComparator."<init>":()V
+       8: invokestatic  #30                 // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+      11: getstatic     #31                 // Field $assertionsDisabled:Z
+      14: ifne          34
+      17: aload_0
+      18: invokevirtual #32                 // Method java/util/ArrayList.isEmpty:()Z
+      21: ifeq          34
+      24: new           #33                 // class java/lang/AssertionError
+      27: dup
+      28: ldc           #34                 // String Somehow the edges are empty. This shouldn\'t happen.
+      30: invokespecial #35                 // Method java/lang/AssertionError."<init>":(Ljava/lang/Object;)V
+      33: athrow
+      34: aload_0
+      35: iconst_0
+      36: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      39: checkcast     #17                 // class com/megacrit/cardcrawl/map/MapEdge
+      42: areturn
+
+  private static com.megacrit.cardcrawl.map.MapRoomNode getNodeWithMaxX(java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>);
+    descriptor: (Ljava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+    Code:
+       0: getstatic     #31                 // Field $assertionsDisabled:Z
+       3: ifne          23
+       6: aload_0
+       7: invokevirtual #32                 // Method java/util/ArrayList.isEmpty:()Z
+      10: ifeq          23
+      13: new           #33                 // class java/lang/AssertionError
+      16: dup
+      17: ldc           #36                 // String The nodes are empty, this shouldn\'t happen.
+      19: invokespecial #35                 // Method java/lang/AssertionError."<init>":(Ljava/lang/Object;)V
+      22: athrow
+      23: aload_0
+      24: iconst_0
+      25: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      28: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+      31: astore_1
+      32: aload_0
+      33: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      36: astore_2
+      37: aload_2
+      38: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      43: ifeq          72
+      46: aload_2
+      47: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      52: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+      55: astore_3
+      56: aload_3
+      57: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+      60: aload_1
+      61: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+      64: if_icmple     69
+      67: aload_3
+      68: astore_1
+      69: goto          37
+      72: aload_1
+      73: areturn
+
+  private static com.megacrit.cardcrawl.map.MapRoomNode getNodeWithMinX(java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>);
+    descriptor: (Ljava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+    Code:
+       0: getstatic     #31                 // Field $assertionsDisabled:Z
+       3: ifne          23
+       6: aload_0
+       7: invokevirtual #32                 // Method java/util/ArrayList.isEmpty:()Z
+      10: ifeq          23
+      13: new           #33                 // class java/lang/AssertionError
+      16: dup
+      17: ldc           #36                 // String The nodes are empty, this shouldn\'t happen.
+      19: invokespecial #35                 // Method java/lang/AssertionError."<init>":(Ljava/lang/Object;)V
+      22: athrow
+      23: aload_0
+      24: iconst_0
+      25: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      28: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+      31: astore_1
+      32: aload_0
+      33: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      36: astore_2
+      37: aload_2
+      38: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      43: ifeq          72
+      46: aload_2
+      47: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      52: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+      55: astore_3
+      56: aload_3
+      57: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+      60: aload_1
+      61: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+      64: if_icmpge     69
+      67: aload_3
+      68: astore_1
+      69: goto          37
+      72: aload_1
+      73: areturn
+
+  private static com.megacrit.cardcrawl.map.MapRoomNode getCommonAncestor(com.megacrit.cardcrawl.map.MapRoomNode, com.megacrit.cardcrawl.map.MapRoomNode, int);
+    descriptor: (Lcom/megacrit/cardcrawl/map/MapRoomNode;Lcom/megacrit/cardcrawl/map/MapRoomNode;I)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+    Code:
+       0: getstatic     #31                 // Field $assertionsDisabled:Z
+       3: ifne          25
+       6: aload_0
+       7: getfield      #38                 // Field com/megacrit/cardcrawl/map/MapRoomNode.y:I
+      10: aload_1
+      11: getfield      #38                 // Field com/megacrit/cardcrawl/map/MapRoomNode.y:I
+      14: if_icmpeq     25
+      17: new           #33                 // class java/lang/AssertionError
+      20: dup
+      21: invokespecial #39                 // Method java/lang/AssertionError."<init>":()V
+      24: athrow
+      25: getstatic     #31                 // Field $assertionsDisabled:Z
+      28: ifne          44
+      31: aload_0
+      32: aload_1
+      33: if_acmpne     44
+      36: new           #33                 // class java/lang/AssertionError
+      39: dup
+      40: invokespecial #39                 // Method java/lang/AssertionError."<init>":()V
+      43: athrow
+      44: aload_0
+      45: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+      48: aload_1
+      49: getfield      #38                 // Field com/megacrit/cardcrawl/map/MapRoomNode.y:I
+      52: if_icmpge     63
+      55: aload_0
+      56: astore_3
+      57: aload_1
+      58: astore        4
+      60: goto          68
+      63: aload_1
+      64: astore_3
+      65: aload_0
+      66: astore        4
+      68: aload_0
+      69: getfield      #38                 // Field com/megacrit/cardcrawl/map/MapRoomNode.y:I
+      72: istore        5
+      74: iload         5
+      76: iflt          145
+      79: iload         5
+      81: aload_0
+      82: getfield      #38                 // Field com/megacrit/cardcrawl/map/MapRoomNode.y:I
+      85: iload_2
+      86: isub
+      87: if_icmplt     145
+      90: aload_3
+      91: invokevirtual #40                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getParents:()Ljava/util/ArrayList;
+      94: invokevirtual #32                 // Method java/util/ArrayList.isEmpty:()Z
+      97: ifne          111
+     100: aload         4
+     102: invokevirtual #40                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getParents:()Ljava/util/ArrayList;
+     105: invokevirtual #32                 // Method java/util/ArrayList.isEmpty:()Z
+     108: ifeq          113
+     111: aconst_null
+     112: areturn
+     113: aload_3
+     114: invokevirtual #40                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getParents:()Ljava/util/ArrayList;
+     117: invokestatic  #41                 // Method getNodeWithMaxX:(Ljava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+     120: astore_3
+     121: aload         4
+     123: invokevirtual #40                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getParents:()Ljava/util/ArrayList;
+     126: invokestatic  #42                 // Method getNodeWithMinX:(Ljava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+     129: astore        4
+     131: aload_3
+     132: aload         4
+     134: if_acmpne     139
+     137: aload_3
+     138: areturn
+     139: iinc          5, -1
+     142: goto          74
+     145: aconst_null
+     146: areturn
+
+  private static java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>> _createPaths(java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>>, com.megacrit.cardcrawl.map.MapEdge, com.megacrit.cardcrawl.random.Random);
+    descriptor: (Ljava/util/ArrayList;Lcom/megacrit/cardcrawl/map/MapEdge;Lcom/megacrit/cardcrawl/random/Random;)Ljava/util/ArrayList;
+    Code:
+       0: aload_1
+       1: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+       4: aload_1
+       5: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+       8: aload_0
+       9: invokestatic  #43                 // Method getNode:(IILjava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+      12: astore_3
+      13: aload_1
+      14: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+      17: iconst_1
+      18: iadd
+      19: aload_0
+      20: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+      23: if_icmplt     83
+      26: new           #17                 // class com/megacrit/cardcrawl/map/MapEdge
+      29: dup
+      30: aload_1
+      31: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+      34: aload_1
+      35: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+      38: aload_3
+      39: getfield      #44                 // Field com/megacrit/cardcrawl/map/MapRoomNode.offsetX:F
+      42: aload_3
+      43: getfield      #45                 // Field com/megacrit/cardcrawl/map/MapRoomNode.offsetY:F
+      46: iconst_3
+      47: aload_1
+      48: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+      51: iconst_2
+      52: iadd
+      53: fconst_0
+      54: fconst_0
+      55: iconst_1
+      56: invokespecial #46                 // Method com/megacrit/cardcrawl/map/MapEdge."<init>":(IIFFIIFFZ)V
+      59: astore        4
+      61: aload_3
+      62: aload         4
+      64: invokevirtual #47                 // Method com/megacrit/cardcrawl/map/MapRoomNode.addEdge:(Lcom/megacrit/cardcrawl/map/MapEdge;)V
+      67: aload_3
+      68: invokevirtual #16                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getEdges:()Ljava/util/ArrayList;
+      71: new           #28                 // class com/megacrit/cardcrawl/map/EdgeComparator
+      74: dup
+      75: invokespecial #29                 // Method com/megacrit/cardcrawl/map/EdgeComparator."<init>":()V
+      78: invokestatic  #30                 // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+      81: aload_0
+      82: areturn
+      83: aload_0
+      84: aload_1
+      85: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+      88: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      91: checkcast     #8                  // class java/util/ArrayList
+      94: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+      97: istore        4
+      99: iload         4
+     101: iconst_1
+     102: isub
+     103: istore        5
+     105: aload_1
+     106: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     109: ifne          121
+     112: iconst_0
+     113: istore        6
+     115: iconst_1
+     116: istore        7
+     118: goto          145
+     121: aload_1
+     122: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     125: iload         5
+     127: if_icmpne     139
+     130: iconst_m1
+     131: istore        6
+     133: iconst_0
+     134: istore        7
+     136: goto          145
+     139: iconst_m1
+     140: istore        6
+     142: iconst_1
+     143: istore        7
+     145: aload_1
+     146: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     149: aload_2
+     150: iload         6
+     152: iload         7
+     154: invokestatic  #25                 // Method randRange:(Lcom/megacrit/cardcrawl/random/Random;II)I
+     157: iadd
+     158: istore        8
+     160: aload_1
+     161: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+     164: iconst_1
+     165: iadd
+     166: istore        9
+     168: iload         8
+     170: iload         9
+     172: aload_0
+     173: invokestatic  #43                 // Method getNode:(IILjava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+     176: astore        10
+     178: iconst_3
+     179: istore        11
+     181: iconst_5
+     182: istore        12
+     184: aload         10
+     186: invokevirtual #40                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getParents:()Ljava/util/ArrayList;
+     189: astore        13
+     191: aload         13
+     193: invokevirtual #32                 // Method java/util/ArrayList.isEmpty:()Z
+     196: ifne          413
+     199: aload         13
+     201: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     204: astore        14
+     206: aload         14
+     208: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     213: ifeq          413
+     216: aload         14
+     218: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     223: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+     226: astore        15
+     228: aload         15
+     230: aload_3
+     231: if_acmpeq     410
+     234: aload         15
+     236: aload_3
+     237: iload         12
+     239: invokestatic  #48                 // Method getCommonAncestor:(Lcom/megacrit/cardcrawl/map/MapRoomNode;Lcom/megacrit/cardcrawl/map/MapRoomNode;I)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+     242: astore        16
+     244: aload         16
+     246: ifnull        410
+     249: iload         9
+     251: aload         16
+     253: getfield      #38                 // Field com/megacrit/cardcrawl/map/MapRoomNode.y:I
+     256: isub
+     257: istore        17
+     259: iload         17
+     261: iload         11
+     263: if_icmpge     403
+     266: aload         10
+     268: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+     271: aload_3
+     272: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+     275: if_icmple     305
+     278: aload_1
+     279: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     282: aload_2
+     283: iconst_m1
+     284: iconst_0
+     285: invokestatic  #25                 // Method randRange:(Lcom/megacrit/cardcrawl/random/Random;II)I
+     288: iadd
+     289: istore        8
+     291: iload         8
+     293: ifge          390
+     296: aload_1
+     297: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     300: istore        8
+     302: goto          390
+     305: aload         10
+     307: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+     310: aload_3
+     311: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+     314: if_icmpne     364
+     317: aload_1
+     318: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     321: aload_2
+     322: iconst_m1
+     323: iconst_1
+     324: invokestatic  #25                 // Method randRange:(Lcom/megacrit/cardcrawl/random/Random;II)I
+     327: iadd
+     328: istore        8
+     330: iload         8
+     332: iload         5
+     334: if_icmple     348
+     337: aload_1
+     338: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     341: iconst_1
+     342: isub
+     343: istore        8
+     345: goto          390
+     348: iload         8
+     350: ifge          390
+     353: aload_1
+     354: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     357: iconst_1
+     358: iadd
+     359: istore        8
+     361: goto          390
+     364: aload_1
+     365: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     368: aload_2
+     369: iconst_0
+     370: iconst_1
+     371: invokestatic  #25                 // Method randRange:(Lcom/megacrit/cardcrawl/random/Random;II)I
+     374: iadd
+     375: istore        8
+     377: iload         8
+     379: iload         5
+     381: if_icmple     390
+     384: aload_1
+     385: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     388: istore        8
+     390: iload         8
+     392: iload         9
+     394: aload_0
+     395: invokestatic  #43                 // Method getNode:(IILjava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+     398: astore        10
+     400: goto          410
+     403: iload         17
+     405: iload         12
+     407: if_icmplt     410
+     410: goto          206
+     413: aload_1
+     414: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     417: ifeq          480
+     420: aload_0
+     421: aload_1
+     422: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+     425: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     428: checkcast     #8                  // class java/util/ArrayList
+     431: aload_1
+     432: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     435: iconst_1
+     436: isub
+     437: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     440: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+     443: astore        14
+     445: aload         14
+     447: invokevirtual #15                 // Method com/megacrit/cardcrawl/map/MapRoomNode.hasEdges:()Z
+     450: ifeq          480
+     453: aload         14
+     455: invokevirtual #16                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getEdges:()Ljava/util/ArrayList;
+     458: invokestatic  #49                 // Method getMaxEdge:(Ljava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapEdge;
+     461: astore        15
+     463: aload         15
+     465: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     468: iload         8
+     470: if_icmple     480
+     473: aload         15
+     475: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     478: istore        8
+     480: aload_1
+     481: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     484: iload         5
+     486: if_icmpge     549
+     489: aload_0
+     490: aload_1
+     491: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+     494: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     497: checkcast     #8                  // class java/util/ArrayList
+     500: aload_1
+     501: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     504: iconst_1
+     505: iadd
+     506: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     509: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+     512: astore        14
+     514: aload         14
+     516: invokevirtual #15                 // Method com/megacrit/cardcrawl/map/MapRoomNode.hasEdges:()Z
+     519: ifeq          549
+     522: aload         14
+     524: invokevirtual #16                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getEdges:()Ljava/util/ArrayList;
+     527: invokestatic  #50                 // Method getMinEdge:(Ljava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapEdge;
+     530: astore        15
+     532: aload         15
+     534: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     537: iload         8
+     539: if_icmpge     549
+     542: aload         15
+     544: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     547: istore        8
+     549: iload         8
+     551: iload         9
+     553: aload_0
+     554: invokestatic  #43                 // Method getNode:(IILjava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+     557: astore        10
+     559: new           #17                 // class com/megacrit/cardcrawl/map/MapEdge
+     562: dup
+     563: aload_1
+     564: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     567: aload_1
+     568: getfield      #19                 // Field com/megacrit/cardcrawl/map/MapEdge.dstY:I
+     571: aload_3
+     572: getfield      #44                 // Field com/megacrit/cardcrawl/map/MapRoomNode.offsetX:F
+     575: aload_3
+     576: getfield      #45                 // Field com/megacrit/cardcrawl/map/MapRoomNode.offsetY:F
+     579: iload         8
+     581: iload         9
+     583: aload         10
+     585: getfield      #44                 // Field com/megacrit/cardcrawl/map/MapRoomNode.offsetX:F
+     588: aload         10
+     590: getfield      #45                 // Field com/megacrit/cardcrawl/map/MapRoomNode.offsetY:F
+     593: iconst_0
+     594: invokespecial #46                 // Method com/megacrit/cardcrawl/map/MapEdge."<init>":(IIFFIIFFZ)V
+     597: astore        14
+     599: aload_3
+     600: aload         14
+     602: invokevirtual #47                 // Method com/megacrit/cardcrawl/map/MapRoomNode.addEdge:(Lcom/megacrit/cardcrawl/map/MapEdge;)V
+     605: aload_3
+     606: invokevirtual #16                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getEdges:()Ljava/util/ArrayList;
+     609: new           #28                 // class com/megacrit/cardcrawl/map/EdgeComparator
+     612: dup
+     613: invokespecial #29                 // Method com/megacrit/cardcrawl/map/EdgeComparator."<init>":()V
+     616: invokestatic  #30                 // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+     619: aload         10
+     621: aload_3
+     622: invokevirtual #51                 // Method com/megacrit/cardcrawl/map/MapRoomNode.addParent:(Lcom/megacrit/cardcrawl/map/MapRoomNode;)V
+     625: aload_0
+     626: aload         14
+     628: aload_2
+     629: invokestatic  #27                 // Method _createPaths:(Ljava/util/ArrayList;Lcom/megacrit/cardcrawl/map/MapEdge;Lcom/megacrit/cardcrawl/random/Random;)Ljava/util/ArrayList;
+     632: areturn
+
+  private static com.megacrit.cardcrawl.map.MapRoomNode getNode(int, int, java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>>);
+    descriptor: (IILjava/util/ArrayList;)Lcom/megacrit/cardcrawl/map/MapRoomNode;
+    Code:
+       0: aload_2
+       1: iload_1
+       2: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+       5: checkcast     #8                  // class java/util/ArrayList
+       8: iload_0
+       9: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      12: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+      15: areturn
+
+  private static java.lang.String paddingGenerator(int);
+    descriptor: (I)Ljava/lang/String;
+    Code:
+       0: new           #52                 // class java/lang/StringBuilder
+       3: dup
+       4: invokespecial #53                 // Method java/lang/StringBuilder."<init>":()V
+       7: astore_1
+       8: iconst_0
+       9: istore_2
+      10: iload_2
+      11: iload_0
+      12: if_icmpge     28
+      15: aload_1
+      16: ldc           #54                 // String
+      18: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      21: pop
+      22: iinc          2, 1
+      25: goto          10
+      28: aload_1
+      29: invokevirtual #56                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      32: areturn
+
+  public static java.lang.String toString(java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>>);
+    descriptor: (Ljava/util/ArrayList;)Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: invokestatic  #57                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+       5: invokestatic  #58                 // Method toString:(Ljava/util/ArrayList;Ljava/lang/Boolean;)Ljava/lang/String;
+       8: areturn
+
+  public static java.lang.String toString(java.util.ArrayList<java.util.ArrayList<com.megacrit.cardcrawl.map.MapRoomNode>>, java.lang.Boolean);
+    descriptor: (Ljava/util/ArrayList;Ljava/lang/Boolean;)Ljava/lang/String;
+    Code:
+       0: new           #52                 // class java/lang/StringBuilder
+       3: dup
+       4: invokespecial #53                 // Method java/lang/StringBuilder."<init>":()V
+       7: astore_2
+       8: aload_0
+       9: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+      12: iconst_1
+      13: isub
+      14: istore_3
+      15: iconst_5
+      16: istore        4
+      18: iload_3
+      19: iflt          412
+      22: aload_2
+      23: ldc           #59                 // String \n
+      25: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      28: iload         4
+      30: invokestatic  #60                 // Method paddingGenerator:(I)Ljava/lang/String;
+      33: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      36: pop
+      37: aload_0
+      38: iload_3
+      39: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      42: checkcast     #8                  // class java/util/ArrayList
+      45: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      48: astore        5
+      50: aload         5
+      52: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      57: ifeq          188
+      60: aload         5
+      62: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      67: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+      70: astore        6
+      72: ldc           #54                 // String
+      74: dup
+      75: astore        9
+      77: dup
+      78: astore        8
+      80: astore        7
+      82: aload         6
+      84: invokevirtual #16                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getEdges:()Ljava/util/ArrayList;
+      87: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      90: astore        10
+      92: aload         10
+      94: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      99: ifeq          168
+     102: aload         10
+     104: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     109: checkcast     #17                 // class com/megacrit/cardcrawl/map/MapEdge
+     112: astore        11
+     114: aload         11
+     116: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     119: aload         6
+     121: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+     124: if_icmpge     131
+     127: ldc           #61                 // String \\
+     129: astore        7
+     131: aload         11
+     133: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     136: aload         6
+     138: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+     141: if_icmpne     148
+     144: ldc           #62                 // String |
+     146: astore        8
+     148: aload         11
+     150: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     153: aload         6
+     155: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+     158: if_icmple     165
+     161: ldc           #63                 // String /
+     163: astore        9
+     165: goto          92
+     168: aload_2
+     169: aload         7
+     171: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     174: aload         8
+     176: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     179: aload         9
+     181: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     184: pop
+     185: goto          50
+     188: aload_2
+     189: ldc           #64                 // String \n
+     191: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     194: iload_3
+     195: invokevirtual #65                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     198: ldc           #54                 // String
+     200: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     203: pop
+     204: aload_2
+     205: iload         4
+     207: iload_3
+     208: invokestatic  #66                 // Method java/lang/String.valueOf:(I)Ljava/lang/String;
+     211: invokevirtual #67                 // Method java/lang/String.length:()I
+     214: isub
+     215: invokestatic  #60                 // Method paddingGenerator:(I)Ljava/lang/String;
+     218: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     221: pop
+     222: aload_0
+     223: iload_3
+     224: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     227: checkcast     #8                  // class java/util/ArrayList
+     230: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     233: astore        5
+     235: aload         5
+     237: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     242: ifeq          406
+     245: aload         5
+     247: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     252: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+     255: astore        6
+     257: ldc           #54                 // String
+     259: astore        7
+     261: iload_3
+     262: aload_0
+     263: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+     266: iconst_1
+     267: isub
+     268: if_icmpne     370
+     271: aload_0
+     272: iload_3
+     273: iconst_1
+     274: isub
+     275: invokevirtual #10                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     278: checkcast     #8                  // class java/util/ArrayList
+     281: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     284: astore        8
+     286: aload         8
+     288: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     293: ifeq          367
+     296: aload         8
+     298: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     303: checkcast     #14                 // class com/megacrit/cardcrawl/map/MapRoomNode
+     306: astore        9
+     308: aload         9
+     310: invokevirtual #16                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getEdges:()Ljava/util/ArrayList;
+     313: invokevirtual #11                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     316: astore        10
+     318: aload         10
+     320: invokeinterface #12,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     325: ifeq          364
+     328: aload         10
+     330: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     335: checkcast     #17                 // class com/megacrit/cardcrawl/map/MapEdge
+     338: astore        11
+     340: aload         11
+     342: getfield      #18                 // Field com/megacrit/cardcrawl/map/MapEdge.dstX:I
+     345: aload         6
+     347: getfield      #37                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+     350: if_icmpne     361
+     353: aload         6
+     355: aload_1
+     356: invokevirtual #68                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getRoomSymbol:(Ljava/lang/Boolean;)Ljava/lang/String;
+     359: astore        7
+     361: goto          318
+     364: goto          286
+     367: goto          386
+     370: aload         6
+     372: invokevirtual #15                 // Method com/megacrit/cardcrawl/map/MapRoomNode.hasEdges:()Z
+     375: ifeq          386
+     378: aload         6
+     380: aload_1
+     381: invokevirtual #68                 // Method com/megacrit/cardcrawl/map/MapRoomNode.getRoomSymbol:(Ljava/lang/Boolean;)Ljava/lang/String;
+     384: astore        7
+     386: aload_2
+     387: ldc           #54                 // String
+     389: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     392: aload         7
+     394: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     397: ldc           #54                 // String
+     399: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     402: pop
+     403: goto          235
+     406: iinc          3, -1
+     409: goto          18
+     412: aload_2
+     413: invokevirtual #56                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     416: areturn
+
+  private static int randRange(com.megacrit.cardcrawl.random.Random, int, int);
+    descriptor: (Lcom/megacrit/cardcrawl/random/Random;II)I
+    Code:
+       0: aload_0
+       1: ifnonnull     26
+       4: getstatic     #69                 // Field logger:Lorg/apache/logging/log4j/Logger;
+       7: ldc           #70                 // String RNG WAS NULL, REPORT IMMEDIATELY
+       9: invokeinterface #71,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      14: new           #72                 // class com/megacrit/cardcrawl/random/Random
+      17: dup
+      18: lconst_1
+      19: invokestatic  #73                 // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+      22: invokespecial #74                 // Method com/megacrit/cardcrawl/random/Random."<init>":(Ljava/lang/Long;)V
+      25: astore_0
+      26: aload_0
+      27: iload_2
+      28: iload_1
+      29: isub
+      30: invokevirtual #75                 // Method com/megacrit/cardcrawl/random/Random.random:(I)I
+      33: iload_1
+      34: iadd
+      35: ireturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #76                 // class com/megacrit/cardcrawl/map/MapGenerator
+       2: invokevirtual #77                 // Method java/lang/Class.desiredAssertionStatus:()Z
+       5: ifne          12
+       8: iconst_1
+       9: goto          13
+      12: iconst_0
+      13: putstatic     #31                 // Field $assertionsDisabled:Z
+      16: ldc           #76                 // class com/megacrit/cardcrawl/map/MapGenerator
+      18: invokevirtual #78                 // Method java/lang/Class.getName:()Ljava/lang/String;
+      21: invokestatic  #79                 // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+      24: putstatic     #69                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      27: return
+}

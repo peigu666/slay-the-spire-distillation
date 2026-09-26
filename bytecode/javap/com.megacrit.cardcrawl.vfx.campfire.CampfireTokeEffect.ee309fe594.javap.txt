@@ -1,0 +1,222 @@
+Compiled from "CampfireTokeEffect.java"
+public class com.megacrit.cardcrawl.vfx.campfire.CampfireTokeEffect extends com.megacrit.cardcrawl.vfx.AbstractGameEffect {
+  private static final com.megacrit.cardcrawl.localization.UIStrings uiStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/UIStrings;
+
+  public static final java.lang.String[] TEXT;
+    descriptor: [Ljava/lang/String;
+
+  private static final float DUR;
+    descriptor: F
+
+  private boolean openedScreen;
+    descriptor: Z
+
+  private com.badlogic.gdx.graphics.Color screenColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public com.megacrit.cardcrawl.vfx.campfire.CampfireTokeEffect();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/vfx/AbstractGameEffect."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #2                  // Field openedScreen:Z
+       9: aload_0
+      10: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.fadeColor:Lcom/badlogic/gdx/graphics/Color;
+      13: invokevirtual #4                  // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      16: putfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      19: aload_0
+      20: ldc           #7                  // float 1.5f
+      22: putfield      #8                  // Field duration:F
+      25: aload_0
+      26: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      29: fconst_0
+      30: putfield      #9                  // Field com/badlogic/gdx/graphics/Color.a:F
+      33: getstatic     #10                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.overlayMenu:Lcom/megacrit/cardcrawl/core/OverlayMenu;
+      36: getfield      #11                 // Field com/megacrit/cardcrawl/core/OverlayMenu.proceedButton:Lcom/megacrit/cardcrawl/ui/buttons/ProceedButton;
+      39: invokevirtual #12                 // Method com/megacrit/cardcrawl/ui/buttons/ProceedButton.hide:()V
+      42: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.isScreenUp:Z
+       3: ifne          27
+       6: aload_0
+       7: dup
+       8: getfield      #8                  // Field duration:F
+      11: getstatic     #14                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+      14: invokeinterface #15,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      19: fsub
+      20: putfield      #8                  // Field duration:F
+      23: aload_0
+      24: invokespecial #16                 // Method updateBlackScreenColor:()V
+      27: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.isScreenUp:Z
+      30: ifne          135
+      33: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.gridSelectScreen:Lcom/megacrit/cardcrawl/screens/select/GridCardSelectScreen;
+      36: getfield      #18                 // Field com/megacrit/cardcrawl/screens/select/GridCardSelectScreen.selectedCards:Ljava/util/ArrayList;
+      39: invokevirtual #19                 // Method java/util/ArrayList.isEmpty:()Z
+      42: ifne          135
+      45: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.gridSelectScreen:Lcom/megacrit/cardcrawl/screens/select/GridCardSelectScreen;
+      48: getfield      #20                 // Field com/megacrit/cardcrawl/screens/select/GridCardSelectScreen.forPurge:Z
+      51: ifeq          135
+      54: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.gridSelectScreen:Lcom/megacrit/cardcrawl/screens/select/GridCardSelectScreen;
+      57: getfield      #18                 // Field com/megacrit/cardcrawl/screens/select/GridCardSelectScreen.selectedCards:Ljava/util/ArrayList;
+      60: iconst_0
+      61: invokevirtual #21                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      64: checkcast     #22                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      67: astore_1
+      68: getstatic     #23                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+      71: ldc           #24                 // String PURGE
+      73: aload_1
+      74: invokevirtual #25                 // Method com/megacrit/cardcrawl/cards/AbstractCard.getMetricID:()Ljava/lang/String;
+      77: invokevirtual #26                 // Method com/megacrit/cardcrawl/metrics/MetricData.addCampfireChoiceData:(Ljava/lang/String;Ljava/lang/String;)V
+      80: getstatic     #27                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+      83: ldc           #28                 // String CARD_EXHAUST
+      85: invokevirtual #29                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+      88: pop2
+      89: getstatic     #30                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topLevelEffects:Ljava/util/ArrayList;
+      92: new           #31                 // class com/megacrit/cardcrawl/vfx/cardManip/PurgeCardEffect
+      95: dup
+      96: aload_1
+      97: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     100: iconst_2
+     101: idiv
+     102: i2f
+     103: getstatic     #33                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     106: iconst_2
+     107: idiv
+     108: i2f
+     109: invokespecial #34                 // Method com/megacrit/cardcrawl/vfx/cardManip/PurgeCardEffect."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;FF)V
+     112: invokevirtual #35                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     115: pop
+     116: getstatic     #36                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     119: getfield      #37                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     122: aload_1
+     123: invokevirtual #38                 // Method com/megacrit/cardcrawl/cards/CardGroup.removeCard:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     126: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.gridSelectScreen:Lcom/megacrit/cardcrawl/screens/select/GridCardSelectScreen;
+     129: getfield      #18                 // Field com/megacrit/cardcrawl/screens/select/GridCardSelectScreen.selectedCards:Ljava/util/ArrayList;
+     132: invokevirtual #39                 // Method java/util/ArrayList.clear:()V
+     135: aload_0
+     136: getfield      #8                  // Field duration:F
+     139: fconst_1
+     140: fcmpg
+     141: ifge          184
+     144: aload_0
+     145: getfield      #2                  // Field openedScreen:Z
+     148: ifne          184
+     151: aload_0
+     152: iconst_1
+     153: putfield      #2                  // Field openedScreen:Z
+     156: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.gridSelectScreen:Lcom/megacrit/cardcrawl/screens/select/GridCardSelectScreen;
+     159: getstatic     #36                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     162: getfield      #37                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     165: invokevirtual #40                 // Method com/megacrit/cardcrawl/cards/CardGroup.getPurgeableCards:()Lcom/megacrit/cardcrawl/cards/CardGroup;
+     168: invokestatic  #41                 // Method com/megacrit/cardcrawl/cards/CardGroup.getGroupWithoutBottledCards:(Lcom/megacrit/cardcrawl/cards/CardGroup;)Lcom/megacrit/cardcrawl/cards/CardGroup;
+     171: iconst_1
+     172: getstatic     #42                 // Field TEXT:[Ljava/lang/String;
+     175: iconst_0
+     176: aaload
+     177: iconst_0
+     178: iconst_0
+     179: iconst_1
+     180: iconst_1
+     181: invokevirtual #43                 // Method com/megacrit/cardcrawl/screens/select/GridCardSelectScreen.open:(Lcom/megacrit/cardcrawl/cards/CardGroup;ILjava/lang/String;ZZZZ)V
+     184: aload_0
+     185: getfield      #8                  // Field duration:F
+     188: fconst_0
+     189: fcmpg
+     190: ifge          226
+     193: aload_0
+     194: iconst_1
+     195: putfield      #44                 // Field isDone:Z
+     198: getstatic     #45                 // Field com/megacrit/cardcrawl/rooms/CampfireUI.hidden:Z
+     201: ifeq          226
+     204: fconst_0
+     205: putstatic     #46                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.waitTimer:F
+     208: invokestatic  #47                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     211: getstatic     #48                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMPLETE:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     214: putfield      #49                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     217: invokestatic  #47                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     220: checkcast     #50                 // class com/megacrit/cardcrawl/rooms/RestRoom
+     223: invokevirtual #51                 // Method com/megacrit/cardcrawl/rooms/RestRoom.cutFireSound:()V
+     226: return
+
+  private void updateBlackScreenColor();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field duration:F
+       4: fconst_1
+       5: fcmpl
+       6: ifle          35
+       9: aload_0
+      10: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      13: getstatic     #52                 // Field com/badlogic/gdx/math/Interpolation.fade:Lcom/badlogic/gdx/math/Interpolation;
+      16: fconst_1
+      17: fconst_0
+      18: aload_0
+      19: getfield      #8                  // Field duration:F
+      22: fconst_1
+      23: fsub
+      24: fconst_2
+      25: fmul
+      26: invokevirtual #53                 // Method com/badlogic/gdx/math/Interpolation.apply:(FFF)F
+      29: putfield      #9                  // Field com/badlogic/gdx/graphics/Color.a:F
+      32: goto          57
+      35: aload_0
+      36: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      39: getstatic     #52                 // Field com/badlogic/gdx/math/Interpolation.fade:Lcom/badlogic/gdx/math/Interpolation;
+      42: fconst_0
+      43: fconst_1
+      44: aload_0
+      45: getfield      #8                  // Field duration:F
+      48: ldc           #7                  // float 1.5f
+      50: fdiv
+      51: invokevirtual #53                 // Method com/badlogic/gdx/math/Interpolation.apply:(FFF)F
+      54: putfield      #9                  // Field com/badlogic/gdx/graphics/Color.a:F
+      57: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_1
+       1: aload_0
+       2: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+       5: invokevirtual #54                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+       8: aload_1
+       9: getstatic     #55                 // Field com/megacrit/cardcrawl/helpers/ImageMaster.WHITE_SQUARE_IMG:Lcom/badlogic/gdx/graphics/Texture;
+      12: fconst_0
+      13: fconst_0
+      14: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      17: i2f
+      18: getstatic     #33                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      21: i2f
+      22: invokevirtual #56                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFF)V
+      25: getstatic     #57                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.screen:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      28: getstatic     #58                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen.GRID:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      31: if_acmpne     41
+      34: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.gridSelectScreen:Lcom/megacrit/cardcrawl/screens/select/GridCardSelectScreen;
+      37: aload_1
+      38: invokevirtual #59                 // Method com/megacrit/cardcrawl/screens/select/GridCardSelectScreen.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      41: return
+
+  public void dispose();
+    descriptor: ()V
+    Code:
+       0: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #60                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #61                 // String CampfireTokeEffect
+       5: invokevirtual #62                 // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getUIString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/UIStrings;
+       8: putstatic     #63                 // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      11: getstatic     #63                 // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      14: getfield      #64                 // Field com/megacrit/cardcrawl/localization/UIStrings.TEXT:[Ljava/lang/String;
+      17: putstatic     #42                 // Field TEXT:[Ljava/lang/String;
+      20: return
+}

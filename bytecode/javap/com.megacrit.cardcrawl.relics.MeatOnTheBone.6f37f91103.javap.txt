@@ -1,0 +1,112 @@
+Compiled from "MeatOnTheBone.java"
+public class com.megacrit.cardcrawl.relics.MeatOnTheBone extends com.megacrit.cardcrawl.relics.AbstractRelic {
+  public static final java.lang.String ID;
+    descriptor: Ljava/lang/String;
+
+  private static final int HEAL_AMT;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.relics.MeatOnTheBone();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: ldc           #2                  // String Meat on the Bone
+       3: ldc           #3                  // String meat.png
+       5: getstatic     #4                  // Field com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.UNCOMMON:Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+       8: getstatic     #5                  // Field com/megacrit/cardcrawl/relics/AbstractRelic$LandingSound.HEAVY:Lcom/megacrit/cardcrawl/relics/AbstractRelic$LandingSound;
+      11: invokespecial #6                  // Method com/megacrit/cardcrawl/relics/AbstractRelic."<init>":(Ljava/lang/String;Ljava/lang/String;Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;Lcom/megacrit/cardcrawl/relics/AbstractRelic$LandingSound;)V
+      14: return
+
+  public java.lang.String getUpdatedDescription();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: new           #7                  // class java/lang/StringBuilder
+       3: dup
+       4: invokespecial #8                  // Method java/lang/StringBuilder."<init>":()V
+       7: aload_0
+       8: getfield      #9                  // Field DESCRIPTIONS:[Ljava/lang/String;
+      11: iconst_0
+      12: aaload
+      13: invokevirtual #10                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      16: bipush        12
+      18: invokevirtual #11                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      21: aload_0
+      22: getfield      #9                  // Field DESCRIPTIONS:[Ljava/lang/String;
+      25: iconst_1
+      26: aaload
+      27: invokevirtual #10                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      30: invokevirtual #12                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      33: areturn
+
+  public void onTrigger();
+    descriptor: ()V
+    Code:
+       0: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: astore_1
+       4: aload_1
+       5: getfield      #14                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentHealth:I
+       8: i2f
+       9: aload_1
+      10: getfield      #15                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+      13: i2f
+      14: fconst_2
+      15: fdiv
+      16: fcmpg
+      17: ifgt          56
+      20: aload_1
+      21: getfield      #14                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentHealth:I
+      24: ifle          56
+      27: aload_0
+      28: invokevirtual #16                 // Method flash:()V
+      31: aload_0
+      32: new           #17                 // class com/megacrit/cardcrawl/actions/common/RelicAboveCreatureAction
+      35: dup
+      36: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      39: aload_0
+      40: invokespecial #18                 // Method com/megacrit/cardcrawl/actions/common/RelicAboveCreatureAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+      43: invokevirtual #19                 // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      46: aload_1
+      47: bipush        12
+      49: invokevirtual #20                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.heal:(I)V
+      52: aload_0
+      53: invokevirtual #21                 // Method stopPulse:()V
+      56: return
+
+  public void onBloodied();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokevirtual #16                 // Method flash:()V
+       4: aload_0
+       5: iconst_1
+       6: putfield      #22                 // Field pulse:Z
+       9: return
+
+  public void onNotBloodied();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokevirtual #21                 // Method stopPulse:()V
+       4: return
+
+  public boolean canSpawn();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #23                 // Field com/megacrit/cardcrawl/core/Settings.isEndless:Z
+       3: ifne          14
+       6: getstatic     #24                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.floorNum:I
+       9: bipush        48
+      11: if_icmpgt     18
+      14: iconst_1
+      15: goto          19
+      18: iconst_0
+      19: ireturn
+
+  public com.megacrit.cardcrawl.relics.AbstractRelic makeCopy();
+    descriptor: ()Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+    Code:
+       0: new           #1                  // class com/megacrit/cardcrawl/relics/MeatOnTheBone
+       3: dup
+       4: invokespecial #25                 // Method "<init>":()V
+       7: areturn
+}

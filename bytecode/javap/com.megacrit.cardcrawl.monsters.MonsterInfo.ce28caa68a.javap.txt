@@ -1,0 +1,143 @@
+Compiled from "MonsterInfo.java"
+public class com.megacrit.cardcrawl.monsters.MonsterInfo implements java.lang.Comparable<com.megacrit.cardcrawl.monsters.MonsterInfo> {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  public java.lang.String name;
+    descriptor: Ljava/lang/String;
+
+  public float weight;
+    descriptor: F
+
+  public com.megacrit.cardcrawl.monsters.MonsterInfo(java.lang.String, float);
+    descriptor: (Ljava/lang/String;F)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #2                  // Field name:Ljava/lang/String;
+       9: aload_0
+      10: fload_2
+      11: putfield      #3                  // Field weight:F
+      14: return
+
+  public static void normalizeWeights(java.util.ArrayList<com.megacrit.cardcrawl.monsters.MonsterInfo>);
+    descriptor: (Ljava/util/ArrayList;)V
+    Code:
+       0: aload_0
+       1: invokestatic  #4                  // Method java/util/Collections.sort:(Ljava/util/List;)V
+       4: fconst_0
+       5: fstore_1
+       6: aload_0
+       7: invokevirtual #5                  // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      10: astore_2
+      11: aload_2
+      12: invokeinterface #6,  1            // InterfaceMethod java/util/Iterator.hasNext:()Z
+      17: ifeq          40
+      20: aload_2
+      21: invokeinterface #7,  1            // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      26: checkcast     #8                  // class com/megacrit/cardcrawl/monsters/MonsterInfo
+      29: astore_3
+      30: fload_1
+      31: aload_3
+      32: getfield      #3                  // Field weight:F
+      35: fadd
+      36: fstore_1
+      37: goto          11
+      40: aload_0
+      41: invokevirtual #5                  // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      44: astore_2
+      45: aload_2
+      46: invokeinterface #6,  1            // InterfaceMethod java/util/Iterator.hasNext:()Z
+      51: ifeq          125
+      54: aload_2
+      55: invokeinterface #7,  1            // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      60: checkcast     #8                  // class com/megacrit/cardcrawl/monsters/MonsterInfo
+      63: astore_3
+      64: aload_3
+      65: dup
+      66: getfield      #3                  // Field weight:F
+      69: fload_1
+      70: fdiv
+      71: putfield      #3                  // Field weight:F
+      74: getstatic     #9                  // Field com/megacrit/cardcrawl/core/Settings.isInfo:Z
+      77: ifeq          122
+      80: getstatic     #10                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      83: new           #11                 // class java/lang/StringBuilder
+      86: dup
+      87: invokespecial #12                 // Method java/lang/StringBuilder."<init>":()V
+      90: aload_3
+      91: getfield      #2                  // Field name:Ljava/lang/String;
+      94: invokevirtual #13                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      97: ldc           #14                 // String :
+      99: invokevirtual #13                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     102: aload_3
+     103: getfield      #3                  // Field weight:F
+     106: invokevirtual #15                 // Method java/lang/StringBuilder.append:(F)Ljava/lang/StringBuilder;
+     109: ldc           #16                 // String %
+     111: invokevirtual #13                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     114: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     117: invokeinterface #18,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     122: goto          45
+     125: return
+
+  public static java.lang.String roll(java.util.ArrayList<com.megacrit.cardcrawl.monsters.MonsterInfo>, float);
+    descriptor: (Ljava/util/ArrayList;F)Ljava/lang/String;
+    Code:
+       0: fconst_0
+       1: fstore_2
+       2: aload_0
+       3: invokevirtual #5                  // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       6: astore_3
+       7: aload_3
+       8: invokeinterface #6,  1            // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          50
+      16: aload_3
+      17: invokeinterface #7,  1            // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #8                  // class com/megacrit/cardcrawl/monsters/MonsterInfo
+      25: astore        4
+      27: fload_2
+      28: aload         4
+      30: getfield      #3                  // Field weight:F
+      33: fadd
+      34: fstore_2
+      35: fload_1
+      36: fload_2
+      37: fcmpg
+      38: ifge          47
+      41: aload         4
+      43: getfield      #2                  // Field name:Ljava/lang/String;
+      46: areturn
+      47: goto          7
+      50: ldc           #19                 // String ERROR
+      52: areturn
+
+  public int compareTo(com.megacrit.cardcrawl.monsters.MonsterInfo);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/MonsterInfo;)I
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field weight:F
+       4: aload_1
+       5: getfield      #3                  // Field weight:F
+       8: invokestatic  #20                 // Method java/lang/Float.compare:(FF)I
+      11: ireturn
+
+  public int compareTo(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)I
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #8                  // class com/megacrit/cardcrawl/monsters/MonsterInfo
+       5: invokevirtual #21                 // Method compareTo:(Lcom/megacrit/cardcrawl/monsters/MonsterInfo;)I
+       8: ireturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #8                  // class com/megacrit/cardcrawl/monsters/MonsterInfo
+       2: invokevirtual #22                 // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #23                 // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #10                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: return
+}

@@ -1,0 +1,358 @@
+Compiled from "AutoAdd.java"
+public class basemod.AutoAdd {
+  private org.clapper.util.classutil.ClassFinder finder;
+    descriptor: Lorg/clapper/util/classutil/ClassFinder;
+
+  private java.util.List<org.clapper.util.classutil.ClassFilter> filters;
+    descriptor: Ljava/util/List;
+
+  private javassist.ClassPool pool;
+    descriptor: Ljavassist/ClassPool;
+
+  private java.lang.Boolean defaultSeenOverride;
+    descriptor: Ljava/lang/Boolean;
+
+  public basemod.AutoAdd(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: invokespecial #2                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aconst_null
+       6: putfield      #1                  // Field defaultSeenOverride:Ljava/lang/Boolean;
+       9: aload_0
+      10: new           #3                  // class org/clapper/util/classutil/ClassFinder
+      13: dup
+      14: invokespecial #4                  // Method org/clapper/util/classutil/ClassFinder."<init>":()V
+      17: putfield      #5                  // Field finder:Lorg/clapper/util/classutil/ClassFinder;
+      20: getstatic     #6                  // Field com/evacipated/cardcrawl/modthespire/Loader.MODINFOS:[Lcom/evacipated/cardcrawl/modthespire/ModInfo;
+      23: astore_2
+      24: aload_2
+      25: arraylength
+      26: istore_3
+      27: iconst_0
+      28: istore        4
+      30: iload         4
+      32: iload_3
+      33: if_icmpge     100
+      36: aload_2
+      37: iload         4
+      39: aaload
+      40: astore        5
+      42: aload         5
+      44: ifnull        94
+      47: aload_1
+      48: ifnull        94
+      51: aload_1
+      52: aload         5
+      54: getfield      #7                  // Field com/evacipated/cardcrawl/modthespire/ModInfo.ID:Ljava/lang/String;
+      57: invokevirtual #8                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      60: ifeq          94
+      63: aload         5
+      65: getfield      #9                  // Field com/evacipated/cardcrawl/modthespire/ModInfo.jarURL:Ljava/net/URL;
+      68: ifnull        94
+      71: aload_0
+      72: getfield      #5                  // Field finder:Lorg/clapper/util/classutil/ClassFinder;
+      75: new           #10                 // class java/io/File
+      78: dup
+      79: aload         5
+      81: getfield      #9                  // Field com/evacipated/cardcrawl/modthespire/ModInfo.jarURL:Ljava/net/URL;
+      84: invokevirtual #11                 // Method java/net/URL.toURI:()Ljava/net/URI;
+      87: invokespecial #12                 // Method java/io/File."<init>":(Ljava/net/URI;)V
+      90: invokevirtual #13                 // Method org/clapper/util/classutil/ClassFinder.add:(Ljava/io/File;)Z
+      93: pop
+      94: iinc          4, 1
+      97: goto          30
+     100: goto          113
+     103: astore_2
+     104: new           #15                 // class java/lang/RuntimeException
+     107: dup
+     108: aload_2
+     109: invokespecial #16                 // Method java/lang/RuntimeException."<init>":(Ljava/lang/Throwable;)V
+     112: athrow
+     113: aload_0
+     114: new           #17                 // class java/util/ArrayList
+     117: dup
+     118: invokespecial #18                 // Method java/util/ArrayList."<init>":()V
+     121: putfield      #19                 // Field filters:Ljava/util/List;
+     124: aload_0
+     125: invokestatic  #20                 // Method com/evacipated/cardcrawl/modthespire/Loader.getClassPool:()Ljavassist/ClassPool;
+     128: putfield      #21                 // Field pool:Ljavassist/ClassPool;
+     131: return
+    Exception table:
+       from    to  target type
+          20   100   103   Class java/net/URISyntaxException
+
+  public basemod.AutoAdd overrideClassPool(javassist.ClassPool);
+    descriptor: (Ljavassist/ClassPool;)Lbasemod/AutoAdd;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #21                 // Field pool:Ljavassist/ClassPool;
+       5: aload_0
+       6: areturn
+
+  public basemod.AutoAdd setDefaultSeen(boolean);
+    descriptor: (Z)Lbasemod/AutoAdd;
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokestatic  #22                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+       5: putfield      #1                  // Field defaultSeenOverride:Ljava/lang/Boolean;
+       8: aload_0
+       9: areturn
+
+  public basemod.AutoAdd filter(org.clapper.util.classutil.ClassFilter);
+    descriptor: (Lorg/clapper/util/classutil/ClassFilter;)Lbasemod/AutoAdd;
+    Code:
+       0: aload_0
+       1: getfield      #19                 // Field filters:Ljava/util/List;
+       4: aload_1
+       5: invokeinterface #23,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      10: pop
+      11: aload_0
+      12: areturn
+
+  public basemod.AutoAdd packageFilter(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lbasemod/AutoAdd;
+    Code:
+       0: aload_0
+       1: new           #24                 // class basemod/AutoAdd$PackageFilter
+       4: dup
+       5: aload_1
+       6: invokespecial #25                 // Method basemod/AutoAdd$PackageFilter."<init>":(Ljava/lang/String;)V
+       9: invokevirtual #26                 // Method filter:(Lorg/clapper/util/classutil/ClassFilter;)Lbasemod/AutoAdd;
+      12: areturn
+
+  public basemod.AutoAdd packageFilter(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)Lbasemod/AutoAdd;
+    Code:
+       0: aload_0
+       1: new           #24                 // class basemod/AutoAdd$PackageFilter
+       4: dup
+       5: aload_1
+       6: invokespecial #27                 // Method basemod/AutoAdd$PackageFilter."<init>":(Ljava/lang/Class;)V
+       9: invokevirtual #26                 // Method filter:(Lorg/clapper/util/classutil/ClassFilter;)Lbasemod/AutoAdd;
+      12: areturn
+
+  public basemod.AutoAdd notPackageFilter(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lbasemod/AutoAdd;
+    Code:
+       0: aload_0
+       1: new           #28                 // class basemod/AutoAdd$NotPackageFilter
+       4: dup
+       5: aload_1
+       6: invokespecial #29                 // Method basemod/AutoAdd$NotPackageFilter."<init>":(Ljava/lang/String;)V
+       9: invokevirtual #26                 // Method filter:(Lorg/clapper/util/classutil/ClassFilter;)Lbasemod/AutoAdd;
+      12: areturn
+
+  public basemod.AutoAdd notPackageFilter(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)Lbasemod/AutoAdd;
+    Code:
+       0: aload_0
+       1: new           #28                 // class basemod/AutoAdd$NotPackageFilter
+       4: dup
+       5: aload_1
+       6: invokespecial #30                 // Method basemod/AutoAdd$NotPackageFilter."<init>":(Ljava/lang/Class;)V
+       9: invokevirtual #26                 // Method filter:(Lorg/clapper/util/classutil/ClassFilter;)Lbasemod/AutoAdd;
+      12: areturn
+
+  public <T> java.util.Collection<javassist.CtClass> findClasses(java.lang.Class<T>);
+    descriptor: (Ljava/lang/Class;)Ljava/util/Collection;
+    Code:
+       0: new           #17                 // class java/util/ArrayList
+       3: dup
+       4: invokespecial #18                 // Method java/util/ArrayList."<init>":()V
+       7: astore_2
+       8: aload_2
+       9: iconst_3
+      10: anewarray     #31                 // class org/clapper/util/classutil/ClassFilter
+      13: dup
+      14: iconst_0
+      15: new           #32                 // class org/clapper/util/classutil/NotClassFilter
+      18: dup
+      19: new           #33                 // class org/clapper/util/classutil/InterfaceOnlyClassFilter
+      22: dup
+      23: invokespecial #34                 // Method org/clapper/util/classutil/InterfaceOnlyClassFilter."<init>":()V
+      26: invokespecial #35                 // Method org/clapper/util/classutil/NotClassFilter."<init>":(Lorg/clapper/util/classutil/ClassFilter;)V
+      29: aastore
+      30: dup
+      31: iconst_1
+      32: new           #32                 // class org/clapper/util/classutil/NotClassFilter
+      35: dup
+      36: new           #36                 // class org/clapper/util/classutil/AbstractClassFilter
+      39: dup
+      40: invokespecial #37                 // Method org/clapper/util/classutil/AbstractClassFilter."<init>":()V
+      43: invokespecial #35                 // Method org/clapper/util/classutil/NotClassFilter."<init>":(Lorg/clapper/util/classutil/ClassFilter;)V
+      46: aastore
+      47: dup
+      48: iconst_2
+      49: new           #38                 // class org/clapper/util/classutil/ClassModifiersClassFilter
+      52: dup
+      53: iconst_1
+      54: invokespecial #40                 // Method org/clapper/util/classutil/ClassModifiersClassFilter."<init>":(I)V
+      57: aastore
+      58: invokestatic  #41                 // Method java/util/Arrays.asList:([Ljava/lang/Object;)Ljava/util/List;
+      61: invokeinterface #42,  2           // InterfaceMethod java/util/List.addAll:(Ljava/util/Collection;)Z
+      66: pop
+      67: aload_2
+      68: aload_0
+      69: getfield      #19                 // Field filters:Ljava/util/List;
+      72: invokeinterface #42,  2           // InterfaceMethod java/util/List.addAll:(Ljava/util/Collection;)Z
+      77: pop
+      78: new           #43                 // class org/clapper/util/classutil/AndClassFilter
+      81: dup
+      82: aload_2
+      83: iconst_0
+      84: anewarray     #31                 // class org/clapper/util/classutil/ClassFilter
+      87: invokeinterface #44,  2           // InterfaceMethod java/util/List.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+      92: checkcast     #45                 // class "[Lorg/clapper/util/classutil/ClassFilter;"
+      95: invokespecial #46                 // Method org/clapper/util/classutil/AndClassFilter."<init>":([Lorg/clapper/util/classutil/ClassFilter;)V
+      98: astore_3
+      99: new           #17                 // class java/util/ArrayList
+     102: dup
+     103: invokespecial #18                 // Method java/util/ArrayList."<init>":()V
+     106: astore        4
+     108: aload_0
+     109: getfield      #5                  // Field finder:Lorg/clapper/util/classutil/ClassFinder;
+     112: aload         4
+     114: aload_3
+     115: invokevirtual #47                 // Method org/clapper/util/classutil/ClassFinder.findClasses:(Ljava/util/Collection;Lorg/clapper/util/classutil/ClassFilter;)I
+     118: pop
+     119: new           #17                 // class java/util/ArrayList
+     122: dup
+     123: invokespecial #18                 // Method java/util/ArrayList."<init>":()V
+     126: astore        5
+     128: aload         4
+     130: invokeinterface #48,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+     135: astore        6
+     137: aload         6
+     139: invokeinterface #49,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     144: ifeq          220
+     147: aload         6
+     149: invokeinterface #50,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     154: checkcast     #51                 // class org/clapper/util/classutil/ClassInfo
+     157: astore        7
+     159: aload_0
+     160: getfield      #21                 // Field pool:Ljavassist/ClassPool;
+     163: aload         7
+     165: invokevirtual #52                 // Method org/clapper/util/classutil/ClassInfo.getClassName:()Ljava/lang/String;
+     168: invokevirtual #53                 // Method javassist/ClassPool.get:(Ljava/lang/String;)Ljavassist/CtClass;
+     171: astore        8
+     173: aload         8
+     175: astore        9
+     177: aload         9
+     179: invokevirtual #54                 // Method javassist/CtClass.getName:()Ljava/lang/String;
+     182: aload_1
+     183: invokevirtual #55                 // Method java/lang/Class.getName:()Ljava/lang/String;
+     186: invokevirtual #8                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     189: ifeq          205
+     192: aload         5
+     194: aload         8
+     196: invokeinterface #56,  2           // InterfaceMethod java/util/Collection.add:(Ljava/lang/Object;)Z
+     201: pop
+     202: goto          217
+     205: aload         9
+     207: invokevirtual #57                 // Method javassist/CtClass.getSuperclass:()Ljavassist/CtClass;
+     210: astore        9
+     212: aload         9
+     214: ifnonnull     177
+     217: goto          137
+     220: aload         5
+     222: areturn
+     223: astore_2
+     224: new           #15                 // class java/lang/RuntimeException
+     227: dup
+     228: aload_2
+     229: invokespecial #16                 // Method java/lang/RuntimeException."<init>":(Ljava/lang/Throwable;)V
+     232: athrow
+    Exception table:
+       from    to  target type
+           0   222   223   Class javassist/NotFoundException
+
+  public <T> void any(java.lang.Class<T>, java.util.function.BiConsumer<basemod.AutoAdd$Info, T>);
+    descriptor: (Ljava/lang/Class;Ljava/util/function/BiConsumer;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #59                 // Method findClasses:(Ljava/lang/Class;)Ljava/util/Collection;
+       5: astore_3
+       6: aload_3
+       7: invokeinterface #48,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      12: astore        4
+      14: aload         4
+      16: invokeinterface #49,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      21: ifeq          97
+      24: aload         4
+      26: invokeinterface #50,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      31: checkcast     #60                 // class javassist/CtClass
+      34: astore        5
+      36: new           #61                 // class basemod/AutoAdd$Info
+      39: dup
+      40: aload_0
+      41: aload         5
+      43: aconst_null
+      44: invokespecial #62                 // Method basemod/AutoAdd$Info."<init>":(Lbasemod/AutoAdd;Ljavassist/CtClass;Lbasemod/AutoAdd$1;)V
+      47: astore        6
+      49: aload         6
+      51: getfield      #63                 // Field basemod/AutoAdd$Info.ignore:Z
+      54: ifeq          60
+      57: goto          14
+      60: aload_1
+      61: aload_0
+      62: getfield      #21                 // Field pool:Ljavassist/ClassPool;
+      65: invokevirtual #64                 // Method javassist/ClassPool.getClassLoader:()Ljava/lang/ClassLoader;
+      68: aload         5
+      70: invokevirtual #54                 // Method javassist/CtClass.getName:()Ljava/lang/String;
+      73: invokevirtual #65                 // Method java/lang/ClassLoader.loadClass:(Ljava/lang/String;)Ljava/lang/Class;
+      76: invokevirtual #66                 // Method java/lang/Class.newInstance:()Ljava/lang/Object;
+      79: invokevirtual #67                 // Method java/lang/Class.cast:(Ljava/lang/Object;)Ljava/lang/Object;
+      82: astore        7
+      84: aload_2
+      85: aload         6
+      87: aload         7
+      89: invokeinterface #68,  3           // InterfaceMethod java/util/function/BiConsumer.accept:(Ljava/lang/Object;Ljava/lang/Object;)V
+      94: goto          14
+      97: goto          110
+     100: astore_3
+     101: new           #15                 // class java/lang/RuntimeException
+     104: dup
+     105: aload_3
+     106: invokespecial #16                 // Method java/lang/RuntimeException."<init>":(Ljava/lang/Throwable;)V
+     109: athrow
+     110: return
+    Exception table:
+       from    to  target type
+           0    97   100   Class java/lang/ClassNotFoundException
+           0    97   100   Class java/lang/InstantiationException
+           0    97   100   Class java/lang/IllegalAccessException
+
+  public void cards();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: ldc           #72                 // class com/megacrit/cardcrawl/cards/AbstractCard
+       3: invokedynamic #73,  0             // InvokeDynamic #0:accept:()Ljava/util/function/BiConsumer;
+       8: invokevirtual #74                 // Method any:(Ljava/lang/Class;Ljava/util/function/BiConsumer;)V
+      11: return
+
+  private static void lambda$cards$0(basemod.AutoAdd$Info, com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lbasemod/AutoAdd$Info;Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: aload_1
+       1: invokestatic  #75                 // Method basemod/BaseMod.addCard:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+       4: aload_0
+       5: getfield      #76                 // Field basemod/AutoAdd$Info.seen:Z
+       8: ifeq          18
+      11: aload_1
+      12: getfield      #77                 // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+      15: invokestatic  #78                 // Method com/megacrit/cardcrawl/unlock/UnlockTracker.unlockCard:(Ljava/lang/String;)V
+      18: return
+
+  static java.lang.Boolean access$100(basemod.AutoAdd);
+    descriptor: (Lbasemod/AutoAdd;)Ljava/lang/Boolean;
+    Code:
+       0: aload_0
+       1: getfield      #1                  // Field defaultSeenOverride:Ljava/lang/Boolean;
+       4: areturn
+}

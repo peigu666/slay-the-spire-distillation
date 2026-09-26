@@ -1,0 +1,120 @@
+Compiled from "Matryoshka.java"
+public class com.megacrit.cardcrawl.relics.Matryoshka extends com.megacrit.cardcrawl.relics.AbstractRelic {
+  public static final java.lang.String ID;
+    descriptor: Ljava/lang/String;
+
+  public com.megacrit.cardcrawl.relics.Matryoshka();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: ldc           #2                  // String Matryoshka
+       3: ldc           #3                  // String matryoshka.png
+       5: getstatic     #4                  // Field com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.UNCOMMON:Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+       8: getstatic     #5                  // Field com/megacrit/cardcrawl/relics/AbstractRelic$LandingSound.SOLID:Lcom/megacrit/cardcrawl/relics/AbstractRelic$LandingSound;
+      11: invokespecial #6                  // Method com/megacrit/cardcrawl/relics/AbstractRelic."<init>":(Ljava/lang/String;Ljava/lang/String;Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;Lcom/megacrit/cardcrawl/relics/AbstractRelic$LandingSound;)V
+      14: aload_0
+      15: iconst_2
+      16: putfield      #7                  // Field counter:I
+      19: return
+
+  public java.lang.String getUpdatedDescription();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field DESCRIPTIONS:[Ljava/lang/String;
+       4: iconst_0
+       5: aaload
+       6: areturn
+
+  public void onChestOpen(boolean);
+    descriptor: (Z)V
+    Code:
+       0: iload_1
+       1: ifne          108
+       4: aload_0
+       5: getfield      #7                  // Field counter:I
+       8: ifle          108
+      11: aload_0
+      12: dup
+      13: getfield      #7                  // Field counter:I
+      16: iconst_1
+      17: isub
+      18: putfield      #7                  // Field counter:I
+      21: aload_0
+      22: invokevirtual #9                  // Method flash:()V
+      25: aload_0
+      26: new           #10                 // class com/megacrit/cardcrawl/actions/common/RelicAboveCreatureAction
+      29: dup
+      30: getstatic     #11                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      33: aload_0
+      34: invokespecial #12                 // Method com/megacrit/cardcrawl/actions/common/RelicAboveCreatureAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+      37: invokevirtual #13                 // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      40: getstatic     #14                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.relicRng:Lcom/megacrit/cardcrawl/random/Random;
+      43: ldc           #15                 // float 0.75f
+      45: invokevirtual #16                 // Method com/megacrit/cardcrawl/random/Random.randomBoolean:(F)Z
+      48: ifeq          63
+      51: invokestatic  #17                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      54: getstatic     #18                 // Field com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.COMMON:Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+      57: invokevirtual #19                 // Method com/megacrit/cardcrawl/rooms/AbstractRoom.addRelicToRewards:(Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;)V
+      60: goto          72
+      63: invokestatic  #17                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      66: getstatic     #4                  // Field com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.UNCOMMON:Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+      69: invokevirtual #19                 // Method com/megacrit/cardcrawl/rooms/AbstractRoom.addRelicToRewards:(Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;)V
+      72: aload_0
+      73: getfield      #7                  // Field counter:I
+      76: ifne          98
+      79: aload_0
+      80: bipush        -2
+      82: invokevirtual #20                 // Method setCounter:(I)V
+      85: aload_0
+      86: aload_0
+      87: getfield      #8                  // Field DESCRIPTIONS:[Ljava/lang/String;
+      90: iconst_2
+      91: aaload
+      92: putfield      #21                 // Field description:Ljava/lang/String;
+      95: goto          108
+      98: aload_0
+      99: aload_0
+     100: getfield      #8                  // Field DESCRIPTIONS:[Ljava/lang/String;
+     103: iconst_1
+     104: aaload
+     105: putfield      #21                 // Field description:Ljava/lang/String;
+     108: return
+
+  public void setCounter(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: iload_1
+       2: putfield      #7                  // Field counter:I
+       5: iload_1
+       6: bipush        -2
+       8: if_icmpne     21
+      11: aload_0
+      12: invokevirtual #22                 // Method usedUp:()V
+      15: aload_0
+      16: bipush        -2
+      18: putfield      #7                  // Field counter:I
+      21: return
+
+  public boolean canSpawn();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #23                 // Field com/megacrit/cardcrawl/core/Settings.isEndless:Z
+       3: ifne          14
+       6: getstatic     #24                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.floorNum:I
+       9: bipush        40
+      11: if_icmpgt     18
+      14: iconst_1
+      15: goto          19
+      18: iconst_0
+      19: ireturn
+
+  public com.megacrit.cardcrawl.relics.AbstractRelic makeCopy();
+    descriptor: ()Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+    Code:
+       0: new           #1                  // class com/megacrit/cardcrawl/relics/Matryoshka
+       3: dup
+       4: invokespecial #25                 // Method "<init>":()V
+       7: areturn
+}

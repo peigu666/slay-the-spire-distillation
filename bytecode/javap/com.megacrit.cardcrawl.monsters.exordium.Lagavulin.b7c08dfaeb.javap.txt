@@ -1,0 +1,763 @@
+Compiled from "Lagavulin.java"
+public class com.megacrit.cardcrawl.monsters.exordium.Lagavulin extends com.megacrit.cardcrawl.monsters.AbstractMonster {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  public static final java.lang.String ID;
+    descriptor: Ljava/lang/String;
+
+  private static final com.megacrit.cardcrawl.localization.MonsterStrings monsterStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/MonsterStrings;
+
+  public static final java.lang.String NAME;
+    descriptor: Ljava/lang/String;
+
+  public static final java.lang.String[] MOVES;
+    descriptor: [Ljava/lang/String;
+
+  public static final java.lang.String[] DIALOG;
+    descriptor: [Ljava/lang/String;
+
+  private static final int HP_MIN;
+    descriptor: I
+
+  private static final int HP_MAX;
+    descriptor: I
+
+  private static final int A_2_HP_MIN;
+    descriptor: I
+
+  private static final int A_2_HP_MAX;
+    descriptor: I
+
+  private static final byte DEBUFF;
+    descriptor: B
+
+  private static final byte STRONG_ATK;
+    descriptor: B
+
+  private static final byte OPEN;
+    descriptor: B
+
+  private static final byte IDLE;
+    descriptor: B
+
+  private static final byte OPEN_NATURAL;
+    descriptor: B
+
+  private static final java.lang.String DEBUFF_NAME;
+    descriptor: Ljava/lang/String;
+
+  private static final int STRONG_ATK_DMG;
+    descriptor: I
+
+  private static final int DEBUFF_AMT;
+    descriptor: I
+
+  private static final int A_18_DEBUFF_AMT;
+    descriptor: I
+
+  private static final int A_2_STRONG_ATK_DMG;
+    descriptor: I
+
+  private int attackDmg;
+    descriptor: I
+
+  private int debuff;
+    descriptor: I
+
+  private static final int ARMOR_AMT;
+    descriptor: I
+
+  private boolean isOut;
+    descriptor: Z
+
+  private boolean asleep;
+    descriptor: Z
+
+  private boolean isOutTriggered;
+    descriptor: Z
+
+  private int idleCount;
+    descriptor: I
+
+  private int debuffTurnCount;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.monsters.exordium.Lagavulin(boolean);
+    descriptor: (Z)V
+    Code:
+       0: aload_0
+       1: getstatic     #1                  // Field NAME:Ljava/lang/String;
+       4: ldc           #3                  // String Lagavulin
+       6: bipush        111
+       8: fconst_0
+       9: ldc           #4                  // float -25.0f
+      11: ldc           #5                  // float 320.0f
+      13: ldc           #6                  // float 220.0f
+      15: aconst_null
+      16: fconst_0
+      17: ldc           #7                  // float 20.0f
+      19: invokespecial #8                  // Method com/megacrit/cardcrawl/monsters/AbstractMonster."<init>":(Ljava/lang/String;Ljava/lang/String;IFFFFLjava/lang/String;FF)V
+      22: aload_0
+      23: iconst_0
+      24: putfield      #9                  // Field isOut:Z
+      27: aload_0
+      28: iconst_0
+      29: putfield      #10                 // Field isOutTriggered:Z
+      32: aload_0
+      33: iconst_0
+      34: putfield      #11                 // Field idleCount:I
+      37: aload_0
+      38: iconst_0
+      39: putfield      #12                 // Field debuffTurnCount:I
+      42: aload_0
+      43: getstatic     #13                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$EnemyType.ELITE:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$EnemyType;
+      46: putfield      #14                 // Field type:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$EnemyType;
+      49: aload_0
+      50: ldc           #15                 // float -100.0f
+      52: getstatic     #16                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      55: fmul
+      56: putfield      #17                 // Field dialogX:F
+      59: getstatic     #18                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.ascensionLevel:I
+      62: bipush        8
+      64: if_icmplt     78
+      67: aload_0
+      68: bipush        112
+      70: bipush        115
+      72: invokevirtual #19                 // Method setHp:(II)V
+      75: goto          86
+      78: aload_0
+      79: bipush        109
+      81: bipush        111
+      83: invokevirtual #19                 // Method setHp:(II)V
+      86: getstatic     #18                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.ascensionLevel:I
+      89: iconst_3
+      90: if_icmplt     102
+      93: aload_0
+      94: bipush        20
+      96: putfield      #20                 // Field attackDmg:I
+      99: goto          108
+     102: aload_0
+     103: bipush        18
+     105: putfield      #20                 // Field attackDmg:I
+     108: getstatic     #18                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.ascensionLevel:I
+     111: bipush        18
+     113: if_icmplt     125
+     116: aload_0
+     117: bipush        -2
+     119: putfield      #21                 // Field debuff:I
+     122: goto          130
+     125: aload_0
+     126: iconst_m1
+     127: putfield      #21                 // Field debuff:I
+     130: aload_0
+     131: getfield      #22                 // Field damage:Ljava/util/ArrayList;
+     134: new           #23                 // class com/megacrit/cardcrawl/cards/DamageInfo
+     137: dup
+     138: aload_0
+     139: aload_0
+     140: getfield      #20                 // Field attackDmg:I
+     143: invokespecial #24                 // Method com/megacrit/cardcrawl/cards/DamageInfo."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+     146: invokevirtual #25                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     149: pop
+     150: aload_0
+     151: iload_1
+     152: putfield      #26                 // Field asleep:Z
+     155: aload_0
+     156: ldc           #27                 // String images/monsters/theBottom/lagavulin/skeleton.atlas
+     158: ldc           #28                 // String images/monsters/theBottom/lagavulin/skeleton.json
+     160: fconst_1
+     161: invokevirtual #29                 // Method loadAnimation:(Ljava/lang/String;Ljava/lang/String;F)V
+     164: aconst_null
+     165: astore_2
+     166: aload_0
+     167: getfield      #26                 // Field asleep:Z
+     170: ifne          209
+     173: aload_0
+     174: iconst_1
+     175: putfield      #9                  // Field isOut:Z
+     178: aload_0
+     179: iconst_1
+     180: putfield      #10                 // Field isOutTriggered:Z
+     183: aload_0
+     184: getfield      #30                 // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     187: iconst_0
+     188: ldc           #31                 // String Idle_2
+     190: iconst_1
+     191: invokevirtual #32                 // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     194: astore_2
+     195: aload_0
+     196: fconst_0
+     197: ldc           #4                  // float -25.0f
+     199: ldc           #5                  // float 320.0f
+     201: ldc           #33                 // float 370.0f
+     203: invokevirtual #34                 // Method updateHitbox:(FFFF)V
+     206: goto          221
+     209: aload_0
+     210: getfield      #30                 // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     213: iconst_0
+     214: ldc           #35                 // String Idle_1
+     216: iconst_1
+     217: invokevirtual #32                 // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     220: astore_2
+     221: aload_0
+     222: getfield      #36                 // Field stateData:Lcom/esotericsoftware/spine/AnimationStateData;
+     225: ldc           #37                 // String Attack
+     227: ldc           #31                 // String Idle_2
+     229: ldc           #38                 // float 0.25f
+     231: invokevirtual #39                 // Method com/esotericsoftware/spine/AnimationStateData.setMix:(Ljava/lang/String;Ljava/lang/String;F)V
+     234: aload_0
+     235: getfield      #36                 // Field stateData:Lcom/esotericsoftware/spine/AnimationStateData;
+     238: ldc           #40                 // String Hit
+     240: ldc           #31                 // String Idle_2
+     242: ldc           #38                 // float 0.25f
+     244: invokevirtual #39                 // Method com/esotericsoftware/spine/AnimationStateData.setMix:(Ljava/lang/String;Ljava/lang/String;F)V
+     247: aload_0
+     248: getfield      #36                 // Field stateData:Lcom/esotericsoftware/spine/AnimationStateData;
+     251: ldc           #35                 // String Idle_1
+     253: ldc           #31                 // String Idle_2
+     255: ldc           #41                 // float 0.5f
+     257: invokevirtual #39                 // Method com/esotericsoftware/spine/AnimationStateData.setMix:(Ljava/lang/String;Ljava/lang/String;F)V
+     260: aload_2
+     261: aload_2
+     262: invokevirtual #42                 // Method com/esotericsoftware/spine/AnimationState$TrackEntry.getEndTime:()F
+     265: invokestatic  #43                 // Method com/badlogic/gdx/math/MathUtils.random:()F
+     268: fmul
+     269: invokevirtual #44                 // Method com/esotericsoftware/spine/AnimationState$TrackEntry.setTime:(F)V
+     272: return
+
+  public void usePreBattleAction();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #26                 // Field asleep:Z
+       4: ifeq          62
+       7: getstatic     #45                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      10: ldc           #46                 // String ELITE
+      12: invokevirtual #47                 // Method com/megacrit/cardcrawl/audio/MusicMaster.precacheTempBgm:(Ljava/lang/String;)V
+      15: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      18: new           #49                 // class com/megacrit/cardcrawl/actions/common/GainBlockAction
+      21: dup
+      22: aload_0
+      23: aload_0
+      24: bipush        8
+      26: invokespecial #50                 // Method com/megacrit/cardcrawl/actions/common/GainBlockAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+      29: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      32: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      35: new           #52                 // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+      38: dup
+      39: aload_0
+      40: aload_0
+      41: new           #53                 // class com/megacrit/cardcrawl/powers/MetallicizePower
+      44: dup
+      45: aload_0
+      46: bipush        8
+      48: invokespecial #54                 // Method com/megacrit/cardcrawl/powers/MetallicizePower."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+      51: bipush        8
+      53: invokespecial #55                 // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;I)V
+      56: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      59: goto          93
+      62: getstatic     #45                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      65: invokevirtual #56                 // Method com/megacrit/cardcrawl/audio/MusicMaster.unsilenceBGM:()V
+      68: getstatic     #57                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.scene:Lcom/megacrit/cardcrawl/scenes/AbstractScene;
+      71: invokevirtual #58                 // Method com/megacrit/cardcrawl/scenes/AbstractScene.fadeOutAmbiance:()V
+      74: getstatic     #45                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      77: ldc           #46                 // String ELITE
+      79: invokevirtual #59                 // Method com/megacrit/cardcrawl/audio/MusicMaster.playTempBgmInstantly:(Ljava/lang/String;)V
+      82: aload_0
+      83: getstatic     #60                 // Field DEBUFF_NAME:Ljava/lang/String;
+      86: iconst_1
+      87: getstatic     #61                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.STRONG_DEBUFF:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+      90: invokevirtual #62                 // Method setMove:(Ljava/lang/String;BLcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;)V
+      93: return
+
+  public void takeTurn();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #63                 // Field nextMove:B
+       4: tableswitch   { // 1 to 6
+
+                     1: 44
+
+                     2: 555
+
+                     3: 167
+
+                     4: 457
+
+                     5: 255
+
+                     6: 491
+               default: 555
+          }
+      44: aload_0
+      45: iconst_0
+      46: putfield      #12                 // Field debuffTurnCount:I
+      49: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      52: new           #64                 // class com/megacrit/cardcrawl/actions/common/ChangeStateAction
+      55: dup
+      56: aload_0
+      57: ldc           #65                 // String DEBUFF
+      59: invokespecial #66                 // Method com/megacrit/cardcrawl/actions/common/ChangeStateAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/String;)V
+      62: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      65: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      68: new           #67                 // class com/megacrit/cardcrawl/actions/utility/WaitAction
+      71: dup
+      72: ldc           #68                 // float 0.3f
+      74: invokespecial #69                 // Method com/megacrit/cardcrawl/actions/utility/WaitAction."<init>":(F)V
+      77: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      80: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      83: new           #52                 // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+      86: dup
+      87: getstatic     #70                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      90: aload_0
+      91: new           #71                 // class com/megacrit/cardcrawl/powers/DexterityPower
+      94: dup
+      95: getstatic     #70                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      98: aload_0
+      99: getfield      #21                 // Field debuff:I
+     102: invokespecial #72                 // Method com/megacrit/cardcrawl/powers/DexterityPower."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+     105: aload_0
+     106: getfield      #21                 // Field debuff:I
+     109: invokespecial #55                 // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;I)V
+     112: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     115: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     118: new           #52                 // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+     121: dup
+     122: getstatic     #70                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     125: aload_0
+     126: new           #73                 // class com/megacrit/cardcrawl/powers/StrengthPower
+     129: dup
+     130: getstatic     #70                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     133: aload_0
+     134: getfield      #21                 // Field debuff:I
+     137: invokespecial #74                 // Method com/megacrit/cardcrawl/powers/StrengthPower."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+     140: aload_0
+     141: getfield      #21                 // Field debuff:I
+     144: invokespecial #55                 // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;I)V
+     147: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     150: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     153: new           #75                 // class com/megacrit/cardcrawl/actions/common/RollMoveAction
+     156: dup
+     157: aload_0
+     158: invokespecial #76                 // Method com/megacrit/cardcrawl/actions/common/RollMoveAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+     161: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     164: goto          555
+     167: aload_0
+     168: dup
+     169: getfield      #12                 // Field debuffTurnCount:I
+     172: iconst_1
+     173: iadd
+     174: putfield      #12                 // Field debuffTurnCount:I
+     177: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     180: new           #64                 // class com/megacrit/cardcrawl/actions/common/ChangeStateAction
+     183: dup
+     184: aload_0
+     185: ldc           #77                 // String ATTACK
+     187: invokespecial #66                 // Method com/megacrit/cardcrawl/actions/common/ChangeStateAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/String;)V
+     190: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     193: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     196: new           #67                 // class com/megacrit/cardcrawl/actions/utility/WaitAction
+     199: dup
+     200: ldc           #68                 // float 0.3f
+     202: invokespecial #69                 // Method com/megacrit/cardcrawl/actions/utility/WaitAction."<init>":(F)V
+     205: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     208: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     211: new           #78                 // class com/megacrit/cardcrawl/actions/common/DamageAction
+     214: dup
+     215: getstatic     #70                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     218: aload_0
+     219: getfield      #22                 // Field damage:Ljava/util/ArrayList;
+     222: iconst_0
+     223: invokevirtual #79                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     226: checkcast     #23                 // class com/megacrit/cardcrawl/cards/DamageInfo
+     229: getstatic     #80                 // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.BLUNT_HEAVY:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+     232: invokespecial #81                 // Method com/megacrit/cardcrawl/actions/common/DamageAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/cards/DamageInfo;Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;)V
+     235: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     238: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     241: new           #75                 // class com/megacrit/cardcrawl/actions/common/RollMoveAction
+     244: dup
+     245: aload_0
+     246: invokespecial #76                 // Method com/megacrit/cardcrawl/actions/common/RollMoveAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+     249: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     252: goto          555
+     255: aload_0
+     256: dup
+     257: getfield      #11                 // Field idleCount:I
+     260: iconst_1
+     261: iadd
+     262: putfield      #11                 // Field idleCount:I
+     265: aload_0
+     266: getfield      #11                 // Field idleCount:I
+     269: iconst_3
+     270: if_icmplt     339
+     273: getstatic     #82                 // Field logger:Lorg/apache/logging/log4j/Logger;
+     276: ldc           #83                 // String idle happened
+     278: invokeinterface #84,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     283: aload_0
+     284: iconst_1
+     285: putfield      #10                 // Field isOutTriggered:Z
+     288: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     291: new           #64                 // class com/megacrit/cardcrawl/actions/common/ChangeStateAction
+     294: dup
+     295: aload_0
+     296: ldc           #85                 // String OPEN
+     298: invokespecial #66                 // Method com/megacrit/cardcrawl/actions/common/ChangeStateAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/String;)V
+     301: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     304: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     307: new           #86                 // class com/megacrit/cardcrawl/actions/common/SetMoveAction
+     310: dup
+     311: aload_0
+     312: iconst_3
+     313: getstatic     #87                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.ATTACK:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+     316: aload_0
+     317: getfield      #22                 // Field damage:Ljava/util/ArrayList;
+     320: iconst_0
+     321: invokevirtual #79                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     324: checkcast     #23                 // class com/megacrit/cardcrawl/cards/DamageInfo
+     327: getfield      #88                 // Field com/megacrit/cardcrawl/cards/DamageInfo.base:I
+     330: invokespecial #89                 // Method com/megacrit/cardcrawl/actions/common/SetMoveAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;BLcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;I)V
+     333: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     336: goto          347
+     339: aload_0
+     340: iconst_5
+     341: getstatic     #90                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.SLEEP:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+     344: invokevirtual #91                 // Method setMove:(BLcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;)V
+     347: aload_0
+     348: getfield      #11                 // Field idleCount:I
+     351: lookupswitch  { // 2
+
+                     1: 376
+
+                     2: 415
+               default: 454
+          }
+     376: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     379: new           #92                 // class com/megacrit/cardcrawl/actions/animations/TalkAction
+     382: dup
+     383: aload_0
+     384: getstatic     #93                 // Field DIALOG:[Ljava/lang/String;
+     387: iconst_1
+     388: aaload
+     389: ldc           #41                 // float 0.5f
+     391: fconst_2
+     392: invokespecial #94                 // Method com/megacrit/cardcrawl/actions/animations/TalkAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;FF)V
+     395: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     398: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     401: new           #75                 // class com/megacrit/cardcrawl/actions/common/RollMoveAction
+     404: dup
+     405: aload_0
+     406: invokespecial #76                 // Method com/megacrit/cardcrawl/actions/common/RollMoveAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+     409: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     412: goto          555
+     415: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     418: new           #92                 // class com/megacrit/cardcrawl/actions/animations/TalkAction
+     421: dup
+     422: aload_0
+     423: getstatic     #93                 // Field DIALOG:[Ljava/lang/String;
+     426: iconst_2
+     427: aaload
+     428: ldc           #41                 // float 0.5f
+     430: fconst_2
+     431: invokespecial #94                 // Method com/megacrit/cardcrawl/actions/animations/TalkAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;FF)V
+     434: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     437: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     440: new           #75                 // class com/megacrit/cardcrawl/actions/common/RollMoveAction
+     443: dup
+     444: aload_0
+     445: invokespecial #76                 // Method com/megacrit/cardcrawl/actions/common/RollMoveAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+     448: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     451: goto          555
+     454: goto          555
+     457: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     460: new           #95                 // class com/megacrit/cardcrawl/actions/utility/TextAboveCreatureAction
+     463: dup
+     464: aload_0
+     465: getstatic     #96                 // Field com/megacrit/cardcrawl/actions/utility/TextAboveCreatureAction$TextType.STUNNED:Lcom/megacrit/cardcrawl/actions/utility/TextAboveCreatureAction$TextType;
+     468: invokespecial #97                 // Method com/megacrit/cardcrawl/actions/utility/TextAboveCreatureAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/actions/utility/TextAboveCreatureAction$TextType;)V
+     471: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     474: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     477: new           #75                 // class com/megacrit/cardcrawl/actions/common/RollMoveAction
+     480: dup
+     481: aload_0
+     482: invokespecial #76                 // Method com/megacrit/cardcrawl/actions/common/RollMoveAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+     485: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     488: goto          555
+     491: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     494: new           #64                 // class com/megacrit/cardcrawl/actions/common/ChangeStateAction
+     497: dup
+     498: aload_0
+     499: ldc           #85                 // String OPEN
+     501: invokespecial #66                 // Method com/megacrit/cardcrawl/actions/common/ChangeStateAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/String;)V
+     504: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     507: aload_0
+     508: iconst_3
+     509: getstatic     #87                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.ATTACK:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+     512: aload_0
+     513: getfield      #22                 // Field damage:Ljava/util/ArrayList;
+     516: iconst_0
+     517: invokevirtual #79                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     520: checkcast     #23                 // class com/megacrit/cardcrawl/cards/DamageInfo
+     523: getfield      #88                 // Field com/megacrit/cardcrawl/cards/DamageInfo.base:I
+     526: invokevirtual #98                 // Method setMove:(BLcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;I)V
+     529: aload_0
+     530: invokevirtual #99                 // Method createIntent:()V
+     533: aload_0
+     534: iconst_1
+     535: putfield      #10                 // Field isOutTriggered:Z
+     538: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     541: new           #75                 // class com/megacrit/cardcrawl/actions/common/RollMoveAction
+     544: dup
+     545: aload_0
+     546: invokespecial #76                 // Method com/megacrit/cardcrawl/actions/common/RollMoveAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+     549: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     552: goto          555
+     555: return
+
+  public void changeState(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: aload_1
+       1: ldc           #77                 // String ATTACK
+       3: invokevirtual #100                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+       6: ifeq          37
+       9: aload_0
+      10: getfield      #30                 // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      13: iconst_0
+      14: ldc           #37                 // String Attack
+      16: iconst_0
+      17: invokevirtual #32                 // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      20: pop
+      21: aload_0
+      22: getfield      #30                 // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      25: iconst_0
+      26: ldc           #31                 // String Idle_2
+      28: iconst_1
+      29: fconst_0
+      30: invokevirtual #101                // Method com/esotericsoftware/spine/AnimationState.addAnimation:(ILjava/lang/String;ZF)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      33: pop
+      34: goto          190
+      37: aload_1
+      38: ldc           #65                 // String DEBUFF
+      40: invokevirtual #100                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      43: ifeq          74
+      46: aload_0
+      47: getfield      #30                 // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      50: iconst_0
+      51: ldc           #102                // String Debuff
+      53: iconst_0
+      54: invokevirtual #32                 // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      57: pop
+      58: aload_0
+      59: getfield      #30                 // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      62: iconst_0
+      63: ldc           #31                 // String Idle_2
+      65: iconst_1
+      66: fconst_0
+      67: invokevirtual #101                // Method com/esotericsoftware/spine/AnimationState.addAnimation:(ILjava/lang/String;ZF)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      70: pop
+      71: goto          190
+      74: aload_1
+      75: ldc           #85                 // String OPEN
+      77: invokevirtual #100                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      80: ifeq          190
+      83: aload_0
+      84: getfield      #103                // Field isDying:Z
+      87: ifne          190
+      90: aload_0
+      91: iconst_1
+      92: putfield      #9                  // Field isOut:Z
+      95: aload_0
+      96: fconst_0
+      97: ldc           #4                  // float -25.0f
+      99: ldc           #5                  // float 320.0f
+     101: ldc           #104                // float 360.0f
+     103: invokevirtual #34                 // Method updateHitbox:(FFFF)V
+     106: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     109: new           #92                 // class com/megacrit/cardcrawl/actions/animations/TalkAction
+     112: dup
+     113: aload_0
+     114: getstatic     #93                 // Field DIALOG:[Ljava/lang/String;
+     117: iconst_3
+     118: aaload
+     119: ldc           #41                 // float 0.5f
+     121: fconst_2
+     122: invokespecial #94                 // Method com/megacrit/cardcrawl/actions/animations/TalkAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;FF)V
+     125: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     128: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     131: new           #105                // class com/megacrit/cardcrawl/actions/common/ReducePowerAction
+     134: dup
+     135: aload_0
+     136: aload_0
+     137: ldc           #106                // String Metallicize
+     139: bipush        8
+     141: invokespecial #107                // Method com/megacrit/cardcrawl/actions/common/ReducePowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;I)V
+     144: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     147: getstatic     #45                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+     150: invokevirtual #56                 // Method com/megacrit/cardcrawl/audio/MusicMaster.unsilenceBGM:()V
+     153: getstatic     #57                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.scene:Lcom/megacrit/cardcrawl/scenes/AbstractScene;
+     156: invokevirtual #58                 // Method com/megacrit/cardcrawl/scenes/AbstractScene.fadeOutAmbiance:()V
+     159: getstatic     #45                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+     162: invokevirtual #108                // Method com/megacrit/cardcrawl/audio/MusicMaster.playPrecachedTempBgm:()V
+     165: aload_0
+     166: getfield      #30                 // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     169: iconst_0
+     170: ldc           #109                // String Coming_out
+     172: iconst_0
+     173: invokevirtual #32                 // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     176: pop
+     177: aload_0
+     178: getfield      #30                 // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     181: iconst_0
+     182: ldc           #31                 // String Idle_2
+     184: iconst_1
+     185: fconst_0
+     186: invokevirtual #101                // Method com/esotericsoftware/spine/AnimationState.addAnimation:(ILjava/lang/String;ZF)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     189: pop
+     190: return
+
+  public void damage(com.megacrit.cardcrawl.cards.DamageInfo);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/DamageInfo;)V
+    Code:
+       0: aload_0
+       1: getfield      #110                // Field currentHealth:I
+       4: istore_2
+       5: aload_0
+       6: aload_1
+       7: invokespecial #111                // Method com/megacrit/cardcrawl/monsters/AbstractMonster.damage:(Lcom/megacrit/cardcrawl/cards/DamageInfo;)V
+      10: aload_0
+      11: getfield      #110                // Field currentHealth:I
+      14: iload_2
+      15: if_icmpeq     61
+      18: aload_0
+      19: getfield      #10                 // Field isOutTriggered:Z
+      22: ifne          61
+      25: aload_0
+      26: iconst_4
+      27: getstatic     #112                // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.STUN:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+      30: invokevirtual #91                 // Method setMove:(BLcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;)V
+      33: aload_0
+      34: invokevirtual #99                 // Method createIntent:()V
+      37: aload_0
+      38: iconst_1
+      39: putfield      #10                 // Field isOutTriggered:Z
+      42: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      45: new           #64                 // class com/megacrit/cardcrawl/actions/common/ChangeStateAction
+      48: dup
+      49: aload_0
+      50: ldc           #85                 // String OPEN
+      52: invokespecial #66                 // Method com/megacrit/cardcrawl/actions/common/ChangeStateAction."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/String;)V
+      55: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      58: goto          117
+      61: aload_0
+      62: getfield      #10                 // Field isOutTriggered:Z
+      65: ifeq          117
+      68: aload_1
+      69: getfield      #113                // Field com/megacrit/cardcrawl/cards/DamageInfo.owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+      72: ifnull        117
+      75: aload_1
+      76: getfield      #114                // Field com/megacrit/cardcrawl/cards/DamageInfo.type:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+      79: getstatic     #115                // Field com/megacrit/cardcrawl/cards/DamageInfo$DamageType.THORNS:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+      82: if_acmpeq     117
+      85: aload_1
+      86: getfield      #116                // Field com/megacrit/cardcrawl/cards/DamageInfo.output:I
+      89: ifle          117
+      92: aload_0
+      93: getfield      #30                 // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      96: iconst_0
+      97: ldc           #40                 // String Hit
+      99: iconst_0
+     100: invokevirtual #32                 // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     103: pop
+     104: aload_0
+     105: getfield      #30                 // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     108: iconst_0
+     109: ldc           #31                 // String Idle_2
+     111: iconst_1
+     112: fconst_0
+     113: invokevirtual #101                // Method com/esotericsoftware/spine/AnimationState.addAnimation:(ILjava/lang/String;ZF)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     116: pop
+     117: return
+
+  protected void getMove(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: getfield      #9                  // Field isOut:Z
+       4: ifeq          76
+       7: aload_0
+       8: getfield      #12                 // Field debuffTurnCount:I
+      11: iconst_2
+      12: if_icmpge     62
+      15: aload_0
+      16: iconst_3
+      17: invokevirtual #117                // Method lastTwoMoves:(B)Z
+      20: ifeq          37
+      23: aload_0
+      24: getstatic     #60                 // Field DEBUFF_NAME:Ljava/lang/String;
+      27: iconst_1
+      28: getstatic     #61                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.STRONG_DEBUFF:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+      31: invokevirtual #62                 // Method setMove:(Ljava/lang/String;BLcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;)V
+      34: goto          84
+      37: aload_0
+      38: iconst_3
+      39: getstatic     #87                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.ATTACK:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+      42: aload_0
+      43: getfield      #22                 // Field damage:Ljava/util/ArrayList;
+      46: iconst_0
+      47: invokevirtual #79                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      50: checkcast     #23                 // class com/megacrit/cardcrawl/cards/DamageInfo
+      53: getfield      #88                 // Field com/megacrit/cardcrawl/cards/DamageInfo.base:I
+      56: invokevirtual #98                 // Method setMove:(BLcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;I)V
+      59: goto          84
+      62: aload_0
+      63: getstatic     #60                 // Field DEBUFF_NAME:Ljava/lang/String;
+      66: iconst_1
+      67: getstatic     #61                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.STRONG_DEBUFF:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+      70: invokevirtual #62                 // Method setMove:(Ljava/lang/String;BLcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;)V
+      73: goto          84
+      76: aload_0
+      77: iconst_5
+      78: getstatic     #90                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.SLEEP:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+      81: invokevirtual #91                 // Method setMove:(BLcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;)V
+      84: return
+
+  public void die();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #118                // Method com/megacrit/cardcrawl/monsters/AbstractMonster.die:()V
+       4: getstatic     #57                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.scene:Lcom/megacrit/cardcrawl/scenes/AbstractScene;
+       7: invokevirtual #119                // Method com/megacrit/cardcrawl/scenes/AbstractScene.fadeInAmbiance:()V
+      10: getstatic     #45                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      13: invokevirtual #120                // Method com/megacrit/cardcrawl/audio/MusicMaster.fadeOutTempBGM:()V
+      16: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #2                  // class com/megacrit/cardcrawl/monsters/exordium/Lagavulin
+       2: invokevirtual #121                // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #122                // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #82                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: getstatic     #123                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+      14: ldc           #3                  // String Lagavulin
+      16: invokevirtual #124                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getMonsterStrings:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/MonsterStrings;
+      19: putstatic     #125                // Field monsterStrings:Lcom/megacrit/cardcrawl/localization/MonsterStrings;
+      22: getstatic     #125                // Field monsterStrings:Lcom/megacrit/cardcrawl/localization/MonsterStrings;
+      25: getfield      #126                // Field com/megacrit/cardcrawl/localization/MonsterStrings.NAME:Ljava/lang/String;
+      28: putstatic     #1                  // Field NAME:Ljava/lang/String;
+      31: getstatic     #125                // Field monsterStrings:Lcom/megacrit/cardcrawl/localization/MonsterStrings;
+      34: getfield      #127                // Field com/megacrit/cardcrawl/localization/MonsterStrings.MOVES:[Ljava/lang/String;
+      37: putstatic     #128                // Field MOVES:[Ljava/lang/String;
+      40: getstatic     #125                // Field monsterStrings:Lcom/megacrit/cardcrawl/localization/MonsterStrings;
+      43: getfield      #129                // Field com/megacrit/cardcrawl/localization/MonsterStrings.DIALOG:[Ljava/lang/String;
+      46: putstatic     #93                 // Field DIALOG:[Ljava/lang/String;
+      49: getstatic     #128                // Field MOVES:[Ljava/lang/String;
+      52: iconst_0
+      53: aaload
+      54: putstatic     #60                 // Field DEBUFF_NAME:Ljava/lang/String;
+      57: return
+}

@@ -1,0 +1,286 @@
+Compiled from "ArmamentsAction.java"
+public class com.megacrit.cardcrawl.actions.unique.ArmamentsAction extends com.megacrit.cardcrawl.actions.AbstractGameAction {
+  private static final com.megacrit.cardcrawl.localization.UIStrings uiStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/UIStrings;
+
+  public static final java.lang.String[] TEXT;
+    descriptor: [Ljava/lang/String;
+
+  private com.megacrit.cardcrawl.characters.AbstractPlayer p;
+    descriptor: Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.cards.AbstractCard> cannotUpgrade;
+    descriptor: Ljava/util/ArrayList;
+
+  private boolean upgraded;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.actions.unique.ArmamentsAction(boolean);
+    descriptor: (Z)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/actions/AbstractGameAction."<init>":()V
+       4: aload_0
+       5: new           #2                  // class java/util/ArrayList
+       8: dup
+       9: invokespecial #3                  // Method java/util/ArrayList."<init>":()V
+      12: putfield      #4                  // Field cannotUpgrade:Ljava/util/ArrayList;
+      15: aload_0
+      16: iconst_0
+      17: putfield      #5                  // Field upgraded:Z
+      20: aload_0
+      21: getstatic     #6                  // Field com/megacrit/cardcrawl/actions/AbstractGameAction$ActionType.CARD_MANIPULATION:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      24: putfield      #7                  // Field actionType:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      27: aload_0
+      28: getstatic     #8                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      31: putfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      34: aload_0
+      35: getstatic     #10                 // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_FAST:F
+      38: putfield      #11                 // Field duration:F
+      41: aload_0
+      42: iload_1
+      43: putfield      #5                  // Field upgraded:Z
+      46: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #11                 // Field duration:F
+       4: getstatic     #10                 // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_FAST:F
+       7: fcmpl
+       8: ifne          354
+      11: aload_0
+      12: getfield      #5                  // Field upgraded:Z
+      15: ifeq          79
+      18: aload_0
+      19: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      22: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      25: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+      28: invokevirtual #14                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      31: astore_1
+      32: aload_1
+      33: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      38: ifeq          73
+      41: aload_1
+      42: invokeinterface #16,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      47: checkcast     #17                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      50: astore_2
+      51: aload_2
+      52: invokevirtual #18                 // Method com/megacrit/cardcrawl/cards/AbstractCard.canUpgrade:()Z
+      55: ifeq          70
+      58: aload_2
+      59: invokevirtual #19                 // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+      62: aload_2
+      63: invokevirtual #20                 // Method com/megacrit/cardcrawl/cards/AbstractCard.superFlash:()V
+      66: aload_2
+      67: invokevirtual #21                 // Method com/megacrit/cardcrawl/cards/AbstractCard.applyPowers:()V
+      70: goto          32
+      73: aload_0
+      74: iconst_1
+      75: putfield      #22                 // Field isDone:Z
+      78: return
+      79: aload_0
+      80: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      83: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      86: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+      89: invokevirtual #14                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      92: astore_1
+      93: aload_1
+      94: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      99: ifeq          131
+     102: aload_1
+     103: invokeinterface #16,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     108: checkcast     #17                 // class com/megacrit/cardcrawl/cards/AbstractCard
+     111: astore_2
+     112: aload_2
+     113: invokevirtual #18                 // Method com/megacrit/cardcrawl/cards/AbstractCard.canUpgrade:()Z
+     116: ifne          128
+     119: aload_0
+     120: getfield      #4                  // Field cannotUpgrade:Ljava/util/ArrayList;
+     123: aload_2
+     124: invokevirtual #23                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     127: pop
+     128: goto          93
+     131: aload_0
+     132: getfield      #4                  // Field cannotUpgrade:Ljava/util/ArrayList;
+     135: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+     138: aload_0
+     139: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     142: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     145: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     148: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+     151: if_icmpne     160
+     154: aload_0
+     155: iconst_1
+     156: putfield      #22                 // Field isDone:Z
+     159: return
+     160: aload_0
+     161: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     164: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     167: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     170: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+     173: aload_0
+     174: getfield      #4                  // Field cannotUpgrade:Ljava/util/ArrayList;
+     177: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+     180: isub
+     181: iconst_1
+     182: if_icmpne     246
+     185: aload_0
+     186: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     189: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     192: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     195: invokevirtual #14                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     198: astore_1
+     199: aload_1
+     200: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     205: ifeq          246
+     208: aload_1
+     209: invokeinterface #16,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     214: checkcast     #17                 // class com/megacrit/cardcrawl/cards/AbstractCard
+     217: astore_2
+     218: aload_2
+     219: invokevirtual #18                 // Method com/megacrit/cardcrawl/cards/AbstractCard.canUpgrade:()Z
+     222: ifeq          243
+     225: aload_2
+     226: invokevirtual #19                 // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+     229: aload_2
+     230: invokevirtual #20                 // Method com/megacrit/cardcrawl/cards/AbstractCard.superFlash:()V
+     233: aload_2
+     234: invokevirtual #21                 // Method com/megacrit/cardcrawl/cards/AbstractCard.applyPowers:()V
+     237: aload_0
+     238: iconst_1
+     239: putfield      #22                 // Field isDone:Z
+     242: return
+     243: goto          199
+     246: aload_0
+     247: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     250: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     253: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     256: aload_0
+     257: getfield      #4                  // Field cannotUpgrade:Ljava/util/ArrayList;
+     260: invokevirtual #25                 // Method java/util/ArrayList.removeAll:(Ljava/util/Collection;)Z
+     263: pop
+     264: aload_0
+     265: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     268: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     271: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     274: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+     277: iconst_1
+     278: if_icmple     302
+     281: getstatic     #26                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.handCardSelectScreen:Lcom/megacrit/cardcrawl/screens/select/HandCardSelectScreen;
+     284: getstatic     #27                 // Field TEXT:[Ljava/lang/String;
+     287: iconst_0
+     288: aaload
+     289: iconst_1
+     290: iconst_0
+     291: iconst_0
+     292: iconst_0
+     293: iconst_1
+     294: invokevirtual #28                 // Method com/megacrit/cardcrawl/screens/select/HandCardSelectScreen.open:(Ljava/lang/String;IZZZZ)V
+     297: aload_0
+     298: invokevirtual #29                 // Method tickDuration:()V
+     301: return
+     302: aload_0
+     303: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     306: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     309: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     312: invokevirtual #24                 // Method java/util/ArrayList.size:()I
+     315: iconst_1
+     316: if_icmpne     354
+     319: aload_0
+     320: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     323: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     326: invokevirtual #30                 // Method com/megacrit/cardcrawl/cards/CardGroup.getTopCard:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     329: invokevirtual #19                 // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+     332: aload_0
+     333: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     336: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     339: invokevirtual #30                 // Method com/megacrit/cardcrawl/cards/CardGroup.getTopCard:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     342: invokevirtual #20                 // Method com/megacrit/cardcrawl/cards/AbstractCard.superFlash:()V
+     345: aload_0
+     346: invokespecial #31                 // Method returnCards:()V
+     349: aload_0
+     350: iconst_1
+     351: putfield      #22                 // Field isDone:Z
+     354: getstatic     #26                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.handCardSelectScreen:Lcom/megacrit/cardcrawl/screens/select/HandCardSelectScreen;
+     357: getfield      #32                 // Field com/megacrit/cardcrawl/screens/select/HandCardSelectScreen.wereCardsRetrieved:Z
+     360: ifne          449
+     363: getstatic     #26                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.handCardSelectScreen:Lcom/megacrit/cardcrawl/screens/select/HandCardSelectScreen;
+     366: getfield      #33                 // Field com/megacrit/cardcrawl/screens/select/HandCardSelectScreen.selectedCards:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     369: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     372: invokevirtual #14                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     375: astore_1
+     376: aload_1
+     377: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     382: ifeq          421
+     385: aload_1
+     386: invokeinterface #16,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     391: checkcast     #17                 // class com/megacrit/cardcrawl/cards/AbstractCard
+     394: astore_2
+     395: aload_2
+     396: invokevirtual #19                 // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+     399: aload_2
+     400: invokevirtual #20                 // Method com/megacrit/cardcrawl/cards/AbstractCard.superFlash:()V
+     403: aload_2
+     404: invokevirtual #21                 // Method com/megacrit/cardcrawl/cards/AbstractCard.applyPowers:()V
+     407: aload_0
+     408: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     411: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     414: aload_2
+     415: invokevirtual #34                 // Method com/megacrit/cardcrawl/cards/CardGroup.addToTop:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     418: goto          376
+     421: aload_0
+     422: invokespecial #31                 // Method returnCards:()V
+     425: getstatic     #26                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.handCardSelectScreen:Lcom/megacrit/cardcrawl/screens/select/HandCardSelectScreen;
+     428: iconst_1
+     429: putfield      #32                 // Field com/megacrit/cardcrawl/screens/select/HandCardSelectScreen.wereCardsRetrieved:Z
+     432: getstatic     #26                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.handCardSelectScreen:Lcom/megacrit/cardcrawl/screens/select/HandCardSelectScreen;
+     435: getfield      #33                 // Field com/megacrit/cardcrawl/screens/select/HandCardSelectScreen.selectedCards:Lcom/megacrit/cardcrawl/cards/CardGroup;
+     438: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+     441: invokevirtual #35                 // Method java/util/ArrayList.clear:()V
+     444: aload_0
+     445: iconst_1
+     446: putfield      #22                 // Field isDone:Z
+     449: aload_0
+     450: invokevirtual #29                 // Method tickDuration:()V
+     453: return
+
+  private void returnCards();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #4                  // Field cannotUpgrade:Ljava/util/ArrayList;
+       4: invokevirtual #14                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       7: astore_1
+       8: aload_1
+       9: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      14: ifeq          41
+      17: aload_1
+      18: invokeinterface #16,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      23: checkcast     #17                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      26: astore_2
+      27: aload_0
+      28: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      31: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      34: aload_2
+      35: invokevirtual #34                 // Method com/megacrit/cardcrawl/cards/CardGroup.addToTop:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      38: goto          8
+      41: aload_0
+      42: getfield      #9                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      45: getfield      #12                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      48: invokevirtual #36                 // Method com/megacrit/cardcrawl/cards/CardGroup.refreshHandLayout:()V
+      51: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #37                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #38                 // String ArmamentsAction
+       5: invokevirtual #39                 // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getUIString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/UIStrings;
+       8: putstatic     #40                 // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      11: getstatic     #40                 // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      14: getfield      #41                 // Field com/megacrit/cardcrawl/localization/UIStrings.TEXT:[Ljava/lang/String;
+      17: putstatic     #27                 // Field TEXT:[Ljava/lang/String;
+      20: return
+}

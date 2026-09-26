@@ -1,0 +1,138 @@
+Compiled from "DescriptionLine.java"
+public class com.megacrit.cardcrawl.cards.DescriptionLine {
+  public java.lang.String text;
+    descriptor: Ljava/lang/String;
+
+  public float width;
+    descriptor: F
+
+  private java.lang.String[] cachedTokenizedText;
+    descriptor: [Ljava/lang/String;
+
+  private java.lang.String[] cachedTokenizedTextCN;
+    descriptor: [Ljava/lang/String;
+
+  private static final float offsetter;
+    descriptor: F
+
+  public com.megacrit.cardcrawl.cards.DescriptionLine(java.lang.String, float);
+    descriptor: (Ljava/lang/String;F)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: invokevirtual #2                  // Method java/lang/String.trim:()Ljava/lang/String;
+       9: putfield      #3                  // Field text:Ljava/lang/String;
+      12: aload_0
+      13: fload_2
+      14: getstatic     #4                  // Field offsetter:F
+      17: fsub
+      18: dup
+      19: fstore_2
+      20: putfield      #5                  // Field width:F
+      23: return
+
+  public java.lang.String[] getCachedTokenizedText();
+    descriptor: ()[Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #6                  // Field cachedTokenizedText:[Ljava/lang/String;
+       4: ifnonnull     18
+       7: aload_0
+       8: aload_0
+       9: getfield      #3                  // Field text:Ljava/lang/String;
+      12: invokestatic  #7                  // Method tokenize:(Ljava/lang/String;)[Ljava/lang/String;
+      15: putfield      #6                  // Field cachedTokenizedText:[Ljava/lang/String;
+      18: aload_0
+      19: getfield      #6                  // Field cachedTokenizedText:[Ljava/lang/String;
+      22: areturn
+
+  public java.lang.String[] getCachedTokenizedTextCN();
+    descriptor: ()[Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field cachedTokenizedTextCN:[Ljava/lang/String;
+       4: ifnonnull     18
+       7: aload_0
+       8: aload_0
+       9: getfield      #3                  // Field text:Ljava/lang/String;
+      12: invokestatic  #9                  // Method tokenizeCN:(Ljava/lang/String;)[Ljava/lang/String;
+      15: putfield      #8                  // Field cachedTokenizedTextCN:[Ljava/lang/String;
+      18: aload_0
+      19: getfield      #8                  // Field cachedTokenizedTextCN:[Ljava/lang/String;
+      22: areturn
+
+  private static java.lang.String[] tokenize(java.lang.String);
+    descriptor: (Ljava/lang/String;)[Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: ldc           #10                 // String \\s+
+       3: invokevirtual #11                 // Method java/lang/String.split:(Ljava/lang/String;)[Ljava/lang/String;
+       6: astore_1
+       7: iconst_0
+       8: istore_2
+       9: iload_2
+      10: aload_1
+      11: arraylength
+      12: if_icmpge     44
+      15: new           #12                 // class java/lang/StringBuilder
+      18: dup
+      19: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      22: aload_1
+      23: iload_2
+      24: dup2_x1
+      25: aaload
+      26: invokevirtual #14                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      29: bipush        32
+      31: invokevirtual #15                 // Method java/lang/StringBuilder.append:(C)Ljava/lang/StringBuilder;
+      34: invokevirtual #16                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      37: aastore
+      38: iinc          2, 1
+      41: goto          9
+      44: aload_1
+      45: areturn
+
+  private static java.lang.String[] tokenizeCN(java.lang.String);
+    descriptor: (Ljava/lang/String;)[Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: ldc           #10                 // String \\s+
+       3: invokevirtual #11                 // Method java/lang/String.split:(Ljava/lang/String;)[Ljava/lang/String;
+       6: astore_1
+       7: iconst_0
+       8: istore_2
+       9: iload_2
+      10: aload_1
+      11: arraylength
+      12: if_icmpge     34
+      15: aload_1
+      16: iload_2
+      17: aload_1
+      18: iload_2
+      19: aaload
+      20: ldc           #17                 // String !
+      22: ldc           #18                 // String
+      24: invokevirtual #19                 // Method java/lang/String.replace:(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;
+      27: aastore
+      28: iinc          2, 1
+      31: goto          9
+      34: aload_1
+      35: areturn
+
+  public java.lang.String getText();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field text:Ljava/lang/String;
+       4: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #20                 // float 10.0f
+       2: getstatic     #21                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+       5: fmul
+       6: putstatic     #4                  // Field offsetter:F
+       9: return
+}

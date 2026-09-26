@@ -1,0 +1,76 @@
+Compiled from "ApotheosisAction.java"
+public class com.megacrit.cardcrawl.actions.unique.ApotheosisAction extends com.megacrit.cardcrawl.actions.AbstractGameAction {
+  public com.megacrit.cardcrawl.actions.unique.ApotheosisAction();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/actions/AbstractGameAction."<init>":()V
+       4: aload_0
+       5: getstatic     #2                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_MED:F
+       8: putfield      #3                  // Field duration:F
+      11: aload_0
+      12: getstatic     #4                  // Field com/megacrit/cardcrawl/actions/AbstractGameAction$ActionType.WAIT:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      15: putfield      #5                  // Field actionType:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      18: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field duration:F
+       4: getstatic     #2                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_MED:F
+       7: fcmpl
+       8: ifne          52
+      11: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      14: astore_1
+      15: aload_0
+      16: aload_1
+      17: getfield      #7                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      20: invokespecial #8                  // Method upgradeAllCardsInGroup:(Lcom/megacrit/cardcrawl/cards/CardGroup;)V
+      23: aload_0
+      24: aload_1
+      25: getfield      #9                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.drawPile:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      28: invokespecial #8                  // Method upgradeAllCardsInGroup:(Lcom/megacrit/cardcrawl/cards/CardGroup;)V
+      31: aload_0
+      32: aload_1
+      33: getfield      #10                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.discardPile:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      36: invokespecial #8                  // Method upgradeAllCardsInGroup:(Lcom/megacrit/cardcrawl/cards/CardGroup;)V
+      39: aload_0
+      40: aload_1
+      41: getfield      #11                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.exhaustPile:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      44: invokespecial #8                  // Method upgradeAllCardsInGroup:(Lcom/megacrit/cardcrawl/cards/CardGroup;)V
+      47: aload_0
+      48: iconst_1
+      49: putfield      #12                 // Field isDone:Z
+      52: return
+
+  private void upgradeAllCardsInGroup(com.megacrit.cardcrawl.cards.CardGroup);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/CardGroup;)V
+    Code:
+       0: aload_1
+       1: getfield      #13                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+       4: invokevirtual #14                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       7: astore_2
+       8: aload_2
+       9: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      14: ifeq          59
+      17: aload_2
+      18: invokeinterface #16,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      23: checkcast     #17                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      26: astore_3
+      27: aload_3
+      28: invokevirtual #18                 // Method com/megacrit/cardcrawl/cards/AbstractCard.canUpgrade:()Z
+      31: ifeq          56
+      34: aload_1
+      35: getfield      #19                 // Field com/megacrit/cardcrawl/cards/CardGroup.type:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+      38: getstatic     #20                 // Field com/megacrit/cardcrawl/cards/CardGroup$CardGroupType.HAND:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+      41: if_acmpne     48
+      44: aload_3
+      45: invokevirtual #21                 // Method com/megacrit/cardcrawl/cards/AbstractCard.superFlash:()V
+      48: aload_3
+      49: invokevirtual #22                 // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+      52: aload_3
+      53: invokevirtual #23                 // Method com/megacrit/cardcrawl/cards/AbstractCard.applyPowers:()V
+      56: goto          8
+      59: return
+}

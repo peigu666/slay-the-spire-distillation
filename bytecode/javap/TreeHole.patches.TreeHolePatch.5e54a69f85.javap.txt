@@ -1,0 +1,278 @@
+Compiled from "TreeHolePatch.java"
+public class TreeHole.patches.TreeHolePatch {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  public static boolean hasModAdded;
+    descriptor: Z
+
+  public static boolean exitTreeHole;
+    descriptor: Z
+
+  public static boolean enableTreeHole;
+    descriptor: Z
+
+  public static boolean dontScrollThisTime;
+    descriptor: Z
+
+  public static com.megacrit.cardcrawl.saveAndContinue.SaveFile foreSaveFile;
+    descriptor: Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+
+  public static TreeHole.save.ExtraSave extraSave;
+    descriptor: LTreeHole/save/ExtraSave;
+
+  public static boolean renderBoss;
+    descriptor: Z
+
+  public static boolean shouldRespawnTreeHoles;
+    descriptor: Z
+
+  public static java.util.ArrayList<java.lang.Integer> spawnX;
+    descriptor: Ljava/util/ArrayList;
+
+  public static java.util.ArrayList<java.lang.Integer> spawnY;
+    descriptor: Ljava/util/ArrayList;
+
+  public static java.util.ArrayList<java.lang.Integer> treeHoleTypes;
+    descriptor: Ljava/util/ArrayList;
+
+  public static java.util.ArrayList<java.lang.String> specificIDs;
+    descriptor: Ljava/util/ArrayList;
+
+  public static int currentType;
+    descriptor: I
+
+  public static java.util.ArrayList<java.lang.Boolean> entered;
+    descriptor: Ljava/util/ArrayList;
+
+  public static java.util.ArrayList<java.lang.String> bossSpawned;
+    descriptor: Ljava/util/ArrayList;
+
+  public static java.lang.String lastHoleID;
+    descriptor: Ljava/lang/String;
+
+  public TreeHole.patches.TreeHolePatch();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #3                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  private static void clearSet();
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: putstatic     #4                  // Field exitTreeHole:Z
+       4: iconst_0
+       5: putstatic     #5                  // Field enableTreeHole:Z
+       8: iconst_0
+       9: putstatic     #6                  // Field dontScrollThisTime:Z
+      12: aconst_null
+      13: putstatic     #7                  // Field foreSaveFile:Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+      16: iconst_0
+      17: putstatic     #8                  // Field renderBoss:Z
+      20: iconst_0
+      21: putstatic     #9                  // Field shouldRespawnTreeHoles:Z
+      24: aconst_null
+      25: putstatic     #10                 // Field spawnX:Ljava/util/ArrayList;
+      28: aconst_null
+      29: putstatic     #11                 // Field spawnY:Ljava/util/ArrayList;
+      32: aconst_null
+      33: putstatic     #12                 // Field specificIDs:Ljava/util/ArrayList;
+      36: aconst_null
+      37: putstatic     #13                 // Field entered:Ljava/util/ArrayList;
+      40: aconst_null
+      41: putstatic     #14                 // Field treeHoleTypes:Ljava/util/ArrayList;
+      44: iconst_m1
+      45: putstatic     #15                 // Field currentType:I
+      48: getstatic     #16                 // Field bossSpawned:Ljava/util/ArrayList;
+      51: invokevirtual #17                 // Method java/util/ArrayList.clear:()V
+      54: ldc           #18                 // String
+      56: putstatic     #19                 // Field lastHoleID:Ljava/lang/String;
+      59: return
+
+  public static boolean enteredTreeHole(int, int);
+    descriptor: (II)Z
+    Code:
+       0: iconst_0
+       1: istore_2
+       2: iload_2
+       3: getstatic     #13                 // Field entered:Ljava/util/ArrayList;
+       6: invokevirtual #20                 // Method java/util/ArrayList.size:()I
+       9: if_icmpge     86
+      12: iload_2
+      13: getstatic     #10                 // Field spawnX:Ljava/util/ArrayList;
+      16: invokevirtual #20                 // Method java/util/ArrayList.size:()I
+      19: if_icmpge     86
+      22: iload_2
+      23: getstatic     #11                 // Field spawnY:Ljava/util/ArrayList;
+      26: invokevirtual #20                 // Method java/util/ArrayList.size:()I
+      29: if_icmpge     86
+      32: getstatic     #10                 // Field spawnX:Ljava/util/ArrayList;
+      35: iload_2
+      36: invokevirtual #21                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      39: checkcast     #22                 // class java/lang/Integer
+      42: invokevirtual #23                 // Method java/lang/Integer.intValue:()I
+      45: iload_0
+      46: if_icmpne     80
+      49: getstatic     #11                 // Field spawnY:Ljava/util/ArrayList;
+      52: iload_2
+      53: invokevirtual #21                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      56: checkcast     #22                 // class java/lang/Integer
+      59: invokevirtual #23                 // Method java/lang/Integer.intValue:()I
+      62: iload_1
+      63: if_icmpne     80
+      66: getstatic     #13                 // Field entered:Ljava/util/ArrayList;
+      69: iload_2
+      70: invokevirtual #21                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      73: checkcast     #24                 // class java/lang/Boolean
+      76: invokevirtual #25                 // Method java/lang/Boolean.booleanValue:()Z
+      79: ireturn
+      80: iinc          2, 1
+      83: goto          2
+      86: iconst_0
+      87: ireturn
+
+  private static void markEntered(int, int);
+    descriptor: (II)V
+    Code:
+       0: getstatic     #13                 // Field entered:Ljava/util/ArrayList;
+       3: ifnull        18
+       6: getstatic     #10                 // Field spawnX:Ljava/util/ArrayList;
+       9: ifnull        18
+      12: getstatic     #11                 // Field spawnY:Ljava/util/ArrayList;
+      15: ifnonnull     19
+      18: return
+      19: iconst_0
+      20: istore_2
+      21: iload_2
+      22: getstatic     #13                 // Field entered:Ljava/util/ArrayList;
+      25: invokevirtual #20                 // Method java/util/ArrayList.size:()I
+      28: if_icmpge     103
+      31: iload_2
+      32: getstatic     #10                 // Field spawnX:Ljava/util/ArrayList;
+      35: invokevirtual #20                 // Method java/util/ArrayList.size:()I
+      38: if_icmpge     103
+      41: iload_2
+      42: getstatic     #11                 // Field spawnY:Ljava/util/ArrayList;
+      45: invokevirtual #20                 // Method java/util/ArrayList.size:()I
+      48: if_icmpge     103
+      51: getstatic     #10                 // Field spawnX:Ljava/util/ArrayList;
+      54: iload_2
+      55: invokevirtual #21                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      58: checkcast     #22                 // class java/lang/Integer
+      61: invokevirtual #23                 // Method java/lang/Integer.intValue:()I
+      64: iload_0
+      65: if_icmpne     97
+      68: getstatic     #11                 // Field spawnY:Ljava/util/ArrayList;
+      71: iload_2
+      72: invokevirtual #21                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      75: checkcast     #22                 // class java/lang/Integer
+      78: invokevirtual #23                 // Method java/lang/Integer.intValue:()I
+      81: iload_1
+      82: if_icmpne     97
+      85: getstatic     #13                 // Field entered:Ljava/util/ArrayList;
+      88: iload_2
+      89: iconst_1
+      90: invokestatic  #26                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      93: invokevirtual #27                 // Method java/util/ArrayList.set:(ILjava/lang/Object;)Ljava/lang/Object;
+      96: pop
+      97: iinc          2, 1
+     100: goto          21
+     103: return
+
+  public static void enterTreeHole(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)V
+    Code:
+       0: aload_0
+       1: putstatic     #19                 // Field lastHoleID:Ljava/lang/String;
+       4: iload_1
+       5: putstatic     #15                 // Field currentType:I
+       8: iconst_1
+       9: putstatic     #5                  // Field enableTreeHole:Z
+      12: invokestatic  #28                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrMapNode:()Lcom/megacrit/cardcrawl/map/MapRoomNode;
+      15: getfield      #29                 // Field com/megacrit/cardcrawl/map/MapRoomNode.x:I
+      18: invokestatic  #28                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrMapNode:()Lcom/megacrit/cardcrawl/map/MapRoomNode;
+      21: getfield      #30                 // Field com/megacrit/cardcrawl/map/MapRoomNode.y:I
+      24: invokestatic  #31                 // Method markEntered:(II)V
+      27: invokestatic  #32                 // Method TreeHole/save/SaveAndContinueFore.makeCopy:()Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+      30: putstatic     #7                  // Field foreSaveFile:Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+      33: getstatic     #33                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      36: invokevirtual #34                 // Method com/megacrit/cardcrawl/audio/MusicMaster.fadeOutBGM:()V
+      39: getstatic     #33                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      42: invokevirtual #35                 // Method com/megacrit/cardcrawl/audio/MusicMaster.fadeOutTempBGM:()V
+      45: invokestatic  #36                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.fadeOut:()V
+      48: aload_0
+      49: putstatic     #37                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.nextDungeon:Ljava/lang/String;
+      52: iconst_1
+      53: putstatic     #38                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.isDungeonBeaten:Z
+      56: invokestatic  #39                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      59: getstatic     #40                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMPLETE:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      62: putfield      #41                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      65: return
+
+  public static void outerTreeHole();
+    descriptor: ()V
+    Code:
+       0: iconst_1
+       1: putstatic     #4                  // Field exitTreeHole:Z
+       4: iconst_1
+       5: putstatic     #42                 // Field TreeHole/room/TreeHoleEnterRoom.justLeaveTreeHole:Z
+       8: getstatic     #33                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      11: invokevirtual #34                 // Method com/megacrit/cardcrawl/audio/MusicMaster.fadeOutBGM:()V
+      14: getstatic     #33                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      17: invokevirtual #35                 // Method com/megacrit/cardcrawl/audio/MusicMaster.fadeOutTempBGM:()V
+      20: invokestatic  #36                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.fadeOut:()V
+      23: getstatic     #7                  // Field foreSaveFile:Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+      26: getfield      #43                 // Field com/megacrit/cardcrawl/saveAndContinue/SaveFile.level_name:Ljava/lang/String;
+      29: putstatic     #44                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.id:Ljava/lang/String;
+      32: getstatic     #7                  // Field foreSaveFile:Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;
+      35: getfield      #43                 // Field com/megacrit/cardcrawl/saveAndContinue/SaveFile.level_name:Ljava/lang/String;
+      38: putstatic     #37                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.nextDungeon:Ljava/lang/String;
+      41: iconst_1
+      42: putstatic     #38                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.isDungeonBeaten:Z
+      45: return
+
+  static void access$000();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #2                  // Method clearSet:()V
+       3: return
+
+  static org.apache.logging.log4j.Logger access$100();
+    descriptor: ()Lorg/apache/logging/log4j/Logger;
+    Code:
+       0: getstatic     #1                  // Field logger:Lorg/apache/logging/log4j/Logger;
+       3: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #45                 // class TreeHole/patches/TreeHolePatch
+       2: invokevirtual #46                 // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #47                 // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #1                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: iconst_0
+      12: putstatic     #48                 // Field hasModAdded:Z
+      15: iconst_0
+      16: putstatic     #4                  // Field exitTreeHole:Z
+      19: iconst_0
+      20: putstatic     #5                  // Field enableTreeHole:Z
+      23: iconst_0
+      24: putstatic     #6                  // Field dontScrollThisTime:Z
+      27: new           #49                 // class TreeHole/save/ExtraSave
+      30: dup
+      31: invokespecial #50                 // Method TreeHole/save/ExtraSave."<init>":()V
+      34: putstatic     #51                 // Field extraSave:LTreeHole/save/ExtraSave;
+      37: iconst_0
+      38: putstatic     #8                  // Field renderBoss:Z
+      41: iconst_0
+      42: putstatic     #9                  // Field shouldRespawnTreeHoles:Z
+      45: new           #52                 // class java/util/ArrayList
+      48: dup
+      49: invokespecial #53                 // Method java/util/ArrayList."<init>":()V
+      52: putstatic     #16                 // Field bossSpawned:Ljava/util/ArrayList;
+      55: ldc           #18                 // String
+      57: putstatic     #19                 // Field lastHoleID:Ljava/lang/String;
+      60: return
+}

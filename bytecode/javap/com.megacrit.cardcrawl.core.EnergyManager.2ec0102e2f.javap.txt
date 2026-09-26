@@ -1,0 +1,90 @@
+Compiled from "EnergyManager.java"
+public class com.megacrit.cardcrawl.core.EnergyManager {
+  public int energy;
+    descriptor: I
+
+  public int energyMaster;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.core.EnergyManager(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: iload_1
+       6: putfield      #2                  // Field energyMaster:I
+       9: return
+
+  public void prep();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: aload_0
+       2: getfield      #2                  // Field energyMaster:I
+       5: putfield      #3                  // Field energy:I
+       8: iconst_0
+       9: putstatic     #4                  // Field com/megacrit/cardcrawl/ui/panels/EnergyPanel.totalCount:I
+      12: return
+
+  public void recharge();
+    descriptor: ()V
+    Code:
+       0: getstatic     #5                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: ldc           #7                  // String Ice Cream
+       5: invokevirtual #8                  // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+       8: ifeq          62
+      11: getstatic     #4                  // Field com/megacrit/cardcrawl/ui/panels/EnergyPanel.totalCount:I
+      14: ifle          52
+      17: getstatic     #5                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      20: ldc           #7                  // String Ice Cream
+      22: invokevirtual #9                  // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+      25: invokevirtual #10                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.flash:()V
+      28: getstatic     #11                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      31: new           #12                 // class com/megacrit/cardcrawl/actions/common/RelicAboveCreatureAction
+      34: dup
+      35: getstatic     #5                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      38: getstatic     #5                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      41: ldc           #7                  // String Ice Cream
+      43: invokevirtual #9                  // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+      46: invokespecial #13                 // Method com/megacrit/cardcrawl/actions/common/RelicAboveCreatureAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+      49: invokevirtual #14                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      52: aload_0
+      53: getfield      #3                  // Field energy:I
+      56: invokestatic  #15                 // Method com/megacrit/cardcrawl/ui/panels/EnergyPanel.addEnergy:(I)V
+      59: goto          118
+      62: getstatic     #5                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      65: ldc           #17                 // String Conserve
+      67: invokevirtual #18                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasPower:(Ljava/lang/String;)Z
+      70: ifeq          111
+      73: getstatic     #4                  // Field com/megacrit/cardcrawl/ui/panels/EnergyPanel.totalCount:I
+      76: ifle          101
+      79: getstatic     #11                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      82: new           #19                 // class com/megacrit/cardcrawl/actions/common/ReducePowerAction
+      85: dup
+      86: getstatic     #5                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      89: getstatic     #5                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      92: ldc           #17                 // String Conserve
+      94: iconst_1
+      95: invokespecial #20                 // Method com/megacrit/cardcrawl/actions/common/ReducePowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;I)V
+      98: invokevirtual #14                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     101: aload_0
+     102: getfield      #3                  // Field energy:I
+     105: invokestatic  #15                 // Method com/megacrit/cardcrawl/ui/panels/EnergyPanel.addEnergy:(I)V
+     108: goto          118
+     111: aload_0
+     112: getfield      #3                  // Field energy:I
+     115: invokestatic  #21                 // Method com/megacrit/cardcrawl/ui/panels/EnergyPanel.setEnergy:(I)V
+     118: getstatic     #11                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     121: aload_0
+     122: getfield      #3                  // Field energy:I
+     125: invokevirtual #22                 // Method com/megacrit/cardcrawl/actions/GameActionManager.updateEnergyGain:(I)V
+     128: return
+
+  public void use(int);
+    descriptor: (I)V
+    Code:
+       0: iload_1
+       1: invokestatic  #23                 // Method com/megacrit/cardcrawl/ui/panels/EnergyPanel.useEnergy:(I)V
+       4: return
+}

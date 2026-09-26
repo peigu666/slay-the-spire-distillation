@@ -1,0 +1,2816 @@
+Compiled from "SkeletonJson.java"
+public class com.esotericsoftware.spine.SkeletonJson {
+  private final com.esotericsoftware.spine.attachments.AttachmentLoader attachmentLoader;
+    descriptor: Lcom/esotericsoftware/spine/attachments/AttachmentLoader;
+
+  private float scale;
+    descriptor: F
+
+  private com.badlogic.gdx.utils.Array<com.esotericsoftware.spine.SkeletonJson$LinkedMesh> linkedMeshes;
+    descriptor: Lcom/badlogic/gdx/utils/Array;
+
+  public com.esotericsoftware.spine.SkeletonJson(com.badlogic.gdx.graphics.g2d.TextureAtlas);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: fconst_1
+       6: putfield      #2                  // Field scale:F
+       9: aload_0
+      10: new           #3                  // class com/badlogic/gdx/utils/Array
+      13: dup
+      14: invokespecial #4                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      17: putfield      #5                  // Field linkedMeshes:Lcom/badlogic/gdx/utils/Array;
+      20: aload_0
+      21: new           #6                  // class com/esotericsoftware/spine/attachments/AtlasAttachmentLoader
+      24: dup
+      25: aload_1
+      26: invokespecial #7                  // Method com/esotericsoftware/spine/attachments/AtlasAttachmentLoader."<init>":(Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;)V
+      29: putfield      #8                  // Field attachmentLoader:Lcom/esotericsoftware/spine/attachments/AttachmentLoader;
+      32: return
+
+  public com.esotericsoftware.spine.SkeletonJson(com.esotericsoftware.spine.attachments.AttachmentLoader);
+    descriptor: (Lcom/esotericsoftware/spine/attachments/AttachmentLoader;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: fconst_1
+       6: putfield      #2                  // Field scale:F
+       9: aload_0
+      10: new           #3                  // class com/badlogic/gdx/utils/Array
+      13: dup
+      14: invokespecial #4                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      17: putfield      #5                  // Field linkedMeshes:Lcom/badlogic/gdx/utils/Array;
+      20: aload_1
+      21: ifnonnull     34
+      24: new           #9                  // class java/lang/IllegalArgumentException
+      27: dup
+      28: ldc           #10                 // String attachmentLoader cannot be null.
+      30: invokespecial #11                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      33: athrow
+      34: aload_0
+      35: aload_1
+      36: putfield      #8                  // Field attachmentLoader:Lcom/esotericsoftware/spine/attachments/AttachmentLoader;
+      39: return
+
+  public float getScale();
+    descriptor: ()F
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field scale:F
+       4: freturn
+
+  public void setScale(float);
+    descriptor: (F)V
+    Code:
+       0: aload_0
+       1: fload_1
+       2: putfield      #2                  // Field scale:F
+       5: return
+
+  public com.esotericsoftware.spine.SkeletonData readSkeletonData(com.badlogic.gdx.files.FileHandle);
+    descriptor: (Lcom/badlogic/gdx/files/FileHandle;)Lcom/esotericsoftware/spine/SkeletonData;
+    Code:
+       0: aload_1
+       1: ifnonnull     14
+       4: new           #9                  // class java/lang/IllegalArgumentException
+       7: dup
+       8: ldc           #12                 // String file cannot be null.
+      10: invokespecial #11                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      13: athrow
+      14: aload_0
+      15: getfield      #2                  // Field scale:F
+      18: fstore_2
+      19: new           #13                 // class com/esotericsoftware/spine/SkeletonData
+      22: dup
+      23: invokespecial #14                 // Method com/esotericsoftware/spine/SkeletonData."<init>":()V
+      26: astore_3
+      27: aload_3
+      28: aload_1
+      29: invokevirtual #15                 // Method com/badlogic/gdx/files/FileHandle.nameWithoutExtension:()Ljava/lang/String;
+      32: putfield      #16                 // Field com/esotericsoftware/spine/SkeletonData.name:Ljava/lang/String;
+      35: new           #17                 // class com/badlogic/gdx/utils/JsonReader
+      38: dup
+      39: invokespecial #18                 // Method com/badlogic/gdx/utils/JsonReader."<init>":()V
+      42: aload_1
+      43: invokevirtual #19                 // Method com/badlogic/gdx/utils/JsonReader.parse:(Lcom/badlogic/gdx/files/FileHandle;)Lcom/badlogic/gdx/utils/JsonValue;
+      46: astore        4
+      48: aload         4
+      50: ldc           #20                 // String skeleton
+      52: invokevirtual #21                 // Method com/badlogic/gdx/utils/JsonValue.get:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+      55: astore        5
+      57: aload         5
+      59: ifnull        122
+      62: aload_3
+      63: aload         5
+      65: ldc           #22                 // String hash
+      67: aconst_null
+      68: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      71: putfield      #24                 // Field com/esotericsoftware/spine/SkeletonData.hash:Ljava/lang/String;
+      74: aload_3
+      75: aload         5
+      77: ldc           #25                 // String spine
+      79: aconst_null
+      80: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      83: putfield      #26                 // Field com/esotericsoftware/spine/SkeletonData.version:Ljava/lang/String;
+      86: aload_3
+      87: aload         5
+      89: ldc           #27                 // String width
+      91: fconst_0
+      92: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+      95: putfield      #29                 // Field com/esotericsoftware/spine/SkeletonData.width:F
+      98: aload_3
+      99: aload         5
+     101: ldc           #30                 // String height
+     103: fconst_0
+     104: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     107: putfield      #31                 // Field com/esotericsoftware/spine/SkeletonData.height:F
+     110: aload_3
+     111: aload         5
+     113: ldc           #32                 // String images
+     115: aconst_null
+     116: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     119: putfield      #33                 // Field com/esotericsoftware/spine/SkeletonData.imagesPath:Ljava/lang/String;
+     122: aload         4
+     124: ldc           #34                 // String bones
+     126: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     129: astore        6
+     131: aload         6
+     133: ifnull        404
+     136: aconst_null
+     137: astore        7
+     139: aload         6
+     141: ldc           #36                 // String parent
+     143: aconst_null
+     144: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     147: astore        8
+     149: aload         8
+     151: ifnull        195
+     154: aload_3
+     155: aload         8
+     157: invokevirtual #37                 // Method com/esotericsoftware/spine/SkeletonData.findBone:(Ljava/lang/String;)Lcom/esotericsoftware/spine/BoneData;
+     160: astore        7
+     162: aload         7
+     164: ifnonnull     195
+     167: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+     170: dup
+     171: new           #39                 // class java/lang/StringBuilder
+     174: dup
+     175: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+     178: ldc           #41                 // String Parent bone not found:
+     180: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     183: aload         8
+     185: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     188: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     191: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+     194: athrow
+     195: new           #45                 // class com/esotericsoftware/spine/BoneData
+     198: dup
+     199: aload_3
+     200: getfield      #46                 // Field com/esotericsoftware/spine/SkeletonData.bones:Lcom/badlogic/gdx/utils/Array;
+     203: getfield      #47                 // Field com/badlogic/gdx/utils/Array.size:I
+     206: aload         6
+     208: ldc           #48                 // String name
+     210: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+     213: aload         7
+     215: invokespecial #50                 // Method com/esotericsoftware/spine/BoneData."<init>":(ILjava/lang/String;Lcom/esotericsoftware/spine/BoneData;)V
+     218: astore        9
+     220: aload         9
+     222: aload         6
+     224: ldc           #51                 // String length
+     226: fconst_0
+     227: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     230: fload_2
+     231: fmul
+     232: putfield      #52                 // Field com/esotericsoftware/spine/BoneData.length:F
+     235: aload         9
+     237: aload         6
+     239: ldc           #53                 // String x
+     241: fconst_0
+     242: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     245: fload_2
+     246: fmul
+     247: putfield      #54                 // Field com/esotericsoftware/spine/BoneData.x:F
+     250: aload         9
+     252: aload         6
+     254: ldc           #55                 // String y
+     256: fconst_0
+     257: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     260: fload_2
+     261: fmul
+     262: putfield      #56                 // Field com/esotericsoftware/spine/BoneData.y:F
+     265: aload         9
+     267: aload         6
+     269: ldc           #57                 // String rotation
+     271: fconst_0
+     272: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     275: putfield      #58                 // Field com/esotericsoftware/spine/BoneData.rotation:F
+     278: aload         9
+     280: aload         6
+     282: ldc           #59                 // String scaleX
+     284: fconst_1
+     285: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     288: putfield      #60                 // Field com/esotericsoftware/spine/BoneData.scaleX:F
+     291: aload         9
+     293: aload         6
+     295: ldc           #61                 // String scaleY
+     297: fconst_1
+     298: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     301: putfield      #62                 // Field com/esotericsoftware/spine/BoneData.scaleY:F
+     304: aload         9
+     306: aload         6
+     308: ldc           #63                 // String shearX
+     310: fconst_0
+     311: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     314: putfield      #64                 // Field com/esotericsoftware/spine/BoneData.shearX:F
+     317: aload         9
+     319: aload         6
+     321: ldc           #65                 // String shearY
+     323: fconst_0
+     324: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     327: putfield      #66                 // Field com/esotericsoftware/spine/BoneData.shearY:F
+     330: aload         9
+     332: aload         6
+     334: ldc           #67                 // String inheritRotation
+     336: iconst_1
+     337: invokevirtual #68                 // Method com/badlogic/gdx/utils/JsonValue.getBoolean:(Ljava/lang/String;Z)Z
+     340: putfield      #69                 // Field com/esotericsoftware/spine/BoneData.inheritRotation:Z
+     343: aload         9
+     345: aload         6
+     347: ldc           #70                 // String inheritScale
+     349: iconst_1
+     350: invokevirtual #68                 // Method com/badlogic/gdx/utils/JsonValue.getBoolean:(Ljava/lang/String;Z)Z
+     353: putfield      #71                 // Field com/esotericsoftware/spine/BoneData.inheritScale:Z
+     356: aload         6
+     358: ldc           #72                 // String color
+     360: aconst_null
+     361: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     364: astore        10
+     366: aload         10
+     368: ifnull        385
+     371: aload         9
+     373: invokevirtual #73                 // Method com/esotericsoftware/spine/BoneData.getColor:()Lcom/badlogic/gdx/graphics/Color;
+     376: aload         10
+     378: invokestatic  #74                 // Method com/badlogic/gdx/graphics/Color.valueOf:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Color;
+     381: invokevirtual #75                 // Method com/badlogic/gdx/graphics/Color.set:(Lcom/badlogic/gdx/graphics/Color;)Lcom/badlogic/gdx/graphics/Color;
+     384: pop
+     385: aload_3
+     386: getfield      #46                 // Field com/esotericsoftware/spine/SkeletonData.bones:Lcom/badlogic/gdx/utils/Array;
+     389: aload         9
+     391: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+     394: aload         6
+     396: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     399: astore        6
+     401: goto          131
+     404: aload         4
+     406: ldc           #78                 // String slots
+     408: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     411: astore        6
+     413: aload         6
+     415: ifnull        579
+     418: aload         6
+     420: ldc           #48                 // String name
+     422: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+     425: astore        7
+     427: aload         6
+     429: ldc           #79                 // String bone
+     431: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+     434: astore        8
+     436: aload_3
+     437: aload         8
+     439: invokevirtual #37                 // Method com/esotericsoftware/spine/SkeletonData.findBone:(Ljava/lang/String;)Lcom/esotericsoftware/spine/BoneData;
+     442: astore        9
+     444: aload         9
+     446: ifnonnull     477
+     449: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+     452: dup
+     453: new           #39                 // class java/lang/StringBuilder
+     456: dup
+     457: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+     460: ldc           #80                 // String Slot bone not found:
+     462: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     465: aload         8
+     467: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     470: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     473: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+     476: athrow
+     477: new           #81                 // class com/esotericsoftware/spine/SlotData
+     480: dup
+     481: aload_3
+     482: getfield      #82                 // Field com/esotericsoftware/spine/SkeletonData.slots:Lcom/badlogic/gdx/utils/Array;
+     485: getfield      #47                 // Field com/badlogic/gdx/utils/Array.size:I
+     488: aload         7
+     490: aload         9
+     492: invokespecial #83                 // Method com/esotericsoftware/spine/SlotData."<init>":(ILjava/lang/String;Lcom/esotericsoftware/spine/BoneData;)V
+     495: astore        10
+     497: aload         6
+     499: ldc           #72                 // String color
+     501: aconst_null
+     502: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     505: astore        11
+     507: aload         11
+     509: ifnull        526
+     512: aload         10
+     514: invokevirtual #84                 // Method com/esotericsoftware/spine/SlotData.getColor:()Lcom/badlogic/gdx/graphics/Color;
+     517: aload         11
+     519: invokestatic  #74                 // Method com/badlogic/gdx/graphics/Color.valueOf:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Color;
+     522: invokevirtual #75                 // Method com/badlogic/gdx/graphics/Color.set:(Lcom/badlogic/gdx/graphics/Color;)Lcom/badlogic/gdx/graphics/Color;
+     525: pop
+     526: aload         10
+     528: aload         6
+     530: ldc           #85                 // String attachment
+     532: aconst_null
+     533: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     536: putfield      #86                 // Field com/esotericsoftware/spine/SlotData.attachmentName:Ljava/lang/String;
+     539: aload         10
+     541: aload         6
+     543: ldc           #87                 // String blend
+     545: getstatic     #88                 // Field com/esotericsoftware/spine/BlendMode.normal:Lcom/esotericsoftware/spine/BlendMode;
+     548: invokevirtual #89                 // Method com/esotericsoftware/spine/BlendMode.name:()Ljava/lang/String;
+     551: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     554: invokestatic  #90                 // Method com/esotericsoftware/spine/BlendMode.valueOf:(Ljava/lang/String;)Lcom/esotericsoftware/spine/BlendMode;
+     557: putfield      #91                 // Field com/esotericsoftware/spine/SlotData.blendMode:Lcom/esotericsoftware/spine/BlendMode;
+     560: aload_3
+     561: getfield      #82                 // Field com/esotericsoftware/spine/SkeletonData.slots:Lcom/badlogic/gdx/utils/Array;
+     564: aload         10
+     566: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+     569: aload         6
+     571: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     574: astore        6
+     576: goto          413
+     579: aload         4
+     581: ldc           #92                 // String ik
+     583: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     586: astore        6
+     588: aload         6
+     590: ifnull        800
+     593: new           #93                 // class com/esotericsoftware/spine/IkConstraintData
+     596: dup
+     597: aload         6
+     599: ldc           #48                 // String name
+     601: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+     604: invokespecial #94                 // Method com/esotericsoftware/spine/IkConstraintData."<init>":(Ljava/lang/String;)V
+     607: astore        7
+     609: aload         6
+     611: ldc           #34                 // String bones
+     613: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     616: astore        8
+     618: aload         8
+     620: ifnull        691
+     623: aload         8
+     625: invokevirtual #95                 // Method com/badlogic/gdx/utils/JsonValue.asString:()Ljava/lang/String;
+     628: astore        9
+     630: aload_3
+     631: aload         9
+     633: invokevirtual #37                 // Method com/esotericsoftware/spine/SkeletonData.findBone:(Ljava/lang/String;)Lcom/esotericsoftware/spine/BoneData;
+     636: astore        10
+     638: aload         10
+     640: ifnonnull     671
+     643: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+     646: dup
+     647: new           #39                 // class java/lang/StringBuilder
+     650: dup
+     651: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+     654: ldc           #96                 // String IK bone not found:
+     656: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     659: aload         9
+     661: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     664: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     667: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+     670: athrow
+     671: aload         7
+     673: getfield      #97                 // Field com/esotericsoftware/spine/IkConstraintData.bones:Lcom/badlogic/gdx/utils/Array;
+     676: aload         10
+     678: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+     681: aload         8
+     683: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     686: astore        8
+     688: goto          618
+     691: aload         6
+     693: ldc           #98                 // String target
+     695: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+     698: astore        8
+     700: aload         7
+     702: aload_3
+     703: aload         8
+     705: invokevirtual #37                 // Method com/esotericsoftware/spine/SkeletonData.findBone:(Ljava/lang/String;)Lcom/esotericsoftware/spine/BoneData;
+     708: putfield      #99                 // Field com/esotericsoftware/spine/IkConstraintData.target:Lcom/esotericsoftware/spine/BoneData;
+     711: aload         7
+     713: getfield      #99                 // Field com/esotericsoftware/spine/IkConstraintData.target:Lcom/esotericsoftware/spine/BoneData;
+     716: ifnonnull     747
+     719: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+     722: dup
+     723: new           #39                 // class java/lang/StringBuilder
+     726: dup
+     727: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+     730: ldc           #100                // String IK target bone not found:
+     732: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     735: aload         8
+     737: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     740: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     743: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+     746: athrow
+     747: aload         7
+     749: aload         6
+     751: ldc           #101                // String bendPositive
+     753: iconst_1
+     754: invokevirtual #68                 // Method com/badlogic/gdx/utils/JsonValue.getBoolean:(Ljava/lang/String;Z)Z
+     757: ifeq          764
+     760: iconst_1
+     761: goto          765
+     764: iconst_m1
+     765: putfield      #102                // Field com/esotericsoftware/spine/IkConstraintData.bendDirection:I
+     768: aload         7
+     770: aload         6
+     772: ldc           #103                // String mix
+     774: fconst_1
+     775: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     778: putfield      #104                // Field com/esotericsoftware/spine/IkConstraintData.mix:F
+     781: aload_3
+     782: getfield      #105                // Field com/esotericsoftware/spine/SkeletonData.ikConstraints:Lcom/badlogic/gdx/utils/Array;
+     785: aload         7
+     787: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+     790: aload         6
+     792: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     795: astore        6
+     797: goto          588
+     800: aload         4
+     802: ldc           #106                // String transform
+     804: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     807: astore        6
+     809: aload         6
+     811: ifnull        1121
+     814: new           #107                // class com/esotericsoftware/spine/TransformConstraintData
+     817: dup
+     818: aload         6
+     820: ldc           #48                 // String name
+     822: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+     825: invokespecial #108                // Method com/esotericsoftware/spine/TransformConstraintData."<init>":(Ljava/lang/String;)V
+     828: astore        7
+     830: aload         6
+     832: ldc           #34                 // String bones
+     834: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     837: astore        8
+     839: aload         8
+     841: ifnull        912
+     844: aload         8
+     846: invokevirtual #95                 // Method com/badlogic/gdx/utils/JsonValue.asString:()Ljava/lang/String;
+     849: astore        9
+     851: aload_3
+     852: aload         9
+     854: invokevirtual #37                 // Method com/esotericsoftware/spine/SkeletonData.findBone:(Ljava/lang/String;)Lcom/esotericsoftware/spine/BoneData;
+     857: astore        10
+     859: aload         10
+     861: ifnonnull     892
+     864: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+     867: dup
+     868: new           #39                 // class java/lang/StringBuilder
+     871: dup
+     872: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+     875: ldc           #109                // String Transform constraint bone not found:
+     877: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     880: aload         9
+     882: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     885: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     888: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+     891: athrow
+     892: aload         7
+     894: getfield      #110                // Field com/esotericsoftware/spine/TransformConstraintData.bones:Lcom/badlogic/gdx/utils/Array;
+     897: aload         10
+     899: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+     902: aload         8
+     904: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     907: astore        8
+     909: goto          839
+     912: aload         6
+     914: ldc           #98                 // String target
+     916: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+     919: astore        8
+     921: aload         7
+     923: aload_3
+     924: aload         8
+     926: invokevirtual #37                 // Method com/esotericsoftware/spine/SkeletonData.findBone:(Ljava/lang/String;)Lcom/esotericsoftware/spine/BoneData;
+     929: putfield      #111                // Field com/esotericsoftware/spine/TransformConstraintData.target:Lcom/esotericsoftware/spine/BoneData;
+     932: aload         7
+     934: getfield      #111                // Field com/esotericsoftware/spine/TransformConstraintData.target:Lcom/esotericsoftware/spine/BoneData;
+     937: ifnonnull     968
+     940: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+     943: dup
+     944: new           #39                 // class java/lang/StringBuilder
+     947: dup
+     948: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+     951: ldc           #112                // String Transform constraint target bone not found:
+     953: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     956: aload         8
+     958: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     961: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     964: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+     967: athrow
+     968: aload         7
+     970: aload         6
+     972: ldc           #57                 // String rotation
+     974: fconst_0
+     975: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     978: putfield      #113                // Field com/esotericsoftware/spine/TransformConstraintData.offsetRotation:F
+     981: aload         7
+     983: aload         6
+     985: ldc           #53                 // String x
+     987: fconst_0
+     988: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     991: fload_2
+     992: fmul
+     993: putfield      #114                // Field com/esotericsoftware/spine/TransformConstraintData.offsetX:F
+     996: aload         7
+     998: aload         6
+    1000: ldc           #55                 // String y
+    1002: fconst_0
+    1003: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1006: fload_2
+    1007: fmul
+    1008: putfield      #115                // Field com/esotericsoftware/spine/TransformConstraintData.offsetY:F
+    1011: aload         7
+    1013: aload         6
+    1015: ldc           #59                 // String scaleX
+    1017: fconst_0
+    1018: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1021: putfield      #116                // Field com/esotericsoftware/spine/TransformConstraintData.offsetScaleX:F
+    1024: aload         7
+    1026: aload         6
+    1028: ldc           #61                 // String scaleY
+    1030: fconst_0
+    1031: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1034: putfield      #117                // Field com/esotericsoftware/spine/TransformConstraintData.offsetScaleY:F
+    1037: aload         7
+    1039: aload         6
+    1041: ldc           #65                 // String shearY
+    1043: fconst_0
+    1044: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1047: putfield      #118                // Field com/esotericsoftware/spine/TransformConstraintData.offsetShearY:F
+    1050: aload         7
+    1052: aload         6
+    1054: ldc           #119                // String rotateMix
+    1056: fconst_1
+    1057: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1060: putfield      #120                // Field com/esotericsoftware/spine/TransformConstraintData.rotateMix:F
+    1063: aload         7
+    1065: aload         6
+    1067: ldc           #121                // String translateMix
+    1069: fconst_1
+    1070: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1073: putfield      #122                // Field com/esotericsoftware/spine/TransformConstraintData.translateMix:F
+    1076: aload         7
+    1078: aload         6
+    1080: ldc           #123                // String scaleMix
+    1082: fconst_1
+    1083: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1086: putfield      #124                // Field com/esotericsoftware/spine/TransformConstraintData.scaleMix:F
+    1089: aload         7
+    1091: aload         6
+    1093: ldc           #125                // String shearMix
+    1095: fconst_1
+    1096: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1099: putfield      #126                // Field com/esotericsoftware/spine/TransformConstraintData.shearMix:F
+    1102: aload_3
+    1103: getfield      #127                // Field com/esotericsoftware/spine/SkeletonData.transformConstraints:Lcom/badlogic/gdx/utils/Array;
+    1106: aload         7
+    1108: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    1111: aload         6
+    1113: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1116: astore        6
+    1118: goto          809
+    1121: aload         4
+    1123: ldc           #128                // String path
+    1125: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    1128: astore        6
+    1130: aload         6
+    1132: ifnull        1479
+    1135: new           #129                // class com/esotericsoftware/spine/PathConstraintData
+    1138: dup
+    1139: aload         6
+    1141: ldc           #48                 // String name
+    1143: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+    1146: invokespecial #130                // Method com/esotericsoftware/spine/PathConstraintData."<init>":(Ljava/lang/String;)V
+    1149: astore        7
+    1151: aload         6
+    1153: ldc           #34                 // String bones
+    1155: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    1158: astore        8
+    1160: aload         8
+    1162: ifnull        1233
+    1165: aload         8
+    1167: invokevirtual #95                 // Method com/badlogic/gdx/utils/JsonValue.asString:()Ljava/lang/String;
+    1170: astore        9
+    1172: aload_3
+    1173: aload         9
+    1175: invokevirtual #37                 // Method com/esotericsoftware/spine/SkeletonData.findBone:(Ljava/lang/String;)Lcom/esotericsoftware/spine/BoneData;
+    1178: astore        10
+    1180: aload         10
+    1182: ifnonnull     1213
+    1185: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    1188: dup
+    1189: new           #39                 // class java/lang/StringBuilder
+    1192: dup
+    1193: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    1196: ldc           #131                // String Path bone not found:
+    1198: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1201: aload         9
+    1203: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1206: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1209: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    1212: athrow
+    1213: aload         7
+    1215: getfield      #132                // Field com/esotericsoftware/spine/PathConstraintData.bones:Lcom/badlogic/gdx/utils/Array;
+    1218: aload         10
+    1220: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    1223: aload         8
+    1225: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1228: astore        8
+    1230: goto          1160
+    1233: aload         6
+    1235: ldc           #98                 // String target
+    1237: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+    1240: astore        8
+    1242: aload         7
+    1244: aload_3
+    1245: aload         8
+    1247: invokevirtual #133                // Method com/esotericsoftware/spine/SkeletonData.findSlot:(Ljava/lang/String;)Lcom/esotericsoftware/spine/SlotData;
+    1250: putfield      #134                // Field com/esotericsoftware/spine/PathConstraintData.target:Lcom/esotericsoftware/spine/SlotData;
+    1253: aload         7
+    1255: getfield      #134                // Field com/esotericsoftware/spine/PathConstraintData.target:Lcom/esotericsoftware/spine/SlotData;
+    1258: ifnonnull     1289
+    1261: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    1264: dup
+    1265: new           #39                 // class java/lang/StringBuilder
+    1268: dup
+    1269: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    1272: ldc           #135                // String Path target slot not found:
+    1274: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1277: aload         8
+    1279: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1282: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1285: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    1288: athrow
+    1289: aload         7
+    1291: aload         6
+    1293: ldc           #136                // String positionMode
+    1295: ldc           #137                // String percent
+    1297: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    1300: invokestatic  #138                // Method com/esotericsoftware/spine/PathConstraintData$PositionMode.valueOf:(Ljava/lang/String;)Lcom/esotericsoftware/spine/PathConstraintData$PositionMode;
+    1303: putfield      #139                // Field com/esotericsoftware/spine/PathConstraintData.positionMode:Lcom/esotericsoftware/spine/PathConstraintData$PositionMode;
+    1306: aload         7
+    1308: aload         6
+    1310: ldc           #140                // String spacingMode
+    1312: ldc           #51                 // String length
+    1314: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    1317: invokestatic  #141                // Method com/esotericsoftware/spine/PathConstraintData$SpacingMode.valueOf:(Ljava/lang/String;)Lcom/esotericsoftware/spine/PathConstraintData$SpacingMode;
+    1320: putfield      #142                // Field com/esotericsoftware/spine/PathConstraintData.spacingMode:Lcom/esotericsoftware/spine/PathConstraintData$SpacingMode;
+    1323: aload         7
+    1325: aload         6
+    1327: ldc           #143                // String rotateMode
+    1329: ldc           #144                // String tangent
+    1331: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    1334: invokestatic  #145                // Method com/esotericsoftware/spine/PathConstraintData$RotateMode.valueOf:(Ljava/lang/String;)Lcom/esotericsoftware/spine/PathConstraintData$RotateMode;
+    1337: putfield      #146                // Field com/esotericsoftware/spine/PathConstraintData.rotateMode:Lcom/esotericsoftware/spine/PathConstraintData$RotateMode;
+    1340: aload         7
+    1342: aload         6
+    1344: ldc           #57                 // String rotation
+    1346: fconst_0
+    1347: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1350: putfield      #147                // Field com/esotericsoftware/spine/PathConstraintData.offsetRotation:F
+    1353: aload         7
+    1355: aload         6
+    1357: ldc           #148                // String position
+    1359: fconst_0
+    1360: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1363: putfield      #149                // Field com/esotericsoftware/spine/PathConstraintData.position:F
+    1366: aload         7
+    1368: getfield      #139                // Field com/esotericsoftware/spine/PathConstraintData.positionMode:Lcom/esotericsoftware/spine/PathConstraintData$PositionMode;
+    1371: getstatic     #150                // Field com/esotericsoftware/spine/PathConstraintData$PositionMode.fixed:Lcom/esotericsoftware/spine/PathConstraintData$PositionMode;
+    1374: if_acmpne     1388
+    1377: aload         7
+    1379: dup
+    1380: getfield      #149                // Field com/esotericsoftware/spine/PathConstraintData.position:F
+    1383: fload_2
+    1384: fmul
+    1385: putfield      #149                // Field com/esotericsoftware/spine/PathConstraintData.position:F
+    1388: aload         7
+    1390: aload         6
+    1392: ldc           #151                // String spacing
+    1394: fconst_0
+    1395: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1398: putfield      #152                // Field com/esotericsoftware/spine/PathConstraintData.spacing:F
+    1401: aload         7
+    1403: getfield      #142                // Field com/esotericsoftware/spine/PathConstraintData.spacingMode:Lcom/esotericsoftware/spine/PathConstraintData$SpacingMode;
+    1406: getstatic     #153                // Field com/esotericsoftware/spine/PathConstraintData$SpacingMode.length:Lcom/esotericsoftware/spine/PathConstraintData$SpacingMode;
+    1409: if_acmpeq     1423
+    1412: aload         7
+    1414: getfield      #142                // Field com/esotericsoftware/spine/PathConstraintData.spacingMode:Lcom/esotericsoftware/spine/PathConstraintData$SpacingMode;
+    1417: getstatic     #154                // Field com/esotericsoftware/spine/PathConstraintData$SpacingMode.fixed:Lcom/esotericsoftware/spine/PathConstraintData$SpacingMode;
+    1420: if_acmpne     1434
+    1423: aload         7
+    1425: dup
+    1426: getfield      #152                // Field com/esotericsoftware/spine/PathConstraintData.spacing:F
+    1429: fload_2
+    1430: fmul
+    1431: putfield      #152                // Field com/esotericsoftware/spine/PathConstraintData.spacing:F
+    1434: aload         7
+    1436: aload         6
+    1438: ldc           #119                // String rotateMix
+    1440: fconst_1
+    1441: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1444: putfield      #155                // Field com/esotericsoftware/spine/PathConstraintData.rotateMix:F
+    1447: aload         7
+    1449: aload         6
+    1451: ldc           #121                // String translateMix
+    1453: fconst_1
+    1454: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1457: putfield      #156                // Field com/esotericsoftware/spine/PathConstraintData.translateMix:F
+    1460: aload_3
+    1461: getfield      #157                // Field com/esotericsoftware/spine/SkeletonData.pathConstraints:Lcom/badlogic/gdx/utils/Array;
+    1464: aload         7
+    1466: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    1469: aload         6
+    1471: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1474: astore        6
+    1476: goto          1130
+    1479: aload         4
+    1481: ldc           #158                // String skins
+    1483: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    1486: astore        6
+    1488: aload         6
+    1490: ifnull        1721
+    1493: new           #159                // class com/esotericsoftware/spine/Skin
+    1496: dup
+    1497: aload         6
+    1499: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1502: invokespecial #161                // Method com/esotericsoftware/spine/Skin."<init>":(Ljava/lang/String;)V
+    1505: astore        7
+    1507: aload         6
+    1509: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    1512: astore        8
+    1514: aload         8
+    1516: ifnull        1683
+    1519: aload_3
+    1520: aload         8
+    1522: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1525: invokevirtual #163                // Method com/esotericsoftware/spine/SkeletonData.findSlotIndex:(Ljava/lang/String;)I
+    1528: istore        9
+    1530: iload         9
+    1532: iconst_m1
+    1533: if_icmpne     1567
+    1536: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    1539: dup
+    1540: new           #39                 // class java/lang/StringBuilder
+    1543: dup
+    1544: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    1547: ldc           #164                // String Slot not found:
+    1549: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1552: aload         8
+    1554: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1557: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1560: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1563: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    1566: athrow
+    1567: aload         8
+    1569: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    1572: astore        10
+    1574: aload         10
+    1576: ifnull        1673
+    1579: aload_0
+    1580: aload         10
+    1582: aload         7
+    1584: iload         9
+    1586: aload         10
+    1588: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1591: invokespecial #165                // Method readAttachment:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Skin;ILjava/lang/String;)Lcom/esotericsoftware/spine/attachments/Attachment;
+    1594: astore        11
+    1596: aload         11
+    1598: ifnull        1615
+    1601: aload         7
+    1603: iload         9
+    1605: aload         10
+    1607: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1610: aload         11
+    1612: invokevirtual #166                // Method com/esotericsoftware/spine/Skin.addAttachment:(ILjava/lang/String;Lcom/esotericsoftware/spine/attachments/Attachment;)V
+    1615: goto          1663
+    1618: astore        11
+    1620: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    1623: dup
+    1624: new           #39                 // class java/lang/StringBuilder
+    1627: dup
+    1628: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    1631: ldc           #168                // String Error reading attachment:
+    1633: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1636: aload         10
+    1638: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1641: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1644: ldc           #169                // String , skin:
+    1646: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1649: aload         7
+    1651: invokevirtual #170                // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    1654: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1657: aload         11
+    1659: invokespecial #171                // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;Ljava/lang/Throwable;)V
+    1662: athrow
+    1663: aload         10
+    1665: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1668: astore        10
+    1670: goto          1574
+    1673: aload         8
+    1675: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1678: astore        8
+    1680: goto          1514
+    1683: aload_3
+    1684: getfield      #172                // Field com/esotericsoftware/spine/SkeletonData.skins:Lcom/badlogic/gdx/utils/Array;
+    1687: aload         7
+    1689: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    1692: aload         7
+    1694: getfield      #173                // Field com/esotericsoftware/spine/Skin.name:Ljava/lang/String;
+    1697: ldc           #174                // String default
+    1699: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1702: ifeq          1711
+    1705: aload_3
+    1706: aload         7
+    1708: putfield      #176                // Field com/esotericsoftware/spine/SkeletonData.defaultSkin:Lcom/esotericsoftware/spine/Skin;
+    1711: aload         6
+    1713: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1716: astore        6
+    1718: goto          1488
+    1721: iconst_0
+    1722: istore        6
+    1724: aload_0
+    1725: getfield      #5                  // Field linkedMeshes:Lcom/badlogic/gdx/utils/Array;
+    1728: getfield      #47                 // Field com/badlogic/gdx/utils/Array.size:I
+    1731: istore        7
+    1733: iload         6
+    1735: iload         7
+    1737: if_icmpge     1896
+    1740: aload_0
+    1741: getfield      #5                  // Field linkedMeshes:Lcom/badlogic/gdx/utils/Array;
+    1744: iload         6
+    1746: invokevirtual #177                // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+    1749: checkcast     #178                // class com/esotericsoftware/spine/SkeletonJson$LinkedMesh
+    1752: astore        8
+    1754: aload         8
+    1756: getfield      #179                // Field com/esotericsoftware/spine/SkeletonJson$LinkedMesh.skin:Ljava/lang/String;
+    1759: ifnonnull     1769
+    1762: aload_3
+    1763: invokevirtual #180                // Method com/esotericsoftware/spine/SkeletonData.getDefaultSkin:()Lcom/esotericsoftware/spine/Skin;
+    1766: goto          1778
+    1769: aload_3
+    1770: aload         8
+    1772: getfield      #179                // Field com/esotericsoftware/spine/SkeletonJson$LinkedMesh.skin:Ljava/lang/String;
+    1775: invokevirtual #181                // Method com/esotericsoftware/spine/SkeletonData.findSkin:(Ljava/lang/String;)Lcom/esotericsoftware/spine/Skin;
+    1778: astore        9
+    1780: aload         9
+    1782: ifnonnull     1816
+    1785: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    1788: dup
+    1789: new           #39                 // class java/lang/StringBuilder
+    1792: dup
+    1793: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    1796: ldc           #182                // String Skin not found:
+    1798: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1801: aload         8
+    1803: getfield      #179                // Field com/esotericsoftware/spine/SkeletonJson$LinkedMesh.skin:Ljava/lang/String;
+    1806: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1809: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1812: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    1815: athrow
+    1816: aload         9
+    1818: aload         8
+    1820: getfield      #183                // Field com/esotericsoftware/spine/SkeletonJson$LinkedMesh.slotIndex:I
+    1823: aload         8
+    1825: getfield      #184                // Field com/esotericsoftware/spine/SkeletonJson$LinkedMesh.parent:Ljava/lang/String;
+    1828: invokevirtual #185                // Method com/esotericsoftware/spine/Skin.getAttachment:(ILjava/lang/String;)Lcom/esotericsoftware/spine/attachments/Attachment;
+    1831: astore        10
+    1833: aload         10
+    1835: ifnonnull     1869
+    1838: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    1841: dup
+    1842: new           #39                 // class java/lang/StringBuilder
+    1845: dup
+    1846: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    1849: ldc           #186                // String Parent mesh not found:
+    1851: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1854: aload         8
+    1856: getfield      #184                // Field com/esotericsoftware/spine/SkeletonJson$LinkedMesh.parent:Ljava/lang/String;
+    1859: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1862: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1865: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    1868: athrow
+    1869: aload         8
+    1871: getfield      #187                // Field com/esotericsoftware/spine/SkeletonJson$LinkedMesh.mesh:Lcom/esotericsoftware/spine/attachments/MeshAttachment;
+    1874: aload         10
+    1876: checkcast     #188                // class com/esotericsoftware/spine/attachments/MeshAttachment
+    1879: invokevirtual #189                // Method com/esotericsoftware/spine/attachments/MeshAttachment.setParentMesh:(Lcom/esotericsoftware/spine/attachments/MeshAttachment;)V
+    1882: aload         8
+    1884: getfield      #187                // Field com/esotericsoftware/spine/SkeletonJson$LinkedMesh.mesh:Lcom/esotericsoftware/spine/attachments/MeshAttachment;
+    1887: invokevirtual #190                // Method com/esotericsoftware/spine/attachments/MeshAttachment.updateUVs:()V
+    1890: iinc          6, 1
+    1893: goto          1733
+    1896: aload_0
+    1897: getfield      #5                  // Field linkedMeshes:Lcom/badlogic/gdx/utils/Array;
+    1900: invokevirtual #191                // Method com/badlogic/gdx/utils/Array.clear:()V
+    1903: aload         4
+    1905: ldc           #192                // String events
+    1907: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    1910: astore        6
+    1912: aload         6
+    1914: ifnull        1989
+    1917: new           #193                // class com/esotericsoftware/spine/EventData
+    1920: dup
+    1921: aload         6
+    1923: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1926: invokespecial #194                // Method com/esotericsoftware/spine/EventData."<init>":(Ljava/lang/String;)V
+    1929: astore        7
+    1931: aload         7
+    1933: aload         6
+    1935: ldc           #195                // String int
+    1937: iconst_0
+    1938: invokevirtual #196                // Method com/badlogic/gdx/utils/JsonValue.getInt:(Ljava/lang/String;I)I
+    1941: putfield      #197                // Field com/esotericsoftware/spine/EventData.intValue:I
+    1944: aload         7
+    1946: aload         6
+    1948: ldc           #198                // String float
+    1950: fconst_0
+    1951: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1954: putfield      #199                // Field com/esotericsoftware/spine/EventData.floatValue:F
+    1957: aload         7
+    1959: aload         6
+    1961: ldc           #200                // String string
+    1963: aconst_null
+    1964: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    1967: putfield      #201                // Field com/esotericsoftware/spine/EventData.stringValue:Ljava/lang/String;
+    1970: aload_3
+    1971: getfield      #202                // Field com/esotericsoftware/spine/SkeletonData.events:Lcom/badlogic/gdx/utils/Array;
+    1974: aload         7
+    1976: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    1979: aload         6
+    1981: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1984: astore        6
+    1986: goto          1912
+    1989: aload         4
+    1991: ldc           #203                // String animations
+    1993: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    1996: astore        6
+    1998: aload         6
+    2000: ifnull        2063
+    2003: aload_0
+    2004: aload         6
+    2006: aload         6
+    2008: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    2011: aload_3
+    2012: invokespecial #204                // Method readAnimation:(Lcom/badlogic/gdx/utils/JsonValue;Ljava/lang/String;Lcom/esotericsoftware/spine/SkeletonData;)V
+    2015: goto          2053
+    2018: astore        7
+    2020: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    2023: dup
+    2024: new           #39                 // class java/lang/StringBuilder
+    2027: dup
+    2028: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    2031: ldc           #205                // String Error reading animation:
+    2033: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    2036: aload         6
+    2038: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    2041: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    2044: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    2047: aload         7
+    2049: invokespecial #171                // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;Ljava/lang/Throwable;)V
+    2052: athrow
+    2053: aload         6
+    2055: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    2058: astore        6
+    2060: goto          1998
+    2063: aload_3
+    2064: getfield      #46                 // Field com/esotericsoftware/spine/SkeletonData.bones:Lcom/badlogic/gdx/utils/Array;
+    2067: invokevirtual #206                // Method com/badlogic/gdx/utils/Array.shrink:()[Ljava/lang/Object;
+    2070: pop
+    2071: aload_3
+    2072: getfield      #82                 // Field com/esotericsoftware/spine/SkeletonData.slots:Lcom/badlogic/gdx/utils/Array;
+    2075: invokevirtual #206                // Method com/badlogic/gdx/utils/Array.shrink:()[Ljava/lang/Object;
+    2078: pop
+    2079: aload_3
+    2080: getfield      #172                // Field com/esotericsoftware/spine/SkeletonData.skins:Lcom/badlogic/gdx/utils/Array;
+    2083: invokevirtual #206                // Method com/badlogic/gdx/utils/Array.shrink:()[Ljava/lang/Object;
+    2086: pop
+    2087: aload_3
+    2088: getfield      #202                // Field com/esotericsoftware/spine/SkeletonData.events:Lcom/badlogic/gdx/utils/Array;
+    2091: invokevirtual #206                // Method com/badlogic/gdx/utils/Array.shrink:()[Ljava/lang/Object;
+    2094: pop
+    2095: aload_3
+    2096: getfield      #207                // Field com/esotericsoftware/spine/SkeletonData.animations:Lcom/badlogic/gdx/utils/Array;
+    2099: invokevirtual #206                // Method com/badlogic/gdx/utils/Array.shrink:()[Ljava/lang/Object;
+    2102: pop
+    2103: aload_3
+    2104: getfield      #105                // Field com/esotericsoftware/spine/SkeletonData.ikConstraints:Lcom/badlogic/gdx/utils/Array;
+    2107: invokevirtual #206                // Method com/badlogic/gdx/utils/Array.shrink:()[Ljava/lang/Object;
+    2110: pop
+    2111: aload_3
+    2112: areturn
+    Exception table:
+       from    to  target type
+        1579  1615  1618   Class java/lang/Exception
+        2003  2015  2018   Class java/lang/Exception
+
+  private com.esotericsoftware.spine.attachments.Attachment readAttachment(com.badlogic.gdx.utils.JsonValue, com.esotericsoftware.spine.Skin, int, java.lang.String);
+    descriptor: (Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Skin;ILjava/lang/String;)Lcom/esotericsoftware/spine/attachments/Attachment;
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field scale:F
+       4: fstore        5
+       6: aload_1
+       7: ldc           #48                 // String name
+       9: aload         4
+      11: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      14: astore        4
+      16: aload_1
+      17: ldc           #208                // String type
+      19: getstatic     #209                // Field com/esotericsoftware/spine/attachments/AttachmentType.region:Lcom/esotericsoftware/spine/attachments/AttachmentType;
+      22: invokevirtual #210                // Method com/esotericsoftware/spine/attachments/AttachmentType.name:()Ljava/lang/String;
+      25: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      28: astore        6
+      30: getstatic     #211                // Field com/esotericsoftware/spine/SkeletonJson$1.$SwitchMap$com$esotericsoftware$spine$attachments$AttachmentType:[I
+      33: aload         6
+      35: invokestatic  #212                // Method com/esotericsoftware/spine/attachments/AttachmentType.valueOf:(Ljava/lang/String;)Lcom/esotericsoftware/spine/attachments/AttachmentType;
+      38: invokevirtual #213                // Method com/esotericsoftware/spine/attachments/AttachmentType.ordinal:()I
+      41: iaload
+      42: tableswitch   { // 1 to 5
+
+                     1: 76
+
+                     2: 246
+
+                     3: 313
+
+                     4: 313
+
+                     5: 564
+               default: 721
+          }
+      76: aload_1
+      77: ldc           #128                // String path
+      79: aload         4
+      81: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      84: astore        7
+      86: aload_0
+      87: getfield      #8                  // Field attachmentLoader:Lcom/esotericsoftware/spine/attachments/AttachmentLoader;
+      90: aload_2
+      91: aload         4
+      93: aload         7
+      95: invokeinterface #214,  4          // InterfaceMethod com/esotericsoftware/spine/attachments/AttachmentLoader.newRegionAttachment:(Lcom/esotericsoftware/spine/Skin;Ljava/lang/String;Ljava/lang/String;)Lcom/esotericsoftware/spine/attachments/RegionAttachment;
+     100: astore        8
+     102: aload         8
+     104: ifnonnull     109
+     107: aconst_null
+     108: areturn
+     109: aload         8
+     111: aload         7
+     113: invokevirtual #215                // Method com/esotericsoftware/spine/attachments/RegionAttachment.setPath:(Ljava/lang/String;)V
+     116: aload         8
+     118: aload_1
+     119: ldc           #53                 // String x
+     121: fconst_0
+     122: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     125: fload         5
+     127: fmul
+     128: invokevirtual #216                // Method com/esotericsoftware/spine/attachments/RegionAttachment.setX:(F)V
+     131: aload         8
+     133: aload_1
+     134: ldc           #55                 // String y
+     136: fconst_0
+     137: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     140: fload         5
+     142: fmul
+     143: invokevirtual #217                // Method com/esotericsoftware/spine/attachments/RegionAttachment.setY:(F)V
+     146: aload         8
+     148: aload_1
+     149: ldc           #59                 // String scaleX
+     151: fconst_1
+     152: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     155: invokevirtual #218                // Method com/esotericsoftware/spine/attachments/RegionAttachment.setScaleX:(F)V
+     158: aload         8
+     160: aload_1
+     161: ldc           #61                 // String scaleY
+     163: fconst_1
+     164: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     167: invokevirtual #219                // Method com/esotericsoftware/spine/attachments/RegionAttachment.setScaleY:(F)V
+     170: aload         8
+     172: aload_1
+     173: ldc           #57                 // String rotation
+     175: fconst_0
+     176: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     179: invokevirtual #220                // Method com/esotericsoftware/spine/attachments/RegionAttachment.setRotation:(F)V
+     182: aload         8
+     184: aload_1
+     185: ldc           #27                 // String width
+     187: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+     190: fload         5
+     192: fmul
+     193: invokevirtual #222                // Method com/esotericsoftware/spine/attachments/RegionAttachment.setWidth:(F)V
+     196: aload         8
+     198: aload_1
+     199: ldc           #30                 // String height
+     201: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+     204: fload         5
+     206: fmul
+     207: invokevirtual #223                // Method com/esotericsoftware/spine/attachments/RegionAttachment.setHeight:(F)V
+     210: aload_1
+     211: ldc           #72                 // String color
+     213: aconst_null
+     214: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     217: astore        9
+     219: aload         9
+     221: ifnull        238
+     224: aload         8
+     226: invokevirtual #224                // Method com/esotericsoftware/spine/attachments/RegionAttachment.getColor:()Lcom/badlogic/gdx/graphics/Color;
+     229: aload         9
+     231: invokestatic  #74                 // Method com/badlogic/gdx/graphics/Color.valueOf:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Color;
+     234: invokevirtual #75                 // Method com/badlogic/gdx/graphics/Color.set:(Lcom/badlogic/gdx/graphics/Color;)Lcom/badlogic/gdx/graphics/Color;
+     237: pop
+     238: aload         8
+     240: invokevirtual #225                // Method com/esotericsoftware/spine/attachments/RegionAttachment.updateOffset:()V
+     243: aload         8
+     245: areturn
+     246: aload_0
+     247: getfield      #8                  // Field attachmentLoader:Lcom/esotericsoftware/spine/attachments/AttachmentLoader;
+     250: aload_2
+     251: aload         4
+     253: invokeinterface #226,  3          // InterfaceMethod com/esotericsoftware/spine/attachments/AttachmentLoader.newBoundingBoxAttachment:(Lcom/esotericsoftware/spine/Skin;Ljava/lang/String;)Lcom/esotericsoftware/spine/attachments/BoundingBoxAttachment;
+     258: astore        7
+     260: aload         7
+     262: ifnonnull     267
+     265: aconst_null
+     266: areturn
+     267: aload_0
+     268: aload_1
+     269: aload         7
+     271: aload_1
+     272: ldc           #227                // String vertexCount
+     274: invokevirtual #228                // Method com/badlogic/gdx/utils/JsonValue.getInt:(Ljava/lang/String;)I
+     277: iconst_1
+     278: ishl
+     279: invokespecial #229                // Method readVertices:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/attachments/VertexAttachment;I)V
+     282: aload_1
+     283: ldc           #72                 // String color
+     285: aconst_null
+     286: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     289: astore        8
+     291: aload         8
+     293: ifnull        310
+     296: aload         7
+     298: invokevirtual #230                // Method com/esotericsoftware/spine/attachments/BoundingBoxAttachment.getColor:()Lcom/badlogic/gdx/graphics/Color;
+     301: aload         8
+     303: invokestatic  #74                 // Method com/badlogic/gdx/graphics/Color.valueOf:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Color;
+     306: invokevirtual #75                 // Method com/badlogic/gdx/graphics/Color.set:(Lcom/badlogic/gdx/graphics/Color;)Lcom/badlogic/gdx/graphics/Color;
+     309: pop
+     310: aload         7
+     312: areturn
+     313: aload_1
+     314: ldc           #128                // String path
+     316: aload         4
+     318: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     321: astore        7
+     323: aload_0
+     324: getfield      #8                  // Field attachmentLoader:Lcom/esotericsoftware/spine/attachments/AttachmentLoader;
+     327: aload_2
+     328: aload         4
+     330: aload         7
+     332: invokeinterface #231,  4          // InterfaceMethod com/esotericsoftware/spine/attachments/AttachmentLoader.newMeshAttachment:(Lcom/esotericsoftware/spine/Skin;Ljava/lang/String;Ljava/lang/String;)Lcom/esotericsoftware/spine/attachments/MeshAttachment;
+     337: astore        8
+     339: aload         8
+     341: ifnonnull     346
+     344: aconst_null
+     345: areturn
+     346: aload         8
+     348: aload         7
+     350: invokevirtual #232                // Method com/esotericsoftware/spine/attachments/MeshAttachment.setPath:(Ljava/lang/String;)V
+     353: aload_1
+     354: ldc           #72                 // String color
+     356: aconst_null
+     357: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     360: astore        9
+     362: aload         9
+     364: ifnull        381
+     367: aload         8
+     369: invokevirtual #233                // Method com/esotericsoftware/spine/attachments/MeshAttachment.getColor:()Lcom/badlogic/gdx/graphics/Color;
+     372: aload         9
+     374: invokestatic  #74                 // Method com/badlogic/gdx/graphics/Color.valueOf:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Color;
+     377: invokevirtual #75                 // Method com/badlogic/gdx/graphics/Color.set:(Lcom/badlogic/gdx/graphics/Color;)Lcom/badlogic/gdx/graphics/Color;
+     380: pop
+     381: aload         8
+     383: aload_1
+     384: ldc           #27                 // String width
+     386: fconst_0
+     387: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     390: fload         5
+     392: fmul
+     393: invokevirtual #234                // Method com/esotericsoftware/spine/attachments/MeshAttachment.setWidth:(F)V
+     396: aload         8
+     398: aload_1
+     399: ldc           #30                 // String height
+     401: fconst_0
+     402: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     405: fload         5
+     407: fmul
+     408: invokevirtual #235                // Method com/esotericsoftware/spine/attachments/MeshAttachment.setHeight:(F)V
+     411: aload_1
+     412: ldc           #36                 // String parent
+     414: aconst_null
+     415: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     418: astore        10
+     420: aload         10
+     422: ifnull        466
+     425: aload         8
+     427: aload_1
+     428: ldc           #236                // String deform
+     430: iconst_1
+     431: invokevirtual #68                 // Method com/badlogic/gdx/utils/JsonValue.getBoolean:(Ljava/lang/String;Z)Z
+     434: invokevirtual #237                // Method com/esotericsoftware/spine/attachments/MeshAttachment.setInheritDeform:(Z)V
+     437: aload_0
+     438: getfield      #5                  // Field linkedMeshes:Lcom/badlogic/gdx/utils/Array;
+     441: new           #178                // class com/esotericsoftware/spine/SkeletonJson$LinkedMesh
+     444: dup
+     445: aload         8
+     447: aload_1
+     448: ldc           #238                // String skin
+     450: aconst_null
+     451: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     454: iload_3
+     455: aload         10
+     457: invokespecial #239                // Method com/esotericsoftware/spine/SkeletonJson$LinkedMesh."<init>":(Lcom/esotericsoftware/spine/attachments/MeshAttachment;Ljava/lang/String;ILjava/lang/String;)V
+     460: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+     463: aload         8
+     465: areturn
+     466: aload_1
+     467: ldc           #240                // String uvs
+     469: invokevirtual #241                // Method com/badlogic/gdx/utils/JsonValue.require:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     472: invokevirtual #242                // Method com/badlogic/gdx/utils/JsonValue.asFloatArray:()[F
+     475: astore        11
+     477: aload_0
+     478: aload_1
+     479: aload         8
+     481: aload         11
+     483: arraylength
+     484: invokespecial #229                // Method readVertices:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/attachments/VertexAttachment;I)V
+     487: aload         8
+     489: aload_1
+     490: ldc           #243                // String triangles
+     492: invokevirtual #241                // Method com/badlogic/gdx/utils/JsonValue.require:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     495: invokevirtual #244                // Method com/badlogic/gdx/utils/JsonValue.asShortArray:()[S
+     498: invokevirtual #245                // Method com/esotericsoftware/spine/attachments/MeshAttachment.setTriangles:([S)V
+     501: aload         8
+     503: aload         11
+     505: invokevirtual #246                // Method com/esotericsoftware/spine/attachments/MeshAttachment.setRegionUVs:([F)V
+     508: aload         8
+     510: invokevirtual #190                // Method com/esotericsoftware/spine/attachments/MeshAttachment.updateUVs:()V
+     513: aload_1
+     514: ldc           #247                // String hull
+     516: invokevirtual #248                // Method com/badlogic/gdx/utils/JsonValue.has:(Ljava/lang/String;)Z
+     519: ifeq          538
+     522: aload         8
+     524: aload_1
+     525: ldc           #247                // String hull
+     527: invokevirtual #241                // Method com/badlogic/gdx/utils/JsonValue.require:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     530: invokevirtual #249                // Method com/badlogic/gdx/utils/JsonValue.asInt:()I
+     533: iconst_2
+     534: imul
+     535: invokevirtual #250                // Method com/esotericsoftware/spine/attachments/MeshAttachment.setHullLength:(I)V
+     538: aload_1
+     539: ldc           #251                // String edges
+     541: invokevirtual #248                // Method com/badlogic/gdx/utils/JsonValue.has:(Ljava/lang/String;)Z
+     544: ifeq          561
+     547: aload         8
+     549: aload_1
+     550: ldc           #251                // String edges
+     552: invokevirtual #241                // Method com/badlogic/gdx/utils/JsonValue.require:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     555: invokevirtual #244                // Method com/badlogic/gdx/utils/JsonValue.asShortArray:()[S
+     558: invokevirtual #252                // Method com/esotericsoftware/spine/attachments/MeshAttachment.setEdges:([S)V
+     561: aload         8
+     563: areturn
+     564: aload_0
+     565: getfield      #8                  // Field attachmentLoader:Lcom/esotericsoftware/spine/attachments/AttachmentLoader;
+     568: aload_2
+     569: aload         4
+     571: invokeinterface #253,  3          // InterfaceMethod com/esotericsoftware/spine/attachments/AttachmentLoader.newPathAttachment:(Lcom/esotericsoftware/spine/Skin;Ljava/lang/String;)Lcom/esotericsoftware/spine/attachments/PathAttachment;
+     576: astore        7
+     578: aload         7
+     580: ifnonnull     585
+     583: aconst_null
+     584: areturn
+     585: aload         7
+     587: aload_1
+     588: ldc           #254                // String closed
+     590: iconst_0
+     591: invokevirtual #68                 // Method com/badlogic/gdx/utils/JsonValue.getBoolean:(Ljava/lang/String;Z)Z
+     594: invokevirtual #255                // Method com/esotericsoftware/spine/attachments/PathAttachment.setClosed:(Z)V
+     597: aload         7
+     599: aload_1
+     600: ldc_w         #256                // String constantSpeed
+     603: iconst_1
+     604: invokevirtual #68                 // Method com/badlogic/gdx/utils/JsonValue.getBoolean:(Ljava/lang/String;Z)Z
+     607: invokevirtual #257                // Method com/esotericsoftware/spine/attachments/PathAttachment.setConstantSpeed:(Z)V
+     610: aload_1
+     611: ldc           #227                // String vertexCount
+     613: invokevirtual #228                // Method com/badlogic/gdx/utils/JsonValue.getInt:(Ljava/lang/String;)I
+     616: istore        8
+     618: aload_0
+     619: aload_1
+     620: aload         7
+     622: iload         8
+     624: iconst_1
+     625: ishl
+     626: invokespecial #229                // Method readVertices:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/attachments/VertexAttachment;I)V
+     629: iload         8
+     631: iconst_3
+     632: idiv
+     633: newarray       float
+     635: astore        9
+     637: iconst_0
+     638: istore        10
+     640: aload_1
+     641: ldc_w         #258                // String lengths
+     644: invokevirtual #241                // Method com/badlogic/gdx/utils/JsonValue.require:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     647: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+     650: astore        11
+     652: aload         11
+     654: ifnull        683
+     657: aload         9
+     659: iload         10
+     661: iinc          10, 1
+     664: aload         11
+     666: invokevirtual #259                // Method com/badlogic/gdx/utils/JsonValue.asFloat:()F
+     669: fload         5
+     671: fmul
+     672: fastore
+     673: aload         11
+     675: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     678: astore        11
+     680: goto          652
+     683: aload         7
+     685: aload         9
+     687: invokevirtual #260                // Method com/esotericsoftware/spine/attachments/PathAttachment.setLengths:([F)V
+     690: aload_1
+     691: ldc           #72                 // String color
+     693: aconst_null
+     694: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     697: astore        11
+     699: aload         11
+     701: ifnull        718
+     704: aload         7
+     706: invokevirtual #261                // Method com/esotericsoftware/spine/attachments/PathAttachment.getColor:()Lcom/badlogic/gdx/graphics/Color;
+     709: aload         11
+     711: invokestatic  #74                 // Method com/badlogic/gdx/graphics/Color.valueOf:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Color;
+     714: invokevirtual #75                 // Method com/badlogic/gdx/graphics/Color.set:(Lcom/badlogic/gdx/graphics/Color;)Lcom/badlogic/gdx/graphics/Color;
+     717: pop
+     718: aload         7
+     720: areturn
+     721: aconst_null
+     722: areturn
+
+  private void readVertices(com.badlogic.gdx.utils.JsonValue, com.esotericsoftware.spine.attachments.VertexAttachment, int);
+    descriptor: (Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/attachments/VertexAttachment;I)V
+    Code:
+       0: aload_2
+       1: iload_3
+       2: invokevirtual #262                // Method com/esotericsoftware/spine/attachments/VertexAttachment.setWorldVerticesLength:(I)V
+       5: aload_1
+       6: ldc_w         #263                // String vertices
+       9: invokevirtual #241                // Method com/badlogic/gdx/utils/JsonValue.require:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+      12: invokevirtual #242                // Method com/badlogic/gdx/utils/JsonValue.asFloatArray:()[F
+      15: astore        4
+      17: iload_3
+      18: aload         4
+      20: arraylength
+      21: if_icmpne     73
+      24: aload_0
+      25: getfield      #2                  // Field scale:F
+      28: fconst_1
+      29: fcmpl
+      30: ifeq          66
+      33: iconst_0
+      34: istore        5
+      36: aload         4
+      38: arraylength
+      39: istore        6
+      41: iload         5
+      43: iload         6
+      45: if_icmpge     66
+      48: aload         4
+      50: iload         5
+      52: dup2
+      53: faload
+      54: aload_0
+      55: getfield      #2                  // Field scale:F
+      58: fmul
+      59: fastore
+      60: iinc          5, 1
+      63: goto          41
+      66: aload_2
+      67: aload         4
+      69: invokevirtual #264                // Method com/esotericsoftware/spine/attachments/VertexAttachment.setVertices:([F)V
+      72: return
+      73: new           #265                // class com/badlogic/gdx/utils/FloatArray
+      76: dup
+      77: iload_3
+      78: iconst_3
+      79: imul
+      80: iconst_3
+      81: imul
+      82: invokespecial #266                // Method com/badlogic/gdx/utils/FloatArray."<init>":(I)V
+      85: astore        5
+      87: new           #267                // class com/badlogic/gdx/utils/IntArray
+      90: dup
+      91: iload_3
+      92: iconst_3
+      93: imul
+      94: invokespecial #268                // Method com/badlogic/gdx/utils/IntArray."<init>":(I)V
+      97: astore        6
+      99: iconst_0
+     100: istore        7
+     102: aload         4
+     104: arraylength
+     105: istore        8
+     107: iload         7
+     109: iload         8
+     111: if_icmpge     214
+     114: aload         4
+     116: iload         7
+     118: iinc          7, 1
+     121: faload
+     122: f2i
+     123: istore        9
+     125: aload         6
+     127: iload         9
+     129: invokevirtual #269                // Method com/badlogic/gdx/utils/IntArray.add:(I)V
+     132: iload         7
+     134: iload         9
+     136: iconst_4
+     137: imul
+     138: iadd
+     139: istore        10
+     141: iload         7
+     143: iload         10
+     145: if_icmpge     211
+     148: aload         6
+     150: aload         4
+     152: iload         7
+     154: faload
+     155: f2i
+     156: invokevirtual #269                // Method com/badlogic/gdx/utils/IntArray.add:(I)V
+     159: aload         5
+     161: aload         4
+     163: iload         7
+     165: iconst_1
+     166: iadd
+     167: faload
+     168: aload_0
+     169: getfield      #2                  // Field scale:F
+     172: fmul
+     173: invokevirtual #270                // Method com/badlogic/gdx/utils/FloatArray.add:(F)V
+     176: aload         5
+     178: aload         4
+     180: iload         7
+     182: iconst_2
+     183: iadd
+     184: faload
+     185: aload_0
+     186: getfield      #2                  // Field scale:F
+     189: fmul
+     190: invokevirtual #270                // Method com/badlogic/gdx/utils/FloatArray.add:(F)V
+     193: aload         5
+     195: aload         4
+     197: iload         7
+     199: iconst_3
+     200: iadd
+     201: faload
+     202: invokevirtual #270                // Method com/badlogic/gdx/utils/FloatArray.add:(F)V
+     205: iinc          7, 4
+     208: goto          141
+     211: goto          107
+     214: aload_2
+     215: aload         6
+     217: invokevirtual #271                // Method com/badlogic/gdx/utils/IntArray.toArray:()[I
+     220: invokevirtual #272                // Method com/esotericsoftware/spine/attachments/VertexAttachment.setBones:([I)V
+     223: aload_2
+     224: aload         5
+     226: invokevirtual #273                // Method com/badlogic/gdx/utils/FloatArray.toArray:()[F
+     229: invokevirtual #264                // Method com/esotericsoftware/spine/attachments/VertexAttachment.setVertices:([F)V
+     232: return
+
+  private void readAnimation(com.badlogic.gdx.utils.JsonValue, java.lang.String, com.esotericsoftware.spine.SkeletonData);
+    descriptor: (Lcom/badlogic/gdx/utils/JsonValue;Ljava/lang/String;Lcom/esotericsoftware/spine/SkeletonData;)V
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field scale:F
+       4: fstore        4
+       6: new           #3                  // class com/badlogic/gdx/utils/Array
+       9: dup
+      10: invokespecial #4                  // Method com/badlogic/gdx/utils/Array."<init>":()V
+      13: astore        5
+      15: fconst_0
+      16: fstore        6
+      18: aload_1
+      19: ldc           #78                 // String slots
+      21: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+      24: astore        7
+      26: aload         7
+      28: ifnull        426
+      31: aload_3
+      32: aload         7
+      34: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+      37: invokevirtual #163                // Method com/esotericsoftware/spine/SkeletonData.findSlotIndex:(Ljava/lang/String;)I
+      40: istore        8
+      42: iload         8
+      44: iconst_m1
+      45: if_icmpne     79
+      48: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+      51: dup
+      52: new           #39                 // class java/lang/StringBuilder
+      55: dup
+      56: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+      59: ldc           #164                // String Slot not found:
+      61: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      64: aload         7
+      66: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+      69: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      72: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      75: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+      78: athrow
+      79: aload         7
+      81: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+      84: astore        9
+      86: aload         9
+      88: ifnull        416
+      91: aload         9
+      93: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+      96: astore        10
+      98: aload         10
+     100: ldc           #72                 // String color
+     102: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     105: ifeq          246
+     108: new           #274                // class com/esotericsoftware/spine/Animation$ColorTimeline
+     111: dup
+     112: aload         9
+     114: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+     117: invokespecial #276                // Method com/esotericsoftware/spine/Animation$ColorTimeline."<init>":(I)V
+     120: astore        11
+     122: aload         11
+     124: iload         8
+     126: putfield      #277                // Field com/esotericsoftware/spine/Animation$ColorTimeline.slotIndex:I
+     129: iconst_0
+     130: istore        12
+     132: aload         9
+     134: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+     137: astore        13
+     139: aload         13
+     141: ifnull        214
+     144: aload         13
+     146: ldc           #72                 // String color
+     148: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+     151: invokestatic  #74                 // Method com/badlogic/gdx/graphics/Color.valueOf:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Color;
+     154: astore        14
+     156: aload         11
+     158: iload         12
+     160: aload         13
+     162: ldc_w         #278                // String time
+     165: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+     168: aload         14
+     170: getfield      #279                // Field com/badlogic/gdx/graphics/Color.r:F
+     173: aload         14
+     175: getfield      #280                // Field com/badlogic/gdx/graphics/Color.g:F
+     178: aload         14
+     180: getfield      #281                // Field com/badlogic/gdx/graphics/Color.b:F
+     183: aload         14
+     185: getfield      #282                // Field com/badlogic/gdx/graphics/Color.a:F
+     188: invokevirtual #283                // Method com/esotericsoftware/spine/Animation$ColorTimeline.setFrame:(IFFFFF)V
+     191: aload_0
+     192: aload         13
+     194: aload         11
+     196: iload         12
+     198: invokevirtual #284                // Method readCurve:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Animation$CurveTimeline;I)V
+     201: iinc          12, 1
+     204: aload         13
+     206: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     209: astore        13
+     211: goto          139
+     214: aload         5
+     216: aload         11
+     218: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+     221: fload         6
+     223: aload         11
+     225: invokevirtual #285                // Method com/esotericsoftware/spine/Animation$ColorTimeline.getFrames:()[F
+     228: aload         11
+     230: invokevirtual #286                // Method com/esotericsoftware/spine/Animation$ColorTimeline.getFrameCount:()I
+     233: iconst_1
+     234: isub
+     235: iconst_5
+     236: imul
+     237: faload
+     238: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+     241: fstore        6
+     243: goto          406
+     246: aload         10
+     248: ldc           #85                 // String attachment
+     250: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     253: ifeq          357
+     256: new           #288                // class com/esotericsoftware/spine/Animation$AttachmentTimeline
+     259: dup
+     260: aload         9
+     262: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+     265: invokespecial #289                // Method com/esotericsoftware/spine/Animation$AttachmentTimeline."<init>":(I)V
+     268: astore        11
+     270: aload         11
+     272: iload         8
+     274: putfield      #290                // Field com/esotericsoftware/spine/Animation$AttachmentTimeline.slotIndex:I
+     277: iconst_0
+     278: istore        12
+     280: aload         9
+     282: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+     285: astore        13
+     287: aload         13
+     289: ifnull        327
+     292: aload         11
+     294: iload         12
+     296: iinc          12, 1
+     299: aload         13
+     301: ldc_w         #278                // String time
+     304: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+     307: aload         13
+     309: ldc           #48                 // String name
+     311: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+     314: invokevirtual #291                // Method com/esotericsoftware/spine/Animation$AttachmentTimeline.setFrame:(IFLjava/lang/String;)V
+     317: aload         13
+     319: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     322: astore        13
+     324: goto          287
+     327: aload         5
+     329: aload         11
+     331: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+     334: fload         6
+     336: aload         11
+     338: invokevirtual #292                // Method com/esotericsoftware/spine/Animation$AttachmentTimeline.getFrames:()[F
+     341: aload         11
+     343: invokevirtual #293                // Method com/esotericsoftware/spine/Animation$AttachmentTimeline.getFrameCount:()I
+     346: iconst_1
+     347: isub
+     348: faload
+     349: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+     352: fstore        6
+     354: goto          406
+     357: new           #294                // class java/lang/RuntimeException
+     360: dup
+     361: new           #39                 // class java/lang/StringBuilder
+     364: dup
+     365: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+     368: ldc_w         #295                // String Invalid timeline type for a slot:
+     371: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     374: aload         10
+     376: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     379: ldc_w         #296                // String  (
+     382: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     385: aload         7
+     387: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+     390: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     393: ldc_w         #297                // String )
+     396: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     399: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     402: invokespecial #298                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     405: athrow
+     406: aload         9
+     408: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     411: astore        9
+     413: goto          86
+     416: aload         7
+     418: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     421: astore        7
+     423: goto          26
+     426: aload_1
+     427: ldc           #34                 // String bones
+     429: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     432: astore        7
+     434: aload         7
+     436: ifnull        933
+     439: aload_3
+     440: aload         7
+     442: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+     445: invokevirtual #299                // Method com/esotericsoftware/spine/SkeletonData.findBoneIndex:(Ljava/lang/String;)I
+     448: istore        8
+     450: iload         8
+     452: iconst_m1
+     453: if_icmpne     488
+     456: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+     459: dup
+     460: new           #39                 // class java/lang/StringBuilder
+     463: dup
+     464: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+     467: ldc_w         #300                // String Bone not found:
+     470: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     473: aload         7
+     475: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+     478: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     481: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     484: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+     487: athrow
+     488: aload         7
+     490: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+     493: astore        9
+     495: aload         9
+     497: ifnull        923
+     500: aload         9
+     502: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+     505: astore        10
+     507: aload         10
+     509: ldc_w         #301                // String rotate
+     512: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     515: ifeq          632
+     518: new           #302                // class com/esotericsoftware/spine/Animation$RotateTimeline
+     521: dup
+     522: aload         9
+     524: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+     527: invokespecial #303                // Method com/esotericsoftware/spine/Animation$RotateTimeline."<init>":(I)V
+     530: astore        11
+     532: aload         11
+     534: iload         8
+     536: putfield      #304                // Field com/esotericsoftware/spine/Animation$RotateTimeline.boneIndex:I
+     539: iconst_0
+     540: istore        12
+     542: aload         9
+     544: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+     547: astore        13
+     549: aload         13
+     551: ifnull        600
+     554: aload         11
+     556: iload         12
+     558: aload         13
+     560: ldc_w         #278                // String time
+     563: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+     566: aload         13
+     568: ldc_w         #305                // String angle
+     571: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+     574: invokevirtual #306                // Method com/esotericsoftware/spine/Animation$RotateTimeline.setFrame:(IFF)V
+     577: aload_0
+     578: aload         13
+     580: aload         11
+     582: iload         12
+     584: invokevirtual #284                // Method readCurve:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Animation$CurveTimeline;I)V
+     587: iinc          12, 1
+     590: aload         13
+     592: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     595: astore        13
+     597: goto          549
+     600: aload         5
+     602: aload         11
+     604: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+     607: fload         6
+     609: aload         11
+     611: invokevirtual #307                // Method com/esotericsoftware/spine/Animation$RotateTimeline.getFrames:()[F
+     614: aload         11
+     616: invokevirtual #308                // Method com/esotericsoftware/spine/Animation$RotateTimeline.getFrameCount:()I
+     619: iconst_1
+     620: isub
+     621: iconst_2
+     622: imul
+     623: faload
+     624: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+     627: fstore        6
+     629: goto          913
+     632: aload         10
+     634: ldc_w         #309                // String translate
+     637: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     640: ifne          665
+     643: aload         10
+     645: ldc_w         #310                // String scale
+     648: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     651: ifne          665
+     654: aload         10
+     656: ldc_w         #311                // String shear
+     659: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     662: ifeq          864
+     665: fconst_1
+     666: fstore        12
+     668: aload         10
+     670: ldc_w         #310                // String scale
+     673: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     676: ifeq          696
+     679: new           #312                // class com/esotericsoftware/spine/Animation$ScaleTimeline
+     682: dup
+     683: aload         9
+     685: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+     688: invokespecial #313                // Method com/esotericsoftware/spine/Animation$ScaleTimeline."<init>":(I)V
+     691: astore        11
+     693: goto          742
+     696: aload         10
+     698: ldc_w         #311                // String shear
+     701: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     704: ifeq          724
+     707: new           #314                // class com/esotericsoftware/spine/Animation$ShearTimeline
+     710: dup
+     711: aload         9
+     713: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+     716: invokespecial #315                // Method com/esotericsoftware/spine/Animation$ShearTimeline."<init>":(I)V
+     719: astore        11
+     721: goto          742
+     724: new           #316                // class com/esotericsoftware/spine/Animation$TranslateTimeline
+     727: dup
+     728: aload         9
+     730: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+     733: invokespecial #317                // Method com/esotericsoftware/spine/Animation$TranslateTimeline."<init>":(I)V
+     736: astore        11
+     738: fload         4
+     740: fstore        12
+     742: aload         11
+     744: iload         8
+     746: putfield      #318                // Field com/esotericsoftware/spine/Animation$TranslateTimeline.boneIndex:I
+     749: iconst_0
+     750: istore        13
+     752: aload         9
+     754: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+     757: astore        14
+     759: aload         14
+     761: ifnull        832
+     764: aload         14
+     766: ldc           #53                 // String x
+     768: fconst_0
+     769: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     772: fstore        15
+     774: aload         14
+     776: ldc           #55                 // String y
+     778: fconst_0
+     779: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+     782: fstore        16
+     784: aload         11
+     786: iload         13
+     788: aload         14
+     790: ldc_w         #278                // String time
+     793: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+     796: fload         15
+     798: fload         12
+     800: fmul
+     801: fload         16
+     803: fload         12
+     805: fmul
+     806: invokevirtual #319                // Method com/esotericsoftware/spine/Animation$TranslateTimeline.setFrame:(IFFF)V
+     809: aload_0
+     810: aload         14
+     812: aload         11
+     814: iload         13
+     816: invokevirtual #284                // Method readCurve:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Animation$CurveTimeline;I)V
+     819: iinc          13, 1
+     822: aload         14
+     824: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     827: astore        14
+     829: goto          759
+     832: aload         5
+     834: aload         11
+     836: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+     839: fload         6
+     841: aload         11
+     843: invokevirtual #320                // Method com/esotericsoftware/spine/Animation$TranslateTimeline.getFrames:()[F
+     846: aload         11
+     848: invokevirtual #321                // Method com/esotericsoftware/spine/Animation$TranslateTimeline.getFrameCount:()I
+     851: iconst_1
+     852: isub
+     853: iconst_3
+     854: imul
+     855: faload
+     856: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+     859: fstore        6
+     861: goto          913
+     864: new           #294                // class java/lang/RuntimeException
+     867: dup
+     868: new           #39                 // class java/lang/StringBuilder
+     871: dup
+     872: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+     875: ldc_w         #322                // String Invalid timeline type for a bone:
+     878: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     881: aload         10
+     883: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     886: ldc_w         #296                // String  (
+     889: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     892: aload         7
+     894: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+     897: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     900: ldc_w         #297                // String )
+     903: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     906: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     909: invokespecial #298                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     912: athrow
+     913: aload         9
+     915: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     918: astore        9
+     920: goto          495
+     923: aload         7
+     925: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+     928: astore        7
+     930: goto          434
+     933: aload_1
+     934: ldc           #92                 // String ik
+     936: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+     939: astore        7
+     941: aload         7
+     943: ifnull        1102
+     946: aload_3
+     947: aload         7
+     949: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+     952: invokevirtual #323                // Method com/esotericsoftware/spine/SkeletonData.findIkConstraint:(Ljava/lang/String;)Lcom/esotericsoftware/spine/IkConstraintData;
+     955: astore        8
+     957: new           #324                // class com/esotericsoftware/spine/Animation$IkConstraintTimeline
+     960: dup
+     961: aload         7
+     963: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+     966: invokespecial #325                // Method com/esotericsoftware/spine/Animation$IkConstraintTimeline."<init>":(I)V
+     969: astore        9
+     971: aload         9
+     973: aload_3
+     974: invokevirtual #326                // Method com/esotericsoftware/spine/SkeletonData.getIkConstraints:()Lcom/badlogic/gdx/utils/Array;
+     977: aload         8
+     979: iconst_1
+     980: invokevirtual #327                // Method com/badlogic/gdx/utils/Array.indexOf:(Ljava/lang/Object;Z)I
+     983: putfield      #328                // Field com/esotericsoftware/spine/Animation$IkConstraintTimeline.ikConstraintIndex:I
+     986: iconst_0
+     987: istore        10
+     989: aload         7
+     991: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+     994: astore        11
+     996: aload         11
+     998: ifnull        1063
+    1001: aload         9
+    1003: iload         10
+    1005: aload         11
+    1007: ldc_w         #278                // String time
+    1010: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+    1013: aload         11
+    1015: ldc           #103                // String mix
+    1017: fconst_1
+    1018: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1021: aload         11
+    1023: ldc           #101                // String bendPositive
+    1025: iconst_1
+    1026: invokevirtual #68                 // Method com/badlogic/gdx/utils/JsonValue.getBoolean:(Ljava/lang/String;Z)Z
+    1029: ifeq          1036
+    1032: iconst_1
+    1033: goto          1037
+    1036: iconst_m1
+    1037: invokevirtual #329                // Method com/esotericsoftware/spine/Animation$IkConstraintTimeline.setFrame:(IFFI)V
+    1040: aload_0
+    1041: aload         11
+    1043: aload         9
+    1045: iload         10
+    1047: invokevirtual #284                // Method readCurve:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Animation$CurveTimeline;I)V
+    1050: iinc          10, 1
+    1053: aload         11
+    1055: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1058: astore        11
+    1060: goto          996
+    1063: aload         5
+    1065: aload         9
+    1067: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    1070: fload         6
+    1072: aload         9
+    1074: invokevirtual #330                // Method com/esotericsoftware/spine/Animation$IkConstraintTimeline.getFrames:()[F
+    1077: aload         9
+    1079: invokevirtual #331                // Method com/esotericsoftware/spine/Animation$IkConstraintTimeline.getFrameCount:()I
+    1082: iconst_1
+    1083: isub
+    1084: iconst_3
+    1085: imul
+    1086: faload
+    1087: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+    1090: fstore        6
+    1092: aload         7
+    1094: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1097: astore        7
+    1099: goto          941
+    1102: aload_1
+    1103: ldc           #106                // String transform
+    1105: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    1108: astore        7
+    1110: aload         7
+    1112: ifnull        1279
+    1115: aload_3
+    1116: aload         7
+    1118: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1121: invokevirtual #332                // Method com/esotericsoftware/spine/SkeletonData.findTransformConstraint:(Ljava/lang/String;)Lcom/esotericsoftware/spine/TransformConstraintData;
+    1124: astore        8
+    1126: new           #333                // class com/esotericsoftware/spine/Animation$TransformConstraintTimeline
+    1129: dup
+    1130: aload         7
+    1132: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+    1135: invokespecial #334                // Method com/esotericsoftware/spine/Animation$TransformConstraintTimeline."<init>":(I)V
+    1138: astore        9
+    1140: aload         9
+    1142: aload_3
+    1143: invokevirtual #335                // Method com/esotericsoftware/spine/SkeletonData.getTransformConstraints:()Lcom/badlogic/gdx/utils/Array;
+    1146: aload         8
+    1148: iconst_1
+    1149: invokevirtual #327                // Method com/badlogic/gdx/utils/Array.indexOf:(Ljava/lang/Object;Z)I
+    1152: putfield      #336                // Field com/esotericsoftware/spine/Animation$TransformConstraintTimeline.transformConstraintIndex:I
+    1155: iconst_0
+    1156: istore        10
+    1158: aload         7
+    1160: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    1163: astore        11
+    1165: aload         11
+    1167: ifnull        1240
+    1170: aload         9
+    1172: iload         10
+    1174: aload         11
+    1176: ldc_w         #278                // String time
+    1179: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+    1182: aload         11
+    1184: ldc           #119                // String rotateMix
+    1186: fconst_1
+    1187: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1190: aload         11
+    1192: ldc           #121                // String translateMix
+    1194: fconst_1
+    1195: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1198: aload         11
+    1200: ldc           #123                // String scaleMix
+    1202: fconst_1
+    1203: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1206: aload         11
+    1208: ldc           #125                // String shearMix
+    1210: fconst_1
+    1211: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1214: invokevirtual #337                // Method com/esotericsoftware/spine/Animation$TransformConstraintTimeline.setFrame:(IFFFFF)V
+    1217: aload_0
+    1218: aload         11
+    1220: aload         9
+    1222: iload         10
+    1224: invokevirtual #284                // Method readCurve:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Animation$CurveTimeline;I)V
+    1227: iinc          10, 1
+    1230: aload         11
+    1232: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1235: astore        11
+    1237: goto          1165
+    1240: aload         5
+    1242: aload         9
+    1244: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    1247: fload         6
+    1249: aload         9
+    1251: invokevirtual #338                // Method com/esotericsoftware/spine/Animation$TransformConstraintTimeline.getFrames:()[F
+    1254: aload         9
+    1256: invokevirtual #339                // Method com/esotericsoftware/spine/Animation$TransformConstraintTimeline.getFrameCount:()I
+    1259: iconst_1
+    1260: isub
+    1261: iconst_5
+    1262: imul
+    1263: faload
+    1264: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+    1267: fstore        6
+    1269: aload         7
+    1271: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1274: astore        7
+    1276: goto          1110
+    1279: aload_1
+    1280: ldc_w         #340                // String paths
+    1283: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    1286: astore        7
+    1288: aload         7
+    1290: ifnull        1732
+    1293: aload_3
+    1294: aload         7
+    1296: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1299: invokevirtual #341                // Method com/esotericsoftware/spine/SkeletonData.findPathConstraintIndex:(Ljava/lang/String;)I
+    1302: istore        8
+    1304: iload         8
+    1306: iconst_m1
+    1307: if_icmpne     1342
+    1310: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    1313: dup
+    1314: new           #39                 // class java/lang/StringBuilder
+    1317: dup
+    1318: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    1321: ldc_w         #342                // String Path constraint not found:
+    1324: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1327: aload         7
+    1329: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1332: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1335: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1338: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    1341: athrow
+    1342: aload_3
+    1343: invokevirtual #343                // Method com/esotericsoftware/spine/SkeletonData.getPathConstraints:()Lcom/badlogic/gdx/utils/Array;
+    1346: iload         8
+    1348: invokevirtual #177                // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+    1351: checkcast     #129                // class com/esotericsoftware/spine/PathConstraintData
+    1354: astore        9
+    1356: aload         7
+    1358: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    1361: astore        10
+    1363: aload         10
+    1365: ifnull        1722
+    1368: aload         10
+    1370: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1373: astore        11
+    1375: aload         11
+    1377: ldc           #148                // String position
+    1379: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1382: ifne          1395
+    1385: aload         11
+    1387: ldc           #151                // String spacing
+    1389: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1392: ifeq          1583
+    1395: fconst_1
+    1396: fstore        13
+    1398: aload         11
+    1400: ldc           #151                // String spacing
+    1402: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1405: ifeq          1451
+    1408: new           #344                // class com/esotericsoftware/spine/Animation$PathConstraintSpacingTimeline
+    1411: dup
+    1412: aload         10
+    1414: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+    1417: invokespecial #345                // Method com/esotericsoftware/spine/Animation$PathConstraintSpacingTimeline."<init>":(I)V
+    1420: astore        12
+    1422: aload         9
+    1424: getfield      #142                // Field com/esotericsoftware/spine/PathConstraintData.spacingMode:Lcom/esotericsoftware/spine/PathConstraintData$SpacingMode;
+    1427: getstatic     #153                // Field com/esotericsoftware/spine/PathConstraintData$SpacingMode.length:Lcom/esotericsoftware/spine/PathConstraintData$SpacingMode;
+    1430: if_acmpeq     1444
+    1433: aload         9
+    1435: getfield      #142                // Field com/esotericsoftware/spine/PathConstraintData.spacingMode:Lcom/esotericsoftware/spine/PathConstraintData$SpacingMode;
+    1438: getstatic     #154                // Field com/esotericsoftware/spine/PathConstraintData$SpacingMode.fixed:Lcom/esotericsoftware/spine/PathConstraintData$SpacingMode;
+    1441: if_acmpne     1480
+    1444: fload         4
+    1446: fstore        13
+    1448: goto          1480
+    1451: new           #346                // class com/esotericsoftware/spine/Animation$PathConstraintPositionTimeline
+    1454: dup
+    1455: aload         10
+    1457: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+    1460: invokespecial #347                // Method com/esotericsoftware/spine/Animation$PathConstraintPositionTimeline."<init>":(I)V
+    1463: astore        12
+    1465: aload         9
+    1467: getfield      #139                // Field com/esotericsoftware/spine/PathConstraintData.positionMode:Lcom/esotericsoftware/spine/PathConstraintData$PositionMode;
+    1470: getstatic     #150                // Field com/esotericsoftware/spine/PathConstraintData$PositionMode.fixed:Lcom/esotericsoftware/spine/PathConstraintData$PositionMode;
+    1473: if_acmpne     1480
+    1476: fload         4
+    1478: fstore        13
+    1480: aload         12
+    1482: iload         8
+    1484: putfield      #348                // Field com/esotericsoftware/spine/Animation$PathConstraintPositionTimeline.pathConstraintIndex:I
+    1487: iconst_0
+    1488: istore        14
+    1490: aload         10
+    1492: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    1495: astore        15
+    1497: aload         15
+    1499: ifnull        1551
+    1502: aload         12
+    1504: iload         14
+    1506: aload         15
+    1508: ldc_w         #278                // String time
+    1511: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+    1514: aload         15
+    1516: aload         11
+    1518: fconst_0
+    1519: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1522: fload         13
+    1524: fmul
+    1525: invokevirtual #349                // Method com/esotericsoftware/spine/Animation$PathConstraintPositionTimeline.setFrame:(IFF)V
+    1528: aload_0
+    1529: aload         15
+    1531: aload         12
+    1533: iload         14
+    1535: invokevirtual #284                // Method readCurve:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Animation$CurveTimeline;I)V
+    1538: iinc          14, 1
+    1541: aload         15
+    1543: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1546: astore        15
+    1548: goto          1497
+    1551: aload         5
+    1553: aload         12
+    1555: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    1558: fload         6
+    1560: aload         12
+    1562: invokevirtual #350                // Method com/esotericsoftware/spine/Animation$PathConstraintPositionTimeline.getFrames:()[F
+    1565: aload         12
+    1567: invokevirtual #351                // Method com/esotericsoftware/spine/Animation$PathConstraintPositionTimeline.getFrameCount:()I
+    1570: iconst_1
+    1571: isub
+    1572: iconst_2
+    1573: imul
+    1574: faload
+    1575: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+    1578: fstore        6
+    1580: goto          1712
+    1583: aload         11
+    1585: ldc           #103                // String mix
+    1587: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1590: ifeq          1712
+    1593: new           #352                // class com/esotericsoftware/spine/Animation$PathConstraintMixTimeline
+    1596: dup
+    1597: aload         10
+    1599: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+    1602: invokespecial #353                // Method com/esotericsoftware/spine/Animation$PathConstraintMixTimeline."<init>":(I)V
+    1605: astore        12
+    1607: aload         12
+    1609: iload         8
+    1611: putfield      #354                // Field com/esotericsoftware/spine/Animation$PathConstraintMixTimeline.pathConstraintIndex:I
+    1614: iconst_0
+    1615: istore        13
+    1617: aload         10
+    1619: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    1622: astore        14
+    1624: aload         14
+    1626: ifnull        1683
+    1629: aload         12
+    1631: iload         13
+    1633: aload         14
+    1635: ldc_w         #278                // String time
+    1638: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+    1641: aload         14
+    1643: ldc           #119                // String rotateMix
+    1645: fconst_1
+    1646: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1649: aload         14
+    1651: ldc           #121                // String translateMix
+    1653: fconst_1
+    1654: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    1657: invokevirtual #355                // Method com/esotericsoftware/spine/Animation$PathConstraintMixTimeline.setFrame:(IFFF)V
+    1660: aload_0
+    1661: aload         14
+    1663: aload         12
+    1665: iload         13
+    1667: invokevirtual #284                // Method readCurve:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Animation$CurveTimeline;I)V
+    1670: iinc          13, 1
+    1673: aload         14
+    1675: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1678: astore        14
+    1680: goto          1624
+    1683: aload         5
+    1685: aload         12
+    1687: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    1690: fload         6
+    1692: aload         12
+    1694: invokevirtual #356                // Method com/esotericsoftware/spine/Animation$PathConstraintMixTimeline.getFrames:()[F
+    1697: aload         12
+    1699: invokevirtual #357                // Method com/esotericsoftware/spine/Animation$PathConstraintMixTimeline.getFrameCount:()I
+    1702: iconst_1
+    1703: isub
+    1704: iconst_3
+    1705: imul
+    1706: faload
+    1707: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+    1710: fstore        6
+    1712: aload         10
+    1714: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1717: astore        10
+    1719: goto          1363
+    1722: aload         7
+    1724: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    1727: astore        7
+    1729: goto          1288
+    1732: aload_1
+    1733: ldc           #236                // String deform
+    1735: invokevirtual #35                 // Method com/badlogic/gdx/utils/JsonValue.getChild:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    1738: astore        7
+    1740: aload         7
+    1742: ifnull        2247
+    1745: aload_3
+    1746: aload         7
+    1748: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1751: invokevirtual #181                // Method com/esotericsoftware/spine/SkeletonData.findSkin:(Ljava/lang/String;)Lcom/esotericsoftware/spine/Skin;
+    1754: astore        8
+    1756: aload         8
+    1758: ifnonnull     1792
+    1761: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    1764: dup
+    1765: new           #39                 // class java/lang/StringBuilder
+    1768: dup
+    1769: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    1772: ldc           #182                // String Skin not found:
+    1774: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1777: aload         7
+    1779: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1782: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1785: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1788: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    1791: athrow
+    1792: aload         7
+    1794: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    1797: astore        9
+    1799: aload         9
+    1801: ifnull        2237
+    1804: aload_3
+    1805: aload         9
+    1807: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1810: invokevirtual #163                // Method com/esotericsoftware/spine/SkeletonData.findSlotIndex:(Ljava/lang/String;)I
+    1813: istore        10
+    1815: iload         10
+    1817: iconst_m1
+    1818: if_icmpne     1852
+    1821: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    1824: dup
+    1825: new           #39                 // class java/lang/StringBuilder
+    1828: dup
+    1829: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    1832: ldc           #164                // String Slot not found:
+    1834: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1837: aload         9
+    1839: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1842: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1845: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1848: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    1851: athrow
+    1852: aload         9
+    1854: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    1857: astore        11
+    1859: aload         11
+    1861: ifnull        2227
+    1864: aload         8
+    1866: iload         10
+    1868: aload         11
+    1870: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1873: invokevirtual #185                // Method com/esotericsoftware/spine/Skin.getAttachment:(ILjava/lang/String;)Lcom/esotericsoftware/spine/attachments/Attachment;
+    1876: checkcast     #358                // class com/esotericsoftware/spine/attachments/VertexAttachment
+    1879: astore        12
+    1881: aload         12
+    1883: ifnonnull     1918
+    1886: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    1889: dup
+    1890: new           #39                 // class java/lang/StringBuilder
+    1893: dup
+    1894: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    1897: ldc_w         #359                // String Deform attachment not found:
+    1900: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1903: aload         11
+    1905: getfield      #160                // Field com/badlogic/gdx/utils/JsonValue.name:Ljava/lang/String;
+    1908: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1911: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1914: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    1917: athrow
+    1918: aload         12
+    1920: invokevirtual #360                // Method com/esotericsoftware/spine/attachments/VertexAttachment.getBones:()[I
+    1923: ifnull        1930
+    1926: iconst_1
+    1927: goto          1931
+    1930: iconst_0
+    1931: istore        13
+    1933: aload         12
+    1935: invokevirtual #361                // Method com/esotericsoftware/spine/attachments/VertexAttachment.getVertices:()[F
+    1938: astore        14
+    1940: iload         13
+    1942: ifeq          1955
+    1945: aload         14
+    1947: arraylength
+    1948: iconst_3
+    1949: idiv
+    1950: iconst_2
+    1951: imul
+    1952: goto          1958
+    1955: aload         14
+    1957: arraylength
+    1958: istore        15
+    1960: new           #362                // class com/esotericsoftware/spine/Animation$DeformTimeline
+    1963: dup
+    1964: aload         11
+    1966: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+    1969: invokespecial #363                // Method com/esotericsoftware/spine/Animation$DeformTimeline."<init>":(I)V
+    1972: astore        16
+    1974: aload         16
+    1976: iload         10
+    1978: putfield      #364                // Field com/esotericsoftware/spine/Animation$DeformTimeline.slotIndex:I
+    1981: aload         16
+    1983: aload         12
+    1985: putfield      #365                // Field com/esotericsoftware/spine/Animation$DeformTimeline.attachment:Lcom/esotericsoftware/spine/attachments/VertexAttachment;
+    1988: iconst_0
+    1989: istore        17
+    1991: aload         11
+    1993: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    1996: astore        18
+    1998: aload         18
+    2000: ifnull        2190
+    2003: aload         18
+    2005: ldc_w         #263                // String vertices
+    2008: invokevirtual #21                 // Method com/badlogic/gdx/utils/JsonValue.get:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    2011: astore        20
+    2013: aload         20
+    2015: ifnonnull     2037
+    2018: iload         13
+    2020: ifeq          2030
+    2023: iload         15
+    2025: newarray       float
+    2027: goto          2032
+    2030: aload         14
+    2032: astore        19
+    2034: goto          2150
+    2037: iload         15
+    2039: newarray       float
+    2041: astore        19
+    2043: aload         18
+    2045: ldc_w         #366                // String offset
+    2048: iconst_0
+    2049: invokevirtual #196                // Method com/badlogic/gdx/utils/JsonValue.getInt:(Ljava/lang/String;I)I
+    2052: istore        21
+    2054: aload         20
+    2056: invokevirtual #242                // Method com/badlogic/gdx/utils/JsonValue.asFloatArray:()[F
+    2059: iconst_0
+    2060: aload         19
+    2062: iload         21
+    2064: aload         20
+    2066: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+    2069: invokestatic  #367                // Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+    2072: fload         4
+    2074: fconst_1
+    2075: fcmpl
+    2076: ifeq          2116
+    2079: iload         21
+    2081: istore        22
+    2083: iload         22
+    2085: aload         20
+    2087: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+    2090: iadd
+    2091: istore        23
+    2093: iload         22
+    2095: iload         23
+    2097: if_icmpge     2116
+    2100: aload         19
+    2102: iload         22
+    2104: dup2
+    2105: faload
+    2106: fload         4
+    2108: fmul
+    2109: fastore
+    2110: iinc          22, 1
+    2113: goto          2093
+    2116: iload         13
+    2118: ifne          2150
+    2121: iconst_0
+    2122: istore        22
+    2124: iload         22
+    2126: iload         15
+    2128: if_icmpge     2150
+    2131: aload         19
+    2133: iload         22
+    2135: dup2
+    2136: faload
+    2137: aload         14
+    2139: iload         22
+    2141: faload
+    2142: fadd
+    2143: fastore
+    2144: iinc          22, 1
+    2147: goto          2124
+    2150: aload         16
+    2152: iload         17
+    2154: aload         18
+    2156: ldc_w         #278                // String time
+    2159: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+    2162: aload         19
+    2164: invokevirtual #368                // Method com/esotericsoftware/spine/Animation$DeformTimeline.setFrame:(IF[F)V
+    2167: aload_0
+    2168: aload         18
+    2170: aload         16
+    2172: iload         17
+    2174: invokevirtual #284                // Method readCurve:(Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Animation$CurveTimeline;I)V
+    2177: iinc          17, 1
+    2180: aload         18
+    2182: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    2185: astore        18
+    2187: goto          1998
+    2190: aload         5
+    2192: aload         16
+    2194: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    2197: fload         6
+    2199: aload         16
+    2201: invokevirtual #369                // Method com/esotericsoftware/spine/Animation$DeformTimeline.getFrames:()[F
+    2204: aload         16
+    2206: invokevirtual #370                // Method com/esotericsoftware/spine/Animation$DeformTimeline.getFrameCount:()I
+    2209: iconst_1
+    2210: isub
+    2211: faload
+    2212: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+    2215: fstore        6
+    2217: aload         11
+    2219: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    2222: astore        11
+    2224: goto          1859
+    2227: aload         9
+    2229: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    2232: astore        9
+    2234: goto          1799
+    2237: aload         7
+    2239: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    2242: astore        7
+    2244: goto          1740
+    2247: aload_1
+    2248: ldc_w         #371                // String drawOrder
+    2251: invokevirtual #21                 // Method com/badlogic/gdx/utils/JsonValue.get:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    2254: astore        7
+    2256: aload         7
+    2258: ifnonnull     2270
+    2261: aload_1
+    2262: ldc_w         #372                // String draworder
+    2265: invokevirtual #21                 // Method com/badlogic/gdx/utils/JsonValue.get:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    2268: astore        7
+    2270: aload         7
+    2272: ifnull        2615
+    2275: new           #373                // class com/esotericsoftware/spine/Animation$DrawOrderTimeline
+    2278: dup
+    2279: aload         7
+    2281: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+    2284: invokespecial #374                // Method com/esotericsoftware/spine/Animation$DrawOrderTimeline."<init>":(I)V
+    2287: astore        8
+    2289: aload_3
+    2290: getfield      #82                 // Field com/esotericsoftware/spine/SkeletonData.slots:Lcom/badlogic/gdx/utils/Array;
+    2293: getfield      #47                 // Field com/badlogic/gdx/utils/Array.size:I
+    2296: istore        9
+    2298: iconst_0
+    2299: istore        10
+    2301: aload         7
+    2303: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    2306: astore        11
+    2308: aload         11
+    2310: ifnull        2588
+    2313: aconst_null
+    2314: astore        12
+    2316: aload         11
+    2318: ldc_w         #375                // String offsets
+    2321: invokevirtual #21                 // Method com/badlogic/gdx/utils/JsonValue.get:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    2324: astore        13
+    2326: aload         13
+    2328: ifnull        2558
+    2331: iload         9
+    2333: newarray       int
+    2335: astore        12
+    2337: iload         9
+    2339: iconst_1
+    2340: isub
+    2341: istore        14
+    2343: iload         14
+    2345: iflt          2360
+    2348: aload         12
+    2350: iload         14
+    2352: iconst_m1
+    2353: iastore
+    2354: iinc          14, -1
+    2357: goto          2343
+    2360: iload         9
+    2362: aload         13
+    2364: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+    2367: isub
+    2368: newarray       int
+    2370: astore        14
+    2372: iconst_0
+    2373: istore        15
+    2375: iconst_0
+    2376: istore        16
+    2378: aload         13
+    2380: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    2383: astore        17
+    2385: aload         17
+    2387: ifnull        2496
+    2390: aload_3
+    2391: aload         17
+    2393: ldc_w         #376                // String slot
+    2396: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+    2399: invokevirtual #163                // Method com/esotericsoftware/spine/SkeletonData.findSlotIndex:(Ljava/lang/String;)I
+    2402: istore        18
+    2404: iload         18
+    2406: iconst_m1
+    2407: if_icmpne     2444
+    2410: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    2413: dup
+    2414: new           #39                 // class java/lang/StringBuilder
+    2417: dup
+    2418: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    2421: ldc           #164                // String Slot not found:
+    2423: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    2426: aload         17
+    2428: ldc_w         #376                // String slot
+    2431: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+    2434: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    2437: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    2440: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    2443: athrow
+    2444: iload         15
+    2446: iload         18
+    2448: if_icmpeq     2467
+    2451: aload         14
+    2453: iload         16
+    2455: iinc          16, 1
+    2458: iload         15
+    2460: iinc          15, 1
+    2463: iastore
+    2464: goto          2444
+    2467: aload         12
+    2469: iload         15
+    2471: aload         17
+    2473: ldc_w         #366                // String offset
+    2476: invokevirtual #228                // Method com/badlogic/gdx/utils/JsonValue.getInt:(Ljava/lang/String;)I
+    2479: iadd
+    2480: iload         15
+    2482: iinc          15, 1
+    2485: iastore
+    2486: aload         17
+    2488: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    2491: astore        17
+    2493: goto          2385
+    2496: iload         15
+    2498: iload         9
+    2500: if_icmpge     2519
+    2503: aload         14
+    2505: iload         16
+    2507: iinc          16, 1
+    2510: iload         15
+    2512: iinc          15, 1
+    2515: iastore
+    2516: goto          2496
+    2519: iload         9
+    2521: iconst_1
+    2522: isub
+    2523: istore        17
+    2525: iload         17
+    2527: iflt          2558
+    2530: aload         12
+    2532: iload         17
+    2534: iaload
+    2535: iconst_m1
+    2536: if_icmpne     2552
+    2539: aload         12
+    2541: iload         17
+    2543: aload         14
+    2545: iinc          16, -1
+    2548: iload         16
+    2550: iaload
+    2551: iastore
+    2552: iinc          17, -1
+    2555: goto          2525
+    2558: aload         8
+    2560: iload         10
+    2562: iinc          10, 1
+    2565: aload         11
+    2567: ldc_w         #278                // String time
+    2570: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+    2573: aload         12
+    2575: invokevirtual #377                // Method com/esotericsoftware/spine/Animation$DrawOrderTimeline.setFrame:(IF[I)V
+    2578: aload         11
+    2580: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    2583: astore        11
+    2585: goto          2308
+    2588: aload         5
+    2590: aload         8
+    2592: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    2595: fload         6
+    2597: aload         8
+    2599: invokevirtual #378                // Method com/esotericsoftware/spine/Animation$DrawOrderTimeline.getFrames:()[F
+    2602: aload         8
+    2604: invokevirtual #379                // Method com/esotericsoftware/spine/Animation$DrawOrderTimeline.getFrameCount:()I
+    2607: iconst_1
+    2608: isub
+    2609: faload
+    2610: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+    2613: fstore        6
+    2615: aload_1
+    2616: ldc           #192                // String events
+    2618: invokevirtual #21                 // Method com/badlogic/gdx/utils/JsonValue.get:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+    2621: astore        8
+    2623: aload         8
+    2625: ifnull        2828
+    2628: new           #380                // class com/esotericsoftware/spine/Animation$EventTimeline
+    2631: dup
+    2632: aload         8
+    2634: getfield      #275                // Field com/badlogic/gdx/utils/JsonValue.size:I
+    2637: invokespecial #381                // Method com/esotericsoftware/spine/Animation$EventTimeline."<init>":(I)V
+    2640: astore        9
+    2642: iconst_0
+    2643: istore        10
+    2645: aload         8
+    2647: getfield      #162                // Field com/badlogic/gdx/utils/JsonValue.child:Lcom/badlogic/gdx/utils/JsonValue;
+    2650: astore        11
+    2652: aload         11
+    2654: ifnull        2801
+    2657: aload_3
+    2658: aload         11
+    2660: ldc           #48                 // String name
+    2662: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+    2665: invokevirtual #382                // Method com/esotericsoftware/spine/SkeletonData.findEvent:(Ljava/lang/String;)Lcom/esotericsoftware/spine/EventData;
+    2668: astore        12
+    2670: aload         12
+    2672: ifnonnull     2709
+    2675: new           #38                 // class com/badlogic/gdx/utils/SerializationException
+    2678: dup
+    2679: new           #39                 // class java/lang/StringBuilder
+    2682: dup
+    2683: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+    2686: ldc_w         #383                // String Event not found:
+    2689: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    2692: aload         11
+    2694: ldc           #48                 // String name
+    2696: invokevirtual #49                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;)Ljava/lang/String;
+    2699: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    2702: invokevirtual #43                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    2705: invokespecial #44                 // Method com/badlogic/gdx/utils/SerializationException."<init>":(Ljava/lang/String;)V
+    2708: athrow
+    2709: new           #384                // class com/esotericsoftware/spine/Event
+    2712: dup
+    2713: aload         11
+    2715: ldc_w         #278                // String time
+    2718: invokevirtual #221                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;)F
+    2721: aload         12
+    2723: invokespecial #385                // Method com/esotericsoftware/spine/Event."<init>":(FLcom/esotericsoftware/spine/EventData;)V
+    2726: astore        13
+    2728: aload         13
+    2730: aload         11
+    2732: ldc           #195                // String int
+    2734: aload         12
+    2736: invokevirtual #386                // Method com/esotericsoftware/spine/EventData.getInt:()I
+    2739: invokevirtual #196                // Method com/badlogic/gdx/utils/JsonValue.getInt:(Ljava/lang/String;I)I
+    2742: putfield      #387                // Field com/esotericsoftware/spine/Event.intValue:I
+    2745: aload         13
+    2747: aload         11
+    2749: ldc           #198                // String float
+    2751: aload         12
+    2753: invokevirtual #388                // Method com/esotericsoftware/spine/EventData.getFloat:()F
+    2756: invokevirtual #28                 // Method com/badlogic/gdx/utils/JsonValue.getFloat:(Ljava/lang/String;F)F
+    2759: putfield      #389                // Field com/esotericsoftware/spine/Event.floatValue:F
+    2762: aload         13
+    2764: aload         11
+    2766: ldc           #200                // String string
+    2768: aload         12
+    2770: invokevirtual #390                // Method com/esotericsoftware/spine/EventData.getString:()Ljava/lang/String;
+    2773: invokevirtual #23                 // Method com/badlogic/gdx/utils/JsonValue.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    2776: putfield      #391                // Field com/esotericsoftware/spine/Event.stringValue:Ljava/lang/String;
+    2779: aload         9
+    2781: iload         10
+    2783: iinc          10, 1
+    2786: aload         13
+    2788: invokevirtual #392                // Method com/esotericsoftware/spine/Animation$EventTimeline.setFrame:(ILcom/esotericsoftware/spine/Event;)V
+    2791: aload         11
+    2793: getfield      #77                 // Field com/badlogic/gdx/utils/JsonValue.next:Lcom/badlogic/gdx/utils/JsonValue;
+    2796: astore        11
+    2798: goto          2652
+    2801: aload         5
+    2803: aload         9
+    2805: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    2808: fload         6
+    2810: aload         9
+    2812: invokevirtual #393                // Method com/esotericsoftware/spine/Animation$EventTimeline.getFrames:()[F
+    2815: aload         9
+    2817: invokevirtual #394                // Method com/esotericsoftware/spine/Animation$EventTimeline.getFrameCount:()I
+    2820: iconst_1
+    2821: isub
+    2822: faload
+    2823: invokestatic  #287                // Method java/lang/Math.max:(FF)F
+    2826: fstore        6
+    2828: aload         5
+    2830: invokevirtual #206                // Method com/badlogic/gdx/utils/Array.shrink:()[Ljava/lang/Object;
+    2833: pop
+    2834: aload_3
+    2835: getfield      #207                // Field com/esotericsoftware/spine/SkeletonData.animations:Lcom/badlogic/gdx/utils/Array;
+    2838: new           #395                // class com/esotericsoftware/spine/Animation
+    2841: dup
+    2842: aload_2
+    2843: aload         5
+    2845: fload         6
+    2847: invokespecial #396                // Method com/esotericsoftware/spine/Animation."<init>":(Ljava/lang/String;Lcom/badlogic/gdx/utils/Array;F)V
+    2850: invokevirtual #76                 // Method com/badlogic/gdx/utils/Array.add:(Ljava/lang/Object;)V
+    2853: return
+
+  void readCurve(com.badlogic.gdx.utils.JsonValue, com.esotericsoftware.spine.Animation$CurveTimeline, int);
+    descriptor: (Lcom/badlogic/gdx/utils/JsonValue;Lcom/esotericsoftware/spine/Animation$CurveTimeline;I)V
+    Code:
+       0: aload_1
+       1: ldc_w         #397                // String curve
+       4: invokevirtual #21                 // Method com/badlogic/gdx/utils/JsonValue.get:(Ljava/lang/String;)Lcom/badlogic/gdx/utils/JsonValue;
+       7: astore        4
+       9: aload         4
+      11: ifnonnull     15
+      14: return
+      15: aload         4
+      17: invokevirtual #398                // Method com/badlogic/gdx/utils/JsonValue.isString:()Z
+      20: ifeq          45
+      23: aload         4
+      25: invokevirtual #95                 // Method com/badlogic/gdx/utils/JsonValue.asString:()Ljava/lang/String;
+      28: ldc_w         #399                // String stepped
+      31: invokevirtual #175                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      34: ifeq          45
+      37: aload_2
+      38: iload_3
+      39: invokevirtual #400                // Method com/esotericsoftware/spine/Animation$CurveTimeline.setStepped:(I)V
+      42: goto          82
+      45: aload         4
+      47: invokevirtual #401                // Method com/badlogic/gdx/utils/JsonValue.isArray:()Z
+      50: ifeq          82
+      53: aload_2
+      54: iload_3
+      55: aload         4
+      57: iconst_0
+      58: invokevirtual #402                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(I)F
+      61: aload         4
+      63: iconst_1
+      64: invokevirtual #402                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(I)F
+      67: aload         4
+      69: iconst_2
+      70: invokevirtual #402                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(I)F
+      73: aload         4
+      75: iconst_3
+      76: invokevirtual #402                // Method com/badlogic/gdx/utils/JsonValue.getFloat:(I)F
+      79: invokevirtual #403                // Method com/esotericsoftware/spine/Animation$CurveTimeline.setCurve:(IFFFF)V
+      82: return
+}

@@ -1,0 +1,61 @@
+Compiled from "GainEnergyAction.java"
+public class com.megacrit.cardcrawl.actions.common.GainEnergyAction extends com.megacrit.cardcrawl.actions.AbstractGameAction {
+  private int energyGain;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.actions.common.GainEnergyAction(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/actions/AbstractGameAction."<init>":()V
+       4: aload_0
+       5: getstatic     #2                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       8: getstatic     #2                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      11: iconst_0
+      12: invokevirtual #3                  // Method setValues:(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+      15: aload_0
+      16: getstatic     #4                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_FAST:F
+      19: putfield      #5                  // Field duration:F
+      22: aload_0
+      23: iload_1
+      24: putfield      #6                  // Field energyGain:I
+      27: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #5                  // Field duration:F
+       4: getstatic     #4                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_FAST:F
+       7: fcmpl
+       8: ifne          75
+      11: getstatic     #2                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      14: aload_0
+      15: getfield      #6                  // Field energyGain:I
+      18: invokevirtual #7                  // Method com/megacrit/cardcrawl/characters/AbstractPlayer.gainEnergy:(I)V
+      21: getstatic     #8                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      24: aload_0
+      25: getfield      #6                  // Field energyGain:I
+      28: invokevirtual #9                  // Method com/megacrit/cardcrawl/actions/GameActionManager.updateEnergyGain:(I)V
+      31: getstatic     #2                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      34: getfield      #10                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      37: getfield      #11                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+      40: invokevirtual #12                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      43: astore_1
+      44: aload_1
+      45: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      50: ifeq          75
+      53: aload_1
+      54: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      59: checkcast     #15                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      62: astore_2
+      63: aload_2
+      64: aload_0
+      65: getfield      #6                  // Field energyGain:I
+      68: iconst_1
+      69: invokevirtual #16                 // Method com/megacrit/cardcrawl/cards/AbstractCard.triggerOnGainEnergy:(IZ)V
+      72: goto          44
+      75: aload_0
+      76: invokevirtual #17                 // Method tickDuration:()V
+      79: return
+}

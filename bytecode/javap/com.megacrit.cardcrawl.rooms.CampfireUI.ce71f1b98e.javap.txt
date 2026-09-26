@@ -1,0 +1,1405 @@
+Compiled from "CampfireUI.java"
+public class com.megacrit.cardcrawl.rooms.CampfireUI implements com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener {
+  private static final com.megacrit.cardcrawl.localization.UIStrings uiStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/UIStrings;
+
+  public static final java.lang.String[] TEXT;
+    descriptor: [Ljava/lang/String;
+
+  public static boolean hidden;
+    descriptor: Z
+
+  public boolean somethingSelected;
+    descriptor: Z
+
+  private float hideStuffTimer;
+    descriptor: F
+
+  private float charAnimTimer;
+    descriptor: F
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.ui.campfire.AbstractCampfireOption> buttons;
+    descriptor: Ljava/util/ArrayList;
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.vfx.campfire.CampfireBubbleEffect> bubbles;
+    descriptor: Ljava/util/ArrayList;
+
+  private float fireTimer;
+    descriptor: F
+
+  private static final float FIRE_INTERVAL;
+    descriptor: F
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.vfx.AbstractGameEffect> flameEffect;
+    descriptor: Ljava/util/ArrayList;
+
+  private int bubbleAmt;
+    descriptor: I
+
+  private java.lang.String bubbleMsg;
+    descriptor: Ljava/lang/String;
+
+  private com.megacrit.cardcrawl.vfx.BobEffect effect;
+    descriptor: Lcom/megacrit/cardcrawl/vfx/BobEffect;
+
+  private static final float BUTTON_START_X;
+    descriptor: F
+
+  private static final float BUTTON_SPACING_X;
+    descriptor: F
+
+  private static final float BUTTON_START_Y;
+    descriptor: F
+
+  private static final float BUTTON_SPACING_Y;
+    descriptor: F
+
+  private static final float BUTTON_EXTRA_SPACING_Y;
+    descriptor: F
+
+  private static final int MAX_BUTTONS_BEFORE_SCROLL;
+    descriptor: I
+
+  private static final float START_Y;
+    descriptor: F
+
+  private boolean grabbedScreen;
+    descriptor: Z
+
+  private float grabStartY;
+    descriptor: F
+
+  private float scrollY;
+    descriptor: F
+
+  private float targetY;
+    descriptor: F
+
+  private float scrollLowerBound;
+    descriptor: F
+
+  private float scrollUpperBound;
+    descriptor: F
+
+  private com.megacrit.cardcrawl.screens.mainMenu.ScrollBar scrollBar;
+    descriptor: Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+
+  public com.megacrit.cardcrawl.ui.buttons.ConfirmButton confirmButton;
+    descriptor: Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+
+  public com.megacrit.cardcrawl.ui.campfire.AbstractCampfireOption touchOption;
+    descriptor: Lcom/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption;
+
+  public com.megacrit.cardcrawl.rooms.CampfireUI();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #2                  // Field somethingSelected:Z
+       9: aload_0
+      10: ldc           #3                  // float 0.5f
+      12: putfield      #4                  // Field hideStuffTimer:F
+      15: aload_0
+      16: fconst_2
+      17: putfield      #5                  // Field charAnimTimer:F
+      20: aload_0
+      21: new           #6                  // class java/util/ArrayList
+      24: dup
+      25: invokespecial #7                  // Method java/util/ArrayList."<init>":()V
+      28: putfield      #8                  // Field buttons:Ljava/util/ArrayList;
+      31: aload_0
+      32: new           #6                  // class java/util/ArrayList
+      35: dup
+      36: invokespecial #7                  // Method java/util/ArrayList."<init>":()V
+      39: putfield      #9                  // Field bubbles:Ljava/util/ArrayList;
+      42: aload_0
+      43: fconst_0
+      44: putfield      #10                 // Field fireTimer:F
+      47: aload_0
+      48: new           #6                  // class java/util/ArrayList
+      51: dup
+      52: invokespecial #7                  // Method java/util/ArrayList."<init>":()V
+      55: putfield      #11                 // Field flameEffect:Ljava/util/ArrayList;
+      58: aload_0
+      59: new           #12                 // class com/megacrit/cardcrawl/vfx/BobEffect
+      62: dup
+      63: fconst_2
+      64: invokespecial #13                 // Method com/megacrit/cardcrawl/vfx/BobEffect."<init>":(F)V
+      67: putfield      #14                 // Field effect:Lcom/megacrit/cardcrawl/vfx/BobEffect;
+      70: aload_0
+      71: iconst_0
+      72: putfield      #15                 // Field grabbedScreen:Z
+      75: aload_0
+      76: fconst_0
+      77: putfield      #16                 // Field grabStartY:F
+      80: aload_0
+      81: getstatic     #17                 // Field START_Y:F
+      84: putfield      #18                 // Field scrollY:F
+      87: aload_0
+      88: aload_0
+      89: getfield      #18                 // Field scrollY:F
+      92: putfield      #19                 // Field targetY:F
+      95: aload_0
+      96: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      99: i2f
+     100: ldc           #21                 // float 300.0f
+     102: getstatic     #22                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     105: fmul
+     106: fsub
+     107: putfield      #23                 // Field scrollLowerBound:F
+     110: aload_0
+     111: ldc           #24                 // float 2400.0f
+     113: getstatic     #22                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     116: fmul
+     117: putfield      #25                 // Field scrollUpperBound:F
+     120: aload_0
+     121: new           #26                 // class com/megacrit/cardcrawl/ui/buttons/ConfirmButton
+     124: dup
+     125: invokespecial #27                 // Method com/megacrit/cardcrawl/ui/buttons/ConfirmButton."<init>":()V
+     128: putfield      #28                 // Field confirmButton:Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+     131: aload_0
+     132: aconst_null
+     133: putfield      #29                 // Field touchOption:Lcom/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption;
+     136: aload_0
+     137: new           #30                 // class com/megacrit/cardcrawl/screens/mainMenu/ScrollBar
+     140: dup
+     141: aload_0
+     142: invokespecial #31                 // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar."<init>":(Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBarListener;)V
+     145: putfield      #32                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+     148: iconst_0
+     149: putstatic     #33                 // Field hidden:Z
+     152: aload_0
+     153: invokespecial #34                 // Method initializeButtons:()V
+     156: aload_0
+     157: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     160: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     163: iconst_2
+     164: if_icmple     176
+     167: aload_0
+     168: bipush        60
+     170: putfield      #36                 // Field bubbleAmt:I
+     173: goto          182
+     176: aload_0
+     177: bipush        40
+     179: putfield      #36                 // Field bubbleAmt:I
+     182: aload_0
+     183: aload_0
+     184: invokespecial #37                 // Method getCampMessage:()Ljava/lang/String;
+     187: putfield      #38                 // Field bubbleMsg:Ljava/lang/String;
+     190: return
+
+  private void initializeButtons();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+       4: new           #39                 // class com/megacrit/cardcrawl/ui/campfire/RestOption
+       7: dup
+       8: iconst_1
+       9: invokespecial #40                 // Method com/megacrit/cardcrawl/ui/campfire/RestOption."<init>":(Z)V
+      12: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      15: pop
+      16: aload_0
+      17: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+      20: new           #42                 // class com/megacrit/cardcrawl/ui/campfire/SmithOption
+      23: dup
+      24: getstatic     #43                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      27: getfield      #44                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      30: invokevirtual #45                 // Method com/megacrit/cardcrawl/cards/CardGroup.getUpgradableCards:()Lcom/megacrit/cardcrawl/cards/CardGroup;
+      33: invokevirtual #46                 // Method com/megacrit/cardcrawl/cards/CardGroup.size:()I
+      36: ifle          51
+      39: ldc           #48                 // String Midas
+      41: invokestatic  #49                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+      44: ifne          51
+      47: iconst_1
+      48: goto          52
+      51: iconst_0
+      52: invokespecial #50                 // Method com/megacrit/cardcrawl/ui/campfire/SmithOption."<init>":(Z)V
+      55: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      58: pop
+      59: getstatic     #43                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      62: getfield      #51                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+      65: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      68: astore_1
+      69: aload_1
+      70: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      75: ifeq          99
+      78: aload_1
+      79: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      84: checkcast     #55                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+      87: astore_2
+      88: aload_2
+      89: aload_0
+      90: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+      93: invokevirtual #56                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.addCampfireOption:(Ljava/util/ArrayList;)V
+      96: goto          69
+      99: aload_0
+     100: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     103: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     106: astore_1
+     107: aload_1
+     108: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     113: ifeq          179
+     116: aload_1
+     117: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     122: checkcast     #57                 // class com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption
+     125: astore_2
+     126: getstatic     #43                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     129: getfield      #51                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+     132: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     135: astore_3
+     136: aload_3
+     137: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     142: ifeq          176
+     145: aload_3
+     146: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     151: checkcast     #55                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+     154: astore        4
+     156: aload         4
+     158: aload_2
+     159: invokevirtual #58                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.canUseCampfireOption:(Lcom/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption;)Z
+     162: ifne          173
+     165: aload_2
+     166: iconst_0
+     167: putfield      #59                 // Field com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.usable:Z
+     170: goto          176
+     173: goto          136
+     176: goto          107
+     179: getstatic     #60                 // Field com/megacrit/cardcrawl/core/Settings.isFinalActAvailable:Z
+     182: ifeq          206
+     185: getstatic     #61                 // Field com/megacrit/cardcrawl/core/Settings.hasRubyKey:Z
+     188: ifne          206
+     191: aload_0
+     192: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     195: new           #62                 // class com/megacrit/cardcrawl/ui/campfire/RecallOption
+     198: dup
+     199: invokespecial #63                 // Method com/megacrit/cardcrawl/ui/campfire/RecallOption."<init>":()V
+     202: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     205: pop
+     206: iconst_1
+     207: istore_1
+     208: aload_0
+     209: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     212: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     215: astore_2
+     216: aload_2
+     217: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     222: ifeq          250
+     225: aload_2
+     226: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     231: checkcast     #57                 // class com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption
+     234: astore_3
+     235: aload_3
+     236: getfield      #59                 // Field com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.usable:Z
+     239: ifeq          247
+     242: iconst_0
+     243: istore_1
+     244: goto          250
+     247: goto          216
+     250: iload_1
+     251: ifeq          267
+     254: fconst_0
+     255: putstatic     #64                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.waitTimer:F
+     258: invokestatic  #65                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     261: getstatic     #66                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMPLETE:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     264: putfield      #67                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     267: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #68                 // Method updateCharacterPosition:()V
+       4: aload_0
+       5: invokespecial #69                 // Method updateTouchscreen:()V
+       8: aload_0
+       9: invokespecial #70                 // Method updateControllerInput:()V
+      12: aload_0
+      13: getfield      #32                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+      16: invokevirtual #71                 // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.update:()Z
+      19: ifne          26
+      22: aload_0
+      23: invokespecial #72                 // Method updateScrolling:()V
+      26: aload_0
+      27: getfield      #14                 // Field effect:Lcom/megacrit/cardcrawl/vfx/BobEffect;
+      30: invokevirtual #73                 // Method com/megacrit/cardcrawl/vfx/BobEffect.update:()V
+      33: getstatic     #33                 // Field hidden:Z
+      36: ifne          81
+      39: aload_0
+      40: invokespecial #74                 // Method updateBubbles:()V
+      43: aload_0
+      44: invokespecial #75                 // Method updateFire:()V
+      47: aload_0
+      48: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+      51: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      54: astore_1
+      55: aload_1
+      56: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      61: ifeq          81
+      64: aload_1
+      65: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      70: checkcast     #57                 // class com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption
+      73: astore_2
+      74: aload_2
+      75: invokevirtual #76                 // Method com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.update:()V
+      78: goto          55
+      81: aload_0
+      82: getfield      #2                  // Field somethingSelected:Z
+      85: ifeq          118
+      88: aload_0
+      89: dup
+      90: getfield      #4                  // Field hideStuffTimer:F
+      93: getstatic     #77                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+      96: invokeinterface #78,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+     101: fsub
+     102: putfield      #4                  // Field hideStuffTimer:F
+     105: aload_0
+     106: getfield      #4                  // Field hideStuffTimer:F
+     109: fconst_0
+     110: fcmpg
+     111: ifge          118
+     114: iconst_1
+     115: putstatic     #33                 // Field hidden:Z
+     118: return
+
+  private void updateTouchscreen();
+    descriptor: ()V
+    Code:
+       0: getstatic     #79                 // Field com/megacrit/cardcrawl/core/Settings.isTouchScreen:Z
+       3: ifne          7
+       6: return
+       7: aload_0
+       8: getfield      #28                 // Field confirmButton:Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+      11: invokevirtual #80                 // Method com/megacrit/cardcrawl/ui/buttons/ConfirmButton.update:()V
+      14: aload_0
+      15: getfield      #28                 // Field confirmButton:Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+      18: getfield      #81                 // Field com/megacrit/cardcrawl/ui/buttons/ConfirmButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      21: getfield      #82                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clicked:Z
+      24: ifeq          91
+      27: aload_0
+      28: getfield      #29                 // Field touchOption:Lcom/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption;
+      31: ifnull        91
+      34: aload_0
+      35: getfield      #28                 // Field confirmButton:Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+      38: getfield      #81                 // Field com/megacrit/cardcrawl/ui/buttons/ConfirmButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      41: iconst_0
+      42: putfield      #82                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clicked:Z
+      45: aload_0
+      46: getfield      #28                 // Field confirmButton:Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+      49: getfield      #81                 // Field com/megacrit/cardcrawl/ui/buttons/ConfirmButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      52: iconst_0
+      53: putfield      #83                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clickStarted:Z
+      56: aload_0
+      57: getfield      #28                 // Field confirmButton:Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+      60: iconst_1
+      61: putfield      #84                 // Field com/megacrit/cardcrawl/ui/buttons/ConfirmButton.isDisabled:Z
+      64: aload_0
+      65: getfield      #28                 // Field confirmButton:Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+      68: invokevirtual #85                 // Method com/megacrit/cardcrawl/ui/buttons/ConfirmButton.hide:()V
+      71: aload_0
+      72: getfield      #29                 // Field touchOption:Lcom/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption;
+      75: invokevirtual #86                 // Method com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.useOption:()V
+      78: aload_0
+      79: iconst_1
+      80: putfield      #2                  // Field somethingSelected:Z
+      83: aload_0
+      84: aconst_null
+      85: putfield      #29                 // Field touchOption:Lcom/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption;
+      88: goto          124
+      91: getstatic     #87                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.justReleasedClickLeft:Z
+      94: ifeq          124
+      97: aload_0
+      98: getfield      #29                 // Field touchOption:Lcom/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption;
+     101: ifnull        124
+     104: aload_0
+     105: aconst_null
+     106: putfield      #29                 // Field touchOption:Lcom/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption;
+     109: aload_0
+     110: getfield      #28                 // Field confirmButton:Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+     113: iconst_1
+     114: putfield      #84                 // Field com/megacrit/cardcrawl/ui/buttons/ConfirmButton.isDisabled:Z
+     117: aload_0
+     118: getfield      #28                 // Field confirmButton:Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+     121: invokevirtual #85                 // Method com/megacrit/cardcrawl/ui/buttons/ConfirmButton.hide:()V
+     124: return
+
+  private void updateControllerInput();
+    descriptor: ()V
+    Code:
+       0: getstatic     #88                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+       3: ifeq          53
+       6: getstatic     #43                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       9: getfield      #89                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.viewingRelics:Z
+      12: ifne          53
+      15: getstatic     #90                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topPanel:Lcom/megacrit/cardcrawl/ui/panels/TopPanel;
+      18: getfield      #91                 // Field com/megacrit/cardcrawl/ui/panels/TopPanel.selectPotionMode:Z
+      21: ifne          53
+      24: getstatic     #90                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topPanel:Lcom/megacrit/cardcrawl/ui/panels/TopPanel;
+      27: getfield      #92                 // Field com/megacrit/cardcrawl/ui/panels/TopPanel.potionUi:Lcom/megacrit/cardcrawl/ui/panels/PotionPopUp;
+      30: getfield      #93                 // Field com/megacrit/cardcrawl/ui/panels/PotionPopUp.isHidden:Z
+      33: ifeq          53
+      36: aload_0
+      37: getfield      #2                  // Field somethingSelected:Z
+      40: ifne          53
+      43: aload_0
+      44: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+      47: invokevirtual #94                 // Method java/util/ArrayList.isEmpty:()Z
+      50: ifeq          54
+      53: return
+      54: iconst_0
+      55: istore_1
+      56: iconst_0
+      57: istore_2
+      58: aload_0
+      59: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+      62: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      65: astore_3
+      66: aload_3
+      67: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      72: ifeq          108
+      75: aload_3
+      76: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      81: checkcast     #57                 // class com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption
+      84: astore        4
+      86: aload         4
+      88: getfield      #95                 // Field com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      91: getfield      #96                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+      94: ifeq          102
+      97: iconst_1
+      98: istore_1
+      99: goto          108
+     102: iinc          2, 1
+     105: goto          66
+     108: iload_1
+     109: ifne          132
+     112: aload_0
+     113: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     116: iconst_0
+     117: invokevirtual #97                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     120: checkcast     #57                 // class com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption
+     123: getfield      #95                 // Field com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     126: invokestatic  #98                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     129: goto          563
+     132: getstatic     #99                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.left:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     135: invokevirtual #100                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     138: ifne          150
+     141: getstatic     #101                // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altLeft:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     144: invokevirtual #100                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     147: ifeq          221
+     150: iinc          2, -1
+     153: iload_2
+     154: ifge          178
+     157: aload_0
+     158: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     161: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     164: iconst_2
+     165: if_icmpne     173
+     168: iconst_1
+     169: istore_2
+     170: goto          201
+     173: iconst_0
+     174: istore_2
+     175: goto          201
+     178: iload_2
+     179: iconst_1
+     180: if_icmpne     201
+     183: aload_0
+     184: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     187: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     190: iconst_4
+     191: if_icmpne     199
+     194: iconst_3
+     195: istore_2
+     196: goto          201
+     199: iconst_2
+     200: istore_2
+     201: aload_0
+     202: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     205: iload_2
+     206: invokevirtual #97                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     209: checkcast     #57                 // class com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption
+     212: getfield      #95                 // Field com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     215: invokestatic  #98                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     218: goto          563
+     221: getstatic     #102                // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.right:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     224: invokevirtual #100                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     227: ifne          239
+     230: getstatic     #103                // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altRight:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     233: invokevirtual #100                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     236: ifeq          303
+     239: iinc          2, 1
+     242: iload_2
+     243: aload_0
+     244: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     247: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     250: iconst_1
+     251: isub
+     252: if_icmple     283
+     255: aload_0
+     256: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     259: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     262: iconst_2
+     263: if_icmpne     271
+     266: iconst_0
+     267: istore_2
+     268: goto          283
+     271: iload_2
+     272: iconst_3
+     273: if_icmpne     281
+     276: iconst_2
+     277: istore_2
+     278: goto          283
+     281: iconst_0
+     282: istore_2
+     283: aload_0
+     284: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     287: iload_2
+     288: invokevirtual #97                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     291: checkcast     #57                 // class com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption
+     294: getfield      #95                 // Field com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     297: invokestatic  #98                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     300: goto          563
+     303: getstatic     #104                // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     306: invokevirtual #100                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     309: ifne          321
+     312: getstatic     #105                // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altUp:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     315: invokevirtual #100                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     318: ifeq          436
+     321: aload_0
+     322: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     325: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     328: iconst_2
+     329: if_icmple     436
+     332: aload_0
+     333: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     336: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     339: iconst_5
+     340: if_icmpne     355
+     343: iinc          2, -2
+     346: iload_2
+     347: ifge          416
+     350: iconst_4
+     351: istore_2
+     352: goto          416
+     355: aload_0
+     356: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     359: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     362: iconst_3
+     363: if_icmpne     385
+     366: iload_2
+     367: ifne          375
+     370: iconst_2
+     371: istore_2
+     372: goto          416
+     375: iload_2
+     376: iconst_2
+     377: if_icmpne     416
+     380: iconst_0
+     381: istore_2
+     382: goto          416
+     385: iload_2
+     386: ifne          394
+     389: iconst_2
+     390: istore_2
+     391: goto          416
+     394: iload_2
+     395: iconst_2
+     396: if_icmpne     404
+     399: iconst_0
+     400: istore_2
+     401: goto          416
+     404: iload_2
+     405: iconst_3
+     406: if_icmpne     414
+     409: iconst_1
+     410: istore_2
+     411: goto          416
+     414: iconst_3
+     415: istore_2
+     416: aload_0
+     417: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     420: iload_2
+     421: invokevirtual #97                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     424: checkcast     #57                 // class com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption
+     427: getfield      #95                 // Field com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     430: invokestatic  #98                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     433: goto          563
+     436: getstatic     #106                // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.down:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     439: invokevirtual #100                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     442: ifne          454
+     445: getstatic     #107                // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altDown:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     448: invokevirtual #100                // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     451: ifeq          563
+     454: aload_0
+     455: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     458: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     461: iconst_2
+     462: if_icmple     563
+     465: aload_0
+     466: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     469: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     472: iconst_5
+     473: if_icmpne     502
+     476: iload_2
+     477: iconst_4
+     478: if_icmpne     486
+     481: iconst_0
+     482: istore_2
+     483: goto          546
+     486: iload_2
+     487: iconst_2
+     488: if_icmple     496
+     491: iconst_4
+     492: istore_2
+     493: goto          546
+     496: iinc          2, 2
+     499: goto          546
+     502: aload_0
+     503: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     506: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     509: iconst_4
+     510: if_icmpne     530
+     513: iload_2
+     514: iconst_2
+     515: if_icmplt     524
+     518: iinc          2, -2
+     521: goto          546
+     524: iinc          2, 2
+     527: goto          546
+     530: iload_2
+     531: ifeq          539
+     534: iload_2
+     535: iconst_1
+     536: if_icmpne     544
+     539: iconst_2
+     540: istore_2
+     541: goto          546
+     544: iconst_0
+     545: istore_2
+     546: aload_0
+     547: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     550: iload_2
+     551: invokevirtual #97                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     554: checkcast     #57                 // class com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption
+     557: getfield      #95                 // Field com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     560: invokestatic  #98                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     563: return
+
+  private void updateScrolling();
+    descriptor: ()V
+    Code:
+       0: getstatic     #108                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+       3: istore_1
+       4: aload_0
+       5: getfield      #15                 // Field grabbedScreen:Z
+       8: ifne          75
+      11: getstatic     #109                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.scrolledDown:Z
+      14: ifeq          32
+      17: aload_0
+      18: dup
+      19: getfield      #19                 // Field targetY:F
+      22: getstatic     #110                // Field com/megacrit/cardcrawl/core/Settings.SCROLL_SPEED:F
+      25: fadd
+      26: putfield      #19                 // Field targetY:F
+      29: goto          50
+      32: getstatic     #111                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.scrolledUp:Z
+      35: ifeq          50
+      38: aload_0
+      39: dup
+      40: getfield      #19                 // Field targetY:F
+      43: getstatic     #110                // Field com/megacrit/cardcrawl/core/Settings.SCROLL_SPEED:F
+      46: fsub
+      47: putfield      #19                 // Field targetY:F
+      50: getstatic     #112                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.justClickedLeft:Z
+      53: ifeq          100
+      56: aload_0
+      57: iconst_1
+      58: putfield      #15                 // Field grabbedScreen:Z
+      61: aload_0
+      62: iload_1
+      63: i2f
+      64: aload_0
+      65: getfield      #19                 // Field targetY:F
+      68: fsub
+      69: putfield      #16                 // Field grabStartY:F
+      72: goto          100
+      75: getstatic     #113                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.isMouseDown:Z
+      78: ifeq          95
+      81: aload_0
+      82: iload_1
+      83: i2f
+      84: aload_0
+      85: getfield      #16                 // Field grabStartY:F
+      88: fsub
+      89: putfield      #19                 // Field targetY:F
+      92: goto          100
+      95: aload_0
+      96: iconst_0
+      97: putfield      #15                 // Field grabbedScreen:Z
+     100: aload_0
+     101: aload_0
+     102: getfield      #18                 // Field scrollY:F
+     105: aload_0
+     106: getfield      #19                 // Field targetY:F
+     109: invokestatic  #114                // Method com/megacrit/cardcrawl/helpers/MathHelper.scrollSnapLerpSpeed:(FF)F
+     112: putfield      #18                 // Field scrollY:F
+     115: aload_0
+     116: invokespecial #115                // Method resetScrolling:()V
+     119: aload_0
+     120: invokespecial #116                // Method updateBarPosition:()V
+     123: return
+
+  private void resetScrolling();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #19                 // Field targetY:F
+       4: aload_0
+       5: getfield      #23                 // Field scrollLowerBound:F
+       8: fcmpg
+       9: ifge          30
+      12: aload_0
+      13: aload_0
+      14: getfield      #19                 // Field targetY:F
+      17: aload_0
+      18: getfield      #23                 // Field scrollLowerBound:F
+      21: invokestatic  #114                // Method com/megacrit/cardcrawl/helpers/MathHelper.scrollSnapLerpSpeed:(FF)F
+      24: putfield      #19                 // Field targetY:F
+      27: goto          57
+      30: aload_0
+      31: getfield      #19                 // Field targetY:F
+      34: aload_0
+      35: getfield      #25                 // Field scrollUpperBound:F
+      38: fcmpl
+      39: ifle          57
+      42: aload_0
+      43: aload_0
+      44: getfield      #19                 // Field targetY:F
+      47: aload_0
+      48: getfield      #25                 // Field scrollUpperBound:F
+      51: invokestatic  #114                // Method com/megacrit/cardcrawl/helpers/MathHelper.scrollSnapLerpSpeed:(FF)F
+      54: putfield      #19                 // Field targetY:F
+      57: return
+
+  private void updateCharacterPosition();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #5                  // Field charAnimTimer:F
+       5: getstatic     #77                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+       8: invokeinterface #78,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      13: fsub
+      14: putfield      #5                  // Field charAnimTimer:F
+      17: aload_0
+      18: getfield      #5                  // Field charAnimTimer:F
+      21: fconst_0
+      22: fcmpg
+      23: ifge          31
+      26: aload_0
+      27: fconst_0
+      28: putfield      #5                  // Field charAnimTimer:F
+      31: getstatic     #43                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      34: getstatic     #117                // Field com/badlogic/gdx/math/Interpolation.exp10In:Lcom/badlogic/gdx/math/Interpolation$ExpIn;
+      37: fconst_0
+      38: ldc           #118                // float -300.0f
+      40: getstatic     #22                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      43: fmul
+      44: aload_0
+      45: getfield      #5                  // Field charAnimTimer:F
+      48: fconst_2
+      49: fdiv
+      50: invokevirtual #119                // Method com/badlogic/gdx/math/Interpolation$ExpIn.apply:(FFF)F
+      53: putfield      #120                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.animX:F
+      56: return
+
+  private void updateBubbles();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #9                  // Field bubbles:Ljava/util/ArrayList;
+       4: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+       7: aload_0
+       8: getfield      #36                 // Field bubbleAmt:I
+      11: if_icmpge     69
+      14: aload_0
+      15: getfield      #36                 // Field bubbleAmt:I
+      18: aload_0
+      19: getfield      #9                  // Field bubbles:Ljava/util/ArrayList;
+      22: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+      25: isub
+      26: istore_1
+      27: iconst_0
+      28: istore_2
+      29: iload_2
+      30: iload_1
+      31: if_icmpge     69
+      34: aload_0
+      35: getfield      #9                  // Field bubbles:Ljava/util/ArrayList;
+      38: new           #121                // class com/megacrit/cardcrawl/vfx/campfire/CampfireBubbleEffect
+      41: dup
+      42: aload_0
+      43: getfield      #36                 // Field bubbleAmt:I
+      46: bipush        60
+      48: if_icmpne     55
+      51: iconst_1
+      52: goto          56
+      55: iconst_0
+      56: invokespecial #122                // Method com/megacrit/cardcrawl/vfx/campfire/CampfireBubbleEffect."<init>":(Z)V
+      59: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      62: pop
+      63: iinc          2, 1
+      66: goto          29
+      69: aload_0
+      70: getfield      #9                  // Field bubbles:Ljava/util/ArrayList;
+      73: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      76: astore_1
+      77: aload_1
+      78: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      83: ifeq          116
+      86: aload_1
+      87: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      92: checkcast     #121                // class com/megacrit/cardcrawl/vfx/campfire/CampfireBubbleEffect
+      95: astore_2
+      96: aload_2
+      97: invokevirtual #123                // Method com/megacrit/cardcrawl/vfx/campfire/CampfireBubbleEffect.update:()V
+     100: aload_2
+     101: getfield      #124                // Field com/megacrit/cardcrawl/vfx/campfire/CampfireBubbleEffect.isDone:Z
+     104: ifeq          113
+     107: aload_1
+     108: invokeinterface #125,  1          // InterfaceMethod java/util/Iterator.remove:()V
+     113: goto          77
+     116: return
+
+  private void updateFire();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #10                 // Field fireTimer:F
+       5: getstatic     #77                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+       8: invokeinterface #78,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      13: fsub
+      14: putfield      #10                 // Field fireTimer:F
+      17: aload_0
+      18: getfield      #10                 // Field fireTimer:F
+      21: fconst_0
+      22: fcmpg
+      23: ifge          136
+      26: aload_0
+      27: ldc           #127                // float 0.05f
+      29: putfield      #10                 // Field fireTimer:F
+      32: getstatic     #128                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.id:Ljava/lang/String;
+      35: ldc           #130                // String TheEnding
+      37: invokevirtual #131                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      40: ifeq          106
+      43: aload_0
+      44: getfield      #11                 // Field flameEffect:Ljava/util/ArrayList;
+      47: new           #132                // class com/megacrit/cardcrawl/vfx/campfire/CampfireEndingBurningEffect
+      50: dup
+      51: invokespecial #133                // Method com/megacrit/cardcrawl/vfx/campfire/CampfireEndingBurningEffect."<init>":()V
+      54: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      57: pop
+      58: aload_0
+      59: getfield      #11                 // Field flameEffect:Ljava/util/ArrayList;
+      62: new           #132                // class com/megacrit/cardcrawl/vfx/campfire/CampfireEndingBurningEffect
+      65: dup
+      66: invokespecial #133                // Method com/megacrit/cardcrawl/vfx/campfire/CampfireEndingBurningEffect."<init>":()V
+      69: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      72: pop
+      73: aload_0
+      74: getfield      #11                 // Field flameEffect:Ljava/util/ArrayList;
+      77: new           #132                // class com/megacrit/cardcrawl/vfx/campfire/CampfireEndingBurningEffect
+      80: dup
+      81: invokespecial #133                // Method com/megacrit/cardcrawl/vfx/campfire/CampfireEndingBurningEffect."<init>":()V
+      84: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      87: pop
+      88: aload_0
+      89: getfield      #11                 // Field flameEffect:Ljava/util/ArrayList;
+      92: new           #132                // class com/megacrit/cardcrawl/vfx/campfire/CampfireEndingBurningEffect
+      95: dup
+      96: invokespecial #133                // Method com/megacrit/cardcrawl/vfx/campfire/CampfireEndingBurningEffect."<init>":()V
+      99: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     102: pop
+     103: goto          136
+     106: aload_0
+     107: getfield      #11                 // Field flameEffect:Ljava/util/ArrayList;
+     110: new           #134                // class com/megacrit/cardcrawl/vfx/campfire/CampfireBurningEffect
+     113: dup
+     114: invokespecial #135                // Method com/megacrit/cardcrawl/vfx/campfire/CampfireBurningEffect."<init>":()V
+     117: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     120: pop
+     121: aload_0
+     122: getfield      #11                 // Field flameEffect:Ljava/util/ArrayList;
+     125: new           #134                // class com/megacrit/cardcrawl/vfx/campfire/CampfireBurningEffect
+     128: dup
+     129: invokespecial #135                // Method com/megacrit/cardcrawl/vfx/campfire/CampfireBurningEffect."<init>":()V
+     132: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     135: pop
+     136: aload_0
+     137: getfield      #11                 // Field flameEffect:Ljava/util/ArrayList;
+     140: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     143: astore_1
+     144: aload_1
+     145: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     150: ifeq          183
+     153: aload_1
+     154: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     159: checkcast     #136                // class com/megacrit/cardcrawl/vfx/AbstractGameEffect
+     162: astore_2
+     163: aload_2
+     164: invokevirtual #137                // Method com/megacrit/cardcrawl/vfx/AbstractGameEffect.update:()V
+     167: aload_2
+     168: getfield      #138                // Field com/megacrit/cardcrawl/vfx/AbstractGameEffect.isDone:Z
+     171: ifeq          180
+     174: aload_1
+     175: invokeinterface #125,  1          // InterfaceMethod java/util/Iterator.remove:()V
+     180: goto          144
+     183: return
+
+  public void reopen();
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: putstatic     #33                 // Field hidden:Z
+       4: aload_0
+       5: ldc           #3                  // float 0.5f
+       7: putfield      #4                  // Field hideStuffTimer:F
+      10: aload_0
+      11: iconst_0
+      12: putfield      #2                  // Field somethingSelected:Z
+      15: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: getstatic     #33                 // Field hidden:Z
+       3: ifne          163
+       6: aload_0
+       7: aload_1
+       8: invokespecial #139                // Method renderFire:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      11: getstatic     #43                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      14: aload_1
+      15: invokevirtual #140                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      18: aload_0
+      19: getfield      #9                  // Field bubbles:Ljava/util/ArrayList;
+      22: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      25: astore_2
+      26: aload_2
+      27: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      32: ifeq          83
+      35: aload_2
+      36: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      41: checkcast     #121                // class com/megacrit/cardcrawl/vfx/campfire/CampfireBubbleEffect
+      44: astore_3
+      45: aload_3
+      46: aload_1
+      47: ldc           #141                // float 950.0f
+      49: getstatic     #142                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+      52: fmul
+      53: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      56: i2f
+      57: fconst_2
+      58: fdiv
+      59: ldc           #143                // float 60.0f
+      61: getstatic     #144                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+      64: fmul
+      65: fadd
+      66: aload_0
+      67: getfield      #14                 // Field effect:Lcom/megacrit/cardcrawl/vfx/BobEffect;
+      70: getfield      #145                // Field com/megacrit/cardcrawl/vfx/BobEffect.y:F
+      73: ldc           #146                // float 4.0f
+      75: fdiv
+      76: fadd
+      77: invokevirtual #147                // Method com/megacrit/cardcrawl/vfx/campfire/CampfireBubbleEffect.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;FF)V
+      80: goto          26
+      83: aload_1
+      84: getstatic     #148                // Field com/megacrit/cardcrawl/helpers/FontHelper.losePowerFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      87: aload_0
+      88: getfield      #38                 // Field bubbleMsg:Ljava/lang/String;
+      91: ldc           #141                // float 950.0f
+      93: getstatic     #142                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+      96: fmul
+      97: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     100: i2f
+     101: fconst_2
+     102: fdiv
+     103: ldc           #149                // float 310.0f
+     105: getstatic     #22                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     108: fmul
+     109: fadd
+     110: aload_0
+     111: getfield      #14                 // Field effect:Lcom/megacrit/cardcrawl/vfx/BobEffect;
+     114: getfield      #145                // Field com/megacrit/cardcrawl/vfx/BobEffect.y:F
+     117: ldc           #150                // float 3.0f
+     119: fdiv
+     120: fadd
+     121: getstatic     #151                // Field com/megacrit/cardcrawl/core/Settings.CREAM_COLOR:Lcom/badlogic/gdx/graphics/Color;
+     124: ldc           #152                // float 1.2f
+     126: invokestatic  #153                // Method com/megacrit/cardcrawl/helpers/FontHelper.renderFontCentered:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FFLcom/badlogic/gdx/graphics/Color;F)V
+     129: aload_0
+     130: aload_1
+     131: invokespecial #154                // Method renderCampfireButtons:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     134: aload_0
+     135: invokespecial #155                // Method shouldShowScrollBar:()Z
+     138: ifeq          149
+     141: aload_0
+     142: getfield      #32                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+     145: aload_1
+     146: invokevirtual #156                // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     149: getstatic     #79                 // Field com/megacrit/cardcrawl/core/Settings.isTouchScreen:Z
+     152: ifeq          163
+     155: aload_0
+     156: getfield      #28                 // Field confirmButton:Lcom/megacrit/cardcrawl/ui/buttons/ConfirmButton;
+     159: aload_1
+     160: invokevirtual #157                // Method com/megacrit/cardcrawl/ui/buttons/ConfirmButton.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     163: return
+
+  private java.lang.String getCampMessage();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: new           #6                  // class java/util/ArrayList
+       3: dup
+       4: invokespecial #7                  // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: getstatic     #158                // Field TEXT:[Ljava/lang/String;
+      12: iconst_0
+      13: aaload
+      14: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      17: pop
+      18: aload_1
+      19: getstatic     #158                // Field TEXT:[Ljava/lang/String;
+      22: iconst_1
+      23: aaload
+      24: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      27: pop
+      28: aload_1
+      29: getstatic     #158                // Field TEXT:[Ljava/lang/String;
+      32: iconst_2
+      33: aaload
+      34: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      37: pop
+      38: aload_1
+      39: getstatic     #158                // Field TEXT:[Ljava/lang/String;
+      42: iconst_3
+      43: aaload
+      44: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      47: pop
+      48: aload_0
+      49: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+      52: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+      55: iconst_2
+      56: if_icmple     69
+      59: aload_1
+      60: getstatic     #158                // Field TEXT:[Ljava/lang/String;
+      63: iconst_4
+      64: aaload
+      65: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      68: pop
+      69: getstatic     #43                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      72: getfield      #159                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentHealth:I
+      75: getstatic     #43                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      78: getfield      #160                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+      81: iconst_2
+      82: idiv
+      83: if_icmpge     107
+      86: aload_1
+      87: getstatic     #158                // Field TEXT:[Ljava/lang/String;
+      90: iconst_5
+      91: aaload
+      92: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      95: pop
+      96: aload_1
+      97: getstatic     #158                // Field TEXT:[Ljava/lang/String;
+     100: bipush        6
+     102: aaload
+     103: invokevirtual #41                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     106: pop
+     107: aload_1
+     108: aload_1
+     109: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     112: iconst_1
+     113: isub
+     114: invokestatic  #161                // Method com/badlogic/gdx/math/MathUtils.random:(I)I
+     117: invokevirtual #97                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     120: checkcast     #162                // class java/lang/String
+     123: areturn
+
+  private void renderFire(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #11                 // Field flameEffect:Ljava/util/ArrayList;
+       4: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       7: astore_2
+       8: aload_2
+       9: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      14: ifeq          35
+      17: aload_2
+      18: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      23: checkcast     #136                // class com/megacrit/cardcrawl/vfx/AbstractGameEffect
+      26: astore_3
+      27: aload_3
+      28: aload_1
+      29: invokevirtual #163                // Method com/megacrit/cardcrawl/vfx/AbstractGameEffect.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      32: goto          8
+      35: return
+
+  private void renderCampfireButtons(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: fconst_0
+       1: fstore_2
+       2: fconst_0
+       3: fstore_3
+       4: aload_0
+       5: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+       8: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+      11: iconst_1
+      12: iadd
+      13: bipush        6
+      15: isub
+      16: istore        4
+      18: iload         4
+      20: iconst_1
+      21: iadd
+      22: i2f
+      23: aload_0
+      24: getfield      #23                 // Field scrollLowerBound:F
+      27: aload_0
+      28: getfield      #25                 // Field scrollUpperBound:F
+      31: aload_0
+      32: getfield      #18                 // Field scrollY:F
+      35: invokestatic  #164                // Method com/megacrit/cardcrawl/helpers/MathHelper.percentFromValueBetween:(FFF)F
+      38: fmul
+      39: f2i
+      40: iload         4
+      42: invokestatic  #165                // Method java/lang/Math.min:(II)I
+      45: iconst_0
+      46: invokestatic  #166                // Method java/lang/Math.max:(II)I
+      49: istore        5
+      51: iload         5
+      53: iconst_2
+      54: idiv
+      55: i2f
+      56: invokestatic  #167                // Method com/badlogic/gdx/math/MathUtils.ceil:(F)I
+      59: iconst_2
+      60: imul
+      61: istore        5
+      63: aload_0
+      64: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+      67: invokevirtual #52                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      70: astore        6
+      72: aload         6
+      74: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      79: ifeq          296
+      82: aload         6
+      84: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      89: checkcast     #57                 // class com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption
+      92: astore        7
+      94: aload_0
+      95: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+      98: aload         7
+     100: invokevirtual #168                // Method java/util/ArrayList.indexOf:(Ljava/lang/Object;)I
+     103: iload         5
+     105: if_icmplt     266
+     108: aload_0
+     109: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     112: aload         7
+     114: invokevirtual #168                // Method java/util/ArrayList.indexOf:(Ljava/lang/Object;)I
+     117: iload         5
+     119: bipush        6
+     121: iadd
+     122: if_icmpge     266
+     125: aload_0
+     126: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     129: aload         7
+     131: invokevirtual #168                // Method java/util/ArrayList.indexOf:(Ljava/lang/Object;)I
+     134: aload_0
+     135: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     138: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     141: iconst_1
+     142: isub
+     143: if_icmpne     175
+     146: aload_0
+     147: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     150: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+     153: iload         5
+     155: isub
+     156: iconst_2
+     157: irem
+     158: iconst_1
+     159: if_icmpne     175
+     162: getstatic     #169                // Field BUTTON_START_X:F
+     165: getstatic     #170                // Field BUTTON_SPACING_X:F
+     168: fconst_2
+     169: fdiv
+     170: fadd
+     171: fstore_2
+     172: goto          207
+     175: aload_0
+     176: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     179: aload         7
+     181: invokevirtual #168                // Method java/util/ArrayList.indexOf:(Ljava/lang/Object;)I
+     184: iload         5
+     186: isub
+     187: iconst_2
+     188: irem
+     189: ifne          199
+     192: getstatic     #169                // Field BUTTON_START_X:F
+     195: fstore_2
+     196: goto          207
+     199: getstatic     #169                // Field BUTTON_START_X:F
+     202: getstatic     #170                // Field BUTTON_SPACING_X:F
+     205: fadd
+     206: fstore_2
+     207: aload_0
+     208: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     211: aload         7
+     213: invokevirtual #168                // Method java/util/ArrayList.indexOf:(Ljava/lang/Object;)I
+     216: iload         5
+     218: isub
+     219: iconst_2
+     220: idiv
+     221: ifne          231
+     224: getstatic     #171                // Field BUTTON_START_Y:F
+     227: fstore_3
+     228: goto          280
+     231: getstatic     #171                // Field BUTTON_START_Y:F
+     234: getstatic     #172                // Field BUTTON_SPACING_Y:F
+     237: aload_0
+     238: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+     241: aload         7
+     243: invokevirtual #168                // Method java/util/ArrayList.indexOf:(Ljava/lang/Object;)I
+     246: iload         5
+     248: isub
+     249: iconst_2
+     250: idiv
+     251: i2f
+     252: invokestatic  #173                // Method com/badlogic/gdx/math/MathUtils.floor:(F)I
+     255: i2f
+     256: fmul
+     257: fadd
+     258: getstatic     #174                // Field BUTTON_EXTRA_SPACING_Y:F
+     261: fadd
+     262: fstore_3
+     263: goto          280
+     266: getstatic     #175                // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     269: i2f
+     270: fconst_2
+     271: fmul
+     272: fstore_2
+     273: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     276: i2f
+     277: fconst_2
+     278: fmul
+     279: fstore_3
+     280: aload         7
+     282: fload_2
+     283: fload_3
+     284: invokevirtual #176                // Method com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.setPosition:(FF)V
+     287: aload         7
+     289: aload_1
+     290: invokevirtual #177                // Method com/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     293: goto          72
+     296: return
+
+  public void scrolledUsingBar(float);
+    descriptor: (F)V
+    Code:
+       0: aload_0
+       1: aload_0
+       2: getfield      #23                 // Field scrollLowerBound:F
+       5: aload_0
+       6: getfield      #25                 // Field scrollUpperBound:F
+       9: fload_1
+      10: invokestatic  #178                // Method com/megacrit/cardcrawl/helpers/MathHelper.valueFromPercentBetween:(FFF)F
+      13: putfield      #18                 // Field scrollY:F
+      16: aload_0
+      17: aload_0
+      18: getfield      #18                 // Field scrollY:F
+      21: putfield      #19                 // Field targetY:F
+      24: aload_0
+      25: invokespecial #116                // Method updateBarPosition:()V
+      28: return
+
+  private void updateBarPosition();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #23                 // Field scrollLowerBound:F
+       4: aload_0
+       5: getfield      #25                 // Field scrollUpperBound:F
+       8: aload_0
+       9: getfield      #18                 // Field scrollY:F
+      12: invokestatic  #164                // Method com/megacrit/cardcrawl/helpers/MathHelper.percentFromValueBetween:(FFF)F
+      15: fstore_1
+      16: aload_0
+      17: getfield      #32                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+      20: fload_1
+      21: invokevirtual #179                // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.parentScrolledToPercent:(F)V
+      24: return
+
+  private boolean shouldShowScrollBar();
+    descriptor: ()Z
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field buttons:Ljava/util/ArrayList;
+       4: invokevirtual #35                 // Method java/util/ArrayList.size:()I
+       7: bipush        6
+       9: if_icmple     16
+      12: iconst_1
+      13: goto          17
+      16: iconst_0
+      17: ireturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #180                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #181                // String CampfireUI
+       5: invokevirtual #182                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getUIString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/UIStrings;
+       8: putstatic     #183                // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      11: getstatic     #183                // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      14: getfield      #184                // Field com/megacrit/cardcrawl/localization/UIStrings.TEXT:[Ljava/lang/String;
+      17: putstatic     #158                // Field TEXT:[Ljava/lang/String;
+      20: iconst_0
+      21: putstatic     #33                 // Field hidden:Z
+      24: getstatic     #175                // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      27: i2f
+      28: ldc           #185                // float 0.416f
+      30: fmul
+      31: putstatic     #169                // Field BUTTON_START_X:F
+      34: ldc           #21                 // float 300.0f
+      36: getstatic     #142                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+      39: fmul
+      40: putstatic     #170                // Field BUTTON_SPACING_X:F
+      43: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      46: i2f
+      47: fconst_2
+      48: fdiv
+      49: ldc           #186                // float 180.0f
+      51: getstatic     #22                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      54: fmul
+      55: fadd
+      56: putstatic     #171                // Field BUTTON_START_Y:F
+      59: ldc           #187                // float -200.0f
+      61: getstatic     #22                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      64: fmul
+      65: putstatic     #172                // Field BUTTON_SPACING_Y:F
+      68: ldc           #188                // float -70.0f
+      70: getstatic     #22                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      73: fmul
+      74: putstatic     #174                // Field BUTTON_EXTRA_SPACING_Y:F
+      77: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      80: i2f
+      81: ldc           #21                 // float 300.0f
+      83: getstatic     #22                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      86: fmul
+      87: fsub
+      88: putstatic     #17                 // Field START_Y:F
+      91: return
+}

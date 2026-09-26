@@ -1,0 +1,392 @@
+Compiled from "CampfireSleepEffect.java"
+public class com.megacrit.cardcrawl.vfx.campfire.CampfireSleepEffect extends com.megacrit.cardcrawl.vfx.AbstractGameEffect {
+  private static final com.megacrit.cardcrawl.localization.UIStrings uiStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/UIStrings;
+
+  public static final java.lang.String[] TEXT;
+    descriptor: [Ljava/lang/String;
+
+  private static final float HEAL_AMOUNT;
+    descriptor: F
+
+  private static final float DUR;
+    descriptor: F
+
+  private static final float FAST_MODE_DUR;
+    descriptor: F
+
+  private boolean hasHealed;
+    descriptor: Z
+
+  private int healAmount;
+    descriptor: I
+
+  private com.badlogic.gdx.graphics.Color screenColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public com.megacrit.cardcrawl.vfx.campfire.CampfireSleepEffect();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/vfx/AbstractGameEffect."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #2                  // Field hasHealed:Z
+       9: aload_0
+      10: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.fadeColor:Lcom/badlogic/gdx/graphics/Color;
+      13: invokevirtual #4                  // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      16: putfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      19: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.FAST_MODE:Z
+      22: ifeq          34
+      25: aload_0
+      26: ldc           #8                  // float 1.5f
+      28: putfield      #9                  // Field startingDuration:F
+      31: goto          40
+      34: aload_0
+      35: ldc           #10                 // float 3.0f
+      37: putfield      #9                  // Field startingDuration:F
+      40: aload_0
+      41: aload_0
+      42: getfield      #9                  // Field startingDuration:F
+      45: putfield      #11                 // Field duration:F
+      48: aload_0
+      49: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      52: fconst_0
+      53: putfield      #12                 // Field com/badlogic/gdx/graphics/Color.a:F
+      56: invokestatic  #13                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      59: checkcast     #14                 // class com/megacrit/cardcrawl/rooms/RestRoom
+      62: invokevirtual #15                 // Method com/megacrit/cardcrawl/rooms/RestRoom.cutFireSound:()V
+      65: getstatic     #16                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.overlayMenu:Lcom/megacrit/cardcrawl/core/OverlayMenu;
+      68: getfield      #17                 // Field com/megacrit/cardcrawl/core/OverlayMenu.proceedButton:Lcom/megacrit/cardcrawl/ui/buttons/ProceedButton;
+      71: invokevirtual #18                 // Method com/megacrit/cardcrawl/ui/buttons/ProceedButton.hide:()V
+      74: ldc           #20                 // String Night Terrors
+      76: invokestatic  #21                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+      79: ifeq          106
+      82: aload_0
+      83: getstatic     #22                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      86: getfield      #23                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+      89: i2f
+      90: fconst_1
+      91: fmul
+      92: f2i
+      93: putfield      #24                 // Field healAmount:I
+      96: getstatic     #22                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      99: iconst_5
+     100: invokevirtual #25                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.decreaseMaxHealth:(I)V
+     103: goto          121
+     106: aload_0
+     107: getstatic     #22                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     110: getfield      #23                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+     113: i2f
+     114: ldc           #26                 // float 0.3f
+     116: fmul
+     117: f2i
+     118: putfield      #24                 // Field healAmount:I
+     121: getstatic     #22                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     124: ldc           #28                 // String Regal Pillow
+     126: invokevirtual #29                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+     129: ifeq          143
+     132: aload_0
+     133: dup
+     134: getfield      #24                 // Field healAmount:I
+     137: bipush        15
+     139: iadd
+     140: putfield      #24                 // Field healAmount:I
+     143: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #11                 // Field duration:F
+       5: getstatic     #30                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+       8: invokeinterface #31,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      13: fsub
+      14: putfield      #11                 // Field duration:F
+      17: aload_0
+      18: invokespecial #32                 // Method updateBlackScreenColor:()V
+      21: aload_0
+      22: getfield      #11                 // Field duration:F
+      25: aload_0
+      26: getfield      #9                  // Field startingDuration:F
+      29: ldc           #33                 // float 0.5f
+      31: fsub
+      32: fcmpg
+      33: ifge          121
+      36: aload_0
+      37: getfield      #2                  // Field hasHealed:Z
+      40: ifne          121
+      43: aload_0
+      44: invokespecial #34                 // Method playSleepJingle:()V
+      47: aload_0
+      48: iconst_1
+      49: putfield      #2                  // Field hasHealed:Z
+      52: getstatic     #22                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      55: ldc           #28                 // String Regal Pillow
+      57: invokevirtual #29                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+      60: ifeq          74
+      63: getstatic     #22                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      66: ldc           #28                 // String Regal Pillow
+      68: invokevirtual #35                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+      71: invokevirtual #36                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.flash:()V
+      74: getstatic     #22                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      77: aload_0
+      78: getfield      #24                 // Field healAmount:I
+      81: iconst_0
+      82: invokevirtual #37                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.heal:(IZ)V
+      85: getstatic     #22                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      88: getfield      #38                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+      91: invokevirtual #39                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      94: astore_1
+      95: aload_1
+      96: invokeinterface #40,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     101: ifeq          121
+     104: aload_1
+     105: invokeinterface #41,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     110: checkcast     #42                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+     113: astore_2
+     114: aload_2
+     115: invokevirtual #43                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.onRest:()V
+     118: goto          95
+     121: aload_0
+     122: getfield      #11                 // Field duration:F
+     125: aload_0
+     126: getfield      #9                  // Field startingDuration:F
+     129: fconst_2
+     130: fdiv
+     131: fcmpg
+     132: ifge          212
+     135: getstatic     #22                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     138: ldc           #45                 // String Dream Catcher
+     140: invokevirtual #29                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+     143: ifeq          185
+     146: getstatic     #22                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     149: ldc           #45                 // String Dream Catcher
+     151: invokevirtual #35                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+     154: invokevirtual #36                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.flash:()V
+     157: invokestatic  #46                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getRewardCards:()Ljava/util/ArrayList;
+     160: astore_1
+     161: aload_1
+     162: ifnull        185
+     165: aload_1
+     166: invokevirtual #47                 // Method java/util/ArrayList.isEmpty:()Z
+     169: ifne          185
+     172: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.cardRewardScreen:Lcom/megacrit/cardcrawl/screens/CardRewardScreen;
+     175: aload_1
+     176: aconst_null
+     177: getstatic     #49                 // Field TEXT:[Ljava/lang/String;
+     180: iconst_0
+     181: aaload
+     182: invokevirtual #50                 // Method com/megacrit/cardcrawl/screens/CardRewardScreen.open:(Ljava/util/ArrayList;Lcom/megacrit/cardcrawl/rewards/RewardItem;Ljava/lang/String;)V
+     185: aload_0
+     186: iconst_1
+     187: putfield      #51                 // Field isDone:Z
+     190: invokestatic  #13                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     193: checkcast     #14                 // class com/megacrit/cardcrawl/rooms/RestRoom
+     196: invokevirtual #52                 // Method com/megacrit/cardcrawl/rooms/RestRoom.fadeIn:()V
+     199: fconst_0
+     200: putstatic     #53                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.waitTimer:F
+     203: invokestatic  #13                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     206: getstatic     #54                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMPLETE:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     209: putfield      #55                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     212: return
+
+  private void playSleepJingle();
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: iconst_2
+       2: invokestatic  #56                 // Method com/badlogic/gdx/math/MathUtils.random:(II)I
+       5: istore_1
+       6: getstatic     #57                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.id:Ljava/lang/String;
+       9: astore_2
+      10: iconst_m1
+      11: istore_3
+      12: aload_2
+      13: invokevirtual #58                 // Method java/lang/String.hashCode:()I
+      16: lookupswitch  { // 3
+
+           -1887678253: 52
+
+             313705820: 66
+
+             791401920: 80
+               default: 91
+          }
+      52: aload_2
+      53: ldc           #59                 // String Exordium
+      55: invokevirtual #60                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      58: ifeq          91
+      61: iconst_0
+      62: istore_3
+      63: goto          91
+      66: aload_2
+      67: ldc           #61                 // String TheCity
+      69: invokevirtual #60                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      72: ifeq          91
+      75: iconst_1
+      76: istore_3
+      77: goto          91
+      80: aload_2
+      81: ldc           #62                 // String TheBeyond
+      83: invokevirtual #60                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      86: ifeq          91
+      89: iconst_2
+      90: istore_3
+      91: iload_3
+      92: tableswitch   { // 0 to 2
+
+                     0: 120
+
+                     1: 165
+
+                     2: 210
+               default: 255
+          }
+     120: iload_1
+     121: ifne          136
+     124: getstatic     #63                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     127: ldc           #64                 // String SLEEP_1-1
+     129: invokevirtual #65                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     132: pop2
+     133: goto          255
+     136: iload_1
+     137: iconst_1
+     138: if_icmpne     153
+     141: getstatic     #63                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     144: ldc           #66                 // String SLEEP_1-2
+     146: invokevirtual #65                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     149: pop2
+     150: goto          255
+     153: getstatic     #63                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     156: ldc           #67                 // String SLEEP_1-3
+     158: invokevirtual #65                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     161: pop2
+     162: goto          255
+     165: iload_1
+     166: ifne          181
+     169: getstatic     #63                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     172: ldc           #68                 // String SLEEP_2-1
+     174: invokevirtual #65                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     177: pop2
+     178: goto          255
+     181: iload_1
+     182: iconst_1
+     183: if_icmpne     198
+     186: getstatic     #63                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     189: ldc           #69                 // String SLEEP_2-2
+     191: invokevirtual #65                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     194: pop2
+     195: goto          255
+     198: getstatic     #63                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     201: ldc           #70                 // String SLEEP_2-3
+     203: invokevirtual #65                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     206: pop2
+     207: goto          255
+     210: iload_1
+     211: ifne          226
+     214: getstatic     #63                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     217: ldc           #71                 // String SLEEP_3-1
+     219: invokevirtual #65                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     222: pop2
+     223: goto          255
+     226: iload_1
+     227: iconst_1
+     228: if_icmpne     243
+     231: getstatic     #63                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     234: ldc           #72                 // String SLEEP_3-2
+     236: invokevirtual #65                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     239: pop2
+     240: goto          255
+     243: getstatic     #63                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     246: ldc           #73                 // String SLEEP_3-3
+     248: invokevirtual #65                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     251: pop2
+     252: goto          255
+     255: return
+
+  private void updateBlackScreenColor();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #11                 // Field duration:F
+       4: aload_0
+       5: getfield      #9                  // Field startingDuration:F
+       8: ldc           #33                 // float 0.5f
+      10: fsub
+      11: fcmpl
+      12: ifle          47
+      15: aload_0
+      16: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      19: getstatic     #74                 // Field com/badlogic/gdx/math/Interpolation.fade:Lcom/badlogic/gdx/math/Interpolation;
+      22: fconst_1
+      23: fconst_0
+      24: aload_0
+      25: getfield      #11                 // Field duration:F
+      28: aload_0
+      29: getfield      #9                  // Field startingDuration:F
+      32: ldc           #33                 // float 0.5f
+      34: fsub
+      35: fsub
+      36: fconst_2
+      37: fmul
+      38: invokevirtual #75                 // Method com/badlogic/gdx/math/Interpolation.apply:(FFF)F
+      41: putfield      #12                 // Field com/badlogic/gdx/graphics/Color.a:F
+      44: goto          86
+      47: aload_0
+      48: getfield      #11                 // Field duration:F
+      51: fconst_1
+      52: fcmpg
+      53: ifge          78
+      56: aload_0
+      57: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      60: getstatic     #74                 // Field com/badlogic/gdx/math/Interpolation.fade:Lcom/badlogic/gdx/math/Interpolation;
+      63: fconst_0
+      64: fconst_1
+      65: aload_0
+      66: getfield      #11                 // Field duration:F
+      69: invokevirtual #75                 // Method com/badlogic/gdx/math/Interpolation.apply:(FFF)F
+      72: putfield      #12                 // Field com/badlogic/gdx/graphics/Color.a:F
+      75: goto          86
+      78: aload_0
+      79: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      82: fconst_1
+      83: putfield      #12                 // Field com/badlogic/gdx/graphics/Color.a:F
+      86: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_1
+       1: aload_0
+       2: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+       5: invokevirtual #76                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+       8: aload_1
+       9: getstatic     #77                 // Field com/megacrit/cardcrawl/helpers/ImageMaster.WHITE_SQUARE_IMG:Lcom/badlogic/gdx/graphics/Texture;
+      12: fconst_0
+      13: fconst_0
+      14: getstatic     #78                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      17: i2f
+      18: getstatic     #79                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      21: i2f
+      22: invokevirtual #80                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFF)V
+      25: return
+
+  public void dispose();
+    descriptor: ()V
+    Code:
+       0: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #81                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #82                 // String CampfireSleepEffect
+       5: invokevirtual #83                 // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getUIString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/UIStrings;
+       8: putstatic     #84                 // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      11: getstatic     #84                 // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      14: getfield      #85                 // Field com/megacrit/cardcrawl/localization/UIStrings.TEXT:[Ljava/lang/String;
+      17: putstatic     #49                 // Field TEXT:[Ljava/lang/String;
+      20: return
+}

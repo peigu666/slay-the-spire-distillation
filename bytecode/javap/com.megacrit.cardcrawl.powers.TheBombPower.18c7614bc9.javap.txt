@@ -1,0 +1,152 @@
+Compiled from "TheBombPower.java"
+public class com.megacrit.cardcrawl.powers.TheBombPower extends com.megacrit.cardcrawl.powers.AbstractPower {
+  public static final java.lang.String POWER_ID;
+    descriptor: Ljava/lang/String;
+
+  private static final com.megacrit.cardcrawl.localization.PowerStrings powerStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/PowerStrings;
+
+  public static final java.lang.String NAME;
+    descriptor: Ljava/lang/String;
+
+  public static final java.lang.String[] DESCRIPTIONS;
+    descriptor: [Ljava/lang/String;
+
+  private int damage;
+    descriptor: I
+
+  private static int bombIdOffset;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.powers.TheBombPower(com.megacrit.cardcrawl.core.AbstractCreature, int, int);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;II)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/powers/AbstractPower."<init>":()V
+       4: aload_0
+       5: getstatic     #2                  // Field NAME:Ljava/lang/String;
+       8: putfield      #3                  // Field name:Ljava/lang/String;
+      11: aload_0
+      12: new           #4                  // class java/lang/StringBuilder
+      15: dup
+      16: invokespecial #5                  // Method java/lang/StringBuilder."<init>":()V
+      19: ldc           #7                  // String TheBomb
+      21: invokevirtual #8                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      24: getstatic     #9                  // Field bombIdOffset:I
+      27: invokevirtual #10                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      30: invokevirtual #11                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      33: putfield      #12                 // Field ID:Ljava/lang/String;
+      36: getstatic     #9                  // Field bombIdOffset:I
+      39: iconst_1
+      40: iadd
+      41: putstatic     #9                  // Field bombIdOffset:I
+      44: aload_0
+      45: aload_1
+      46: putfield      #13                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+      49: aload_0
+      50: iload_2
+      51: putfield      #14                 // Field amount:I
+      54: aload_0
+      55: iload_3
+      56: putfield      #15                 // Field damage:I
+      59: aload_0
+      60: invokevirtual #16                 // Method updateDescription:()V
+      63: aload_0
+      64: ldc           #17                 // String the_bomb
+      66: invokevirtual #18                 // Method loadRegion:(Ljava/lang/String;)V
+      69: return
+
+  public void atEndOfTurn(boolean);
+    descriptor: (Z)V
+    Code:
+       0: invokestatic  #19                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getMonsters:()Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+       3: invokevirtual #20                 // Method com/megacrit/cardcrawl/monsters/MonsterGroup.areMonstersBasicallyDead:()Z
+       6: ifne          64
+       9: aload_0
+      10: new           #21                 // class com/megacrit/cardcrawl/actions/common/ReducePowerAction
+      13: dup
+      14: aload_0
+      15: getfield      #13                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+      18: aload_0
+      19: getfield      #13                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+      22: aload_0
+      23: iconst_1
+      24: invokespecial #22                 // Method com/megacrit/cardcrawl/actions/common/ReducePowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;I)V
+      27: invokevirtual #23                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      30: aload_0
+      31: getfield      #14                 // Field amount:I
+      34: iconst_1
+      35: if_icmpne     64
+      38: aload_0
+      39: new           #24                 // class com/megacrit/cardcrawl/actions/common/DamageAllEnemiesAction
+      42: dup
+      43: aconst_null
+      44: aload_0
+      45: getfield      #15                 // Field damage:I
+      48: iconst_1
+      49: invokestatic  #25                 // Method com/megacrit/cardcrawl/cards/DamageInfo.createDamageMatrix:(IZ)[I
+      52: getstatic     #26                 // Field com/megacrit/cardcrawl/cards/DamageInfo$DamageType.THORNS:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+      55: getstatic     #27                 // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.FIRE:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      58: invokespecial #28                 // Method com/megacrit/cardcrawl/actions/common/DamageAllEnemiesAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;[ILcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;)V
+      61: invokevirtual #23                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      64: return
+
+  public void updateDescription();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #14                 // Field amount:I
+       4: iconst_1
+       5: if_icmpne     37
+       8: aload_0
+       9: getstatic     #29                 // Field DESCRIPTIONS:[Ljava/lang/String;
+      12: iconst_1
+      13: aaload
+      14: iconst_1
+      15: anewarray     #30                 // class java/lang/Object
+      18: dup
+      19: iconst_0
+      20: aload_0
+      21: getfield      #15                 // Field damage:I
+      24: invokestatic  #31                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      27: aastore
+      28: invokestatic  #32                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      31: putfield      #33                 // Field description:Ljava/lang/String;
+      34: goto          73
+      37: aload_0
+      38: getstatic     #29                 // Field DESCRIPTIONS:[Ljava/lang/String;
+      41: iconst_0
+      42: aaload
+      43: iconst_2
+      44: anewarray     #30                 // class java/lang/Object
+      47: dup
+      48: iconst_0
+      49: aload_0
+      50: getfield      #14                 // Field amount:I
+      53: invokestatic  #31                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      56: aastore
+      57: dup
+      58: iconst_1
+      59: aload_0
+      60: getfield      #15                 // Field damage:I
+      63: invokestatic  #31                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      66: aastore
+      67: invokestatic  #32                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      70: putfield      #33                 // Field description:Ljava/lang/String;
+      73: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #34                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #7                  // String TheBomb
+       5: invokevirtual #35                 // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getPowerStrings:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/PowerStrings;
+       8: putstatic     #36                 // Field powerStrings:Lcom/megacrit/cardcrawl/localization/PowerStrings;
+      11: getstatic     #36                 // Field powerStrings:Lcom/megacrit/cardcrawl/localization/PowerStrings;
+      14: getfield      #37                 // Field com/megacrit/cardcrawl/localization/PowerStrings.NAME:Ljava/lang/String;
+      17: putstatic     #2                  // Field NAME:Ljava/lang/String;
+      20: getstatic     #36                 // Field powerStrings:Lcom/megacrit/cardcrawl/localization/PowerStrings;
+      23: getfield      #38                 // Field com/megacrit/cardcrawl/localization/PowerStrings.DESCRIPTIONS:[Ljava/lang/String;
+      26: putstatic     #29                 // Field DESCRIPTIONS:[Ljava/lang/String;
+      29: return
+}

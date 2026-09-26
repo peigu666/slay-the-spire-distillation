@@ -22,6 +22,8 @@
 
 `ModTheSpire.json` 的 `dependencies` 是加载依赖；`optional_dependencies` 不应被当成硬依赖。先检查 `environment/mod_catalog.json` 的元数据，再检查实际 JAR 是否存在；只在类确实被引用时才把 StSLib 或其他 Mod 设为硬依赖。
 
+如果 `metadata_status` 为 `invalid_json`，不要把空的 `metadata` 当成“没有元数据”；读取同一条记录的 `metadata_raw_fallback.text`，并结合 `metadata_raw_fallback.sha256` 判断原文是否发生变化。
+
 ## 版本不一致时
 
 不要手工编辑 API JSONL 来“修正”版本。保留旧包，换新的输出目录重新跑生成器，再重新运行验证工具；这样 AI 能区分不同基线。

@@ -1,0 +1,1497 @@
+Compiled from "PotionPopUp.java"
+public class com.megacrit.cardcrawl.ui.panels.PotionPopUp {
+  private static final com.megacrit.cardcrawl.localization.TutorialStrings tutorialStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/TutorialStrings;
+
+  public static final java.lang.String[] MSG;
+    descriptor: [Ljava/lang/String;
+
+  public static final java.lang.String[] LABEL;
+    descriptor: [Ljava/lang/String;
+
+  private static final com.megacrit.cardcrawl.localization.UIStrings uiStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/UIStrings;
+
+  public static final java.lang.String[] TEXT;
+    descriptor: [Ljava/lang/String;
+
+  private int slot;
+    descriptor: I
+
+  private com.megacrit.cardcrawl.potions.AbstractPotion potion;
+    descriptor: Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+
+  public boolean isHidden;
+    descriptor: Z
+
+  public boolean targetMode;
+    descriptor: Z
+
+  private com.megacrit.cardcrawl.helpers.Hitbox hbTop;
+    descriptor: Lcom/megacrit/cardcrawl/helpers/Hitbox;
+
+  private com.megacrit.cardcrawl.helpers.Hitbox hbBot;
+    descriptor: Lcom/megacrit/cardcrawl/helpers/Hitbox;
+
+  private com.badlogic.gdx.graphics.Color topHoverColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private com.badlogic.gdx.graphics.Color botHoverColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private float x;
+    descriptor: F
+
+  private float y;
+    descriptor: F
+
+  private static final int SEGMENTS;
+    descriptor: I
+
+  private com.badlogic.gdx.math.Vector2[] points;
+    descriptor: [Lcom/badlogic/gdx/math/Vector2;
+
+  private com.badlogic.gdx.math.Vector2 controlPoint;
+    descriptor: Lcom/badlogic/gdx/math/Vector2;
+
+  private float arrowScale;
+    descriptor: F
+
+  private float arrowScaleTimer;
+    descriptor: F
+
+  private static final float ARROW_TARGET_SCALE;
+    descriptor: F
+
+  private static final int TARGET_ARROW_W;
+    descriptor: I
+
+  private com.megacrit.cardcrawl.monsters.AbstractMonster hoveredMonster;
+    descriptor: Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+
+  private boolean autoTargetFirst;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.ui.panels.PotionPopUp();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: iconst_1
+       6: putfield      #2                  // Field isHidden:Z
+       9: aload_0
+      10: iconst_0
+      11: putfield      #3                  // Field targetMode:Z
+      14: aload_0
+      15: new           #4                  // class com/badlogic/gdx/graphics/Color
+      18: dup
+      19: ldc           #5                  // float 0.5f
+      21: ldc           #6                  // float 0.9f
+      23: fconst_1
+      24: fconst_0
+      25: invokespecial #7                  // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      28: putfield      #8                  // Field topHoverColor:Lcom/badlogic/gdx/graphics/Color;
+      31: aload_0
+      32: new           #4                  // class com/badlogic/gdx/graphics/Color
+      35: dup
+      36: fconst_1
+      37: ldc           #9                  // float 0.4f
+      39: ldc           #10                 // float 0.3f
+      41: fconst_0
+      42: invokespecial #7                  // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      45: putfield      #11                 // Field botHoverColor:Lcom/badlogic/gdx/graphics/Color;
+      48: aload_0
+      49: bipush        20
+      51: anewarray     #13                 // class com/badlogic/gdx/math/Vector2
+      54: putfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+      57: aload_0
+      58: fconst_0
+      59: putfield      #15                 // Field arrowScaleTimer:F
+      62: aload_0
+      63: aconst_null
+      64: putfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+      67: aload_0
+      68: iconst_0
+      69: putfield      #17                 // Field autoTargetFirst:Z
+      72: aload_0
+      73: new           #18                 // class com/megacrit/cardcrawl/helpers/Hitbox
+      76: dup
+      77: ldc           #19                 // float 286.0f
+      79: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      82: fmul
+      83: ldc           #21                 // float 120.0f
+      85: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      88: fmul
+      89: invokespecial #22                 // Method com/megacrit/cardcrawl/helpers/Hitbox."<init>":(FF)V
+      92: putfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      95: aload_0
+      96: new           #18                 // class com/megacrit/cardcrawl/helpers/Hitbox
+      99: dup
+     100: ldc           #19                 // float 286.0f
+     102: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     105: fmul
+     106: ldc           #24                 // float 90.0f
+     108: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     111: fmul
+     112: invokespecial #22                 // Method com/megacrit/cardcrawl/helpers/Hitbox."<init>":(FF)V
+     115: putfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     118: iconst_0
+     119: istore_1
+     120: iload_1
+     121: aload_0
+     122: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+     125: arraylength
+     126: if_icmpge     148
+     129: aload_0
+     130: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+     133: iload_1
+     134: new           #13                 // class com/badlogic/gdx/math/Vector2
+     137: dup
+     138: invokespecial #26                 // Method com/badlogic/gdx/math/Vector2."<init>":()V
+     141: aastore
+     142: iinc          1, 1
+     145: goto          120
+     148: return
+
+  public void open(int, com.megacrit.cardcrawl.potions.AbstractPotion);
+    descriptor: (ILcom/megacrit/cardcrawl/potions/AbstractPotion;)V
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field topHoverColor:Lcom/badlogic/gdx/graphics/Color;
+       4: fconst_0
+       5: putfield      #27                 // Field com/badlogic/gdx/graphics/Color.a:F
+       8: aload_0
+       9: getfield      #11                 // Field botHoverColor:Lcom/badlogic/gdx/graphics/Color;
+      12: fconst_0
+      13: putfield      #27                 // Field com/badlogic/gdx/graphics/Color.a:F
+      16: getstatic     #28                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topPanel:Lcom/megacrit/cardcrawl/ui/panels/TopPanel;
+      19: iconst_0
+      20: putfield      #29                 // Field com/megacrit/cardcrawl/ui/panels/TopPanel.selectPotionMode:Z
+      23: aload_0
+      24: iload_1
+      25: putfield      #30                 // Field slot:I
+      28: aload_0
+      29: aload_2
+      30: putfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+      33: aload_0
+      34: aload_2
+      35: getfield      #32                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.posX:F
+      38: putfield      #33                 // Field x:F
+      41: aload_0
+      42: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      45: i2f
+      46: ldc           #35                 // float 230.0f
+      48: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      51: fmul
+      52: fsub
+      53: putfield      #36                 // Field y:F
+      56: aload_0
+      57: iconst_0
+      58: putfield      #2                  // Field isHidden:Z
+      61: aload_0
+      62: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      65: aload_0
+      66: getfield      #33                 // Field x:F
+      69: aload_0
+      70: getfield      #36                 // Field y:F
+      73: ldc           #37                 // float 44.0f
+      75: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      78: fmul
+      79: fadd
+      80: invokevirtual #38                 // Method com/megacrit/cardcrawl/helpers/Hitbox.move:(FF)V
+      83: aload_0
+      84: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      87: aload_0
+      88: getfield      #33                 // Field x:F
+      91: aload_0
+      92: getfield      #36                 // Field y:F
+      95: ldc           #39                 // float 76.0f
+      97: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     100: fmul
+     101: fsub
+     102: invokevirtual #38                 // Method com/megacrit/cardcrawl/helpers/Hitbox.move:(FF)V
+     105: aload_0
+     106: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     109: iconst_0
+     110: putfield      #40                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clickStarted:Z
+     113: aload_0
+     114: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     117: iconst_0
+     118: putfield      #40                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clickStarted:Z
+     121: aload_0
+     122: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     125: iconst_0
+     126: putfield      #41                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clicked:Z
+     129: aload_0
+     130: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     133: iconst_0
+     134: putfield      #41                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clicked:Z
+     137: return
+
+  public void close();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: iconst_1
+       2: putfield      #2                  // Field isHidden:Z
+       5: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field isHidden:Z
+       4: ifne          71
+       7: aload_0
+       8: invokespecial #42                 // Method updateControllerInput:()V
+      11: aload_0
+      12: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      15: invokevirtual #43                 // Method com/megacrit/cardcrawl/helpers/Hitbox.update:()V
+      18: aload_0
+      19: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      22: invokevirtual #43                 // Method com/megacrit/cardcrawl/helpers/Hitbox.update:()V
+      25: aload_0
+      26: invokespecial #44                 // Method updateInput:()V
+      29: aload_0
+      30: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+      33: ifnull        86
+      36: aload_0
+      37: getfield      #33                 // Field x:F
+      40: ldc           #45                 // float 180.0f
+      42: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      45: fmul
+      46: fadd
+      47: aload_0
+      48: getfield      #36                 // Field y:F
+      51: ldc           #46                 // float 70.0f
+      53: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      56: fmul
+      57: fadd
+      58: aload_0
+      59: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+      62: getfield      #47                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.tips:Ljava/util/ArrayList;
+      65: invokestatic  #48                 // Method com/megacrit/cardcrawl/helpers/TipHelper.queuePowerTips:(FFLjava/util/ArrayList;)V
+      68: goto          86
+      71: aload_0
+      72: getfield      #3                  // Field targetMode:Z
+      75: ifeq          86
+      78: aload_0
+      79: invokespecial #49                 // Method updateControllerTargetInput:()V
+      82: aload_0
+      83: invokespecial #50                 // Method updateTargetMode:()V
+      86: return
+
+  private void updateControllerTargetInput();
+    descriptor: ()V
+    Code:
+       0: getstatic     #51                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+       3: ifne          7
+       6: return
+       7: iconst_0
+       8: istore_1
+       9: aload_0
+      10: getfield      #17                 // Field autoTargetFirst:Z
+      13: ifeq          24
+      16: aload_0
+      17: iconst_0
+      18: putfield      #17                 // Field autoTargetFirst:Z
+      21: iinc          1, 1
+      24: getstatic     #52                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.left:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      27: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+      30: ifne          42
+      33: getstatic     #54                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altLeft:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      36: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+      39: ifeq          45
+      42: iinc          1, -1
+      45: getstatic     #55                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.right:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      48: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+      51: ifne          63
+      54: getstatic     #56                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altRight:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      57: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+      60: ifeq          66
+      63: iinc          1, 1
+      66: iload_1
+      67: ifeq          350
+      70: invokestatic  #57                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      73: getfield      #58                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      76: getfield      #59                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+      79: astore_2
+      80: new           #60                 // class java/util/ArrayList
+      83: dup
+      84: invokestatic  #57                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      87: getfield      #58                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      90: getfield      #59                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+      93: invokespecial #61                 // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+      96: astore_3
+      97: aload_2
+      98: invokevirtual #62                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     101: astore        4
+     103: aload         4
+     105: invokeinterface #63,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     110: ifeq          143
+     113: aload         4
+     115: invokeinterface #64,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     120: checkcast     #65                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     123: astore        5
+     125: aload         5
+     127: getfield      #66                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.isDying:Z
+     130: ifeq          140
+     133: aload_3
+     134: aload         5
+     136: invokevirtual #67                 // Method java/util/ArrayList.remove:(Ljava/lang/Object;)Z
+     139: pop
+     140: goto          103
+     143: aload_3
+     144: getstatic     #68                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.sortByHitbox:Ljava/util/Comparator;
+     147: invokevirtual #69                 // Method java/util/ArrayList.sort:(Ljava/util/Comparator;)V
+     150: aload_3
+     151: invokevirtual #70                 // Method java/util/ArrayList.isEmpty:()Z
+     154: ifeq          158
+     157: return
+     158: aload_3
+     159: invokevirtual #62                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     162: astore        4
+     164: aload         4
+     166: invokeinterface #63,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     171: ifeq          209
+     174: aload         4
+     176: invokeinterface #64,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     181: checkcast     #65                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     184: astore        5
+     186: aload         5
+     188: getfield      #71                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     191: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     194: ifeq          206
+     197: aload_0
+     198: aload         5
+     200: putfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     203: goto          209
+     206: goto          164
+     209: aload_0
+     210: getfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     213: ifnonnull     252
+     216: iload_1
+     217: iconst_1
+     218: if_icmpne     234
+     221: aload_3
+     222: iconst_0
+     223: invokevirtual #73                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     226: checkcast     #65                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     229: astore        4
+     231: goto          293
+     234: aload_3
+     235: aload_3
+     236: invokevirtual #74                 // Method java/util/ArrayList.size:()I
+     239: iconst_1
+     240: isub
+     241: invokevirtual #73                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     244: checkcast     #65                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     247: astore        4
+     249: goto          293
+     252: aload_3
+     253: aload_0
+     254: getfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     257: invokevirtual #75                 // Method java/util/ArrayList.indexOf:(Ljava/lang/Object;)I
+     260: istore        5
+     262: iload         5
+     264: iload_1
+     265: iadd
+     266: istore        6
+     268: iload         6
+     270: aload_3
+     271: invokevirtual #74                 // Method java/util/ArrayList.size:()I
+     274: iadd
+     275: aload_3
+     276: invokevirtual #74                 // Method java/util/ArrayList.size:()I
+     279: irem
+     280: istore        6
+     282: aload_3
+     283: iload         6
+     285: invokevirtual #73                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     288: checkcast     #65                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     291: astore        4
+     293: aload         4
+     295: ifnull        335
+     298: aload         4
+     300: getfield      #71                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     303: astore        5
+     305: getstatic     #76                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+     308: aload         5
+     310: getfield      #77                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+     313: f2i
+     314: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     317: aload         5
+     319: getfield      #78                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+     322: f2i
+     323: isub
+     324: invokeinterface #79,  3           // InterfaceMethod com/badlogic/gdx/Input.setCursorPosition:(II)V
+     329: aload_0
+     330: aload         4
+     332: putfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     335: aload_0
+     336: getfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     339: getfield      #80                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.halfDead:Z
+     342: ifeq          350
+     345: aload_0
+     346: aconst_null
+     347: putfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     350: return
+
+  private void updateControllerInput();
+    descriptor: ()V
+    Code:
+       0: getstatic     #51                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+       3: ifne          7
+       6: return
+       7: getstatic     #81                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.cancel:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      10: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+      13: ifeq          27
+      16: getstatic     #81                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.cancel:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      19: invokevirtual #82                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.unpress:()V
+      22: aload_0
+      23: invokevirtual #83                 // Method close:()V
+      26: return
+      27: aload_0
+      28: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      31: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+      34: ifne          119
+      37: aload_0
+      38: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      41: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+      44: ifne          119
+      47: aload_0
+      48: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+      51: invokevirtual #84                 // Method com/megacrit/cardcrawl/potions/AbstractPotion.canUse:()Z
+      54: ifeq          88
+      57: getstatic     #76                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      60: aload_0
+      61: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      64: getfield      #77                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+      67: f2i
+      68: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      71: aload_0
+      72: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      75: getfield      #78                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+      78: f2i
+      79: isub
+      80: invokeinterface #79,  3           // InterfaceMethod com/badlogic/gdx/Input.setCursorPosition:(II)V
+      85: goto          280
+      88: getstatic     #76                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      91: aload_0
+      92: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      95: getfield      #77                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+      98: f2i
+      99: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     102: aload_0
+     103: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     106: getfield      #78                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+     109: f2i
+     110: isub
+     111: invokeinterface #79,  3           // InterfaceMethod com/badlogic/gdx/Input.setCursorPosition:(II)V
+     116: goto          280
+     119: aload_0
+     120: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     123: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     126: ifeq          196
+     129: getstatic     #85                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     132: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     135: ifne          165
+     138: getstatic     #86                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.down:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     141: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     144: ifne          165
+     147: getstatic     #87                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altUp:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     150: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     153: ifne          165
+     156: getstatic     #88                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altDown:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     159: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     162: ifeq          280
+     165: getstatic     #76                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+     168: aload_0
+     169: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     172: getfield      #77                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+     175: f2i
+     176: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     179: aload_0
+     180: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     183: getfield      #78                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+     186: f2i
+     187: isub
+     188: invokeinterface #79,  3           // InterfaceMethod com/badlogic/gdx/Input.setCursorPosition:(II)V
+     193: goto          280
+     196: aload_0
+     197: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     200: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     203: ifeq          280
+     206: aload_0
+     207: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     210: invokevirtual #84                 // Method com/megacrit/cardcrawl/potions/AbstractPotion.canUse:()Z
+     213: ifeq          280
+     216: getstatic     #85                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     219: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     222: ifne          252
+     225: getstatic     #86                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.down:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     228: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     231: ifne          252
+     234: getstatic     #87                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altUp:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     237: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     240: ifne          252
+     243: getstatic     #88                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altDown:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     246: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     249: ifeq          280
+     252: getstatic     #76                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+     255: aload_0
+     256: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     259: getfield      #77                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+     262: f2i
+     263: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     266: aload_0
+     267: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     270: getfield      #78                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+     273: f2i
+     274: isub
+     275: invokeinterface #79,  3           // InterfaceMethod com/badlogic/gdx/Input.setCursorPosition:(II)V
+     280: return
+
+  private void updateTargetMode();
+    descriptor: ()V
+    Code:
+       0: getstatic     #89                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.justClickedRight:Z
+       3: ifne          63
+       6: getstatic     #90                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.isScreenUp:Z
+       9: ifne          63
+      12: getstatic     #91                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+      15: i2f
+      16: getstatic     #34                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      19: i2f
+      20: ldc           #92                 // float 80.0f
+      22: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      25: fmul
+      26: fsub
+      27: fcmpl
+      28: ifgt          63
+      31: getstatic     #93                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      34: getfield      #94                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hoveredCard:Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      37: ifnonnull     63
+      40: getstatic     #91                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+      43: i2f
+      44: ldc           #95                 // float 140.0f
+      46: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      49: fmul
+      50: fcmpg
+      51: iflt          63
+      54: getstatic     #81                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.cancel:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      57: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+      60: ifeq          78
+      63: getstatic     #81                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.cancel:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      66: invokevirtual #82                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.unpress:()V
+      69: aload_0
+      70: iconst_0
+      71: putfield      #3                  // Field targetMode:Z
+      74: iconst_0
+      75: putstatic     #96                 // Field com/megacrit/cardcrawl/core/GameCursor.hidden:Z
+      78: aload_0
+      79: aconst_null
+      80: putfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+      83: invokestatic  #97                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getMonsters:()Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      86: getfield      #59                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+      89: invokevirtual #62                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      92: astore_1
+      93: aload_1
+      94: invokeinterface #63,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      99: ifeq          140
+     102: aload_1
+     103: invokeinterface #64,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     108: checkcast     #65                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     111: astore_2
+     112: aload_2
+     113: getfield      #71                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     116: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     119: ifeq          137
+     122: aload_2
+     123: getfield      #66                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.isDying:Z
+     126: ifne          137
+     129: aload_0
+     130: aload_2
+     131: putfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     134: goto          140
+     137: goto          93
+     140: getstatic     #98                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.justClickedLeft:Z
+     143: ifne          155
+     146: getstatic     #99                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.select:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     149: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     152: ifeq          318
+     155: iconst_0
+     156: putstatic     #98                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.justClickedLeft:Z
+     159: getstatic     #99                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.select:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     162: invokevirtual #82                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.unpress:()V
+     165: aload_0
+     166: getfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     169: ifnull        318
+     172: getstatic     #93                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     175: ldc           #101                // String Surrounded
+     177: invokevirtual #102                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasPower:(Ljava/lang/String;)Z
+     180: ifeq          211
+     183: getstatic     #93                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     186: aload_0
+     187: getfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     190: getfield      #103                // Field com/megacrit/cardcrawl/monsters/AbstractMonster.drawX:F
+     193: getstatic     #93                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     196: getfield      #104                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.drawX:F
+     199: fcmpg
+     200: ifge          207
+     203: iconst_1
+     204: goto          208
+     207: iconst_0
+     208: putfield      #105                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.flipHorizontal:Z
+     211: getstatic     #106                // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     214: getfield      #107                // Field com/megacrit/cardcrawl/metrics/MetricData.potions_floor_usage:Ljava/util/ArrayList;
+     217: getstatic     #108                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.floorNum:I
+     220: invokestatic  #109                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     223: invokevirtual #110                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     226: pop
+     227: aload_0
+     228: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     231: aload_0
+     232: getfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     235: invokevirtual #111                // Method com/megacrit/cardcrawl/potions/AbstractPotion.use:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+     238: invokestatic  #57                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     241: getfield      #112                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     244: getstatic     #113                // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMBAT:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     247: if_acmpne     263
+     250: getstatic     #114                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     253: new           #115                // class com/megacrit/cardcrawl/actions/utility/HandCheckAction
+     256: dup
+     257: invokespecial #116                // Method com/megacrit/cardcrawl/actions/utility/HandCheckAction."<init>":()V
+     260: invokevirtual #117                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     263: getstatic     #93                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     266: getfield      #118                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+     269: invokevirtual #62                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     272: astore_1
+     273: aload_1
+     274: invokeinterface #63,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     279: ifeq          299
+     282: aload_1
+     283: invokeinterface #64,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     288: checkcast     #119                // class com/megacrit/cardcrawl/relics/AbstractRelic
+     291: astore_2
+     292: aload_2
+     293: invokevirtual #120                // Method com/megacrit/cardcrawl/relics/AbstractRelic.onUsePotion:()V
+     296: goto          273
+     299: getstatic     #28                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topPanel:Lcom/megacrit/cardcrawl/ui/panels/TopPanel;
+     302: aload_0
+     303: getfield      #30                 // Field slot:I
+     306: invokevirtual #121                // Method com/megacrit/cardcrawl/ui/panels/TopPanel.destroyPotion:(I)V
+     309: aload_0
+     310: iconst_0
+     311: putfield      #3                  // Field targetMode:Z
+     314: iconst_0
+     315: putstatic     #96                 // Field com/megacrit/cardcrawl/core/GameCursor.hidden:Z
+     318: return
+
+  private void updateInput();
+    descriptor: ()V
+    Code:
+       0: getstatic     #98                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.justClickedLeft:Z
+       3: ifeq          56
+       6: iconst_0
+       7: putstatic     #98                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.justClickedLeft:Z
+      10: aload_0
+      11: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      14: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+      17: ifeq          31
+      20: aload_0
+      21: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      24: iconst_1
+      25: putfield      #40                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clickStarted:Z
+      28: goto          56
+      31: aload_0
+      32: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      35: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+      38: ifeq          52
+      41: aload_0
+      42: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      45: iconst_1
+      46: putfield      #40                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clickStarted:Z
+      49: goto          56
+      52: aload_0
+      53: invokevirtual #83                 // Method close:()V
+      56: aload_0
+      57: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      60: getfield      #41                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clicked:Z
+      63: ifne          85
+      66: aload_0
+      67: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      70: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+      73: ifeq          344
+      76: getstatic     #99                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.select:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+      79: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+      82: ifeq          344
+      85: getstatic     #90                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.isScreenUp:Z
+      88: ifeq          102
+      91: aload_0
+      92: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+      95: invokevirtual #84                 // Method com/megacrit/cardcrawl/potions/AbstractPotion.canUse:()Z
+      98: iconst_1
+      99: if_icmpne     344
+     102: getstatic     #99                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.select:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     105: invokevirtual #82                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.unpress:()V
+     108: aload_0
+     109: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     112: iconst_0
+     113: putfield      #41                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clicked:Z
+     116: aload_0
+     117: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     120: invokevirtual #84                 // Method com/megacrit/cardcrawl/potions/AbstractPotion.canUse:()Z
+     123: ifeq          239
+     126: aload_0
+     127: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     130: getfield      #122                // Field com/megacrit/cardcrawl/potions/AbstractPotion.targetRequired:Z
+     133: ifne          218
+     136: getstatic     #106                // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+     139: getfield      #107                // Field com/megacrit/cardcrawl/metrics/MetricData.potions_floor_usage:Ljava/util/ArrayList;
+     142: getstatic     #108                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.floorNum:I
+     145: invokestatic  #109                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     148: invokevirtual #110                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     151: pop
+     152: aload_0
+     153: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     156: aconst_null
+     157: invokevirtual #111                // Method com/megacrit/cardcrawl/potions/AbstractPotion.use:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+     160: getstatic     #93                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     163: getfield      #118                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+     166: invokevirtual #62                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     169: astore_1
+     170: aload_1
+     171: invokeinterface #63,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     176: ifeq          196
+     179: aload_1
+     180: invokeinterface #64,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     185: checkcast     #119                // class com/megacrit/cardcrawl/relics/AbstractRelic
+     188: astore_2
+     189: aload_2
+     190: invokevirtual #120                // Method com/megacrit/cardcrawl/relics/AbstractRelic.onUsePotion:()V
+     193: goto          170
+     196: getstatic     #123                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     199: ldc           #124                // String POTION_1
+     201: invokevirtual #125                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     204: pop2
+     205: getstatic     #28                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topPanel:Lcom/megacrit/cardcrawl/ui/panels/TopPanel;
+     208: aload_0
+     209: getfield      #30                 // Field slot:I
+     212: invokevirtual #121                // Method com/megacrit/cardcrawl/ui/panels/TopPanel.destroyPotion:(I)V
+     215: goto          232
+     218: aload_0
+     219: iconst_1
+     220: putfield      #3                  // Field targetMode:Z
+     223: iconst_1
+     224: putstatic     #96                 // Field com/megacrit/cardcrawl/core/GameCursor.hidden:Z
+     227: aload_0
+     228: iconst_1
+     229: putfield      #17                 // Field autoTargetFirst:Z
+     232: aload_0
+     233: invokevirtual #83                 // Method close:()V
+     236: goto          430
+     239: aload_0
+     240: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     243: getfield      #126                // Field com/megacrit/cardcrawl/potions/AbstractPotion.ID:Ljava/lang/String;
+     246: ldc           #128                // String SmokeBomb
+     248: if_acmpne     430
+     251: invokestatic  #57                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     254: getfield      #58                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+     257: ifnull        430
+     260: invokestatic  #57                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     263: getfield      #58                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+     266: getfield      #59                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+     269: invokevirtual #62                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     272: astore_1
+     273: aload_1
+     274: invokeinterface #63,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     279: ifeq          341
+     282: aload_1
+     283: invokeinterface #64,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     288: checkcast     #65                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     291: astore_2
+     292: aload_2
+     293: ldc           #130                // String BackAttack
+     295: invokevirtual #131                // Method com/megacrit/cardcrawl/monsters/AbstractMonster.hasPower:(Ljava/lang/String;)Z
+     298: ifeq          338
+     301: getstatic     #132                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+     304: new           #133                // class com/megacrit/cardcrawl/vfx/ThoughtBubble
+     307: dup
+     308: getstatic     #93                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     311: getfield      #134                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.dialogX:F
+     314: getstatic     #93                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     317: getfield      #135                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.dialogY:F
+     320: ldc           #136                // float 3.0f
+     322: getstatic     #137                // Field com/megacrit/cardcrawl/potions/SmokeBomb.potionStrings:Lcom/megacrit/cardcrawl/localization/PotionStrings;
+     325: getfield      #138                // Field com/megacrit/cardcrawl/localization/PotionStrings.DESCRIPTIONS:[Ljava/lang/String;
+     328: iconst_1
+     329: aaload
+     330: iconst_1
+     331: invokespecial #139                // Method com/megacrit/cardcrawl/vfx/ThoughtBubble."<init>":(FFFLjava/lang/String;Z)V
+     334: invokevirtual #110                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     337: pop
+     338: goto          273
+     341: goto          430
+     344: aload_0
+     345: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     348: getfield      #41                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clicked:Z
+     351: ifne          373
+     354: aload_0
+     355: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     358: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     361: ifeq          430
+     364: getstatic     #99                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.select:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     367: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     370: ifeq          430
+     373: aload_0
+     374: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     377: invokevirtual #140                // Method com/megacrit/cardcrawl/potions/AbstractPotion.canDiscard:()Z
+     380: ifeq          430
+     383: getstatic     #99                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.select:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     386: invokevirtual #82                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.unpress:()V
+     389: aload_0
+     390: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     393: iconst_0
+     394: putfield      #41                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clicked:Z
+     397: getstatic     #123                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     400: ldc           #141                // String POTION_DROP_2
+     402: invokevirtual #125                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     405: pop2
+     406: getstatic     #28                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topPanel:Lcom/megacrit/cardcrawl/ui/panels/TopPanel;
+     409: aload_0
+     410: getfield      #30                 // Field slot:I
+     413: invokevirtual #121                // Method com/megacrit/cardcrawl/ui/panels/TopPanel.destroyPotion:(I)V
+     416: aload_0
+     417: iconst_m1
+     418: putfield      #30                 // Field slot:I
+     421: aload_0
+     422: aconst_null
+     423: putfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     426: aload_0
+     427: invokevirtual #83                 // Method close:()V
+     430: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field isHidden:Z
+       4: ifne          571
+       7: aload_1
+       8: getstatic     #142                // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+      11: invokevirtual #143                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      14: aload_1
+      15: getstatic     #144                // Field com/megacrit/cardcrawl/helpers/ImageMaster.POTION_UI_BG:Lcom/badlogic/gdx/graphics/Texture;
+      18: aload_0
+      19: getfield      #33                 // Field x:F
+      22: ldc           #145                // float 200.0f
+      24: fsub
+      25: aload_0
+      26: getfield      #36                 // Field y:F
+      29: ldc           #146                // float 169.0f
+      31: fsub
+      32: ldc           #145                // float 200.0f
+      34: ldc           #146                // float 169.0f
+      36: ldc           #147                // float 400.0f
+      38: ldc           #148                // float 338.0f
+      40: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      43: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      46: fconst_0
+      47: iconst_0
+      48: iconst_0
+      49: sipush        400
+      52: sipush        338
+      55: iconst_0
+      56: iconst_0
+      57: invokevirtual #149                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+      60: aload_0
+      61: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      64: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+      67: ifeq          82
+      70: aload_0
+      71: getfield      #8                  // Field topHoverColor:Lcom/badlogic/gdx/graphics/Color;
+      74: ldc           #5                  // float 0.5f
+      76: putfield      #27                 // Field com/badlogic/gdx/graphics/Color.a:F
+      79: goto          100
+      82: aload_0
+      83: getfield      #8                  // Field topHoverColor:Lcom/badlogic/gdx/graphics/Color;
+      86: aload_0
+      87: getfield      #8                  // Field topHoverColor:Lcom/badlogic/gdx/graphics/Color;
+      90: getfield      #27                 // Field com/badlogic/gdx/graphics/Color.a:F
+      93: fconst_0
+      94: invokestatic  #150                // Method com/megacrit/cardcrawl/helpers/MathHelper.fadeLerpSnap:(FF)F
+      97: putfield      #27                 // Field com/badlogic/gdx/graphics/Color.a:F
+     100: aload_0
+     101: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     104: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     107: ifeq          122
+     110: aload_0
+     111: getfield      #11                 // Field botHoverColor:Lcom/badlogic/gdx/graphics/Color;
+     114: ldc           #5                  // float 0.5f
+     116: putfield      #27                 // Field com/badlogic/gdx/graphics/Color.a:F
+     119: goto          140
+     122: aload_0
+     123: getfield      #11                 // Field botHoverColor:Lcom/badlogic/gdx/graphics/Color;
+     126: aload_0
+     127: getfield      #11                 // Field botHoverColor:Lcom/badlogic/gdx/graphics/Color;
+     130: getfield      #27                 // Field com/badlogic/gdx/graphics/Color.a:F
+     133: fconst_0
+     134: invokestatic  #150                // Method com/megacrit/cardcrawl/helpers/MathHelper.fadeLerpSnap:(FF)F
+     137: putfield      #27                 // Field com/badlogic/gdx/graphics/Color.a:F
+     140: aload_1
+     141: sipush        770
+     144: iconst_1
+     145: invokevirtual #152                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setBlendFunction:(II)V
+     148: aload_1
+     149: aload_0
+     150: getfield      #8                  // Field topHoverColor:Lcom/badlogic/gdx/graphics/Color;
+     153: invokevirtual #143                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     156: aload_1
+     157: getstatic     #153                // Field com/megacrit/cardcrawl/helpers/ImageMaster.POTION_UI_TOP:Lcom/badlogic/gdx/graphics/Texture;
+     160: aload_0
+     161: getfield      #33                 // Field x:F
+     164: ldc           #145                // float 200.0f
+     166: fsub
+     167: aload_0
+     168: getfield      #36                 // Field y:F
+     171: ldc           #146                // float 169.0f
+     173: fsub
+     174: ldc           #145                // float 200.0f
+     176: ldc           #146                // float 169.0f
+     178: ldc           #147                // float 400.0f
+     180: ldc           #148                // float 338.0f
+     182: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     185: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     188: fconst_0
+     189: iconst_0
+     190: iconst_0
+     191: sipush        400
+     194: sipush        338
+     197: iconst_0
+     198: iconst_0
+     199: invokevirtual #149                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     202: aload_1
+     203: aload_0
+     204: getfield      #11                 // Field botHoverColor:Lcom/badlogic/gdx/graphics/Color;
+     207: invokevirtual #143                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     210: aload_1
+     211: getstatic     #154                // Field com/megacrit/cardcrawl/helpers/ImageMaster.POTION_UI_BOT:Lcom/badlogic/gdx/graphics/Texture;
+     214: aload_0
+     215: getfield      #33                 // Field x:F
+     218: ldc           #145                // float 200.0f
+     220: fsub
+     221: aload_0
+     222: getfield      #36                 // Field y:F
+     225: ldc           #146                // float 169.0f
+     227: fsub
+     228: ldc           #145                // float 200.0f
+     230: ldc           #146                // float 169.0f
+     232: ldc           #147                // float 400.0f
+     234: ldc           #148                // float 338.0f
+     236: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     239: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     242: fconst_0
+     243: iconst_0
+     244: iconst_0
+     245: sipush        400
+     248: sipush        338
+     251: iconst_0
+     252: iconst_0
+     253: invokevirtual #149                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     256: aload_1
+     257: sipush        770
+     260: sipush        771
+     263: invokevirtual #152                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setBlendFunction:(II)V
+     266: getstatic     #155                // Field com/megacrit/cardcrawl/core/Settings.CREAM_COLOR:Lcom/badlogic/gdx/graphics/Color;
+     269: astore_2
+     270: aload_0
+     271: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     274: invokevirtual #84                 // Method com/megacrit/cardcrawl/potions/AbstractPotion.canUse:()Z
+     277: ifeq          286
+     280: getstatic     #90                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.isScreenUp:Z
+     283: ifeq          290
+     286: getstatic     #156                // Field com/badlogic/gdx/graphics/Color.GRAY:Lcom/badlogic/gdx/graphics/Color;
+     289: astore_2
+     290: aload_0
+     291: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     294: invokevirtual #84                 // Method com/megacrit/cardcrawl/potions/AbstractPotion.canUse:()Z
+     297: ifeq          332
+     300: invokestatic  #57                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     303: getfield      #157                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.event:Lcom/megacrit/cardcrawl/events/AbstractEvent;
+     306: ifnull        328
+     309: invokestatic  #57                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     312: getfield      #157                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.event:Lcom/megacrit/cardcrawl/events/AbstractEvent;
+     315: instanceof    #158                // class com/megacrit/cardcrawl/events/shrines/WeMeetAgain
+     318: ifne          332
+     321: getstatic     #155                // Field com/megacrit/cardcrawl/core/Settings.CREAM_COLOR:Lcom/badlogic/gdx/graphics/Color;
+     324: astore_2
+     325: goto          332
+     328: getstatic     #155                // Field com/megacrit/cardcrawl/core/Settings.CREAM_COLOR:Lcom/badlogic/gdx/graphics/Color;
+     331: astore_2
+     332: getstatic     #159                // Field TEXT:[Ljava/lang/String;
+     335: iconst_1
+     336: aaload
+     337: astore_3
+     338: aload_0
+     339: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     342: getfield      #160                // Field com/megacrit/cardcrawl/potions/AbstractPotion.isThrown:Z
+     345: ifeq          354
+     348: getstatic     #159                // Field TEXT:[Ljava/lang/String;
+     351: iconst_0
+     352: aaload
+     353: astore_3
+     354: aload_1
+     355: getstatic     #161                // Field com/megacrit/cardcrawl/helpers/FontHelper.buttonLabelFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     358: aload_3
+     359: aload_0
+     360: getfield      #33                 // Field x:F
+     363: aload_0
+     364: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     367: getfield      #78                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+     370: ldc           #162                // float 4.0f
+     372: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     375: fmul
+     376: fadd
+     377: aload_2
+     378: invokestatic  #163                // Method com/megacrit/cardcrawl/helpers/FontHelper.renderFontCenteredWidth:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FFLcom/badlogic/gdx/graphics/Color;)V
+     381: aload_1
+     382: getstatic     #161                // Field com/megacrit/cardcrawl/helpers/FontHelper.buttonLabelFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     385: getstatic     #159                // Field TEXT:[Ljava/lang/String;
+     388: iconst_2
+     389: aaload
+     390: aload_0
+     391: getfield      #33                 // Field x:F
+     394: aload_0
+     395: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     398: getfield      #78                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+     401: ldc           #164                // float 12.0f
+     403: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     406: fmul
+     407: fadd
+     408: getstatic     #165                // Field com/megacrit/cardcrawl/core/Settings.RED_TEXT_COLOR:Lcom/badlogic/gdx/graphics/Color;
+     411: invokestatic  #163                // Method com/megacrit/cardcrawl/helpers/FontHelper.renderFontCenteredWidth:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FFLcom/badlogic/gdx/graphics/Color;)V
+     414: aload_0
+     415: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     418: aload_1
+     419: invokevirtual #166                // Method com/megacrit/cardcrawl/helpers/Hitbox.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     422: aload_0
+     423: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     426: aload_1
+     427: invokevirtual #166                // Method com/megacrit/cardcrawl/helpers/Hitbox.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     430: aload_0
+     431: getfield      #23                 // Field hbTop:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     434: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     437: ifeq          526
+     440: aload_0
+     441: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     444: getfield      #160                // Field com/megacrit/cardcrawl/potions/AbstractPotion.isThrown:Z
+     447: ifeq          488
+     450: aload_0
+     451: getfield      #33                 // Field x:F
+     454: ldc           #167                // float 174.0f
+     456: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     459: fmul
+     460: fadd
+     461: aload_0
+     462: getfield      #36                 // Field y:F
+     465: ldc           #168                // float 20.0f
+     467: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     470: fmul
+     471: fadd
+     472: getstatic     #169                // Field LABEL:[Ljava/lang/String;
+     475: iconst_0
+     476: aaload
+     477: getstatic     #170                // Field MSG:[Ljava/lang/String;
+     480: iconst_0
+     481: aaload
+     482: invokestatic  #171                // Method com/megacrit/cardcrawl/helpers/TipHelper.renderGenericTip:(FFLjava/lang/String;Ljava/lang/String;)V
+     485: goto          571
+     488: aload_0
+     489: getfield      #33                 // Field x:F
+     492: ldc           #167                // float 174.0f
+     494: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     497: fmul
+     498: fadd
+     499: aload_0
+     500: getfield      #36                 // Field y:F
+     503: ldc           #168                // float 20.0f
+     505: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     508: fmul
+     509: fadd
+     510: getstatic     #169                // Field LABEL:[Ljava/lang/String;
+     513: iconst_1
+     514: aaload
+     515: getstatic     #170                // Field MSG:[Ljava/lang/String;
+     518: iconst_1
+     519: aaload
+     520: invokestatic  #171                // Method com/megacrit/cardcrawl/helpers/TipHelper.renderGenericTip:(FFLjava/lang/String;Ljava/lang/String;)V
+     523: goto          571
+     526: aload_0
+     527: getfield      #25                 // Field hbBot:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     530: getfield      #72                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     533: ifeq          571
+     536: aload_0
+     537: getfield      #33                 // Field x:F
+     540: ldc           #167                // float 174.0f
+     542: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     545: fmul
+     546: fadd
+     547: aload_0
+     548: getfield      #36                 // Field y:F
+     551: ldc           #168                // float 20.0f
+     553: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     556: fmul
+     557: fadd
+     558: getstatic     #169                // Field LABEL:[Ljava/lang/String;
+     561: iconst_2
+     562: aaload
+     563: getstatic     #170                // Field MSG:[Ljava/lang/String;
+     566: iconst_2
+     567: aaload
+     568: invokestatic  #171                // Method com/megacrit/cardcrawl/helpers/TipHelper.renderGenericTip:(FFLjava/lang/String;Ljava/lang/String;)V
+     571: aload_0
+     572: getfield      #3                  // Field targetMode:Z
+     575: ifeq          598
+     578: aload_0
+     579: getfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     582: ifnull        593
+     585: aload_0
+     586: getfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     589: aload_1
+     590: invokevirtual #172                // Method com/megacrit/cardcrawl/monsters/AbstractMonster.renderReticle:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     593: aload_0
+     594: aload_1
+     595: invokespecial #173                // Method renderTargetingUi:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     598: return
+
+  private void renderTargetingUi(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: getstatic     #174                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+       3: i2f
+       4: fstore_2
+       5: getstatic     #91                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+       8: i2f
+       9: fstore_3
+      10: aload_0
+      11: new           #13                 // class com/badlogic/gdx/math/Vector2
+      14: dup
+      15: aload_0
+      16: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+      19: getfield      #32                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.posX:F
+      22: fload_2
+      23: aload_0
+      24: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+      27: getfield      #32                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.posX:F
+      30: fsub
+      31: ldc           #162                // float 4.0f
+      33: fdiv
+      34: fsub
+      35: fload_3
+      36: fload_3
+      37: aload_0
+      38: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+      41: getfield      #175                // Field com/megacrit/cardcrawl/potions/AbstractPotion.posY:F
+      44: fsub
+      45: ldc           #176                // float 40.0f
+      47: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      50: fmul
+      51: fsub
+      52: fconst_2
+      53: fdiv
+      54: fadd
+      55: invokespecial #177                // Method com/badlogic/gdx/math/Vector2."<init>":(FF)V
+      58: putfield      #178                // Field controlPoint:Lcom/badlogic/gdx/math/Vector2;
+      61: aload_0
+      62: getfield      #16                 // Field hoveredMonster:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+      65: ifnonnull     98
+      68: aload_0
+      69: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      72: putfield      #179                // Field arrowScale:F
+      75: aload_0
+      76: fconst_0
+      77: putfield      #15                 // Field arrowScaleTimer:F
+      80: aload_1
+      81: new           #4                  // class com/badlogic/gdx/graphics/Color
+      84: dup
+      85: fconst_1
+      86: fconst_1
+      87: fconst_1
+      88: fconst_1
+      89: invokespecial #7                  // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      92: invokevirtual #143                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      95: goto          169
+      98: aload_0
+      99: dup
+     100: getfield      #15                 // Field arrowScaleTimer:F
+     103: getstatic     #180                // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+     106: invokeinterface #181,  1          // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+     111: fadd
+     112: putfield      #15                 // Field arrowScaleTimer:F
+     115: aload_0
+     116: getfield      #15                 // Field arrowScaleTimer:F
+     119: fconst_1
+     120: fcmpl
+     121: ifle          129
+     124: aload_0
+     125: fconst_1
+     126: putfield      #15                 // Field arrowScaleTimer:F
+     129: aload_0
+     130: getstatic     #182                // Field com/badlogic/gdx/math/Interpolation.elasticOut:Lcom/badlogic/gdx/math/Interpolation$ElasticOut;
+     133: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     136: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     139: ldc           #183                // float 1.2f
+     141: fmul
+     142: aload_0
+     143: getfield      #15                 // Field arrowScaleTimer:F
+     146: invokevirtual #184                // Method com/badlogic/gdx/math/Interpolation$ElasticOut.apply:(FFF)F
+     149: putfield      #179                // Field arrowScale:F
+     152: aload_1
+     153: new           #4                  // class com/badlogic/gdx/graphics/Color
+     156: dup
+     157: fconst_1
+     158: ldc           #185                // float 0.2f
+     160: ldc           #10                 // float 0.3f
+     162: fconst_1
+     163: invokespecial #7                  // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     166: invokevirtual #143                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     169: new           #13                 // class com/badlogic/gdx/math/Vector2
+     172: dup
+     173: aload_0
+     174: getfield      #178                // Field controlPoint:Lcom/badlogic/gdx/math/Vector2;
+     177: getfield      #186                // Field com/badlogic/gdx/math/Vector2.x:F
+     180: fload_2
+     181: fsub
+     182: aload_0
+     183: getfield      #178                // Field controlPoint:Lcom/badlogic/gdx/math/Vector2;
+     186: getfield      #187                // Field com/badlogic/gdx/math/Vector2.y:F
+     189: fload_3
+     190: fsub
+     191: invokespecial #177                // Method com/badlogic/gdx/math/Vector2."<init>":(FF)V
+     194: astore        4
+     196: aload         4
+     198: invokevirtual #188                // Method com/badlogic/gdx/math/Vector2.nor:()Lcom/badlogic/gdx/math/Vector2;
+     201: pop
+     202: aload_0
+     203: aload_1
+     204: new           #13                 // class com/badlogic/gdx/math/Vector2
+     207: dup
+     208: aload_0
+     209: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     212: getfield      #32                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.posX:F
+     215: aload_0
+     216: getfield      #31                 // Field potion:Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+     219: getfield      #175                // Field com/megacrit/cardcrawl/potions/AbstractPotion.posY:F
+     222: ldc           #176                // float 40.0f
+     224: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     227: fmul
+     228: fsub
+     229: invokespecial #177                // Method com/badlogic/gdx/math/Vector2."<init>":(FF)V
+     232: new           #13                 // class com/badlogic/gdx/math/Vector2
+     235: dup
+     236: fload_2
+     237: fload_3
+     238: invokespecial #177                // Method com/badlogic/gdx/math/Vector2."<init>":(FF)V
+     241: aload_0
+     242: getfield      #178                // Field controlPoint:Lcom/badlogic/gdx/math/Vector2;
+     245: invokespecial #189                // Method drawCurvedLine:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/math/Vector2;Lcom/badlogic/gdx/math/Vector2;Lcom/badlogic/gdx/math/Vector2;)V
+     248: aload_1
+     249: getstatic     #190                // Field com/megacrit/cardcrawl/helpers/ImageMaster.TARGET_UI_ARROW:Lcom/badlogic/gdx/graphics/Texture;
+     252: fload_2
+     253: ldc           #191                // float 128.0f
+     255: fsub
+     256: fload_3
+     257: ldc           #191                // float 128.0f
+     259: fsub
+     260: ldc           #191                // float 128.0f
+     262: ldc           #191                // float 128.0f
+     264: ldc           #192                // float 256.0f
+     266: ldc           #192                // float 256.0f
+     268: aload_0
+     269: getfield      #179                // Field arrowScale:F
+     272: aload_0
+     273: getfield      #179                // Field arrowScale:F
+     276: aload         4
+     278: invokevirtual #193                // Method com/badlogic/gdx/math/Vector2.angle:()F
+     281: ldc           #24                 // float 90.0f
+     283: fadd
+     284: iconst_0
+     285: iconst_0
+     286: sipush        256
+     289: sipush        256
+     292: iconst_0
+     293: iconst_0
+     294: invokevirtual #149                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     297: return
+
+  private void drawCurvedLine(com.badlogic.gdx.graphics.g2d.SpriteBatch, com.badlogic.gdx.math.Vector2, com.badlogic.gdx.math.Vector2, com.badlogic.gdx.math.Vector2);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/math/Vector2;Lcom/badlogic/gdx/math/Vector2;Lcom/badlogic/gdx/math/Vector2;)V
+    Code:
+       0: ldc           #194                // float 7.0f
+       2: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+       5: fmul
+       6: fstore        5
+       8: iconst_0
+       9: istore        6
+      11: iload         6
+      13: aload_0
+      14: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+      17: arraylength
+      18: iconst_1
+      19: isub
+      20: if_icmpge     274
+      23: aload_0
+      24: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+      27: iload         6
+      29: aload_0
+      30: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+      33: iload         6
+      35: aaload
+      36: iload         6
+      38: i2f
+      39: ldc           #168                // float 20.0f
+      41: fdiv
+      42: aload_2
+      43: aload         4
+      45: aload_3
+      46: new           #13                 // class com/badlogic/gdx/math/Vector2
+      49: dup
+      50: invokespecial #26                 // Method com/badlogic/gdx/math/Vector2."<init>":()V
+      53: invokestatic  #195                // Method com/badlogic/gdx/math/Bezier.quadratic:(Lcom/badlogic/gdx/math/Vector;FLcom/badlogic/gdx/math/Vector;Lcom/badlogic/gdx/math/Vector;Lcom/badlogic/gdx/math/Vector;Lcom/badlogic/gdx/math/Vector;)Lcom/badlogic/gdx/math/Vector;
+      56: checkcast     #13                 // class com/badlogic/gdx/math/Vector2
+      59: aastore
+      60: fload         5
+      62: ldc           #9                  // float 0.4f
+      64: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      67: fmul
+      68: fadd
+      69: fstore        5
+      71: iload         6
+      73: ifeq          147
+      76: new           #13                 // class com/badlogic/gdx/math/Vector2
+      79: dup
+      80: aload_0
+      81: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+      84: iload         6
+      86: iconst_1
+      87: isub
+      88: aaload
+      89: getfield      #186                // Field com/badlogic/gdx/math/Vector2.x:F
+      92: aload_0
+      93: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+      96: iload         6
+      98: aaload
+      99: getfield      #186                // Field com/badlogic/gdx/math/Vector2.x:F
+     102: fsub
+     103: aload_0
+     104: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+     107: iload         6
+     109: iconst_1
+     110: isub
+     111: aaload
+     112: getfield      #187                // Field com/badlogic/gdx/math/Vector2.y:F
+     115: aload_0
+     116: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+     119: iload         6
+     121: aaload
+     122: getfield      #187                // Field com/badlogic/gdx/math/Vector2.y:F
+     125: fsub
+     126: invokespecial #177                // Method com/badlogic/gdx/math/Vector2."<init>":(FF)V
+     129: astore        7
+     131: aload         7
+     133: invokevirtual #188                // Method com/badlogic/gdx/math/Vector2.nor:()Lcom/badlogic/gdx/math/Vector2;
+     136: invokevirtual #193                // Method com/badlogic/gdx/math/Vector2.angle:()F
+     139: ldc           #24                 // float 90.0f
+     141: fadd
+     142: fstore        8
+     144: goto          205
+     147: new           #13                 // class com/badlogic/gdx/math/Vector2
+     150: dup
+     151: aload_0
+     152: getfield      #178                // Field controlPoint:Lcom/badlogic/gdx/math/Vector2;
+     155: getfield      #186                // Field com/badlogic/gdx/math/Vector2.x:F
+     158: aload_0
+     159: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+     162: iload         6
+     164: aaload
+     165: getfield      #186                // Field com/badlogic/gdx/math/Vector2.x:F
+     168: fsub
+     169: aload_0
+     170: getfield      #178                // Field controlPoint:Lcom/badlogic/gdx/math/Vector2;
+     173: getfield      #187                // Field com/badlogic/gdx/math/Vector2.y:F
+     176: aload_0
+     177: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+     180: iload         6
+     182: aaload
+     183: getfield      #187                // Field com/badlogic/gdx/math/Vector2.y:F
+     186: fsub
+     187: invokespecial #177                // Method com/badlogic/gdx/math/Vector2."<init>":(FF)V
+     190: astore        7
+     192: aload         7
+     194: invokevirtual #188                // Method com/badlogic/gdx/math/Vector2.nor:()Lcom/badlogic/gdx/math/Vector2;
+     197: invokevirtual #193                // Method com/badlogic/gdx/math/Vector2.angle:()F
+     200: ldc           #196                // float 270.0f
+     202: fadd
+     203: fstore        8
+     205: aload_1
+     206: getstatic     #197                // Field com/megacrit/cardcrawl/helpers/ImageMaster.TARGET_UI_CIRCLE:Lcom/badlogic/gdx/graphics/Texture;
+     209: aload_0
+     210: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+     213: iload         6
+     215: aaload
+     216: getfield      #186                // Field com/badlogic/gdx/math/Vector2.x:F
+     219: ldc           #198                // float 64.0f
+     221: fsub
+     222: aload_0
+     223: getfield      #14                 // Field points:[Lcom/badlogic/gdx/math/Vector2;
+     226: iload         6
+     228: aaload
+     229: getfield      #187                // Field com/badlogic/gdx/math/Vector2.y:F
+     232: ldc           #198                // float 64.0f
+     234: fsub
+     235: ldc           #198                // float 64.0f
+     237: ldc           #198                // float 64.0f
+     239: ldc           #191                // float 128.0f
+     241: ldc           #191                // float 128.0f
+     243: fload         5
+     245: ldc           #199                // float 18.0f
+     247: fdiv
+     248: fload         5
+     250: ldc           #199                // float 18.0f
+     252: fdiv
+     253: fload         8
+     255: iconst_0
+     256: iconst_0
+     257: sipush        128
+     260: sipush        128
+     263: iconst_0
+     264: iconst_0
+     265: invokevirtual #149                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     268: iinc          6, 1
+     271: goto          11
+     274: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #200                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #201                // String Potion Panel Tip
+       5: invokevirtual #202                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getTutorialString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/TutorialStrings;
+       8: putstatic     #203                // Field tutorialStrings:Lcom/megacrit/cardcrawl/localization/TutorialStrings;
+      11: getstatic     #203                // Field tutorialStrings:Lcom/megacrit/cardcrawl/localization/TutorialStrings;
+      14: getfield      #204                // Field com/megacrit/cardcrawl/localization/TutorialStrings.TEXT:[Ljava/lang/String;
+      17: putstatic     #170                // Field MSG:[Ljava/lang/String;
+      20: getstatic     #203                // Field tutorialStrings:Lcom/megacrit/cardcrawl/localization/TutorialStrings;
+      23: getfield      #205                // Field com/megacrit/cardcrawl/localization/TutorialStrings.LABEL:[Ljava/lang/String;
+      26: putstatic     #169                // Field LABEL:[Ljava/lang/String;
+      29: getstatic     #200                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+      32: ldc           #206                // String PotionPopUp
+      34: invokevirtual #207                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getUIString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/UIStrings;
+      37: putstatic     #208                // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      40: getstatic     #208                // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      43: getfield      #209                // Field com/megacrit/cardcrawl/localization/UIStrings.TEXT:[Ljava/lang/String;
+      46: putstatic     #159                // Field TEXT:[Ljava/lang/String;
+      49: return
+}

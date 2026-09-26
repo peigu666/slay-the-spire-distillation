@@ -1,0 +1,1646 @@
+Compiled from "EUIGameUtils.java"
+public class extendedui.EUIGameUtils {
+  private static final java.util.HashMap<com.megacrit.cardcrawl.cards.AbstractCard$CardColor, java.lang.String> CUSTOM_COLOR_NAMES;
+    descriptor: Ljava/util/HashMap;
+
+  private static final java.util.HashMap<com.megacrit.cardcrawl.cards.AbstractCard$CardColor, com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass> COLOR_TO_CLASS;
+    descriptor: Ljava/util/HashMap;
+
+  private static final java.util.HashMap<com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass, com.megacrit.cardcrawl.cards.AbstractCard$CardColor> CLASS_TO_COLOR;
+    descriptor: Ljava/util/HashMap;
+
+  private static final java.util.HashMap<java.lang.Class, com.evacipated.cardcrawl.modthespire.ModInfo> MOD_INFO_MAPPING;
+    descriptor: Ljava/util/HashMap;
+
+  private static final java.util.HashMap<java.lang.String, com.megacrit.cardcrawl.cards.AbstractCard$CardColor> RELIC_COLORS;
+    descriptor: Ljava/util/HashMap;
+
+  public static final com.badlogic.gdx.graphics.Color COLOR_BASIC;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public static final com.badlogic.gdx.graphics.Color COLOR_COMMON;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public static final com.badlogic.gdx.graphics.Color COLOR_CURSE;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public static final com.badlogic.gdx.graphics.Color COLOR_RARE;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public static final com.badlogic.gdx.graphics.Color COLOR_SPECIAL;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public static final com.badlogic.gdx.graphics.Color COLOR_UNCOMMON;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public extendedui.EUIGameUtils();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void addRelicColor(java.lang.String, com.megacrit.cardcrawl.cards.AbstractCard$CardColor);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;)V
+    Code:
+       0: getstatic     #2                  // Field RELIC_COLORS:Ljava/util/HashMap;
+       3: aload_0
+       4: aload_1
+       5: invokevirtual #3                  // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+       8: pop
+       9: return
+
+  public static boolean canReceiveAnyColorCard();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: ifnull        17
+       6: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       9: ldc           #6                  // String PrismaticShard
+      11: invokevirtual #7                  // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+      14: ifne          25
+      17: ldc           #9                  // String Diverse
+      19: invokestatic  #10                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+      22: ifeq          29
+      25: iconst_1
+      26: goto          30
+      29: iconst_0
+      30: ireturn
+
+  public static boolean canSeeAnyColorCardFromPool(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)Z
+    Code:
+       0: aload_0
+       1: invokestatic  #11                 // Method canSeeCard:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)Z
+       4: ifeq          61
+       7: aload_0
+       8: getfield      #12                 // Field com/megacrit/cardcrawl/cards/AbstractCard.rarity:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+      11: getstatic     #13                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardRarity.COMMON:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+      14: if_acmpeq     47
+      17: aload_0
+      18: getfield      #12                 // Field com/megacrit/cardcrawl/cards/AbstractCard.rarity:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+      21: getstatic     #14                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardRarity.UNCOMMON:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+      24: if_acmpeq     47
+      27: aload_0
+      28: getfield      #12                 // Field com/megacrit/cardcrawl/cards/AbstractCard.rarity:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+      31: getstatic     #15                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardRarity.RARE:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+      34: if_acmpeq     47
+      37: aload_0
+      38: getfield      #12                 // Field com/megacrit/cardcrawl/cards/AbstractCard.rarity:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+      41: getstatic     #16                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardRarity.CURSE:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+      44: if_acmpne     61
+      47: aload_0
+      48: getfield      #17                 // Field com/megacrit/cardcrawl/cards/AbstractCard.type:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardType;
+      51: getstatic     #18                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardType.STATUS:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardType;
+      54: if_acmpeq     61
+      57: iconst_1
+      58: goto          62
+      61: iconst_0
+      62: ireturn
+
+  public static boolean canSeeCard(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)Z
+    Code:
+       0: invokestatic  #19                 // Method com/megacrit/cardcrawl/core/Settings.treatEverythingAsUnlocked:()Z
+       3: ifne          16
+       6: aload_0
+       7: getfield      #20                 // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+      10: invokestatic  #21                 // Method com/megacrit/cardcrawl/unlock/UnlockTracker.isCardLocked:(Ljava/lang/String;)Z
+      13: ifne          20
+      16: iconst_1
+      17: goto          21
+      20: iconst_0
+      21: ireturn
+
+  public static boolean canShowUpgrades(boolean);
+    descriptor: (Z)Z
+    Code:
+       0: getstatic     #22                 // Field com/megacrit/cardcrawl/screens/SingleCardViewPopup.isViewingUpgrade:Z
+       3: ifeq          47
+       6: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       9: ifnull        43
+      12: iload_0
+      13: ifne          43
+      16: getstatic     #23                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.screen:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      19: getstatic     #24                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen.COMBAT_REWARD:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      22: if_acmpeq     43
+      25: getstatic     #23                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.screen:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      28: getstatic     #25                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen.CARD_REWARD:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      31: if_acmpeq     43
+      34: getstatic     #23                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.screen:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      37: getstatic     #26                 // Field extendedui/ui/screens/CardPoolScreen.CARD_POOL_SCREEN:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      40: if_acmpne     47
+      43: iconst_1
+      44: goto          48
+      47: iconst_0
+      48: ireturn
+
+  public static boolean canViewAnyEnemyIntent();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: ldc           #28                 // String Runic Dome
+       5: invokevirtual #7                  // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+       8: ifne          15
+      11: iconst_1
+      12: goto          16
+      15: iconst_0
+      16: ireturn
+
+  public static boolean canViewEnemyIntents(com.megacrit.cardcrawl.monsters.AbstractMonster);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)Z
+    Code:
+       0: aload_0
+       1: getfield      #29                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.intent:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+       4: invokestatic  #30                 // Method canViewEnemyIntents:(Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;)Z
+       7: ireturn
+
+  public static boolean canViewEnemyIntents(com.megacrit.cardcrawl.monsters.AbstractMonster$Intent);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;)Z
+    Code:
+       0: aload_0
+       1: getstatic     #31                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.NONE:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+       4: if_acmpeq     24
+       7: aload_0
+       8: getstatic     #32                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.DEBUG:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+      11: if_acmpeq     24
+      14: invokestatic  #33                 // Method canViewAnyEnemyIntent:()Z
+      17: ifeq          24
+      20: iconst_1
+      21: goto          25
+      24: iconst_0
+      25: ireturn
+
+  public static com.badlogic.gdx.graphics.Color colorForPotionRarity(com.megacrit.cardcrawl.potions.AbstractPotion$PotionRarity);
+    descriptor: (Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity;)Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #34                 // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$potions$AbstractPotion$PotionRarity:[I
+       3: aload_0
+       4: invokevirtual #35                 // Method com/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 3
+
+                     1: 36
+
+                     2: 40
+
+                     3: 44
+               default: 48
+          }
+      36: getstatic     #36                 // Field COLOR_UNCOMMON:Lcom/badlogic/gdx/graphics/Color;
+      39: areturn
+      40: getstatic     #37                 // Field COLOR_RARE:Lcom/badlogic/gdx/graphics/Color;
+      43: areturn
+      44: getstatic     #38                 // Field COLOR_COMMON:Lcom/badlogic/gdx/graphics/Color;
+      47: areturn
+      48: getstatic     #39                 // Field COLOR_SPECIAL:Lcom/badlogic/gdx/graphics/Color;
+      51: areturn
+
+  public static com.badlogic.gdx.graphics.Color colorForRarity(com.megacrit.cardcrawl.cards.AbstractCard$CardRarity);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;)Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #40                 // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$cards$AbstractCard$CardRarity:[I
+       3: aload_0
+       4: invokevirtual #41                 // Method com/megacrit/cardcrawl/cards/AbstractCard$CardRarity.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 6
+
+                     1: 48
+
+                     2: 52
+
+                     3: 56
+
+                     4: 60
+
+                     5: 64
+
+                     6: 68
+               default: 68
+          }
+      48: getstatic     #39                 // Field COLOR_SPECIAL:Lcom/badlogic/gdx/graphics/Color;
+      51: areturn
+      52: getstatic     #36                 // Field COLOR_UNCOMMON:Lcom/badlogic/gdx/graphics/Color;
+      55: areturn
+      56: getstatic     #37                 // Field COLOR_RARE:Lcom/badlogic/gdx/graphics/Color;
+      59: areturn
+      60: getstatic     #42                 // Field COLOR_CURSE:Lcom/badlogic/gdx/graphics/Color;
+      63: areturn
+      64: getstatic     #43                 // Field COLOR_BASIC:Lcom/badlogic/gdx/graphics/Color;
+      67: areturn
+      68: getstatic     #38                 // Field COLOR_COMMON:Lcom/badlogic/gdx/graphics/Color;
+      71: areturn
+
+  public static com.badlogic.gdx.graphics.Color colorForRelicTier(com.megacrit.cardcrawl.relics.AbstractRelic$RelicTier);
+    descriptor: (Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;)Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #44                 // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$relics$AbstractRelic$RelicTier:[I
+       3: aload_0
+       4: invokevirtual #45                 // Method com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 7
+
+                     1: 52
+
+                     2: 56
+
+                     3: 60
+
+                     4: 64
+
+                     5: 68
+
+                     6: 72
+
+                     7: 76
+               default: 76
+          }
+      52: getstatic     #36                 // Field COLOR_UNCOMMON:Lcom/badlogic/gdx/graphics/Color;
+      55: areturn
+      56: getstatic     #37                 // Field COLOR_RARE:Lcom/badlogic/gdx/graphics/Color;
+      59: areturn
+      60: getstatic     #46                 // Field com/megacrit/cardcrawl/core/Settings.CREAM_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      63: areturn
+      64: getstatic     #47                 // Field com/megacrit/cardcrawl/core/Settings.RED_TEXT_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      67: areturn
+      68: getstatic     #43                 // Field COLOR_BASIC:Lcom/badlogic/gdx/graphics/Color;
+      71: areturn
+      72: getstatic     #38                 // Field COLOR_COMMON:Lcom/badlogic/gdx/graphics/Color;
+      75: areturn
+      76: getstatic     #39                 // Field COLOR_SPECIAL:Lcom/badlogic/gdx/graphics/Color;
+      79: areturn
+
+  public static void copyVisualProperties(com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getfield      #48                 // Field com/megacrit/cardcrawl/cards/AbstractCard.current_y:F
+       5: putfield      #48                 // Field com/megacrit/cardcrawl/cards/AbstractCard.current_y:F
+       8: aload_0
+       9: aload_1
+      10: getfield      #49                 // Field com/megacrit/cardcrawl/cards/AbstractCard.current_x:F
+      13: putfield      #49                 // Field com/megacrit/cardcrawl/cards/AbstractCard.current_x:F
+      16: aload_0
+      17: aload_1
+      18: getfield      #50                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+      21: putfield      #50                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+      24: aload_0
+      25: aload_1
+      26: getfield      #51                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_y:F
+      29: putfield      #51                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_y:F
+      32: aload_0
+      33: aload_1
+      34: getfield      #52                 // Field com/megacrit/cardcrawl/cards/AbstractCard.targetDrawScale:F
+      37: putfield      #52                 // Field com/megacrit/cardcrawl/cards/AbstractCard.targetDrawScale:F
+      40: aload_0
+      41: aload_1
+      42: getfield      #53                 // Field com/megacrit/cardcrawl/cards/AbstractCard.drawScale:F
+      45: putfield      #53                 // Field com/megacrit/cardcrawl/cards/AbstractCard.drawScale:F
+      48: aload_0
+      49: aload_1
+      50: getfield      #54                 // Field com/megacrit/cardcrawl/cards/AbstractCard.transparency:F
+      53: putfield      #54                 // Field com/megacrit/cardcrawl/cards/AbstractCard.transparency:F
+      56: aload_0
+      57: aload_1
+      58: getfield      #55                 // Field com/megacrit/cardcrawl/cards/AbstractCard.targetTransparency:F
+      61: putfield      #55                 // Field com/megacrit/cardcrawl/cards/AbstractCard.targetTransparency:F
+      64: aload_0
+      65: aload_1
+      66: getfield      #56                 // Field com/megacrit/cardcrawl/cards/AbstractCard.angle:F
+      69: putfield      #56                 // Field com/megacrit/cardcrawl/cards/AbstractCard.angle:F
+      72: aload_0
+      73: aload_1
+      74: getfield      #57                 // Field com/megacrit/cardcrawl/cards/AbstractCard.targetAngle:F
+      77: putfield      #57                 // Field com/megacrit/cardcrawl/cards/AbstractCard.targetAngle:F
+      80: return
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.blights.AbstractBlight> getAllBlights();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: getstatic     #58                 // Field com/megacrit/cardcrawl/helpers/BlightHelper.blights:Ljava/util/ArrayList;
+       3: invokevirtual #59                 // Method java/util/ArrayList.isEmpty:()Z
+       6: ifeq          12
+       9: invokestatic  #60                 // Method com/megacrit/cardcrawl/helpers/BlightHelper.initialize:()V
+      12: getstatic     #58                 // Field com/megacrit/cardcrawl/helpers/BlightHelper.blights:Ljava/util/ArrayList;
+      15: invokedynamic #61,  0             // InvokeDynamic #0:invoke:()Lextendedui/interfaces/delegates/FuncT1;
+      20: invokestatic  #62                 // Method extendedui/EUIUtils.map:(Ljava/util/List;Lextendedui/interfaces/delegates/FuncT1;)Ljava/util/ArrayList;
+      23: areturn
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.relics.AbstractRelic> getAllRelics();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: getstatic     #2                  // Field RELIC_COLORS:Ljava/util/HashMap;
+       3: invokevirtual #63                 // Method java/util/HashMap.keySet:()Ljava/util/Set;
+       6: invokedynamic #64,  0             // InvokeDynamic #1:invoke:()Lextendedui/interfaces/delegates/FuncT1;
+      11: invokestatic  #65                 // Method extendedui/EUIUtils.mapAsNonnull:(Ljava/lang/Iterable;Lextendedui/interfaces/delegates/FuncT1;)Ljava/util/ArrayList;
+      14: areturn
+
+  public static com.badlogic.gdx.graphics.OrthographicCamera getCamera();
+    descriptor: ()Lcom/badlogic/gdx/graphics/OrthographicCamera;
+    Code:
+       0: getstatic     #66                 // Field com/badlogic/gdx/Gdx.app:Lcom/badlogic/gdx/Application;
+       3: invokeinterface #67,  1           // InterfaceMethod com/badlogic/gdx/Application.getApplicationListener:()Lcom/badlogic/gdx/ApplicationListener;
+       8: ldc           #68                 // class com/megacrit/cardcrawl/core/CardCrawlGame
+      10: ldc           #69                 // String camera
+      12: invokestatic  #70                 // Method basemod/ReflectionHacks.getPrivate:(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;
+      15: checkcast     #71                 // class com/badlogic/gdx/graphics/OrthographicCamera
+      18: areturn
+
+  public static com.megacrit.cardcrawl.cards.AbstractCard$CardColor getCardColorForPlayer(com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass);
+    descriptor: (Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+    Code:
+       0: getstatic     #72                 // Field CLASS_TO_COLOR:Ljava/util/HashMap;
+       3: aload_0
+       4: getstatic     #73                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.COLORLESS:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+       7: invokevirtual #74                 // Method java/util/HashMap.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      10: checkcast     #75                 // class com/megacrit/cardcrawl/cards/AbstractCard$CardColor
+      13: areturn
+
+  public static com.badlogic.gdx.graphics.Color getColorColor(com.megacrit.cardcrawl.cards.AbstractCard$CardColor);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;)Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #76                 // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$cards$AbstractCard$CardColor:[I
+       3: aload_0
+       4: invokevirtual #77                 // Method com/megacrit/cardcrawl/cards/AbstractCard$CardColor.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 6
+
+                     1: 48
+
+                     2: 63
+
+                     3: 77
+
+                     4: 92
+
+                     5: 107
+
+                     6: 122
+               default: 137
+          }
+      48: new           #78                 // class com/badlogic/gdx/graphics/Color
+      51: dup
+      52: ldc           #79                 // float 0.5f
+      54: ldc           #80                 // float 0.1f
+      56: ldc           #80                 // float 0.1f
+      58: fconst_1
+      59: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      62: areturn
+      63: new           #78                 // class com/badlogic/gdx/graphics/Color
+      66: dup
+      67: ldc           #82                 // float 0.25f
+      69: ldc           #83                 // float 0.55f
+      71: fconst_0
+      72: fconst_1
+      73: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      76: areturn
+      77: new           #78                 // class com/badlogic/gdx/graphics/Color
+      80: dup
+      81: ldc           #84                 // float 0.01f
+      83: ldc           #85                 // float 0.34f
+      85: ldc           #86                 // float 0.52f
+      87: fconst_1
+      88: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      91: areturn
+      92: new           #78                 // class com/badlogic/gdx/graphics/Color
+      95: dup
+      96: ldc           #87                 // float 0.37f
+      98: ldc           #88                 // float 0.22f
+     100: ldc           #89                 // float 0.49f
+     102: fconst_1
+     103: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     106: areturn
+     107: new           #78                 // class com/badlogic/gdx/graphics/Color
+     110: dup
+     111: ldc           #90                 // float 0.4f
+     113: ldc           #90                 // float 0.4f
+     115: ldc           #90                 // float 0.4f
+     117: fconst_1
+     118: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     121: areturn
+     122: new           #78                 // class com/badlogic/gdx/graphics/Color
+     125: dup
+     126: ldc           #91                 // float 0.18f
+     128: ldc           #91                 // float 0.18f
+     130: ldc           #92                 // float 0.16f
+     132: fconst_1
+     133: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     136: areturn
+     137: aload_0
+     138: invokestatic  #93                 // Method basemod/BaseMod.getTrailVfxColor:(Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;)Lcom/badlogic/gdx/graphics/Color;
+     141: areturn
+
+  public static java.lang.String getColorName(com.megacrit.cardcrawl.cards.AbstractCard$CardColor);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;)Ljava/lang/String;
+    Code:
+       0: getstatic     #76                 // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$cards$AbstractCard$CardColor:[I
+       3: aload_0
+       4: invokevirtual #77                 // Method com/megacrit/cardcrawl/cards/AbstractCard$CardColor.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 6
+
+                     1: 48
+
+                     2: 54
+
+                     3: 60
+
+                     4: 66
+
+                     5: 79
+
+                     6: 73
+               default: 85
+          }
+      48: getstatic     #94                 // Field com/megacrit/cardcrawl/screens/compendium/CardLibraryScreen.TEXT:[Ljava/lang/String;
+      51: iconst_1
+      52: aaload
+      53: areturn
+      54: getstatic     #94                 // Field com/megacrit/cardcrawl/screens/compendium/CardLibraryScreen.TEXT:[Ljava/lang/String;
+      57: iconst_2
+      58: aaload
+      59: areturn
+      60: getstatic     #94                 // Field com/megacrit/cardcrawl/screens/compendium/CardLibraryScreen.TEXT:[Ljava/lang/String;
+      63: iconst_3
+      64: aaload
+      65: areturn
+      66: getstatic     #94                 // Field com/megacrit/cardcrawl/screens/compendium/CardLibraryScreen.TEXT:[Ljava/lang/String;
+      69: bipush        8
+      71: aaload
+      72: areturn
+      73: getstatic     #94                 // Field com/megacrit/cardcrawl/screens/compendium/CardLibraryScreen.TEXT:[Ljava/lang/String;
+      76: iconst_5
+      77: aaload
+      78: areturn
+      79: getstatic     #94                 // Field com/megacrit/cardcrawl/screens/compendium/CardLibraryScreen.TEXT:[Ljava/lang/String;
+      82: iconst_4
+      83: aaload
+      84: areturn
+      85: getstatic     #95                 // Field CUSTOM_COLOR_NAMES:Ljava/util/HashMap;
+      88: aload_0
+      89: aload_0
+      90: invokestatic  #96                 // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+      93: invokestatic  #97                 // Method extendedui/EUIUtils.capitalize:(Ljava/lang/String;)Ljava/lang/String;
+      96: invokevirtual #74                 // Method java/util/HashMap.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      99: checkcast     #98                 // class java/lang/String
+     102: areturn
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.cards.AbstractCard> getEveryColorCardForPoolDisplay();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: getstatic     #99                 // Field com/megacrit/cardcrawl/helpers/CardLibrary.cards:Ljava/util/HashMap;
+       3: invokevirtual #100                // Method java/util/HashMap.values:()Ljava/util/Collection;
+       6: invokedynamic #101,  0            // InvokeDynamic #2:invoke:()Lextendedui/interfaces/delegates/FuncT1;
+      11: invokestatic  #102                // Method extendedui/EUIUtils.filter:(Ljava/lang/Iterable;Lextendedui/interfaces/delegates/FuncT1;)Ljava/util/ArrayList;
+      14: areturn
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.cards.CardGroup> getGameCardPools();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: iconst_5
+       1: anewarray     #103                // class com/megacrit/cardcrawl/cards/CardGroup
+       4: dup
+       5: iconst_0
+       6: getstatic     #104                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.colorlessCardPool:Lcom/megacrit/cardcrawl/cards/CardGroup;
+       9: aastore
+      10: dup
+      11: iconst_1
+      12: getstatic     #105                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.commonCardPool:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      15: aastore
+      16: dup
+      17: iconst_2
+      18: getstatic     #106                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.uncommonCardPool:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      21: aastore
+      22: dup
+      23: iconst_3
+      24: getstatic     #107                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.rareCardPool:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      27: aastore
+      28: dup
+      29: iconst_4
+      30: getstatic     #108                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.curseCardPool:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      33: aastore
+      34: invokestatic  #109                // Method extendedui/EUIUtils.arrayList:([Ljava/lang/Object;)Ljava/util/ArrayList;
+      37: areturn
+
+  public static java.util.ArrayList<java.util.ArrayList<java.lang.String>> getGameRelicPools();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: iconst_5
+       1: anewarray     #110                // class java/util/ArrayList
+       4: dup
+       5: iconst_0
+       6: getstatic     #111                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.commonRelicPool:Ljava/util/ArrayList;
+       9: aastore
+      10: dup
+      11: iconst_1
+      12: getstatic     #112                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.uncommonRelicPool:Ljava/util/ArrayList;
+      15: aastore
+      16: dup
+      17: iconst_2
+      18: getstatic     #113                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.rareRelicPool:Ljava/util/ArrayList;
+      21: aastore
+      22: dup
+      23: iconst_3
+      24: getstatic     #114                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.bossRelicPool:Ljava/util/ArrayList;
+      27: aastore
+      28: dup
+      29: iconst_4
+      30: getstatic     #115                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.shopRelicPool:Ljava/util/ArrayList;
+      33: aastore
+      34: invokestatic  #109                // Method extendedui/EUIUtils.arrayList:([Ljava/lang/Object;)Ljava/util/ArrayList;
+      37: areturn
+
+  public static java.util.ArrayList<java.lang.String> getInGameRelicIDs();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #110                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #116                // Method java/util/ArrayList."<init>":()V
+       7: astore_0
+       8: aload_0
+       9: getstatic     #111                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.commonRelicPool:Ljava/util/ArrayList;
+      12: invokevirtual #117                // Method java/util/ArrayList.addAll:(Ljava/util/Collection;)Z
+      15: pop
+      16: aload_0
+      17: getstatic     #112                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.uncommonRelicPool:Ljava/util/ArrayList;
+      20: invokevirtual #117                // Method java/util/ArrayList.addAll:(Ljava/util/Collection;)Z
+      23: pop
+      24: aload_0
+      25: getstatic     #113                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.rareRelicPool:Ljava/util/ArrayList;
+      28: invokevirtual #117                // Method java/util/ArrayList.addAll:(Ljava/util/Collection;)Z
+      31: pop
+      32: aload_0
+      33: getstatic     #115                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.shopRelicPool:Ljava/util/ArrayList;
+      36: invokevirtual #117                // Method java/util/ArrayList.addAll:(Ljava/util/Collection;)Z
+      39: pop
+      40: aload_0
+      41: getstatic     #114                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.bossRelicPool:Ljava/util/ArrayList;
+      44: invokevirtual #117                // Method java/util/ArrayList.addAll:(Ljava/util/Collection;)Z
+      47: pop
+      48: aload_0
+      49: invokedynamic #118,  0            // InvokeDynamic #3:test:()Ljava/util/function/Predicate;
+      54: invokevirtual #119                // Method java/util/ArrayList.removeIf:(Ljava/util/function/Predicate;)Z
+      57: pop
+      58: aload_0
+      59: areturn
+
+  public static com.megacrit.cardcrawl.relics.AbstractRelic$LandingSound getLandingSound(com.megacrit.cardcrawl.relics.AbstractRelic);
+    descriptor: (Lcom/megacrit/cardcrawl/relics/AbstractRelic;)Lcom/megacrit/cardcrawl/relics/AbstractRelic$LandingSound;
+    Code:
+       0: aload_0
+       1: ldc           #120                // class com/megacrit/cardcrawl/relics/AbstractRelic
+       3: ldc           #121                // String landingSFX
+       5: invokestatic  #70                 // Method basemod/ReflectionHacks.getPrivate:(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;
+       8: checkcast     #122                // class com/megacrit/cardcrawl/relics/AbstractRelic$LandingSound
+      11: areturn
+
+  public static java.lang.String getModID(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: invokevirtual #123                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+       4: invokestatic  #124                // Method getModID:(Ljava/lang/Class;)Ljava/lang/String;
+       7: areturn
+
+  public static java.lang.String getModID(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: invokestatic  #125                // Method getModInfo:(Ljava/lang/Class;)Lcom/evacipated/cardcrawl/modthespire/ModInfo;
+       4: astore_1
+       5: aload_1
+       6: ifnull        16
+       9: aload_1
+      10: getfield      #126                // Field com/evacipated/cardcrawl/modthespire/ModInfo.ID:Ljava/lang/String;
+      13: goto          18
+      16: ldc           #128                // String
+      18: areturn
+
+  public static com.evacipated.cardcrawl.modthespire.ModInfo getModInfo(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Lcom/evacipated/cardcrawl/modthespire/ModInfo;
+    Code:
+       0: aload_0
+       1: invokevirtual #123                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+       4: invokestatic  #125                // Method getModInfo:(Ljava/lang/Class;)Lcom/evacipated/cardcrawl/modthespire/ModInfo;
+       7: areturn
+
+  public static com.evacipated.cardcrawl.modthespire.ModInfo getModInfo(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)Lcom/evacipated/cardcrawl/modthespire/ModInfo;
+    Code:
+       0: getstatic     #129                // Field MOD_INFO_MAPPING:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #130                // Method java/util/HashMap.containsKey:(Ljava/lang/Object;)Z
+       7: ifeq          21
+      10: getstatic     #129                // Field MOD_INFO_MAPPING:Ljava/util/HashMap;
+      13: aload_0
+      14: invokevirtual #131                // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      17: checkcast     #132                // class com/evacipated/cardcrawl/modthespire/ModInfo
+      20: areturn
+      21: aload_0
+      22: invokevirtual #133                // Method java/lang/Class.getProtectionDomain:()Ljava/security/ProtectionDomain;
+      25: invokevirtual #134                // Method java/security/ProtectionDomain.getCodeSource:()Ljava/security/CodeSource;
+      28: astore_1
+      29: aload_1
+      30: invokevirtual #135                // Method java/security/CodeSource.getLocation:()Ljava/net/URL;
+      33: astore_2
+      34: aload_2
+      35: ifnonnull     96
+      38: invokestatic  #136                // Method com/evacipated/cardcrawl/modthespire/Loader.getClassPool:()Ljavassist/ClassPool;
+      41: astore_3
+      42: aload_3
+      43: iconst_1
+      44: putfield      #137                // Field javassist/ClassPool.childFirstLookup:Z
+      47: aload_3
+      48: aload_0
+      49: invokevirtual #138                // Method java/lang/Class.getName:()Ljava/lang/String;
+      52: invokevirtual #139                // Method javassist/ClassPool.get:(Ljava/lang/String;)Ljavassist/CtClass;
+      55: astore        4
+      57: aload         4
+      59: invokevirtual #140                // Method javassist/CtClass.getURL:()Ljava/net/URL;
+      62: invokevirtual #141                // Method java/net/URL.getFile:()Ljava/lang/String;
+      65: astore        5
+      67: aload         5
+      69: bipush        33
+      71: invokevirtual #142                // Method java/lang/String.lastIndexOf:(I)I
+      74: istore        6
+      76: aload         5
+      78: iconst_0
+      79: iload         6
+      81: invokevirtual #143                // Method java/lang/String.substring:(II)Ljava/lang/String;
+      84: astore        5
+      86: new           #144                // class java/net/URL
+      89: dup
+      90: aload         5
+      92: invokespecial #145                // Method java/net/URL."<init>":(Ljava/lang/String;)V
+      95: astore_2
+      96: getstatic     #146                // Field com/evacipated/cardcrawl/modthespire/Loader.MODINFOS:[Lcom/evacipated/cardcrawl/modthespire/ModInfo;
+      99: astore_3
+     100: aload_3
+     101: arraylength
+     102: istore        4
+     104: iconst_0
+     105: istore        5
+     107: iload         5
+     109: iload         4
+     111: if_icmpge     151
+     114: aload_3
+     115: iload         5
+     117: aaload
+     118: astore        6
+     120: aload_2
+     121: aload         6
+     123: getfield      #147                // Field com/evacipated/cardcrawl/modthespire/ModInfo.jarURL:Ljava/net/URL;
+     126: invokevirtual #148                // Method java/net/URL.equals:(Ljava/lang/Object;)Z
+     129: ifeq          145
+     132: getstatic     #129                // Field MOD_INFO_MAPPING:Ljava/util/HashMap;
+     135: aload_0
+     136: aload         6
+     138: invokevirtual #3                  // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     141: pop
+     142: aload         6
+     144: areturn
+     145: iinc          5, 1
+     148: goto          107
+     151: getstatic     #129                // Field MOD_INFO_MAPPING:Ljava/util/HashMap;
+     154: aload_0
+     155: aconst_null
+     156: invokevirtual #3                  // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     159: pop
+     160: goto          200
+     163: astore_2
+     164: aload_0
+     165: new           #150                // class java/lang/StringBuilder
+     168: dup
+     169: invokespecial #151                // Method java/lang/StringBuilder."<init>":()V
+     172: ldc           #152                // String Failed to find source for codesource
+     174: invokevirtual #153                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     177: aload_1
+     178: invokevirtual #154                // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+     181: invokevirtual #155                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     184: invokestatic  #156                // Method extendedui/EUIUtils.logError:(Ljava/lang/Object;Ljava/lang/Object;)V
+     187: aload_2
+     188: invokevirtual #157                // Method java/lang/Exception.printStackTrace:()V
+     191: getstatic     #129                // Field MOD_INFO_MAPPING:Ljava/util/HashMap;
+     194: aload_0
+     195: aconst_null
+     196: invokevirtual #3                  // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     199: pop
+     200: aconst_null
+     201: areturn
+    Exception table:
+       from    to  target type
+          29   144   163   Class java/lang/Exception
+         145   160   163   Class java/lang/Exception
+
+  public static com.evacipated.cardcrawl.modthespire.ModInfo getModInfoFromID(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lcom/evacipated/cardcrawl/modthespire/ModInfo;
+    Code:
+       0: getstatic     #146                // Field com/evacipated/cardcrawl/modthespire/Loader.MODINFOS:[Lcom/evacipated/cardcrawl/modthespire/ModInfo;
+       3: astore_1
+       4: aload_1
+       5: arraylength
+       6: istore_2
+       7: iconst_0
+       8: istore_3
+       9: iload_3
+      10: iload_2
+      11: if_icmpge     40
+      14: aload_1
+      15: iload_3
+      16: aaload
+      17: astore        4
+      19: aload         4
+      21: getfield      #126                // Field com/evacipated/cardcrawl/modthespire/ModInfo.ID:Ljava/lang/String;
+      24: aload_0
+      25: invokevirtual #158                // Method java/lang/String.equalsIgnoreCase:(Ljava/lang/String;)Z
+      28: ifeq          34
+      31: aload         4
+      33: areturn
+      34: iinc          3, 1
+      37: goto          9
+      40: aconst_null
+      41: areturn
+
+  public static com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass getPlayerClassForCardColor(com.megacrit.cardcrawl.cards.AbstractCard$CardColor);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;)Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+    Code:
+       0: getstatic     #159                // Field COLOR_TO_CLASS:Ljava/util/HashMap;
+       3: aload_0
+       4: invokevirtual #131                // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #160                // class com/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass
+      10: areturn
+
+  public static com.megacrit.cardcrawl.cards.AbstractCard$CardColor getPotionColor(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+    Code:
+       0: aload_0
+       1: astore_1
+       2: iconst_m1
+       3: istore_2
+       4: aload_1
+       5: invokevirtual #161                // Method java/lang/String.hashCode:()I
+       8: lookupswitch  { // 12
+
+           -1813432936: 275
+
+           -1573559404: 230
+
+            -989581205: 200
+
+            -976296533: 158
+
+            -717939453: 260
+
+            -131581938: 186
+
+             -16400371: 116
+
+             748260995: 172
+
+             912386821: 144
+
+            1313368658: 130
+
+            1592755027: 245
+
+            1711181252: 215
+               default: 287
+          }
+     116: aload_1
+     117: ldc           #162                // String BloodPotion
+     119: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     122: ifeq          287
+     125: iconst_0
+     126: istore_2
+     127: goto          287
+     130: aload_1
+     131: ldc           #164                // String ElixirPotion
+     133: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     136: ifeq          287
+     139: iconst_1
+     140: istore_2
+     141: goto          287
+     144: aload_1
+     145: ldc           #165                // String HeartOfIron
+     147: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     150: ifeq          287
+     153: iconst_2
+     154: istore_2
+     155: goto          287
+     158: aload_1
+     159: ldc           #166                // String Poison Potion
+     161: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     164: ifeq          287
+     167: iconst_3
+     168: istore_2
+     169: goto          287
+     172: aload_1
+     173: ldc           #167                // String CunningPotion
+     175: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     178: ifeq          287
+     181: iconst_4
+     182: istore_2
+     183: goto          287
+     186: aload_1
+     187: ldc           #168                // String GhostInAJar
+     189: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     192: ifeq          287
+     195: iconst_5
+     196: istore_2
+     197: goto          287
+     200: aload_1
+     201: ldc           #169                // String FocusPotion
+     203: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     206: ifeq          287
+     209: bipush        6
+     211: istore_2
+     212: goto          287
+     215: aload_1
+     216: ldc           #170                // String PotionOfCapacity
+     218: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     221: ifeq          287
+     224: bipush        7
+     226: istore_2
+     227: goto          287
+     230: aload_1
+     231: ldc           #171                // String EssenceOfDarkness
+     233: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     236: ifeq          287
+     239: bipush        8
+     241: istore_2
+     242: goto          287
+     245: aload_1
+     246: ldc           #172                // String BottledMiracle
+     248: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     251: ifeq          287
+     254: bipush        9
+     256: istore_2
+     257: goto          287
+     260: aload_1
+     261: ldc           #173                // String StancePotion
+     263: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     266: ifeq          287
+     269: bipush        10
+     271: istore_2
+     272: goto          287
+     275: aload_1
+     276: ldc           #174                // String Ambrosia
+     278: invokevirtual #163                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     281: ifeq          287
+     284: bipush        11
+     286: istore_2
+     287: iload_2
+     288: tableswitch   { // 0 to 11
+
+                     0: 352
+
+                     1: 352
+
+                     2: 352
+
+                     3: 356
+
+                     4: 356
+
+                     5: 356
+
+                     6: 360
+
+                     7: 360
+
+                     8: 360
+
+                     9: 364
+
+                    10: 364
+
+                    11: 364
+               default: 368
+          }
+     352: getstatic     #175                // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.RED:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+     355: areturn
+     356: getstatic     #176                // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.GREEN:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+     359: areturn
+     360: getstatic     #177                // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.BLUE:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+     363: areturn
+     364: getstatic     #178                // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.PURPLE:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+     367: areturn
+     368: aload_0
+     369: invokestatic  #179                // Method basemod/BaseMod.getPotionPlayerClass:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     372: astore_1
+     373: getstatic     #72                 // Field CLASS_TO_COLOR:Ljava/util/HashMap;
+     376: aload_1
+     377: getstatic     #73                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.COLORLESS:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+     380: invokevirtual #74                 // Method java/util/HashMap.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     383: checkcast     #75                 // class com/megacrit/cardcrawl/cards/AbstractCard$CardColor
+     386: areturn
+
+  public static com.megacrit.cardcrawl.cards.AbstractCard$CardColor getRelicColor(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+    Code:
+       0: getstatic     #2                  // Field RELIC_COLORS:Ljava/util/HashMap;
+       3: aload_0
+       4: getstatic     #73                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardColor.COLORLESS:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+       7: invokevirtual #74                 // Method java/util/HashMap.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      10: checkcast     #75                 // class com/megacrit/cardcrawl/cards/AbstractCard$CardColor
+      13: areturn
+
+  public static com.megacrit.cardcrawl.blights.AbstractBlight getSeenBlight(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lcom/megacrit/cardcrawl/blights/AbstractBlight;
+    Code:
+       0: aload_0
+       1: invokestatic  #180                // Method com/megacrit/cardcrawl/helpers/BlightHelper.getBlight:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/blights/AbstractBlight;
+       4: astore_1
+       5: aload_1
+       6: iconst_1
+       7: putfield      #181                // Field com/megacrit/cardcrawl/blights/AbstractBlight.isSeen:Z
+      10: aload_1
+      11: ldc           #182                // class com/megacrit/cardcrawl/blights/AbstractBlight
+      13: ldc           #183                // String initializeTips
+      15: iconst_0
+      16: anewarray     #184                // class java/lang/Object
+      19: invokestatic  #185                // Method extendedui/utilities/EUIClassUtils.invoke:(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;
+      22: pop
+      23: aload_1
+      24: areturn
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.cards.CardGroup> getSourceCardPools();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: iconst_5
+       1: anewarray     #103                // class com/megacrit/cardcrawl/cards/CardGroup
+       4: dup
+       5: iconst_0
+       6: getstatic     #186                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.srcColorlessCardPool:Lcom/megacrit/cardcrawl/cards/CardGroup;
+       9: aastore
+      10: dup
+      11: iconst_1
+      12: getstatic     #187                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.srcCommonCardPool:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      15: aastore
+      16: dup
+      17: iconst_2
+      18: getstatic     #188                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.srcUncommonCardPool:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      21: aastore
+      22: dup
+      23: iconst_3
+      24: getstatic     #189                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.srcRareCardPool:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      27: aastore
+      28: dup
+      29: iconst_4
+      30: getstatic     #190                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.srcCurseCardPool:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      33: aastore
+      34: invokestatic  #109                // Method extendedui/EUIUtils.arrayList:([Ljava/lang/Object;)Ljava/util/ArrayList;
+      37: areturn
+
+  public static com.badlogic.gdx.graphics.g2d.SpriteBatch getSpriteBatch();
+    descriptor: ()Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;
+    Code:
+       0: getstatic     #66                 // Field com/badlogic/gdx/Gdx.app:Lcom/badlogic/gdx/Application;
+       3: invokeinterface #67,  1           // InterfaceMethod com/badlogic/gdx/Application.getApplicationListener:()Lcom/badlogic/gdx/ApplicationListener;
+       8: ldc           #68                 // class com/megacrit/cardcrawl/core/CardCrawlGame
+      10: ldc           #191                // String sb
+      12: invokestatic  #70                 // Method basemod/ReflectionHacks.getPrivate:(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;
+      15: checkcast     #192                // class com/badlogic/gdx/graphics/g2d/SpriteBatch
+      18: areturn
+
+  public static extendedui.ui.TextureCache iconForType(com.megacrit.cardcrawl.cards.AbstractCard$CardType);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard$CardType;)Lextendedui/ui/TextureCache;
+    Code:
+       0: getstatic     #193                // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$cards$AbstractCard$CardType:[I
+       3: aload_0
+       4: invokevirtual #194                // Method com/megacrit/cardcrawl/cards/AbstractCard$CardType.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 4
+
+                     1: 40
+
+                     2: 47
+
+                     3: 54
+
+                     4: 61
+               default: 68
+          }
+      40: getstatic     #195                // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+      43: getfield      #196                // Field extendedui/EUIRM$Images.typeAttack:Lextendedui/ui/TextureCache;
+      46: areturn
+      47: getstatic     #195                // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+      50: getfield      #197                // Field extendedui/EUIRM$Images.typeCurse:Lextendedui/ui/TextureCache;
+      53: areturn
+      54: getstatic     #195                // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+      57: getfield      #198                // Field extendedui/EUIRM$Images.typePower:Lextendedui/ui/TextureCache;
+      60: areturn
+      61: getstatic     #195                // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+      64: getfield      #199                // Field extendedui/EUIRM$Images.typeSkill:Lextendedui/ui/TextureCache;
+      67: areturn
+      68: getstatic     #195                // Field extendedui/EUIRM.images:Lextendedui/EUIRM$Images;
+      71: getfield      #200                // Field extendedui/EUIRM$Images.typeStatus:Lextendedui/ui/TextureCache;
+      74: areturn
+
+  public static boolean inBattle();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #201                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.currMapNode:Lcom/megacrit/cardcrawl/map/MapRoomNode;
+       3: ifnonnull     10
+       6: aconst_null
+       7: goto          16
+      10: getstatic     #201                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.currMapNode:Lcom/megacrit/cardcrawl/map/MapRoomNode;
+      13: invokevirtual #202                // Method com/megacrit/cardcrawl/map/MapRoomNode.getRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      16: astore_0
+      17: aload_0
+      18: ifnull        57
+      21: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      24: ifnull        57
+      27: aload_0
+      28: getfield      #203                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.isBattleOver:Z
+      31: ifne          57
+      34: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      37: getfield      #204                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.isDead:Z
+      40: ifne          57
+      43: aload_0
+      44: getfield      #205                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      47: getstatic     #206                // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMBAT:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      50: if_acmpne     57
+      53: iconst_1
+      54: goto          58
+      57: iconst_0
+      58: ireturn
+
+  public static boolean inGame();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #207                // Field com/megacrit/cardcrawl/core/CardCrawlGame$GameMode.GAMEPLAY:Lcom/megacrit/cardcrawl/core/CardCrawlGame$GameMode;
+       3: getstatic     #208                // Field com/megacrit/cardcrawl/core/CardCrawlGame.mode:Lcom/megacrit/cardcrawl/core/CardCrawlGame$GameMode;
+       6: invokevirtual #209                // Method com/megacrit/cardcrawl/core/CardCrawlGame$GameMode.equals:(Ljava/lang/Object;)Z
+       9: ireturn
+
+  public static boolean isObjectFromMod(java.lang.Object, com.evacipated.cardcrawl.modthespire.ModInfo);
+    descriptor: (Ljava/lang/Object;Lcom/evacipated/cardcrawl/modthespire/ModInfo;)Z
+    Code:
+       0: aload_0
+       1: invokestatic  #210                // Method getModInfo:(Ljava/lang/Object;)Lcom/evacipated/cardcrawl/modthespire/ModInfo;
+       4: aload_1
+       5: if_acmpne     12
+       8: iconst_1
+       9: goto          13
+      12: iconst_0
+      13: ireturn
+
+  public static boolean isPlayerClass(com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass);
+    descriptor: (Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Z
+    Code:
+       0: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: ifnull        20
+       6: getstatic     #4                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       9: getfield      #211                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.chosenClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      12: aload_0
+      13: if_acmpne     20
+      16: iconst_1
+      17: goto          21
+      20: iconst_0
+      21: ireturn
+
+  public static com.megacrit.cardcrawl.cards.CardGroup makeCardGroup(java.util.Collection<com.megacrit.cardcrawl.cards.AbstractCard>);
+    descriptor: (Ljava/util/Collection;)Lcom/megacrit/cardcrawl/cards/CardGroup;
+    Code:
+       0: new           #103                // class com/megacrit/cardcrawl/cards/CardGroup
+       3: dup
+       4: getstatic     #212                // Field com/megacrit/cardcrawl/cards/CardGroup$CardGroupType.UNSPECIFIED:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+       7: invokespecial #213                // Method com/megacrit/cardcrawl/cards/CardGroup."<init>":(Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;)V
+      10: astore_1
+      11: aload_1
+      12: getfield      #214                // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+      15: aload_0
+      16: invokevirtual #117                // Method java/util/ArrayList.addAll:(Ljava/util/Collection;)Z
+      19: pop
+      20: aload_1
+      21: areturn
+
+  public static void registerColorPlayer(com.megacrit.cardcrawl.cards.AbstractCard$CardColor, com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)V
+    Code:
+       0: getstatic     #159                // Field COLOR_TO_CLASS:Ljava/util/HashMap;
+       3: aload_0
+       4: aload_1
+       5: invokevirtual #3                  // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+       8: pop
+       9: getstatic     #72                 // Field CLASS_TO_COLOR:Ljava/util/HashMap;
+      12: aload_1
+      13: aload_0
+      14: invokevirtual #3                  // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      17: pop
+      18: return
+
+  public static void registerCustomColorName(com.megacrit.cardcrawl.cards.AbstractCard$CardColor, java.lang.String);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;Ljava/lang/String;)V
+    Code:
+       0: getstatic     #95                 // Field CUSTOM_COLOR_NAMES:Ljava/util/HashMap;
+       3: aload_0
+       4: aload_1
+       5: invokevirtual #3                  // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+       8: pop
+       9: return
+
+  public static void renderBlightTip(com.megacrit.cardcrawl.blights.AbstractBlight);
+    descriptor: (Lcom/megacrit/cardcrawl/blights/AbstractBlight;)V
+    Code:
+       0: aload_0
+       1: instanceof    #215                // class extendedui/interfaces/markers/TooltipProvider
+       4: ifeq          14
+       7: aload_0
+       8: invokestatic  #216                // Method extendedui/ui/tooltips/EUITooltip.queueTooltips:(Lcom/megacrit/cardcrawl/blights/AbstractBlight;)V
+      11: goto          43
+      14: getstatic     #217                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+      17: i2f
+      18: ldc           #218                // float 50.0f
+      20: getstatic     #219                // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      23: fmul
+      24: fadd
+      25: getstatic     #220                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+      28: i2f
+      29: ldc           #218                // float 50.0f
+      31: getstatic     #219                // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      34: fmul
+      35: fadd
+      36: aload_0
+      37: getfield      #221                // Field com/megacrit/cardcrawl/blights/AbstractBlight.tips:Ljava/util/ArrayList;
+      40: invokestatic  #222                // Method com/megacrit/cardcrawl/helpers/TipHelper.queuePowerTips:(FFLjava/util/ArrayList;)V
+      43: return
+
+  public static void renderPotionTip(com.megacrit.cardcrawl.potions.AbstractPotion);
+    descriptor: (Lcom/megacrit/cardcrawl/potions/AbstractPotion;)V
+    Code:
+       0: aload_0
+       1: instanceof    #215                // class extendedui/interfaces/markers/TooltipProvider
+       4: ifeq          14
+       7: aload_0
+       8: invokestatic  #223                // Method extendedui/ui/tooltips/EUITooltip.queueTooltips:(Lcom/megacrit/cardcrawl/potions/AbstractPotion;)V
+      11: goto          43
+      14: getstatic     #217                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mX:I
+      17: i2f
+      18: ldc           #218                // float 50.0f
+      20: getstatic     #219                // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      23: fmul
+      24: fadd
+      25: getstatic     #220                // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+      28: i2f
+      29: ldc           #218                // float 50.0f
+      31: getstatic     #219                // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      34: fmul
+      35: fadd
+      36: aload_0
+      37: getfield      #224                // Field com/megacrit/cardcrawl/potions/AbstractPotion.tips:Ljava/util/ArrayList;
+      40: invokestatic  #222                // Method com/megacrit/cardcrawl/helpers/TipHelper.queuePowerTips:(FFLjava/util/ArrayList;)V
+      43: return
+
+  public static float scale(float);
+    descriptor: (F)F
+    Code:
+       0: getstatic     #219                // Field com/megacrit/cardcrawl/core/Settings.scale:F
+       3: fload_0
+       4: fmul
+       5: freturn
+
+  public static float screenH(float);
+    descriptor: (F)F
+    Code:
+       0: getstatic     #225                // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+       3: i2f
+       4: fload_0
+       5: fmul
+       6: freturn
+
+  public static float screenW(float);
+    descriptor: (F)F
+    Code:
+       0: getstatic     #226                // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+       3: i2f
+       4: fload_0
+       5: fmul
+       6: freturn
+
+  public static java.lang.String textForPotionEffect(com.megacrit.cardcrawl.potions.AbstractPotion$PotionEffect);
+    descriptor: (Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionEffect;)Ljava/lang/String;
+    Code:
+       0: getstatic     #227                // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$potions$AbstractPotion$PotionEffect:[I
+       3: aload_0
+       4: invokevirtual #228                // Method com/megacrit/cardcrawl/potions/AbstractPotion$PotionEffect.ordinal:()I
+       7: iaload
+       8: lookupswitch  { // 2
+
+                     1: 36
+
+                     2: 43
+               default: 50
+          }
+      36: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+      39: getfield      #230                // Field extendedui/EUIRM$Strings.potion_rainbow:Ljava/lang/String;
+      42: areturn
+      43: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+      46: getfield      #231                // Field extendedui/EUIRM$Strings.potion_oscillate:Ljava/lang/String;
+      49: areturn
+      50: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+      53: getfield      #232                // Field extendedui/EUIRM$Strings.ui_na:Ljava/lang/String;
+      56: areturn
+
+  public static java.lang.String textForPotionRarity(com.megacrit.cardcrawl.potions.AbstractPotion$PotionRarity);
+    descriptor: (Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity;)Ljava/lang/String;
+    Code:
+       0: getstatic     #34                 // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$potions$AbstractPotion$PotionRarity:[I
+       3: aload_0
+       4: invokevirtual #35                 // Method com/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 3
+
+                     1: 43
+
+                     2: 50
+
+                     3: 36
+               default: 57
+          }
+      36: getstatic     #233                // Field com/megacrit/cardcrawl/screens/runHistory/RunHistoryScreen.TEXT:[Ljava/lang/String;
+      39: bipush        12
+      41: aaload
+      42: areturn
+      43: getstatic     #233                // Field com/megacrit/cardcrawl/screens/runHistory/RunHistoryScreen.TEXT:[Ljava/lang/String;
+      46: bipush        13
+      48: aaload
+      49: areturn
+      50: getstatic     #233                // Field com/megacrit/cardcrawl/screens/runHistory/RunHistoryScreen.TEXT:[Ljava/lang/String;
+      53: bipush        14
+      55: aaload
+      56: areturn
+      57: getstatic     #234                // Field com/megacrit/cardcrawl/cards/AbstractCard.TEXT:[Ljava/lang/String;
+      60: iconst_5
+      61: aaload
+      62: areturn
+
+  public static java.lang.String textForPotionSize(com.megacrit.cardcrawl.potions.AbstractPotion$PotionSize);
+    descriptor: (Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionSize;)Ljava/lang/String;
+    Code:
+       0: getstatic     #235                // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$potions$AbstractPotion$PotionSize:[I
+       3: aload_0
+       4: invokevirtual #236                // Method com/megacrit/cardcrawl/potions/AbstractPotion$PotionSize.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 17
+
+                     1: 92
+
+                     2: 99
+
+                     3: 106
+
+                     4: 113
+
+                     5: 120
+
+                     6: 127
+
+                     7: 134
+
+                     8: 141
+
+                     9: 148
+
+                    10: 155
+
+                    11: 162
+
+                    12: 169
+
+                    13: 176
+
+                    14: 183
+
+                    15: 190
+
+                    16: 197
+
+                    17: 204
+               default: 211
+          }
+      92: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+      95: getfield      #237                // Field extendedui/EUIRM$Strings.potion_anvil:Ljava/lang/String;
+      98: areturn
+      99: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     102: getfield      #238                // Field extendedui/EUIRM$Strings.potion_bolt:Ljava/lang/String;
+     105: areturn
+     106: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     109: getfield      #239                // Field extendedui/EUIRM$Strings.potion_bottle:Ljava/lang/String;
+     112: areturn
+     113: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     116: getfield      #240                // Field extendedui/EUIRM$Strings.potion_card:Ljava/lang/String;
+     119: areturn
+     120: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     123: getfield      #241                // Field extendedui/EUIRM$Strings.potion_eye:Ljava/lang/String;
+     126: areturn
+     127: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     130: getfield      #242                // Field extendedui/EUIRM$Strings.potion_fairy:Ljava/lang/String;
+     133: areturn
+     134: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     137: getfield      #243                // Field extendedui/EUIRM$Strings.potion_ghost:Ljava/lang/String;
+     140: areturn
+     141: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     144: getfield      #244                // Field extendedui/EUIRM$Strings.potion_h:Ljava/lang/String;
+     147: areturn
+     148: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     151: getfield      #245                // Field extendedui/EUIRM$Strings.potion_heart:Ljava/lang/String;
+     154: areturn
+     155: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     158: getfield      #246                // Field extendedui/EUIRM$Strings.potion_jar:Ljava/lang/String;
+     161: areturn
+     162: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     165: getfield      #247                // Field extendedui/EUIRM$Strings.potion_m:Ljava/lang/String;
+     168: areturn
+     169: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     172: getfield      #248                // Field extendedui/EUIRM$Strings.potion_moon:Ljava/lang/String;
+     175: areturn
+     176: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     179: getfield      #249                // Field extendedui/EUIRM$Strings.potion_s:Ljava/lang/String;
+     182: areturn
+     183: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     186: getfield      #250                // Field extendedui/EUIRM$Strings.potion_snecko:Ljava/lang/String;
+     189: areturn
+     190: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     193: getfield      #251                // Field extendedui/EUIRM$Strings.potion_sphere:Ljava/lang/String;
+     196: areturn
+     197: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     200: getfield      #252                // Field extendedui/EUIRM$Strings.potion_spiky:Ljava/lang/String;
+     203: areturn
+     204: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+     207: getfield      #253                // Field extendedui/EUIRM$Strings.potion_t:Ljava/lang/String;
+     210: areturn
+     211: ldc           #128                // String
+     213: areturn
+
+  public static java.lang.String textForRarity(com.megacrit.cardcrawl.cards.AbstractCard$CardRarity);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;)Ljava/lang/String;
+    Code:
+       0: getstatic     #40                 // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$cards$AbstractCard$CardRarity:[I
+       3: aload_0
+       4: invokevirtual #41                 // Method com/megacrit/cardcrawl/cards/AbstractCard$CardRarity.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 6
+
+                     1: 76
+
+                     2: 62
+
+                     3: 69
+
+                     4: 83
+
+                     5: 48
+
+                     6: 55
+               default: 90
+          }
+      48: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+      51: getfield      #254                // Field extendedui/EUIRM$Strings.ui_basic:Ljava/lang/String;
+      54: areturn
+      55: getstatic     #233                // Field com/megacrit/cardcrawl/screens/runHistory/RunHistoryScreen.TEXT:[Ljava/lang/String;
+      58: bipush        12
+      60: aaload
+      61: areturn
+      62: getstatic     #233                // Field com/megacrit/cardcrawl/screens/runHistory/RunHistoryScreen.TEXT:[Ljava/lang/String;
+      65: bipush        13
+      67: aaload
+      68: areturn
+      69: getstatic     #233                // Field com/megacrit/cardcrawl/screens/runHistory/RunHistoryScreen.TEXT:[Ljava/lang/String;
+      72: bipush        14
+      74: aaload
+      75: areturn
+      76: getstatic     #233                // Field com/megacrit/cardcrawl/screens/runHistory/RunHistoryScreen.TEXT:[Ljava/lang/String;
+      79: bipush        15
+      81: aaload
+      82: areturn
+      83: getstatic     #233                // Field com/megacrit/cardcrawl/screens/runHistory/RunHistoryScreen.TEXT:[Ljava/lang/String;
+      86: bipush        16
+      88: aaload
+      89: areturn
+      90: getstatic     #234                // Field com/megacrit/cardcrawl/cards/AbstractCard.TEXT:[Ljava/lang/String;
+      93: iconst_5
+      94: aaload
+      95: areturn
+
+  public static java.lang.String textForRelicLandingSound(com.megacrit.cardcrawl.relics.AbstractRelic$LandingSound);
+    descriptor: (Lcom/megacrit/cardcrawl/relics/AbstractRelic$LandingSound;)Ljava/lang/String;
+    Code:
+       0: getstatic     #255                // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$relics$AbstractRelic$LandingSound:[I
+       3: aload_0
+       4: invokevirtual #256                // Method com/megacrit/cardcrawl/relics/AbstractRelic$LandingSound.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 5
+
+                     1: 44
+
+                     2: 51
+
+                     3: 58
+
+                     4: 65
+
+                     5: 72
+               default: 79
+          }
+      44: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+      47: getfield      #257                // Field extendedui/EUIRM$Strings.relic_clink:Ljava/lang/String;
+      50: areturn
+      51: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+      54: getfield      #258                // Field extendedui/EUIRM$Strings.relic_flat:Ljava/lang/String;
+      57: areturn
+      58: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+      61: getfield      #259                // Field extendedui/EUIRM$Strings.relic_heavy:Ljava/lang/String;
+      64: areturn
+      65: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+      68: getfield      #260                // Field extendedui/EUIRM$Strings.relic_magical:Ljava/lang/String;
+      71: areturn
+      72: getstatic     #229                // Field extendedui/EUIRM.strings:Lextendedui/EUIRM$Strings;
+      75: getfield      #261                // Field extendedui/EUIRM$Strings.relic_solid:Ljava/lang/String;
+      78: areturn
+      79: ldc           #128                // String
+      81: areturn
+
+  public static java.lang.String textForRelicTier(com.megacrit.cardcrawl.relics.AbstractRelic$RelicTier);
+    descriptor: (Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;)Ljava/lang/String;
+    Code:
+       0: getstatic     #44                 // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$relics$AbstractRelic$RelicTier:[I
+       3: aload_0
+       4: invokevirtual #45                 // Method com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 8
+
+                     1: 69
+
+                     2: 76
+
+                     3: 94
+
+                     4: 88
+
+                     5: 56
+
+                     6: 63
+
+                     7: 82
+
+                     8: 100
+               default: 106
+          }
+      56: getstatic     #262                // Field com/megacrit/cardcrawl/screens/SingleRelicViewPopup.TEXT:[Ljava/lang/String;
+      59: bipush        6
+      61: aaload
+      62: areturn
+      63: getstatic     #262                // Field com/megacrit/cardcrawl/screens/SingleRelicViewPopup.TEXT:[Ljava/lang/String;
+      66: iconst_1
+      67: aaload
+      68: areturn
+      69: getstatic     #262                // Field com/megacrit/cardcrawl/screens/SingleRelicViewPopup.TEXT:[Ljava/lang/String;
+      72: bipush        7
+      74: aaload
+      75: areturn
+      76: getstatic     #262                // Field com/megacrit/cardcrawl/screens/SingleRelicViewPopup.TEXT:[Ljava/lang/String;
+      79: iconst_3
+      80: aaload
+      81: areturn
+      82: getstatic     #262                // Field com/megacrit/cardcrawl/screens/SingleRelicViewPopup.TEXT:[Ljava/lang/String;
+      85: iconst_5
+      86: aaload
+      87: areturn
+      88: getstatic     #262                // Field com/megacrit/cardcrawl/screens/SingleRelicViewPopup.TEXT:[Ljava/lang/String;
+      91: iconst_0
+      92: aaload
+      93: areturn
+      94: getstatic     #262                // Field com/megacrit/cardcrawl/screens/SingleRelicViewPopup.TEXT:[Ljava/lang/String;
+      97: iconst_4
+      98: aaload
+      99: areturn
+     100: getstatic     #262                // Field com/megacrit/cardcrawl/screens/SingleRelicViewPopup.TEXT:[Ljava/lang/String;
+     103: iconst_2
+     104: aaload
+     105: areturn
+     106: getstatic     #262                // Field com/megacrit/cardcrawl/screens/SingleRelicViewPopup.TEXT:[Ljava/lang/String;
+     109: bipush        9
+     111: aaload
+     112: areturn
+
+  public static java.lang.String textForType(com.megacrit.cardcrawl.cards.AbstractCard$CardType);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard$CardType;)Ljava/lang/String;
+    Code:
+       0: getstatic     #193                // Field extendedui/EUIGameUtils$1.$SwitchMap$com$megacrit$cardcrawl$cards$AbstractCard$CardType:[I
+       3: aload_0
+       4: invokevirtual #194                // Method com/megacrit/cardcrawl/cards/AbstractCard$CardType.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 5
+
+                     1: 44
+
+                     2: 50
+
+                     3: 69
+
+                     4: 63
+
+                     5: 56
+               default: 75
+          }
+      44: getstatic     #234                // Field com/megacrit/cardcrawl/cards/AbstractCard.TEXT:[Ljava/lang/String;
+      47: iconst_0
+      48: aaload
+      49: areturn
+      50: getstatic     #234                // Field com/megacrit/cardcrawl/cards/AbstractCard.TEXT:[Ljava/lang/String;
+      53: iconst_3
+      54: aaload
+      55: areturn
+      56: getstatic     #234                // Field com/megacrit/cardcrawl/cards/AbstractCard.TEXT:[Ljava/lang/String;
+      59: bipush        7
+      61: aaload
+      62: areturn
+      63: getstatic     #234                // Field com/megacrit/cardcrawl/cards/AbstractCard.TEXT:[Ljava/lang/String;
+      66: iconst_1
+      67: aaload
+      68: areturn
+      69: getstatic     #234                // Field com/megacrit/cardcrawl/cards/AbstractCard.TEXT:[Ljava/lang/String;
+      72: iconst_2
+      73: aaload
+      74: areturn
+      75: getstatic     #234                // Field com/megacrit/cardcrawl/cards/AbstractCard.TEXT:[Ljava/lang/String;
+      78: iconst_5
+      79: aaload
+      80: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: new           #263                // class java/util/HashMap
+       3: dup
+       4: invokespecial #264                // Method java/util/HashMap."<init>":()V
+       7: putstatic     #95                 // Field CUSTOM_COLOR_NAMES:Ljava/util/HashMap;
+      10: new           #263                // class java/util/HashMap
+      13: dup
+      14: invokespecial #264                // Method java/util/HashMap."<init>":()V
+      17: putstatic     #159                // Field COLOR_TO_CLASS:Ljava/util/HashMap;
+      20: new           #263                // class java/util/HashMap
+      23: dup
+      24: invokespecial #264                // Method java/util/HashMap."<init>":()V
+      27: putstatic     #72                 // Field CLASS_TO_COLOR:Ljava/util/HashMap;
+      30: new           #263                // class java/util/HashMap
+      33: dup
+      34: invokespecial #264                // Method java/util/HashMap."<init>":()V
+      37: putstatic     #129                // Field MOD_INFO_MAPPING:Ljava/util/HashMap;
+      40: new           #263                // class java/util/HashMap
+      43: dup
+      44: invokespecial #264                // Method java/util/HashMap."<init>":()V
+      47: putstatic     #2                  // Field RELIC_COLORS:Ljava/util/HashMap;
+      50: new           #78                 // class com/badlogic/gdx/graphics/Color
+      53: dup
+      54: ldc           #86                 // float 0.52f
+      56: ldc           #86                 // float 0.52f
+      58: ldc           #86                 // float 0.52f
+      60: fconst_1
+      61: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      64: putstatic     #43                 // Field COLOR_BASIC:Lcom/badlogic/gdx/graphics/Color;
+      67: new           #78                 // class com/badlogic/gdx/graphics/Color
+      70: dup
+      71: ldc_w         #265                // float 0.7f
+      74: ldc_w         #265                // float 0.7f
+      77: ldc_w         #265                // float 0.7f
+      80: fconst_1
+      81: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      84: putstatic     #38                 // Field COLOR_COMMON:Lcom/badlogic/gdx/graphics/Color;
+      87: new           #78                 // class com/badlogic/gdx/graphics/Color
+      90: dup
+      91: ldc_w         #266                // float 0.44f
+      94: ldc_w         #267                // float 0.3f
+      97: ldc_w         #267                // float 0.3f
+     100: fconst_1
+     101: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     104: putstatic     #42                 // Field COLOR_CURSE:Lcom/badlogic/gdx/graphics/Color;
+     107: new           #78                 // class com/badlogic/gdx/graphics/Color
+     110: dup
+     111: fconst_1
+     112: ldc_w         #268                // float 0.8f
+     115: ldc_w         #269                // float 0.35f
+     118: fconst_1
+     119: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     122: putstatic     #37                 // Field COLOR_RARE:Lcom/badlogic/gdx/graphics/Color;
+     125: new           #78                 // class com/badlogic/gdx/graphics/Color
+     128: dup
+     129: ldc_w         #265                // float 0.7f
+     132: fconst_1
+     133: ldc           #79                 // float 0.5f
+     135: fconst_1
+     136: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     139: putstatic     #39                 // Field COLOR_SPECIAL:Lcom/badlogic/gdx/graphics/Color;
+     142: new           #78                 // class com/badlogic/gdx/graphics/Color
+     145: dup
+     146: ldc_w         #270                // float 0.45f
+     149: ldc_w         #271                // float 0.82f
+     152: fconst_1
+     153: fconst_1
+     154: invokespecial #81                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     157: putstatic     #36                 // Field COLOR_UNCOMMON:Lcom/badlogic/gdx/graphics/Color;
+     160: return
+}

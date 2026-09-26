@@ -1,0 +1,119 @@
+Compiled from "AsyncSaver.java"
+public class com.megacrit.cardcrawl.helpers.AsyncSaver {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  private static java.lang.Thread saveThread;
+    descriptor: Ljava/lang/Thread;
+
+  private static final java.util.concurrent.BlockingQueue<com.megacrit.cardcrawl.helpers.File> saveQueue;
+    descriptor: Ljava/util/concurrent/BlockingQueue;
+
+  public com.megacrit.cardcrawl.helpers.AsyncSaver();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void save(java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;)V
+    Code:
+       0: iconst_1
+       1: istore_2
+       2: iload_2
+       3: ifeq          73
+       6: getstatic     #2                  // Field logger:Lorg/apache/logging/log4j/Logger;
+       9: new           #3                  // class java/lang/StringBuilder
+      12: dup
+      13: invokespecial #4                  // Method java/lang/StringBuilder."<init>":()V
+      16: ldc           #5                  // String Enqueue: qsize=
+      18: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      21: getstatic     #7                  // Field saveQueue:Ljava/util/concurrent/BlockingQueue;
+      24: invokeinterface #8,  1            // InterfaceMethod java/util/concurrent/BlockingQueue.size:()I
+      29: invokevirtual #9                  // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      32: ldc           #10                 // String  file=
+      34: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      37: aload_0
+      38: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      41: invokevirtual #11                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      44: invokeinterface #12,  2           // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;)V
+      49: getstatic     #7                  // Field saveQueue:Ljava/util/concurrent/BlockingQueue;
+      52: new           #13                 // class com/megacrit/cardcrawl/helpers/File
+      55: dup
+      56: aload_0
+      57: aload_1
+      58: invokespecial #14                 // Method com/megacrit/cardcrawl/helpers/File."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+      61: invokeinterface #15,  2           // InterfaceMethod java/util/concurrent/BlockingQueue.add:(Ljava/lang/Object;)Z
+      66: pop
+      67: invokestatic  #16                 // Method ensureSaveThread:()V
+      70: goto          97
+      73: getstatic     #2                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      76: ldc           #17                 // String Saving synchronously
+      78: invokeinterface #18,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      83: new           #13                 // class com/megacrit/cardcrawl/helpers/File
+      86: dup
+      87: aload_0
+      88: aload_1
+      89: invokespecial #14                 // Method com/megacrit/cardcrawl/helpers/File."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+      92: astore_3
+      93: aload_3
+      94: invokevirtual #19                 // Method com/megacrit/cardcrawl/helpers/File.save:()V
+      97: return
+
+  private static void ensureSaveThread();
+    descriptor: ()V
+    Code:
+       0: getstatic     #20                 // Field saveThread:Ljava/lang/Thread;
+       3: ifnonnull     12
+       6: invokestatic  #21                 // Method startSaveThread:()V
+       9: goto          34
+      12: getstatic     #20                 // Field saveThread:Ljava/lang/Thread;
+      15: invokevirtual #22                 // Method java/lang/Thread.isAlive:()Z
+      18: ifne          34
+      21: getstatic     #2                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      24: ldc           #23                 // String Save thread is dead. Starting save thread!
+      26: invokeinterface #18,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      31: invokestatic  #21                 // Method startSaveThread:()V
+      34: return
+
+  private static void startSaveThread();
+    descriptor: ()V
+    Code:
+       0: new           #24                 // class java/lang/Thread
+       3: dup
+       4: new           #25                 // class com/megacrit/cardcrawl/helpers/FileSaver
+       7: dup
+       8: getstatic     #7                  // Field saveQueue:Ljava/util/concurrent/BlockingQueue;
+      11: invokespecial #26                 // Method com/megacrit/cardcrawl/helpers/FileSaver."<init>":(Ljava/util/concurrent/BlockingQueue;)V
+      14: invokespecial #27                 // Method java/lang/Thread."<init>":(Ljava/lang/Runnable;)V
+      17: putstatic     #20                 // Field saveThread:Ljava/lang/Thread;
+      20: getstatic     #20                 // Field saveThread:Ljava/lang/Thread;
+      23: ldc           #28                 // String FileSaver
+      25: invokevirtual #29                 // Method java/lang/Thread.setName:(Ljava/lang/String;)V
+      28: getstatic     #20                 // Field saveThread:Ljava/lang/Thread;
+      31: invokevirtual #30                 // Method java/lang/Thread.start:()V
+      34: return
+
+  public static void shutdownSaveThread();
+    descriptor: ()V
+    Code:
+       0: getstatic     #20                 // Field saveThread:Ljava/lang/Thread;
+       3: ifnull        12
+       6: getstatic     #20                 // Field saveThread:Ljava/lang/Thread;
+       9: invokevirtual #31                 // Method java/lang/Thread.interrupt:()V
+      12: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #32                 // class com/megacrit/cardcrawl/helpers/AsyncSaver
+       2: invokevirtual #33                 // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #34                 // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #2                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: new           #35                 // class java/util/concurrent/LinkedBlockingQueue
+      14: dup
+      15: invokespecial #36                 // Method java/util/concurrent/LinkedBlockingQueue."<init>":()V
+      18: putstatic     #7                  // Field saveQueue:Ljava/util/concurrent/BlockingQueue;
+      21: return
+}

@@ -1,0 +1,1165 @@
+Compiled from "PotionViewScreen.java"
+public class com.megacrit.cardcrawl.screens.compendium.PotionViewScreen implements com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener {
+  private static final com.megacrit.cardcrawl.localization.UIStrings uiStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/UIStrings;
+
+  public static final java.lang.String[] TEXT;
+    descriptor: [Ljava/lang/String;
+
+  private static final float SPACE;
+    descriptor: F
+
+  private static final float START_X;
+    descriptor: F
+
+  private float scrollY;
+    descriptor: F
+
+  private float targetY;
+    descriptor: F
+
+  private float scrollUpperBound;
+    descriptor: F
+
+  private float scrollLowerBound;
+    descriptor: F
+
+  private int row;
+    descriptor: I
+
+  private int col;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.screens.mainMenu.MenuCancelButton button;
+    descriptor: Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.potions.AbstractPotion> commonPotions;
+    descriptor: Ljava/util/ArrayList;
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.potions.AbstractPotion> uncommonPotions;
+    descriptor: Ljava/util/ArrayList;
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.potions.AbstractPotion> rarePotions;
+    descriptor: Ljava/util/ArrayList;
+
+  private boolean grabbedScreen;
+    descriptor: Z
+
+  private float grabStartY;
+    descriptor: F
+
+  private com.megacrit.cardcrawl.screens.mainMenu.ScrollBar scrollBar;
+    descriptor: Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+
+  private com.megacrit.cardcrawl.helpers.Hitbox controllerPotionHb;
+    descriptor: Lcom/megacrit/cardcrawl/helpers/Hitbox;
+
+  public com.megacrit.cardcrawl.screens.compendium.PotionViewScreen();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: getstatic     #2                  // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+       8: i2f
+       9: putfield      #3                  // Field scrollY:F
+      12: aload_0
+      13: aload_0
+      14: getfield      #3                  // Field scrollY:F
+      17: putfield      #4                  // Field targetY:F
+      20: aload_0
+      21: getstatic     #2                  // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      24: i2f
+      25: ldc           #5                  // float 100.0f
+      27: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      30: fmul
+      31: fsub
+      32: putfield      #7                  // Field scrollUpperBound:F
+      35: aload_0
+      36: getstatic     #2                  // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      39: i2f
+      40: fconst_2
+      41: fdiv
+      42: putfield      #8                  // Field scrollLowerBound:F
+      45: aload_0
+      46: iconst_0
+      47: putfield      #9                  // Field row:I
+      50: aload_0
+      51: iconst_0
+      52: putfield      #10                 // Field col:I
+      55: aload_0
+      56: new           #11                 // class com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton
+      59: dup
+      60: invokespecial #12                 // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton."<init>":()V
+      63: putfield      #13                 // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+      66: aload_0
+      67: aconst_null
+      68: putfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+      71: aload_0
+      72: aconst_null
+      73: putfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+      76: aload_0
+      77: aconst_null
+      78: putfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+      81: aload_0
+      82: iconst_0
+      83: putfield      #17                 // Field grabbedScreen:Z
+      86: aload_0
+      87: fconst_0
+      88: putfield      #18                 // Field grabStartY:F
+      91: aload_0
+      92: aconst_null
+      93: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      96: aload_0
+      97: new           #20                 // class com/megacrit/cardcrawl/screens/mainMenu/ScrollBar
+     100: dup
+     101: aload_0
+     102: invokespecial #21                 // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar."<init>":(Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBarListener;)V
+     105: putfield      #22                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+     108: return
+
+  public void open();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: aconst_null
+       2: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+       5: aload_0
+       6: invokespecial #23                 // Method sortOnOpen:()V
+       9: aload_0
+      10: getfield      #13                 // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+      13: getstatic     #24                 // Field TEXT:[Ljava/lang/String;
+      16: iconst_0
+      17: aaload
+      18: invokevirtual #25                 // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.show:(Ljava/lang/String;)V
+      21: aload_0
+      22: aload_0
+      23: getfield      #7                  // Field scrollUpperBound:F
+      26: ldc           #26                 // float 50.0f
+      28: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      31: fmul
+      32: fsub
+      33: putfield      #4                  // Field targetY:F
+      36: aload_0
+      37: getstatic     #2                  // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      40: i2f
+      41: putfield      #3                  // Field scrollY:F
+      44: getstatic     #27                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+      47: getstatic     #28                 // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen.POTION_VIEW:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen;
+      50: putfield      #29                 // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.screen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen$CurScreen;
+      53: return
+
+  private void sortOnOpen();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getstatic     #30                 // Field com/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity.COMMON:Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity;
+       4: invokestatic  #31                 // Method com/megacrit/cardcrawl/helpers/PotionHelper.getPotionsByRarity:(Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity;)Ljava/util/ArrayList;
+       7: putfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+      10: aload_0
+      11: getstatic     #32                 // Field com/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity.UNCOMMON:Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity;
+      14: invokestatic  #31                 // Method com/megacrit/cardcrawl/helpers/PotionHelper.getPotionsByRarity:(Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity;)Ljava/util/ArrayList;
+      17: putfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+      20: aload_0
+      21: getstatic     #33                 // Field com/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity.RARE:Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity;
+      24: invokestatic  #31                 // Method com/megacrit/cardcrawl/helpers/PotionHelper.getPotionsByRarity:(Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity;)Ljava/util/ArrayList;
+      27: putfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+      30: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #34                 // Method updateControllerInput:()V
+       4: getstatic     #35                 // Field com/megacrit/cardcrawl/core/Settings.isModded:Z
+       7: ifeq          130
+      10: getstatic     #36                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+      13: ifeq          130
+      16: aload_0
+      17: getfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      20: ifnull        130
+      23: getstatic     #37                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      26: invokeinterface #38,  1           // InterfaceMethod com/badlogic/gdx/Input.getY:()I
+      31: i2f
+      32: getstatic     #2                  // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      35: i2f
+      36: ldc           #39                 // float 0.7f
+      38: fmul
+      39: fcmpl
+      40: ifle          78
+      43: aload_0
+      44: dup
+      45: getfield      #4                  // Field targetY:F
+      48: getstatic     #40                 // Field com/megacrit/cardcrawl/core/Settings.SCROLL_SPEED:F
+      51: fadd
+      52: putfield      #4                  // Field targetY:F
+      55: aload_0
+      56: getfield      #4                  // Field targetY:F
+      59: aload_0
+      60: getfield      #7                  // Field scrollUpperBound:F
+      63: fcmpl
+      64: ifle          130
+      67: aload_0
+      68: aload_0
+      69: getfield      #7                  // Field scrollUpperBound:F
+      72: putfield      #4                  // Field targetY:F
+      75: goto          130
+      78: getstatic     #37                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      81: invokeinterface #38,  1           // InterfaceMethod com/badlogic/gdx/Input.getY:()I
+      86: i2f
+      87: getstatic     #2                  // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      90: i2f
+      91: ldc           #41                 // float 0.3f
+      93: fmul
+      94: fcmpg
+      95: ifge          130
+      98: aload_0
+      99: dup
+     100: getfield      #4                  // Field targetY:F
+     103: getstatic     #40                 // Field com/megacrit/cardcrawl/core/Settings.SCROLL_SPEED:F
+     106: fsub
+     107: putfield      #4                  // Field targetY:F
+     110: aload_0
+     111: getfield      #4                  // Field targetY:F
+     114: aload_0
+     115: getfield      #8                  // Field scrollLowerBound:F
+     118: fcmpg
+     119: ifge          130
+     122: aload_0
+     123: aload_0
+     124: getfield      #8                  // Field scrollLowerBound:F
+     127: putfield      #4                  // Field targetY:F
+     130: aload_0
+     131: getfield      #13                 // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+     134: invokevirtual #42                 // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.update:()V
+     137: aload_0
+     138: getfield      #13                 // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+     141: getfield      #43                 // Field com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     144: getfield      #44                 // Field com/megacrit/cardcrawl/helpers/Hitbox.clicked:Z
+     147: ifne          156
+     150: getstatic     #45                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.pressedEscape:Z
+     153: ifeq          176
+     156: iconst_0
+     157: putstatic     #45                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.pressedEscape:Z
+     160: aload_0
+     161: getfield      #13                 // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+     164: invokevirtual #46                 // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.hide:()V
+     167: getstatic     #27                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+     170: getfield      #47                 // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.panelScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuPanelScreen;
+     173: invokevirtual #48                 // Method com/megacrit/cardcrawl/screens/mainMenu/MenuPanelScreen.refresh:()V
+     176: aload_0
+     177: getfield      #22                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+     180: invokevirtual #49                 // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.update:()Z
+     183: istore_1
+     184: iload_1
+     185: ifne          192
+     188: aload_0
+     189: invokespecial #50                 // Method updateScrolling:()V
+     192: iconst_0
+     193: putstatic     #51                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.justClickedLeft:Z
+     196: aload_0
+     197: aload_0
+     198: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     201: invokespecial #52                 // Method updateList:(Ljava/util/ArrayList;)V
+     204: aload_0
+     205: aload_0
+     206: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     209: invokespecial #52                 // Method updateList:(Ljava/util/ArrayList;)V
+     212: aload_0
+     213: aload_0
+     214: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+     217: invokespecial #52                 // Method updateList:(Ljava/util/ArrayList;)V
+     220: return
+
+  private void updateControllerInput();
+    descriptor: ()V
+    Code:
+       0: getstatic     #36                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+       3: ifne          7
+       6: return
+       7: getstatic     #53                 // Field com/megacrit/cardcrawl/screens/compendium/PotionViewScreen$PotionCategory.NONE:Lcom/megacrit/cardcrawl/screens/compendium/PotionViewScreen$PotionCategory;
+      10: astore_1
+      11: iconst_0
+      12: istore_2
+      13: iconst_0
+      14: istore_3
+      15: aload_0
+      16: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+      19: invokevirtual #54                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      22: astore        4
+      24: aload         4
+      26: invokeinterface #55,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      31: ifeq          72
+      34: aload         4
+      36: invokeinterface #56,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      41: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+      44: astore        5
+      46: aload         5
+      48: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      51: getfield      #59                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+      54: ifeq          66
+      57: iconst_1
+      58: istore_3
+      59: getstatic     #60                 // Field com/megacrit/cardcrawl/screens/compendium/PotionViewScreen$PotionCategory.COMMON:Lcom/megacrit/cardcrawl/screens/compendium/PotionViewScreen$PotionCategory;
+      62: astore_1
+      63: goto          72
+      66: iinc          2, 1
+      69: goto          24
+      72: iload_3
+      73: ifne          135
+      76: iconst_0
+      77: istore_2
+      78: aload_0
+      79: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+      82: invokevirtual #54                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      85: astore        4
+      87: aload         4
+      89: invokeinterface #55,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      94: ifeq          135
+      97: aload         4
+      99: invokeinterface #56,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     104: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     107: astore        5
+     109: aload         5
+     111: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     114: getfield      #59                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     117: ifeq          129
+     120: iconst_1
+     121: istore_3
+     122: getstatic     #61                 // Field com/megacrit/cardcrawl/screens/compendium/PotionViewScreen$PotionCategory.UNCOMMON:Lcom/megacrit/cardcrawl/screens/compendium/PotionViewScreen$PotionCategory;
+     125: astore_1
+     126: goto          135
+     129: iinc          2, 1
+     132: goto          87
+     135: iload_3
+     136: ifne          198
+     139: iconst_0
+     140: istore_2
+     141: aload_0
+     142: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+     145: invokevirtual #54                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     148: astore        4
+     150: aload         4
+     152: invokeinterface #55,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     157: ifeq          198
+     160: aload         4
+     162: invokeinterface #56,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     167: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     170: astore        5
+     172: aload         5
+     174: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     177: getfield      #59                 // Field com/megacrit/cardcrawl/helpers/Hitbox.hovered:Z
+     180: ifeq          192
+     183: iconst_1
+     184: istore_3
+     185: getstatic     #62                 // Field com/megacrit/cardcrawl/screens/compendium/PotionViewScreen$PotionCategory.RARE:Lcom/megacrit/cardcrawl/screens/compendium/PotionViewScreen$PotionCategory;
+     188: astore_1
+     189: goto          198
+     192: iinc          2, 1
+     195: goto          150
+     198: iload_3
+     199: ifne          230
+     202: getstatic     #63                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     205: ldc           #64                 // String NONE HOVERED
+     207: invokevirtual #65                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+     210: aload_0
+     211: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     214: iconst_0
+     215: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     218: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     221: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     224: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     227: goto          1213
+     230: getstatic     #68                 // Field com/megacrit/cardcrawl/screens/compendium/PotionViewScreen$1.$SwitchMap$com$megacrit$cardcrawl$screens$compendium$PotionViewScreen$PotionCategory:[I
+     233: aload_1
+     234: invokevirtual #69                 // Method com/megacrit/cardcrawl/screens/compendium/PotionViewScreen$PotionCategory.ordinal:()I
+     237: iaload
+     238: tableswitch   { // 1 to 3
+
+                     1: 264
+
+                     2: 614
+
+                     3: 1010
+               default: 1213
+          }
+     264: getstatic     #70                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     267: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     270: ifne          282
+     273: getstatic     #72                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altUp:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     276: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     279: ifeq          329
+     282: iload_2
+     283: bipush        10
+     285: if_icmplt     291
+     288: iinc          2, -10
+     291: aload_0
+     292: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     295: iload_2
+     296: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     299: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     302: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     305: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     308: aload_0
+     309: aload_0
+     310: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     313: iload_2
+     314: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     317: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     320: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     323: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     326: goto          1213
+     329: getstatic     #73                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.down:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     332: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     335: ifne          347
+     338: getstatic     #74                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altDown:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     341: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     344: ifeq          467
+     347: iinc          2, 10
+     350: iload_2
+     351: aload_0
+     352: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     355: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     358: iconst_1
+     359: isub
+     360: if_icmple     429
+     363: iload_2
+     364: bipush        10
+     366: irem
+     367: istore_2
+     368: iload_2
+     369: aload_0
+     370: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     373: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     376: iconst_1
+     377: isub
+     378: if_icmple     391
+     381: aload_0
+     382: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     385: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     388: iconst_1
+     389: isub
+     390: istore_2
+     391: aload_0
+     392: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     395: iload_2
+     396: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     399: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     402: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     405: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     408: aload_0
+     409: aload_0
+     410: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     413: iload_2
+     414: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     417: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     420: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     423: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     426: goto          1213
+     429: aload_0
+     430: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     433: iload_2
+     434: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     437: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     440: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     443: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     446: aload_0
+     447: aload_0
+     448: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     451: iload_2
+     452: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     455: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     458: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     461: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     464: goto          1213
+     467: getstatic     #76                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.left:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     470: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     473: ifne          485
+     476: getstatic     #77                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altLeft:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     479: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     482: ifeq          540
+     485: iinc          2, -1
+     488: iload_2
+     489: ifge          502
+     492: aload_0
+     493: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     496: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     499: iconst_1
+     500: isub
+     501: istore_2
+     502: aload_0
+     503: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     506: iload_2
+     507: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     510: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     513: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     516: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     519: aload_0
+     520: aload_0
+     521: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     524: iload_2
+     525: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     528: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     531: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     534: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     537: goto          1213
+     540: getstatic     #78                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.right:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     543: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     546: ifne          558
+     549: getstatic     #79                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altRight:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     552: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     555: ifeq          1213
+     558: iinc          2, 1
+     561: iload_2
+     562: aload_0
+     563: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     566: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     569: iconst_1
+     570: isub
+     571: if_icmple     576
+     574: iconst_0
+     575: istore_2
+     576: aload_0
+     577: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     580: iload_2
+     581: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     584: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     587: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     590: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     593: aload_0
+     594: aload_0
+     595: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     598: iload_2
+     599: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     602: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     605: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     608: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     611: goto          1213
+     614: getstatic     #70                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     617: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     620: ifne          632
+     623: getstatic     #72                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altUp:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     626: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     629: ifeq          725
+     632: iinc          2, -10
+     635: iload_2
+     636: ifge          687
+     639: aload_0
+     640: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     643: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     646: iconst_1
+     647: isub
+     648: istore_2
+     649: aload_0
+     650: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     653: iload_2
+     654: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     657: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     660: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     663: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     666: aload_0
+     667: aload_0
+     668: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+     671: iload_2
+     672: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     675: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     678: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     681: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     684: goto          1213
+     687: aload_0
+     688: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     691: iload_2
+     692: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     695: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     698: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     701: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     704: aload_0
+     705: aload_0
+     706: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     709: iload_2
+     710: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     713: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     716: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     719: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     722: goto          1213
+     725: getstatic     #73                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.down:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     728: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     731: ifne          743
+     734: getstatic     #74                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altDown:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     737: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     740: ifeq          863
+     743: iinc          2, 10
+     746: iload_2
+     747: aload_0
+     748: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     751: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     754: iconst_1
+     755: isub
+     756: if_icmple     825
+     759: iload_2
+     760: bipush        10
+     762: irem
+     763: istore_2
+     764: iload_2
+     765: aload_0
+     766: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+     769: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     772: iconst_1
+     773: isub
+     774: if_icmple     787
+     777: aload_0
+     778: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+     781: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     784: iconst_1
+     785: isub
+     786: istore_2
+     787: aload_0
+     788: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+     791: iload_2
+     792: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     795: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     798: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     801: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     804: aload_0
+     805: aload_0
+     806: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+     809: iload_2
+     810: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     813: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     816: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     819: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     822: goto          1213
+     825: aload_0
+     826: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     829: iload_2
+     830: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     833: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     836: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     839: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     842: aload_0
+     843: aload_0
+     844: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     847: iload_2
+     848: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     851: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     854: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     857: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     860: goto          1213
+     863: getstatic     #76                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.left:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     866: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     869: ifne          881
+     872: getstatic     #77                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altLeft:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     875: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     878: ifeq          936
+     881: iinc          2, -1
+     884: iload_2
+     885: ifge          898
+     888: aload_0
+     889: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     892: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     895: iconst_1
+     896: isub
+     897: istore_2
+     898: aload_0
+     899: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     902: iload_2
+     903: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     906: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     909: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     912: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     915: aload_0
+     916: aload_0
+     917: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     920: iload_2
+     921: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     924: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     927: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     930: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     933: goto          1213
+     936: getstatic     #78                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.right:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     939: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     942: ifne          954
+     945: getstatic     #79                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altRight:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+     948: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+     951: ifeq          1213
+     954: iinc          2, 1
+     957: iload_2
+     958: aload_0
+     959: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     962: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+     965: iconst_1
+     966: isub
+     967: if_icmple     972
+     970: iconst_0
+     971: istore_2
+     972: aload_0
+     973: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     976: iload_2
+     977: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     980: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     983: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     986: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+     989: aload_0
+     990: aload_0
+     991: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+     994: iload_2
+     995: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     998: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+    1001: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1004: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1007: goto          1213
+    1010: getstatic     #70                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.up:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+    1013: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+    1016: ifne          1028
+    1019: getstatic     #72                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altUp:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+    1022: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+    1025: ifeq          1066
+    1028: aload_0
+    1029: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+    1032: iload_2
+    1033: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+    1036: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+    1039: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1042: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+    1045: aload_0
+    1046: aload_0
+    1047: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+    1050: iload_2
+    1051: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+    1054: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+    1057: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1060: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1063: goto          1213
+    1066: getstatic     #76                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.left:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+    1069: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+    1072: ifne          1084
+    1075: getstatic     #77                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altLeft:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+    1078: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+    1081: ifeq          1139
+    1084: iinc          2, -1
+    1087: iload_2
+    1088: ifge          1101
+    1091: aload_0
+    1092: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+    1095: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+    1098: iconst_1
+    1099: isub
+    1100: istore_2
+    1101: aload_0
+    1102: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+    1105: iload_2
+    1106: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+    1109: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+    1112: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1115: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+    1118: aload_0
+    1119: aload_0
+    1120: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+    1123: iload_2
+    1124: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+    1127: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+    1130: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1133: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1136: goto          1213
+    1139: getstatic     #78                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.right:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+    1142: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+    1145: ifne          1157
+    1148: getstatic     #79                 // Field com/megacrit/cardcrawl/helpers/controller/CInputActionSet.altRight:Lcom/megacrit/cardcrawl/helpers/controller/CInputAction;
+    1151: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/controller/CInputAction.isJustPressed:()Z
+    1154: ifeq          1213
+    1157: iinc          2, 1
+    1160: iload_2
+    1161: aload_0
+    1162: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+    1165: invokevirtual #75                 // Method java/util/ArrayList.size:()I
+    1168: iconst_1
+    1169: isub
+    1170: if_icmple     1175
+    1173: iconst_0
+    1174: istore_2
+    1175: aload_0
+    1176: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+    1179: iload_2
+    1180: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+    1183: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+    1186: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1189: invokestatic  #67                 // Method com/megacrit/cardcrawl/helpers/controller/CInputHelper.setCursor:(Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+    1192: aload_0
+    1193: aload_0
+    1194: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+    1197: iload_2
+    1198: invokevirtual #66                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+    1201: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+    1204: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1207: putfield      #19                 // Field controllerPotionHb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+    1210: goto          1213
+    1213: return
+
+  private void updateScrolling();
+    descriptor: ()V
+    Code:
+       0: getstatic     #80                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.mY:I
+       3: istore_1
+       4: aload_0
+       5: getfield      #17                 // Field grabbedScreen:Z
+       8: ifne          81
+      11: getstatic     #35                 // Field com/megacrit/cardcrawl/core/Settings.isModded:Z
+      14: ifeq          81
+      17: getstatic     #81                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.scrolledDown:Z
+      20: ifeq          38
+      23: aload_0
+      24: dup
+      25: getfield      #4                  // Field targetY:F
+      28: getstatic     #40                 // Field com/megacrit/cardcrawl/core/Settings.SCROLL_SPEED:F
+      31: fadd
+      32: putfield      #4                  // Field targetY:F
+      35: goto          56
+      38: getstatic     #82                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.scrolledUp:Z
+      41: ifeq          56
+      44: aload_0
+      45: dup
+      46: getfield      #4                  // Field targetY:F
+      49: getstatic     #40                 // Field com/megacrit/cardcrawl/core/Settings.SCROLL_SPEED:F
+      52: fsub
+      53: putfield      #4                  // Field targetY:F
+      56: getstatic     #51                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.justClickedLeft:Z
+      59: ifeq          112
+      62: aload_0
+      63: iconst_1
+      64: putfield      #17                 // Field grabbedScreen:Z
+      67: aload_0
+      68: iload_1
+      69: i2f
+      70: aload_0
+      71: getfield      #4                  // Field targetY:F
+      74: fsub
+      75: putfield      #18                 // Field grabStartY:F
+      78: goto          112
+      81: getstatic     #83                 // Field com/megacrit/cardcrawl/helpers/input/InputHelper.isMouseDown:Z
+      84: ifeq          107
+      87: getstatic     #35                 // Field com/megacrit/cardcrawl/core/Settings.isModded:Z
+      90: ifeq          107
+      93: aload_0
+      94: iload_1
+      95: i2f
+      96: aload_0
+      97: getfield      #18                 // Field grabStartY:F
+     100: fsub
+     101: putfield      #4                  // Field targetY:F
+     104: goto          112
+     107: aload_0
+     108: iconst_0
+     109: putfield      #17                 // Field grabbedScreen:Z
+     112: aload_0
+     113: aload_0
+     114: getfield      #3                  // Field scrollY:F
+     117: aload_0
+     118: getfield      #4                  // Field targetY:F
+     121: invokestatic  #84                 // Method com/megacrit/cardcrawl/helpers/MathHelper.scrollSnapLerpSpeed:(FF)F
+     124: putfield      #3                  // Field scrollY:F
+     127: aload_0
+     128: invokespecial #85                 // Method resetScrolling:()V
+     131: aload_0
+     132: invokespecial #86                 // Method updateBarPosition:()V
+     135: return
+
+  private void resetScrolling();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #4                  // Field targetY:F
+       4: aload_0
+       5: getfield      #8                  // Field scrollLowerBound:F
+       8: fcmpg
+       9: ifge          30
+      12: aload_0
+      13: aload_0
+      14: getfield      #4                  // Field targetY:F
+      17: aload_0
+      18: getfield      #8                  // Field scrollLowerBound:F
+      21: invokestatic  #84                 // Method com/megacrit/cardcrawl/helpers/MathHelper.scrollSnapLerpSpeed:(FF)F
+      24: putfield      #4                  // Field targetY:F
+      27: goto          57
+      30: aload_0
+      31: getfield      #4                  // Field targetY:F
+      34: aload_0
+      35: getfield      #7                  // Field scrollUpperBound:F
+      38: fcmpl
+      39: ifle          57
+      42: aload_0
+      43: aload_0
+      44: getfield      #4                  // Field targetY:F
+      47: aload_0
+      48: getfield      #7                  // Field scrollUpperBound:F
+      51: invokestatic  #84                 // Method com/megacrit/cardcrawl/helpers/MathHelper.scrollSnapLerpSpeed:(FF)F
+      54: putfield      #4                  // Field targetY:F
+      57: return
+
+  private void updateList(java.util.ArrayList<com.megacrit.cardcrawl.potions.AbstractPotion>);
+    descriptor: (Ljava/util/ArrayList;)V
+    Code:
+       0: aload_1
+       1: invokevirtual #54                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       4: astore_2
+       5: aload_2
+       6: invokeinterface #55,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      11: ifeq          53
+      14: aload_2
+      15: invokeinterface #56,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      20: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+      23: astore_3
+      24: aload_3
+      25: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      28: invokevirtual #87                 // Method com/megacrit/cardcrawl/helpers/Hitbox.update:()V
+      31: aload_3
+      32: getfield      #58                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      35: aload_3
+      36: getfield      #88                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.posX:F
+      39: aload_3
+      40: getfield      #89                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.posY:F
+      43: invokevirtual #90                 // Method com/megacrit/cardcrawl/helpers/Hitbox.move:(FF)V
+      46: aload_3
+      47: invokevirtual #91                 // Method com/megacrit/cardcrawl/potions/AbstractPotion.update:()V
+      50: goto          5
+      53: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: iconst_m1
+       2: putfield      #9                  // Field row:I
+       5: aload_0
+       6: iconst_0
+       7: putfield      #10                 // Field col:I
+      10: aload_0
+      11: aload_1
+      12: getstatic     #24                 // Field TEXT:[Ljava/lang/String;
+      15: iconst_1
+      16: aaload
+      17: getstatic     #24                 // Field TEXT:[Ljava/lang/String;
+      20: iconst_2
+      21: aaload
+      22: aload_0
+      23: getfield      #14                 // Field commonPotions:Ljava/util/ArrayList;
+      26: invokespecial #92                 // Method renderList:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;)V
+      29: aload_0
+      30: aload_1
+      31: getstatic     #24                 // Field TEXT:[Ljava/lang/String;
+      34: iconst_3
+      35: aaload
+      36: getstatic     #24                 // Field TEXT:[Ljava/lang/String;
+      39: iconst_4
+      40: aaload
+      41: aload_0
+      42: getfield      #15                 // Field uncommonPotions:Ljava/util/ArrayList;
+      45: invokespecial #92                 // Method renderList:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;)V
+      48: aload_0
+      49: aload_1
+      50: getstatic     #24                 // Field TEXT:[Ljava/lang/String;
+      53: iconst_5
+      54: aaload
+      55: getstatic     #24                 // Field TEXT:[Ljava/lang/String;
+      58: bipush        6
+      60: aaload
+      61: aload_0
+      62: getfield      #16                 // Field rarePotions:Ljava/util/ArrayList;
+      65: invokespecial #92                 // Method renderList:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;)V
+      68: aload_0
+      69: getfield      #13                 // Field button:Lcom/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton;
+      72: aload_1
+      73: invokevirtual #93                 // Method com/megacrit/cardcrawl/screens/mainMenu/MenuCancelButton.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      76: getstatic     #35                 // Field com/megacrit/cardcrawl/core/Settings.isModded:Z
+      79: ifeq          90
+      82: aload_0
+      83: getfield      #22                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+      86: aload_1
+      87: invokevirtual #94                 // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      90: return
+
+  private void renderList(com.badlogic.gdx.graphics.g2d.SpriteBatch, java.lang.String, java.lang.String, java.util.ArrayList<com.megacrit.cardcrawl.potions.AbstractPotion>);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;)V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #9                  // Field row:I
+       5: iconst_2
+       6: iadd
+       7: putfield      #9                  // Field row:I
+      10: aload_1
+      11: getstatic     #95                 // Field com/megacrit/cardcrawl/helpers/FontHelper.buttonLabelFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      14: aload_2
+      15: getstatic     #96                 // Field START_X:F
+      18: ldc           #26                 // float 50.0f
+      20: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      23: fmul
+      24: fsub
+      25: aload_0
+      26: getfield      #3                  // Field scrollY:F
+      29: ldc           #97                 // float 4.0f
+      31: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      34: fmul
+      35: fadd
+      36: getstatic     #98                 // Field SPACE:F
+      39: aload_0
+      40: getfield      #9                  // Field row:I
+      43: i2f
+      44: fmul
+      45: fsub
+      46: ldc           #99                 // float 99999.0f
+      48: fconst_0
+      49: getstatic     #100                // Field com/megacrit/cardcrawl/core/Settings.GOLD_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      52: invokestatic  #101                // Method com/megacrit/cardcrawl/helpers/FontHelper.renderSmartText:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FFFFLcom/badlogic/gdx/graphics/Color;)V
+      55: aload_1
+      56: getstatic     #102                // Field com/megacrit/cardcrawl/helpers/FontHelper.cardDescFont_N:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      59: aload_3
+      60: getstatic     #96                 // Field START_X:F
+      63: ldc           #26                 // float 50.0f
+      65: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      68: fmul
+      69: fsub
+      70: getstatic     #95                 // Field com/megacrit/cardcrawl/helpers/FontHelper.buttonLabelFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      73: aload_2
+      74: ldc           #99                 // float 99999.0f
+      76: fconst_0
+      77: invokestatic  #103                // Method com/megacrit/cardcrawl/helpers/FontHelper.getSmartWidth:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FF)F
+      80: fadd
+      81: aload_0
+      82: getfield      #3                  // Field scrollY:F
+      85: fconst_0
+      86: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      89: fmul
+      90: fsub
+      91: getstatic     #98                 // Field SPACE:F
+      94: aload_0
+      95: getfield      #9                  // Field row:I
+      98: i2f
+      99: fmul
+     100: fsub
+     101: ldc           #99                 // float 99999.0f
+     103: fconst_0
+     104: getstatic     #104                // Field com/megacrit/cardcrawl/core/Settings.CREAM_COLOR:Lcom/badlogic/gdx/graphics/Color;
+     107: invokestatic  #101                // Method com/megacrit/cardcrawl/helpers/FontHelper.renderSmartText:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FFFFLcom/badlogic/gdx/graphics/Color;)V
+     110: aload_0
+     111: dup
+     112: getfield      #9                  // Field row:I
+     115: iconst_1
+     116: iadd
+     117: putfield      #9                  // Field row:I
+     120: aload_0
+     121: iconst_0
+     122: putfield      #10                 // Field col:I
+     125: aload         4
+     127: invokevirtual #54                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     130: astore        5
+     132: aload         5
+     134: invokeinterface #55,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     139: ifeq          234
+     142: aload         5
+     144: invokeinterface #56,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     149: checkcast     #57                 // class com/megacrit/cardcrawl/potions/AbstractPotion
+     152: astore        6
+     154: aload_0
+     155: getfield      #10                 // Field col:I
+     158: bipush        10
+     160: if_icmpne     178
+     163: aload_0
+     164: iconst_0
+     165: putfield      #10                 // Field col:I
+     168: aload_0
+     169: dup
+     170: getfield      #9                  // Field row:I
+     173: iconst_1
+     174: iadd
+     175: putfield      #9                  // Field row:I
+     178: aload         6
+     180: getstatic     #96                 // Field START_X:F
+     183: getstatic     #98                 // Field SPACE:F
+     186: aload_0
+     187: getfield      #10                 // Field col:I
+     190: i2f
+     191: fmul
+     192: fadd
+     193: putfield      #88                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.posX:F
+     196: aload         6
+     198: aload_0
+     199: getfield      #3                  // Field scrollY:F
+     202: getstatic     #98                 // Field SPACE:F
+     205: aload_0
+     206: getfield      #9                  // Field row:I
+     209: i2f
+     210: fmul
+     211: fsub
+     212: putfield      #89                 // Field com/megacrit/cardcrawl/potions/AbstractPotion.posY:F
+     215: aload         6
+     217: aload_1
+     218: invokevirtual #105                // Method com/megacrit/cardcrawl/potions/AbstractPotion.labRender:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     221: aload_0
+     222: dup
+     223: getfield      #10                 // Field col:I
+     226: iconst_1
+     227: iadd
+     228: putfield      #10                 // Field col:I
+     231: goto          132
+     234: return
+
+  public void scrolledUsingBar(float);
+    descriptor: (F)V
+    Code:
+       0: getstatic     #35                 // Field com/megacrit/cardcrawl/core/Settings.isModded:Z
+       3: ifne          7
+       6: return
+       7: aload_0
+       8: getfield      #8                  // Field scrollLowerBound:F
+      11: aload_0
+      12: getfield      #7                  // Field scrollUpperBound:F
+      15: fload_1
+      16: invokestatic  #106                // Method com/megacrit/cardcrawl/helpers/MathHelper.valueFromPercentBetween:(FFF)F
+      19: fstore_2
+      20: aload_0
+      21: fload_2
+      22: putfield      #3                  // Field scrollY:F
+      25: aload_0
+      26: fload_2
+      27: putfield      #4                  // Field targetY:F
+      30: aload_0
+      31: invokespecial #86                 // Method updateBarPosition:()V
+      34: return
+
+  private void updateBarPosition();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field scrollLowerBound:F
+       4: aload_0
+       5: getfield      #7                  // Field scrollUpperBound:F
+       8: aload_0
+       9: getfield      #3                  // Field scrollY:F
+      12: invokestatic  #107                // Method com/megacrit/cardcrawl/helpers/MathHelper.percentFromValueBetween:(FFF)F
+      15: fstore_1
+      16: aload_0
+      17: getfield      #22                 // Field scrollBar:Lcom/megacrit/cardcrawl/screens/mainMenu/ScrollBar;
+      20: fload_1
+      21: invokevirtual #108                // Method com/megacrit/cardcrawl/screens/mainMenu/ScrollBar.parentScrolledToPercent:(F)V
+      24: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #109                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #110                // String PotionViewScreen
+       5: invokevirtual #111                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getUIString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/UIStrings;
+       8: putstatic     #112                // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      11: getstatic     #112                // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      14: getfield      #113                // Field com/megacrit/cardcrawl/localization/UIStrings.TEXT:[Ljava/lang/String;
+      17: putstatic     #24                 // Field TEXT:[Ljava/lang/String;
+      20: ldc           #114                // float 80.0f
+      22: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      25: fmul
+      26: putstatic     #98                 // Field SPACE:F
+      29: ldc           #115                // float 600.0f
+      31: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      34: fmul
+      35: putstatic     #96                 // Field START_X:F
+      38: return
+}

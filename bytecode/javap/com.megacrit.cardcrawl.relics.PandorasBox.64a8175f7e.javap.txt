@@ -1,0 +1,207 @@
+Compiled from "PandorasBox.java"
+public class com.megacrit.cardcrawl.relics.PandorasBox extends com.megacrit.cardcrawl.relics.AbstractRelic {
+  public static final java.lang.String ID;
+    descriptor: Ljava/lang/String;
+
+  private int count;
+    descriptor: I
+
+  private boolean calledTransform;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.relics.PandorasBox();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: ldc           #2                  // String Pandora\'s Box
+       3: ldc           #3                  // String pandoras_box.png
+       5: getstatic     #4                  // Field com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.BOSS:Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+       8: getstatic     #5                  // Field com/megacrit/cardcrawl/relics/AbstractRelic$LandingSound.MAGICAL:Lcom/megacrit/cardcrawl/relics/AbstractRelic$LandingSound;
+      11: invokespecial #6                  // Method com/megacrit/cardcrawl/relics/AbstractRelic."<init>":(Ljava/lang/String;Ljava/lang/String;Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;Lcom/megacrit/cardcrawl/relics/AbstractRelic$LandingSound;)V
+      14: aload_0
+      15: iconst_0
+      16: putfield      #7                  // Field count:I
+      19: aload_0
+      20: iconst_1
+      21: putfield      #8                  // Field calledTransform:Z
+      24: aload_0
+      25: invokespecial #9                  // Method removeStrikeTip:()V
+      28: return
+
+  private void removeStrikeTip();
+    descriptor: ()V
+    Code:
+       0: new           #10                 // class java/util/ArrayList
+       3: dup
+       4: invokespecial #11                 // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: getstatic     #12                 // Field com/megacrit/cardcrawl/helpers/GameDictionary.STRIKE:Lcom/megacrit/cardcrawl/localization/Keyword;
+      11: getfield      #13                 // Field com/megacrit/cardcrawl/localization/Keyword.NAMES:[Ljava/lang/String;
+      14: astore_2
+      15: aload_2
+      16: arraylength
+      17: istore_3
+      18: iconst_0
+      19: istore        4
+      21: iload         4
+      23: iload_3
+      24: if_icmpge     49
+      27: aload_2
+      28: iload         4
+      30: aaload
+      31: astore        5
+      33: aload_1
+      34: aload         5
+      36: invokevirtual #14                 // Method java/lang/String.toLowerCase:()Ljava/lang/String;
+      39: invokevirtual #15                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      42: pop
+      43: iinc          4, 1
+      46: goto          21
+      49: aload_0
+      50: getfield      #16                 // Field tips:Ljava/util/ArrayList;
+      53: invokevirtual #17                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      56: astore_2
+      57: aload_2
+      58: invokeinterface #18,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      63: ifeq          106
+      66: aload_2
+      67: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      72: checkcast     #20                 // class com/megacrit/cardcrawl/helpers/PowerTip
+      75: astore_3
+      76: aload_3
+      77: getfield      #21                 // Field com/megacrit/cardcrawl/helpers/PowerTip.header:Ljava/lang/String;
+      80: invokevirtual #14                 // Method java/lang/String.toLowerCase:()Ljava/lang/String;
+      83: astore        4
+      85: aload_1
+      86: aload         4
+      88: invokevirtual #22                 // Method java/util/ArrayList.contains:(Ljava/lang/Object;)Z
+      91: ifeq          103
+      94: aload_2
+      95: invokeinterface #23,  1           // InterfaceMethod java/util/Iterator.remove:()V
+     100: goto          106
+     103: goto          57
+     106: return
+
+  public java.lang.String getUpdatedDescription();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #24                 // Field DESCRIPTIONS:[Ljava/lang/String;
+       4: iconst_0
+       5: aaload
+       6: areturn
+
+  public void onEquip();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: putfield      #8                  // Field calledTransform:Z
+       5: getstatic     #25                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       8: getfield      #26                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      11: getfield      #27                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+      14: invokevirtual #17                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      17: astore_1
+      18: aload_1
+      19: invokeinterface #18,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      24: ifeq          76
+      27: aload_1
+      28: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      33: checkcast     #28                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      36: astore_2
+      37: aload_2
+      38: getstatic     #29                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardTags.STARTER_DEFEND:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardTags;
+      41: invokevirtual #30                 // Method com/megacrit/cardcrawl/cards/AbstractCard.hasTag:(Lcom/megacrit/cardcrawl/cards/AbstractCard$CardTags;)Z
+      44: ifne          57
+      47: aload_2
+      48: getstatic     #31                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardTags.STARTER_STRIKE:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardTags;
+      51: invokevirtual #30                 // Method com/megacrit/cardcrawl/cards/AbstractCard.hasTag:(Lcom/megacrit/cardcrawl/cards/AbstractCard$CardTags;)Z
+      54: ifeq          73
+      57: aload_1
+      58: invokeinterface #23,  1           // InterfaceMethod java/util/Iterator.remove:()V
+      63: aload_0
+      64: dup
+      65: getfield      #7                  // Field count:I
+      68: iconst_1
+      69: iadd
+      70: putfield      #7                  // Field count:I
+      73: goto          18
+      76: aload_0
+      77: getfield      #7                  // Field count:I
+      80: ifle          189
+      83: new           #32                 // class com/megacrit/cardcrawl/cards/CardGroup
+      86: dup
+      87: getstatic     #33                 // Field com/megacrit/cardcrawl/cards/CardGroup$CardGroupType.UNSPECIFIED:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+      90: invokespecial #34                 // Method com/megacrit/cardcrawl/cards/CardGroup."<init>":(Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;)V
+      93: astore_1
+      94: iconst_0
+      95: istore_2
+      96: iload_2
+      97: aload_0
+      98: getfield      #7                  // Field count:I
+     101: if_icmpge     176
+     104: invokestatic  #35                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.returnTrulyRandomCard:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     107: invokevirtual #36                 // Method com/megacrit/cardcrawl/cards/AbstractCard.makeCopy:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     110: astore_3
+     111: aload_3
+     112: getfield      #37                 // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+     115: invokestatic  #38                 // Method com/megacrit/cardcrawl/unlock/UnlockTracker.markCardAsSeen:(Ljava/lang/String;)V
+     118: aload_3
+     119: iconst_1
+     120: putfield      #39                 // Field com/megacrit/cardcrawl/cards/AbstractCard.isSeen:Z
+     123: getstatic     #25                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     126: getfield      #40                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+     129: invokevirtual #17                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     132: astore        4
+     134: aload         4
+     136: invokeinterface #18,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     141: ifeq          165
+     144: aload         4
+     146: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     151: checkcast     #41                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+     154: astore        5
+     156: aload         5
+     158: aload_3
+     159: invokevirtual #42                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.onPreviewObtainCard:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     162: goto          134
+     165: aload_1
+     166: aload_3
+     167: invokevirtual #43                 // Method com/megacrit/cardcrawl/cards/CardGroup.addToBottom:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     170: iinc          2, 1
+     173: goto          96
+     176: getstatic     #44                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.gridSelectScreen:Lcom/megacrit/cardcrawl/screens/select/GridCardSelectScreen;
+     179: aload_1
+     180: aload_0
+     181: getfield      #24                 // Field DESCRIPTIONS:[Ljava/lang/String;
+     184: iconst_1
+     185: aaload
+     186: invokevirtual #45                 // Method com/megacrit/cardcrawl/screens/select/GridCardSelectScreen.openConfirmationGrid:(Lcom/megacrit/cardcrawl/cards/CardGroup;Ljava/lang/String;)V
+     189: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #46                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.update:()V
+       4: aload_0
+       5: getfield      #8                  // Field calledTransform:Z
+       8: ifne          33
+      11: getstatic     #47                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.screen:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      14: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen.GRID:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      17: if_acmpeq     33
+      20: aload_0
+      21: iconst_1
+      22: putfield      #8                  // Field calledTransform:Z
+      25: invokestatic  #49                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      28: ldc           #50                 // float 0.25f
+      30: putfield      #51                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.rewardPopOutTimer:F
+      33: return
+
+  public com.megacrit.cardcrawl.relics.AbstractRelic makeCopy();
+    descriptor: ()Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+    Code:
+       0: new           #1                  // class com/megacrit/cardcrawl/relics/PandorasBox
+       3: dup
+       4: invokespecial #52                 // Method "<init>":()V
+       7: areturn
+}

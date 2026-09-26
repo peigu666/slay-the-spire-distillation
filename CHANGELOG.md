@@ -1,5 +1,22 @@
 # 更新日志
 
+## v1.1.0 — 2026-09-27
+
+补充补丁目标和 Workshop 外置资源证据链。
+
+- 新增 `environment/workshop_external_files.jsonl` 与汇总文件，收录 524 个 JAR 外 Workshop 文件的路径、大小和 SHA-256，不上传二进制本体。
+- 新增 `environment/patch_targets.jsonl`，记录 2,943 条实际 Mod 补丁注解引用、目标类/方法、参数和解析状态。
+- 新增 7,668 个方法的指令级 JVM bytecode 快照，以及 574 个 `javap -p -s -c` 类文本快照。
+- 无法解析的目标类/方法保留 `missing_class` 或 `method_not_found` 状态，不用猜测替代。
+- 无效的 `ModTheSpire.json` 新增 `metadata_raw_fallback` 原文、路径和 SHA-256 字段。
+- 新增 `tools/query-bytecode.ps1` 和 Workshop 外置文件校验选项。
+
+### 兼容性
+
+- 生成基线仍为 Slay the Spire 2.3.4、`desktop-1.0.jar`、BaseMod 5.56.0、StSLib 2.12.0、Java 8。
+- `javap` 文本快照使用生成时的 JDK 21.0.11；运行游戏仍以游戏自带 Java 8 为准。
+- Java 项目中的“IL”指 JVM bytecode 指令，不是 .NET CLR IL。
+
 ## v1.0.0 — 2026-09-27
 
 首次公开发布 Slay the Spire 蒸馏 AI Mod 开发知识库。

@@ -1,0 +1,978 @@
+Compiled from "RoomEventDialog.java"
+public class com.megacrit.cardcrawl.events.RoomEventDialog {
+  private com.badlogic.gdx.graphics.Color color;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private com.badlogic.gdx.graphics.Color targetColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private static final com.badlogic.gdx.graphics.Color PANEL_COLOR;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private static final float COLOR_FADE_SPEED;
+    descriptor: F
+
+  private boolean isMoving;
+    descriptor: Z
+
+  private float animateTimer;
+    descriptor: F
+
+  private static final float ANIM_SPEED;
+    descriptor: F
+
+  private boolean show;
+    descriptor: Z
+
+  private float curLineWidth;
+    descriptor: F
+
+  private int curLine;
+    descriptor: I
+
+  private com.megacrit.cardcrawl.ui.DialogWord$AppearEffect a_effect;
+    descriptor: Lcom/megacrit/cardcrawl/ui/DialogWord$AppearEffect;
+
+  private java.util.Scanner s;
+    descriptor: Ljava/util/Scanner;
+
+  private com.badlogic.gdx.graphics.g2d.GlyphLayout gl;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.ui.DialogWord> words;
+    descriptor: Ljava/util/ArrayList;
+
+  private boolean textDone;
+    descriptor: Z
+
+  private float wordTimer;
+    descriptor: F
+
+  private static final float WORD_TIME;
+    descriptor: F
+
+  private static final float CHAR_SPACING;
+    descriptor: F
+
+  private static final float LINE_SPACING;
+    descriptor: F
+
+  private static final float DIALOG_MSG_X;
+    descriptor: F
+
+  private static final float DIALOG_MSG_Y;
+    descriptor: F
+
+  private static final float DIALOG_MSG_W;
+    descriptor: F
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.ui.buttons.LargeDialogOptionButton> optionList;
+    descriptor: Ljava/util/ArrayList;
+
+  public static int selectedOption;
+    descriptor: I
+
+  public static boolean waitForInput;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.events.RoomEventDialog();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #2                  // class com/badlogic/gdx/graphics/Color
+       8: dup
+       9: fconst_0
+      10: fconst_0
+      11: fconst_0
+      12: fconst_0
+      13: invokespecial #3                  // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      16: putfield      #4                  // Field color:Lcom/badlogic/gdx/graphics/Color;
+      19: aload_0
+      20: new           #2                  // class com/badlogic/gdx/graphics/Color
+      23: dup
+      24: fconst_0
+      25: fconst_0
+      26: fconst_0
+      27: fconst_0
+      28: invokespecial #3                  // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      31: putfield      #5                  // Field targetColor:Lcom/badlogic/gdx/graphics/Color;
+      34: aload_0
+      35: iconst_0
+      36: putfield      #6                  // Field isMoving:Z
+      39: aload_0
+      40: fconst_0
+      41: putfield      #7                  // Field animateTimer:F
+      44: aload_0
+      45: iconst_0
+      46: putfield      #8                  // Field show:Z
+      49: aload_0
+      50: fconst_0
+      51: putfield      #9                  // Field curLineWidth:F
+      54: aload_0
+      55: iconst_0
+      56: putfield      #10                 // Field curLine:I
+      59: aload_0
+      60: new           #11                 // class com/badlogic/gdx/graphics/g2d/GlyphLayout
+      63: dup
+      64: invokespecial #12                 // Method com/badlogic/gdx/graphics/g2d/GlyphLayout."<init>":()V
+      67: putfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+      70: aload_0
+      71: new           #14                 // class java/util/ArrayList
+      74: dup
+      75: invokespecial #15                 // Method java/util/ArrayList."<init>":()V
+      78: putfield      #16                 // Field words:Ljava/util/ArrayList;
+      81: aload_0
+      82: iconst_1
+      83: putfield      #17                 // Field textDone:Z
+      86: aload_0
+      87: fconst_0
+      88: putfield      #18                 // Field wordTimer:F
+      91: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #6                  // Field isMoving:Z
+       4: ifeq          43
+       7: aload_0
+       8: dup
+       9: getfield      #7                  // Field animateTimer:F
+      12: getstatic     #19                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+      15: invokeinterface #20,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      20: fsub
+      21: putfield      #7                  // Field animateTimer:F
+      24: aload_0
+      25: getfield      #7                  // Field animateTimer:F
+      28: fconst_0
+      29: fcmpg
+      30: ifge          43
+      33: aload_0
+      34: fconst_0
+      35: putfield      #7                  // Field animateTimer:F
+      38: aload_0
+      39: iconst_0
+      40: putfield      #6                  // Field isMoving:Z
+      43: aload_0
+      44: aload_0
+      45: getfield      #4                  // Field color:Lcom/badlogic/gdx/graphics/Color;
+      48: aload_0
+      49: getfield      #5                  // Field targetColor:Lcom/badlogic/gdx/graphics/Color;
+      52: getstatic     #19                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+      55: invokeinterface #20,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      60: ldc           #22                 // float 8.0f
+      62: fmul
+      63: invokevirtual #23                 // Method com/badlogic/gdx/graphics/Color.lerp:(Lcom/badlogic/gdx/graphics/Color;F)Lcom/badlogic/gdx/graphics/Color;
+      66: putfield      #4                  // Field color:Lcom/badlogic/gdx/graphics/Color;
+      69: aload_0
+      70: getfield      #8                  // Field show:Z
+      73: ifeq          157
+      76: iconst_0
+      77: istore_1
+      78: iload_1
+      79: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      82: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+      85: if_icmpge     157
+      88: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      91: iload_1
+      92: invokevirtual #26                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      95: checkcast     #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+      98: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+     101: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+     104: invokevirtual #28                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton.update:(I)V
+     107: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+     110: iload_1
+     111: invokevirtual #26                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     114: checkcast     #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+     117: getfield      #29                 // Field com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton.pressed:Z
+     120: ifeq          151
+     123: getstatic     #30                 // Field waitForInput:Z
+     126: ifeq          151
+     129: iload_1
+     130: putstatic     #31                 // Field selectedOption:I
+     133: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+     136: iload_1
+     137: invokevirtual #26                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     140: checkcast     #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+     143: iconst_0
+     144: putfield      #29                 // Field com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton.pressed:Z
+     147: iconst_0
+     148: putstatic     #30                 // Field waitForInput:Z
+     151: iinc          1, 1
+     154: goto          78
+     157: getstatic     #32                 // Field com/megacrit/cardcrawl/core/Settings.lineBreakViaCharacter:Z
+     160: ifeq          170
+     163: aload_0
+     164: invokespecial #33                 // Method bodyTextEffectCN:()V
+     167: goto          174
+     170: aload_0
+     171: invokespecial #34                 // Method bodyTextEffect:()V
+     174: aload_0
+     175: getfield      #16                 // Field words:Ljava/util/ArrayList;
+     178: invokevirtual #35                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     181: astore_1
+     182: aload_1
+     183: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     188: ifeq          208
+     191: aload_1
+     192: invokeinterface #37,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     197: checkcast     #38                 // class com/megacrit/cardcrawl/ui/DialogWord
+     200: astore_2
+     201: aload_2
+     202: invokevirtual #39                 // Method com/megacrit/cardcrawl/ui/DialogWord.update:()V
+     205: goto          182
+     208: return
+
+  public int getSelectedOption();
+    descriptor: ()I
+    Code:
+       0: iconst_1
+       1: putstatic     #30                 // Field waitForInput:Z
+       4: getstatic     #31                 // Field selectedOption:I
+       7: ireturn
+
+  public void clear();
+    descriptor: ()V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: invokevirtual #40                 // Method java/util/ArrayList.clear:()V
+       6: aload_0
+       7: getfield      #16                 // Field words:Ljava/util/ArrayList;
+      10: invokevirtual #40                 // Method java/util/ArrayList.clear:()V
+      13: iconst_1
+      14: putstatic     #30                 // Field waitForInput:Z
+      17: return
+
+  public void show();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getstatic     #41                 // Field PANEL_COLOR:Lcom/badlogic/gdx/graphics/Color;
+       4: putfield      #5                  // Field targetColor:Lcom/badlogic/gdx/graphics/Color;
+       7: getstatic     #42                 // Field com/megacrit/cardcrawl/core/Settings.FAST_MODE:Z
+      10: ifeq          22
+      13: aload_0
+      14: ldc           #43                 // float 0.125f
+      16: putfield      #7                  // Field animateTimer:F
+      19: goto          28
+      22: aload_0
+      23: ldc           #44                 // float 0.5f
+      25: putfield      #7                  // Field animateTimer:F
+      28: aload_0
+      29: iconst_1
+      30: putfield      #8                  // Field show:Z
+      33: aload_0
+      34: iconst_1
+      35: putfield      #6                  // Field isMoving:Z
+      38: return
+
+  public void show(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #45                 // Method updateBodyText:(Ljava/lang/String;)V
+       5: aload_0
+       6: invokevirtual #46                 // Method show:()V
+       9: return
+
+  public void hide();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: new           #2                  // class com/badlogic/gdx/graphics/Color
+       4: dup
+       5: fconst_0
+       6: fconst_0
+       7: fconst_0
+       8: fconst_0
+       9: invokespecial #3                  // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      12: putfield      #5                  // Field targetColor:Lcom/badlogic/gdx/graphics/Color;
+      15: getstatic     #42                 // Field com/megacrit/cardcrawl/core/Settings.FAST_MODE:Z
+      18: ifeq          30
+      21: aload_0
+      22: ldc           #43                 // float 0.125f
+      24: putfield      #7                  // Field animateTimer:F
+      27: goto          36
+      30: aload_0
+      31: ldc           #44                 // float 0.5f
+      33: putfield      #7                  // Field animateTimer:F
+      36: aload_0
+      37: iconst_0
+      38: putfield      #8                  // Field show:Z
+      41: aload_0
+      42: iconst_1
+      43: putfield      #6                  // Field isMoving:Z
+      46: aload_0
+      47: getfield      #16                 // Field words:Ljava/util/ArrayList;
+      50: invokevirtual #35                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      53: astore_1
+      54: aload_1
+      55: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      60: ifeq          80
+      63: aload_1
+      64: invokeinterface #37,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      69: checkcast     #38                 // class com/megacrit/cardcrawl/ui/DialogWord
+      72: astore_2
+      73: aload_2
+      74: invokevirtual #47                 // Method com/megacrit/cardcrawl/ui/DialogWord.dialogFadeOut:()V
+      77: goto          54
+      80: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      83: invokevirtual #40                 // Method java/util/ArrayList.clear:()V
+      86: return
+
+  public void removeDialogOption(int);
+    descriptor: (I)V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: iload_1
+       4: invokevirtual #48                 // Method java/util/ArrayList.remove:(I)Ljava/lang/Object;
+       7: pop
+       8: return
+
+  public void addDialogOption(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: new           #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+       6: dup
+       7: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      10: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+      13: aload_1
+      14: invokespecial #49                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton."<init>":(ILjava/lang/String;)V
+      17: invokevirtual #50                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      20: pop
+      21: return
+
+  public void addDialogOption(java.lang.String, com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: new           #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+       6: dup
+       7: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      10: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+      13: aload_1
+      14: aload_2
+      15: invokespecial #51                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton."<init>":(ILjava/lang/String;Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      18: invokevirtual #50                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      21: pop
+      22: return
+
+  public void addDialogOption(java.lang.String, com.megacrit.cardcrawl.relics.AbstractRelic);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: new           #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+       6: dup
+       7: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      10: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+      13: aload_1
+      14: aload_2
+      15: invokespecial #52                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton."<init>":(ILjava/lang/String;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+      18: invokevirtual #50                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      21: pop
+      22: return
+
+  public void addDialogOption(java.lang.String, com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.relics.AbstractRelic);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: new           #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+       6: dup
+       7: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      10: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+      13: aload_1
+      14: aload_2
+      15: aload_3
+      16: invokespecial #53                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton."<init>":(ILjava/lang/String;Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+      19: invokevirtual #50                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      22: pop
+      23: return
+
+  public void addDialogOption(java.lang.String, boolean);
+    descriptor: (Ljava/lang/String;Z)V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: new           #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+       6: dup
+       7: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      10: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+      13: aload_1
+      14: iload_2
+      15: invokespecial #54                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton."<init>":(ILjava/lang/String;Z)V
+      18: invokevirtual #50                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      21: pop
+      22: return
+
+  public void addDialogOption(java.lang.String, boolean, com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Ljava/lang/String;ZLcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: new           #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+       6: dup
+       7: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      10: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+      13: aload_1
+      14: iload_2
+      15: aload_3
+      16: invokespecial #55                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton."<init>":(ILjava/lang/String;ZLcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      19: invokevirtual #50                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      22: pop
+      23: return
+
+  public void addDialogOption(java.lang.String, boolean, com.megacrit.cardcrawl.relics.AbstractRelic);
+    descriptor: (Ljava/lang/String;ZLcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: new           #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+       6: dup
+       7: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      10: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+      13: aload_1
+      14: iload_2
+      15: aload_3
+      16: invokespecial #56                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton."<init>":(ILjava/lang/String;ZLcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+      19: invokevirtual #50                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      22: pop
+      23: return
+
+  public void addDialogOption(java.lang.String, boolean, com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.relics.AbstractRelic);
+    descriptor: (Ljava/lang/String;ZLcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: new           #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+       6: dup
+       7: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      10: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+      13: aload_1
+      14: iload_2
+      15: aload_3
+      16: aload         4
+      18: invokespecial #57                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton."<init>":(ILjava/lang/String;ZLcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+      21: invokevirtual #50                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      24: pop
+      25: return
+
+  public void updateDialogOption(int, java.lang.String);
+    descriptor: (ILjava/lang/String;)V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: iload_1
+       4: new           #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+       7: dup
+       8: iload_1
+       9: aload_2
+      10: invokespecial #49                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton."<init>":(ILjava/lang/String;)V
+      13: invokevirtual #58                 // Method java/util/ArrayList.set:(ILjava/lang/Object;)Ljava/lang/Object;
+      16: pop
+      17: return
+
+  public void updateBodyText(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getstatic     #59                 // Field com/megacrit/cardcrawl/ui/DialogWord$AppearEffect.BUMP_IN:Lcom/megacrit/cardcrawl/ui/DialogWord$AppearEffect;
+       5: invokevirtual #60                 // Method updateBodyText:(Ljava/lang/String;Lcom/megacrit/cardcrawl/ui/DialogWord$AppearEffect;)V
+       8: return
+
+  public void updateBodyText(java.lang.String, com.megacrit.cardcrawl.ui.DialogWord$AppearEffect);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/ui/DialogWord$AppearEffect;)V
+    Code:
+       0: aload_0
+       1: new           #61                 // class java/util/Scanner
+       4: dup
+       5: aload_1
+       6: invokespecial #62                 // Method java/util/Scanner."<init>":(Ljava/lang/String;)V
+       9: putfield      #63                 // Field s:Ljava/util/Scanner;
+      12: aload_0
+      13: getfield      #16                 // Field words:Ljava/util/ArrayList;
+      16: invokevirtual #40                 // Method java/util/ArrayList.clear:()V
+      19: aload_0
+      20: iconst_0
+      21: putfield      #17                 // Field textDone:Z
+      24: aload_0
+      25: aload_2
+      26: putfield      #64                 // Field a_effect:Lcom/megacrit/cardcrawl/ui/DialogWord$AppearEffect;
+      29: aload_0
+      30: fconst_0
+      31: putfield      #9                  // Field curLineWidth:F
+      34: aload_0
+      35: iconst_0
+      36: putfield      #10                 // Field curLine:I
+      39: return
+
+  public void clearRemainingOptions();
+    descriptor: ()V
+    Code:
+       0: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+       3: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+       6: iconst_1
+       7: isub
+       8: istore_1
+       9: iload_1
+      10: ifle          27
+      13: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      16: iload_1
+      17: invokevirtual #48                 // Method java/util/ArrayList.remove:(I)Ljava/lang/Object;
+      20: pop
+      21: iinc          1, -1
+      24: goto          9
+      27: return
+
+  private void bodyTextEffectCN();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #18                 // Field wordTimer:F
+       5: getstatic     #19                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+       8: invokeinterface #20,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      13: fsub
+      14: putfield      #18                 // Field wordTimer:F
+      17: aload_0
+      18: getfield      #18                 // Field wordTimer:F
+      21: fconst_0
+      22: fcmpg
+      23: ifge          346
+      26: aload_0
+      27: getfield      #17                 // Field textDone:Z
+      30: ifne          346
+      33: getstatic     #42                 // Field com/megacrit/cardcrawl/core/Settings.FAST_MODE:Z
+      36: ifeq          48
+      39: aload_0
+      40: ldc           #65                 // float 0.005f
+      42: putfield      #18                 // Field wordTimer:F
+      45: goto          54
+      48: aload_0
+      49: ldc           #66                 // float 0.02f
+      51: putfield      #18                 // Field wordTimer:F
+      54: aload_0
+      55: getfield      #63                 // Field s:Ljava/util/Scanner;
+      58: invokevirtual #67                 // Method java/util/Scanner.hasNext:()Z
+      61: ifeq          334
+      64: aload_0
+      65: getfield      #63                 // Field s:Ljava/util/Scanner;
+      68: invokevirtual #68                 // Method java/util/Scanner.next:()Ljava/lang/String;
+      71: astore_1
+      72: aload_1
+      73: ldc           #69                 // String NL
+      75: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      78: ifeq          97
+      81: aload_0
+      82: dup
+      83: getfield      #10                 // Field curLine:I
+      86: iconst_1
+      87: iadd
+      88: putfield      #10                 // Field curLine:I
+      91: aload_0
+      92: fconst_0
+      93: putfield      #9                  // Field curLineWidth:F
+      96: return
+      97: aload_1
+      98: invokestatic  #71                 // Method com/megacrit/cardcrawl/ui/DialogWord.identifyWordColor:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+     101: astore_2
+     102: aload_2
+     103: getstatic     #72                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordColor.DEFAULT:Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+     106: if_acmpeq     119
+     109: aload_1
+     110: iconst_2
+     111: aload_1
+     112: invokevirtual #73                 // Method java/lang/String.length:()I
+     115: invokevirtual #74                 // Method java/lang/String.substring:(II)Ljava/lang/String;
+     118: astore_1
+     119: aload_1
+     120: invokestatic  #75                 // Method com/megacrit/cardcrawl/ui/DialogWord.identifyWordEffect:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+     123: astore_3
+     124: aload_3
+     125: getstatic     #76                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordEffect.NONE:Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+     128: if_acmpeq     143
+     131: aload_1
+     132: iconst_1
+     133: aload_1
+     134: invokevirtual #73                 // Method java/lang/String.length:()I
+     137: iconst_1
+     138: isub
+     139: invokevirtual #74                 // Method java/lang/String.substring:(II)Ljava/lang/String;
+     142: astore_1
+     143: iconst_0
+     144: istore        4
+     146: iload         4
+     148: aload_1
+     149: invokevirtual #73                 // Method java/lang/String.length:()I
+     152: if_icmpge     331
+     155: aload_1
+     156: iload         4
+     158: invokevirtual #77                 // Method java/lang/String.charAt:(I)C
+     161: invokestatic  #78                 // Method java/lang/Character.toString:(C)Ljava/lang/String;
+     164: astore        5
+     166: aload_0
+     167: getfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     170: getstatic     #79                 // Field com/megacrit/cardcrawl/helpers/FontHelper.charDescFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     173: aload         5
+     175: invokevirtual #80                 // Method com/badlogic/gdx/graphics/g2d/GlyphLayout.setText:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/CharSequence;)V
+     178: aload_0
+     179: getfield      #9                  // Field curLineWidth:F
+     182: aload_0
+     183: getfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     186: getfield      #81                 // Field com/badlogic/gdx/graphics/g2d/GlyphLayout.width:F
+     189: fadd
+     190: getstatic     #82                 // Field DIALOG_MSG_W:F
+     193: fcmpl
+     194: ifle          221
+     197: aload_0
+     198: dup
+     199: getfield      #10                 // Field curLine:I
+     202: iconst_1
+     203: iadd
+     204: putfield      #10                 // Field curLine:I
+     207: aload_0
+     208: aload_0
+     209: getfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     212: getfield      #81                 // Field com/badlogic/gdx/graphics/g2d/GlyphLayout.width:F
+     215: putfield      #9                  // Field curLineWidth:F
+     218: goto          237
+     221: aload_0
+     222: dup
+     223: getfield      #9                  // Field curLineWidth:F
+     226: aload_0
+     227: getfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     230: getfield      #81                 // Field com/badlogic/gdx/graphics/g2d/GlyphLayout.width:F
+     233: fadd
+     234: putfield      #9                  // Field curLineWidth:F
+     237: aload_0
+     238: getfield      #16                 // Field words:Ljava/util/ArrayList;
+     241: new           #38                 // class com/megacrit/cardcrawl/ui/DialogWord
+     244: dup
+     245: getstatic     #79                 // Field com/megacrit/cardcrawl/helpers/FontHelper.charDescFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     248: aload         5
+     250: aload_0
+     251: getfield      #64                 // Field a_effect:Lcom/megacrit/cardcrawl/ui/DialogWord$AppearEffect;
+     254: aload_3
+     255: aload_2
+     256: getstatic     #83                 // Field DIALOG_MSG_X:F
+     259: aload_0
+     260: getfield      #9                  // Field curLineWidth:F
+     263: fadd
+     264: aload_0
+     265: getfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     268: getfield      #81                 // Field com/badlogic/gdx/graphics/g2d/GlyphLayout.width:F
+     271: fsub
+     272: getstatic     #84                 // Field DIALOG_MSG_Y:F
+     275: getstatic     #85                 // Field LINE_SPACING:F
+     278: aload_0
+     279: getfield      #10                 // Field curLine:I
+     282: i2f
+     283: fmul
+     284: fsub
+     285: aload_0
+     286: getfield      #10                 // Field curLine:I
+     289: invokespecial #86                 // Method com/megacrit/cardcrawl/ui/DialogWord."<init>":(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;Lcom/megacrit/cardcrawl/ui/DialogWord$AppearEffect;Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;FFI)V
+     292: invokevirtual #50                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     295: pop
+     296: aload_0
+     297: getfield      #8                  // Field show:Z
+     300: ifne          325
+     303: aload_0
+     304: getfield      #16                 // Field words:Ljava/util/ArrayList;
+     307: aload_0
+     308: getfield      #16                 // Field words:Ljava/util/ArrayList;
+     311: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+     314: iconst_1
+     315: isub
+     316: invokevirtual #26                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     319: checkcast     #38                 // class com/megacrit/cardcrawl/ui/DialogWord
+     322: invokevirtual #47                 // Method com/megacrit/cardcrawl/ui/DialogWord.dialogFadeOut:()V
+     325: iinc          4, 1
+     328: goto          146
+     331: goto          346
+     334: aload_0
+     335: iconst_1
+     336: putfield      #17                 // Field textDone:Z
+     339: aload_0
+     340: getfield      #63                 // Field s:Ljava/util/Scanner;
+     343: invokevirtual #87                 // Method java/util/Scanner.close:()V
+     346: return
+
+  private void bodyTextEffect();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #18                 // Field wordTimer:F
+       5: getstatic     #19                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+       8: invokeinterface #20,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      13: fsub
+      14: putfield      #18                 // Field wordTimer:F
+      17: aload_0
+      18: getfield      #18                 // Field wordTimer:F
+      21: fconst_0
+      22: fcmpg
+      23: ifge          323
+      26: aload_0
+      27: getfield      #17                 // Field textDone:Z
+      30: ifne          323
+      33: getstatic     #42                 // Field com/megacrit/cardcrawl/core/Settings.FAST_MODE:Z
+      36: ifeq          48
+      39: aload_0
+      40: ldc           #65                 // float 0.005f
+      42: putfield      #18                 // Field wordTimer:F
+      45: goto          54
+      48: aload_0
+      49: ldc           #66                 // float 0.02f
+      51: putfield      #18                 // Field wordTimer:F
+      54: aload_0
+      55: getfield      #63                 // Field s:Ljava/util/Scanner;
+      58: invokevirtual #67                 // Method java/util/Scanner.hasNext:()Z
+      61: ifeq          311
+      64: aload_0
+      65: getfield      #63                 // Field s:Ljava/util/Scanner;
+      68: invokevirtual #68                 // Method java/util/Scanner.next:()Ljava/lang/String;
+      71: astore_1
+      72: aload_1
+      73: ldc           #69                 // String NL
+      75: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      78: ifeq          97
+      81: aload_0
+      82: dup
+      83: getfield      #10                 // Field curLine:I
+      86: iconst_1
+      87: iadd
+      88: putfield      #10                 // Field curLine:I
+      91: aload_0
+      92: fconst_0
+      93: putfield      #9                  // Field curLineWidth:F
+      96: return
+      97: aload_1
+      98: invokestatic  #71                 // Method com/megacrit/cardcrawl/ui/DialogWord.identifyWordColor:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+     101: astore_2
+     102: aload_2
+     103: getstatic     #72                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordColor.DEFAULT:Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;
+     106: if_acmpeq     119
+     109: aload_1
+     110: iconst_2
+     111: aload_1
+     112: invokevirtual #73                 // Method java/lang/String.length:()I
+     115: invokevirtual #74                 // Method java/lang/String.substring:(II)Ljava/lang/String;
+     118: astore_1
+     119: aload_1
+     120: invokestatic  #75                 // Method com/megacrit/cardcrawl/ui/DialogWord.identifyWordEffect:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+     123: astore_3
+     124: aload_3
+     125: getstatic     #76                 // Field com/megacrit/cardcrawl/ui/DialogWord$WordEffect.NONE:Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;
+     128: if_acmpeq     143
+     131: aload_1
+     132: iconst_1
+     133: aload_1
+     134: invokevirtual #73                 // Method java/lang/String.length:()I
+     137: iconst_1
+     138: isub
+     139: invokevirtual #74                 // Method java/lang/String.substring:(II)Ljava/lang/String;
+     142: astore_1
+     143: aload_0
+     144: getfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     147: getstatic     #79                 // Field com/megacrit/cardcrawl/helpers/FontHelper.charDescFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     150: aload_1
+     151: invokevirtual #80                 // Method com/badlogic/gdx/graphics/g2d/GlyphLayout.setText:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/CharSequence;)V
+     154: aload_0
+     155: getfield      #9                  // Field curLineWidth:F
+     158: aload_0
+     159: getfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     162: getfield      #81                 // Field com/badlogic/gdx/graphics/g2d/GlyphLayout.width:F
+     165: fadd
+     166: getstatic     #82                 // Field DIALOG_MSG_W:F
+     169: fcmpl
+     170: ifle          201
+     173: aload_0
+     174: dup
+     175: getfield      #10                 // Field curLine:I
+     178: iconst_1
+     179: iadd
+     180: putfield      #10                 // Field curLine:I
+     183: aload_0
+     184: aload_0
+     185: getfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     188: getfield      #81                 // Field com/badlogic/gdx/graphics/g2d/GlyphLayout.width:F
+     191: getstatic     #88                 // Field CHAR_SPACING:F
+     194: fadd
+     195: putfield      #9                  // Field curLineWidth:F
+     198: goto          221
+     201: aload_0
+     202: dup
+     203: getfield      #9                  // Field curLineWidth:F
+     206: aload_0
+     207: getfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     210: getfield      #81                 // Field com/badlogic/gdx/graphics/g2d/GlyphLayout.width:F
+     213: getstatic     #88                 // Field CHAR_SPACING:F
+     216: fadd
+     217: fadd
+     218: putfield      #9                  // Field curLineWidth:F
+     221: aload_0
+     222: getfield      #16                 // Field words:Ljava/util/ArrayList;
+     225: new           #38                 // class com/megacrit/cardcrawl/ui/DialogWord
+     228: dup
+     229: getstatic     #79                 // Field com/megacrit/cardcrawl/helpers/FontHelper.charDescFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+     232: aload_1
+     233: aload_0
+     234: getfield      #64                 // Field a_effect:Lcom/megacrit/cardcrawl/ui/DialogWord$AppearEffect;
+     237: aload_3
+     238: aload_2
+     239: getstatic     #83                 // Field DIALOG_MSG_X:F
+     242: aload_0
+     243: getfield      #9                  // Field curLineWidth:F
+     246: fadd
+     247: aload_0
+     248: getfield      #13                 // Field gl:Lcom/badlogic/gdx/graphics/g2d/GlyphLayout;
+     251: getfield      #81                 // Field com/badlogic/gdx/graphics/g2d/GlyphLayout.width:F
+     254: fsub
+     255: getstatic     #84                 // Field DIALOG_MSG_Y:F
+     258: getstatic     #85                 // Field LINE_SPACING:F
+     261: aload_0
+     262: getfield      #10                 // Field curLine:I
+     265: i2f
+     266: fmul
+     267: fsub
+     268: aload_0
+     269: getfield      #10                 // Field curLine:I
+     272: invokespecial #86                 // Method com/megacrit/cardcrawl/ui/DialogWord."<init>":(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;Lcom/megacrit/cardcrawl/ui/DialogWord$AppearEffect;Lcom/megacrit/cardcrawl/ui/DialogWord$WordEffect;Lcom/megacrit/cardcrawl/ui/DialogWord$WordColor;FFI)V
+     275: invokevirtual #50                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     278: pop
+     279: aload_0
+     280: getfield      #8                  // Field show:Z
+     283: ifne          308
+     286: aload_0
+     287: getfield      #16                 // Field words:Ljava/util/ArrayList;
+     290: aload_0
+     291: getfield      #16                 // Field words:Ljava/util/ArrayList;
+     294: invokevirtual #25                 // Method java/util/ArrayList.size:()I
+     297: iconst_1
+     298: isub
+     299: invokevirtual #26                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     302: checkcast     #38                 // class com/megacrit/cardcrawl/ui/DialogWord
+     305: invokevirtual #47                 // Method com/megacrit/cardcrawl/ui/DialogWord.dialogFadeOut:()V
+     308: goto          323
+     311: aload_0
+     312: iconst_1
+     313: putfield      #17                 // Field textDone:Z
+     316: aload_0
+     317: getfield      #63                 // Field s:Ljava/util/Scanner;
+     320: invokevirtual #87                 // Method java/util/Scanner.close:()V
+     323: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: getstatic     #89                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: getfield      #90                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.isDead:Z
+       6: ifne          157
+       9: aload_0
+      10: getfield      #16                 // Field words:Ljava/util/ArrayList;
+      13: invokevirtual #35                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      16: astore_2
+      17: aload_2
+      18: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      23: ifeq          55
+      26: aload_2
+      27: invokeinterface #37,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      32: checkcast     #38                 // class com/megacrit/cardcrawl/ui/DialogWord
+      35: astore_3
+      36: aload_3
+      37: aload_1
+      38: getstatic     #91                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      41: i2f
+      42: ldc           #92                 // float 525.0f
+      44: getstatic     #93                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      47: fmul
+      48: fsub
+      49: invokevirtual #94                 // Method com/megacrit/cardcrawl/ui/DialogWord.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;F)V
+      52: goto          17
+      55: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      58: invokevirtual #35                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      61: astore_2
+      62: aload_2
+      63: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      68: ifeq          89
+      71: aload_2
+      72: invokeinterface #37,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      77: checkcast     #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+      80: astore_3
+      81: aload_3
+      82: aload_1
+      83: invokevirtual #95                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      86: goto          62
+      89: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      92: invokevirtual #35                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      95: astore_2
+      96: aload_2
+      97: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     102: ifeq          123
+     105: aload_2
+     106: invokeinterface #37,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     111: checkcast     #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+     114: astore_3
+     115: aload_3
+     116: aload_1
+     117: invokevirtual #96                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton.renderCardPreview:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     120: goto          96
+     123: getstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+     126: invokevirtual #35                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     129: astore_2
+     130: aload_2
+     131: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     136: ifeq          157
+     139: aload_2
+     140: invokeinterface #37,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     145: checkcast     #27                 // class com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton
+     148: astore_3
+     149: aload_3
+     150: aload_1
+     151: invokevirtual #97                 // Method com/megacrit/cardcrawl/ui/buttons/LargeDialogOptionButton.renderRelicPreview:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     154: goto          130
+     157: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: new           #2                  // class com/badlogic/gdx/graphics/Color
+       3: dup
+       4: fconst_0
+       5: fconst_0
+       6: fconst_0
+       7: ldc           #44                 // float 0.5f
+       9: invokespecial #3                  // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+      12: putstatic     #41                 // Field PANEL_COLOR:Lcom/badlogic/gdx/graphics/Color;
+      15: ldc           #22                 // float 8.0f
+      17: getstatic     #93                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      20: fmul
+      21: putstatic     #88                 // Field CHAR_SPACING:F
+      24: ldc           #98                 // float 34.0f
+      26: getstatic     #93                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      29: fmul
+      30: putstatic     #85                 // Field LINE_SPACING:F
+      33: getstatic     #99                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      36: i2f
+      37: ldc           #100                // float 0.1f
+      39: fmul
+      40: putstatic     #83                 // Field DIALOG_MSG_X:F
+      43: ldc           #101                // float 250.0f
+      45: getstatic     #93                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      48: fmul
+      49: putstatic     #84                 // Field DIALOG_MSG_Y:F
+      52: getstatic     #99                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      55: i2f
+      56: ldc           #102                // float 0.8f
+      58: fmul
+      59: putstatic     #82                 // Field DIALOG_MSG_W:F
+      62: new           #14                 // class java/util/ArrayList
+      65: dup
+      66: invokespecial #15                 // Method java/util/ArrayList."<init>":()V
+      69: putstatic     #24                 // Field optionList:Ljava/util/ArrayList;
+      72: iconst_m1
+      73: putstatic     #31                 // Field selectedOption:I
+      76: iconst_1
+      77: putstatic     #30                 // Field waitForInput:Z
+      80: return
+}

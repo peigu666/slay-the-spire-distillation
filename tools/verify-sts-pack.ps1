@@ -2,7 +2,8 @@
 param(
     [Parameter(Mandatory = $true)] [string]$GameRoot,
     [Parameter(Mandatory = $true)] [string]$PackRoot,
-    [switch]$VerifyPackFiles
+    [switch]$VerifyPackFiles,
+    [switch]$VerifyWorkshopExternalFiles
 )
 
 $ErrorActionPreference = 'Stop'
@@ -28,6 +29,24 @@ foreach ($jar in @($manifest.jars)) {
     $hash = (Get-FileHash -LiteralPath $actual -Algorithm SHA256).Hash.ToUpperInvariant()
     if (($item.Length -ne [int64]$jar.size) -or ($hash -ne ([string]$jar.sha256).ToUpperInvariant())) { $failures.Add("mismatch $($jar.name) [$portable]: sizeOk=$($item.Length -eq [int64]$jar.size) hashOk=$($hash -eq ([string]$jar.sha256).ToUpperInvariant())") }
     else { Write-Host "OK   $($jar.name) $hash" -ForegroundColor Green }
+}
+if ($VerifyWorkshopExternalFiles) {
+    $externalIndex = Join-Path $packRoot 'environment\workshop_external_files.jsonl'
+    if (-not (Test-Path -LiteralPath $externalIndex -PathType Leaf)) { $failures.Add("missing external Workshop index: $externalIndex") }
+    else {
+        foreach ($line in Get-Content -LiteralPath $externalIndex -Encoding UTF8) {
+            if ([string]::IsNullOrWhiteSpace($line)) { continue }
+            $entry = $line | ConvertFrom-Json
+            $portable = [string]$entry.portable_path
+            if ($portable -notlike 'workshop/*') { $failures.Add("invalid external Workshop path: $portable"); continue }
+            $relative = $portable.Substring(9) -replace '/', [IO.Path]::DirectorySeparatorChar
+            $actual = Join-Path $workshopRoot $relative
+            if (-not (Test-Path -LiteralPath $actual -PathType Leaf)) { $failures.Add("missing external Workshop file [$portable]: $actual"); continue }
+            $item = Get-Item -LiteralPath $actual
+            $hash = (Get-FileHash -LiteralPath $actual -Algorithm SHA256).Hash.ToUpperInvariant()
+            if ($item.Length -ne [int64]$entry.size -or $hash -ne ([string]$entry.sha256).ToUpperInvariant()) { $failures.Add("external Workshop mismatch: $portable") }
+        }
+    }
 }
 if ($VerifyPackFiles) {
     $index = Join-Path $packRoot 'ai_file_index.jsonl'

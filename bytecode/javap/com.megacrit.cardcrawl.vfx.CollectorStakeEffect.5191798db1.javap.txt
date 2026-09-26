@@ -1,0 +1,410 @@
+Compiled from "CollectorStakeEffect.java"
+public class com.megacrit.cardcrawl.vfx.CollectorStakeEffect extends com.megacrit.cardcrawl.vfx.AbstractGameEffect {
+  private static com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion img;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private float x;
+    descriptor: F
+
+  private float y;
+    descriptor: F
+
+  private float sX;
+    descriptor: F
+
+  private float sY;
+    descriptor: F
+
+  private float tX;
+    descriptor: F
+
+  private float tY;
+    descriptor: F
+
+  private float targetAngle;
+    descriptor: F
+
+  private float startingAngle;
+    descriptor: F
+
+  private float targetScale;
+    descriptor: F
+
+  private boolean shownSlash;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.vfx.CollectorStakeEffect(float, float);
+    descriptor: (FF)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/vfx/AbstractGameEffect."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #2                  // Field shownSlash:Z
+       9: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      12: ifnonnull     26
+      15: getstatic     #4                  // Field com/megacrit/cardcrawl/helpers/ImageMaster.vfxAtlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+      18: ldc           #5                  // String combat/stake
+      20: invokevirtual #6                  // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      23: putstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      26: ldc           #8                  // float 0.017453292f
+      28: ldc           #9                  // float -50.0f
+      30: ldc           #10                 // float 230.0f
+      32: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+      35: fmul
+      36: fstore_3
+      37: aload_0
+      38: fload_3
+      39: invokestatic  #12                 // Method com/badlogic/gdx/math/MathUtils.cos:(F)F
+      42: ldc           #13                 // float 200.0f
+      44: ldc           #14                 // float 600.0f
+      46: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+      49: fmul
+      50: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      53: fmul
+      54: fload_1
+      55: fadd
+      56: putfield      #16                 // Field x:F
+      59: aload_0
+      60: fload_3
+      61: invokestatic  #17                 // Method com/badlogic/gdx/math/MathUtils.sin:(F)F
+      64: ldc           #13                 // float 200.0f
+      66: ldc           #18                 // float 500.0f
+      68: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+      71: fmul
+      72: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      75: fmul
+      76: fload_2
+      77: fadd
+      78: putfield      #19                 // Field y:F
+      81: aload_0
+      82: fconst_1
+      83: putfield      #20                 // Field duration:F
+      86: aload_0
+      87: ldc           #21                 // float 0.01f
+      89: putfield      #22                 // Field scale:F
+      92: aload_0
+      93: ldc           #23                 // float 0.4f
+      95: ldc           #24                 // float 1.1f
+      97: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     100: putfield      #25                 // Field targetScale:F
+     103: aload_0
+     104: fload_2
+     105: aload_0
+     106: getfield      #19                 // Field y:F
+     109: fsub
+     110: fload_1
+     111: aload_0
+     112: getfield      #16                 // Field x:F
+     115: fsub
+     116: invokestatic  #26                 // Method com/badlogic/gdx/math/MathUtils.atan2:(FF)F
+     119: ldc           #27                 // float 57.295776f
+     121: fmul
+     122: ldc           #28                 // float 90.0f
+     124: fadd
+     125: putfield      #29                 // Field targetAngle:F
+     128: aload_0
+     129: fconst_0
+     130: ldc           #30                 // float 360.0f
+     132: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     135: putfield      #31                 // Field startingAngle:F
+     138: aload_0
+     139: aload_0
+     140: getfield      #31                 // Field startingAngle:F
+     143: putfield      #32                 // Field rotation:F
+     146: aload_0
+     147: dup
+     148: getfield      #16                 // Field x:F
+     151: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     154: getfield      #33                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedWidth:I
+     157: iconst_2
+     158: idiv
+     159: i2f
+     160: fsub
+     161: putfield      #16                 // Field x:F
+     164: aload_0
+     165: dup
+     166: getfield      #19                 // Field y:F
+     169: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     172: getfield      #34                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedHeight:I
+     175: iconst_2
+     176: idiv
+     177: i2f
+     178: fsub
+     179: putfield      #19                 // Field y:F
+     182: aload_0
+     183: aload_0
+     184: getfield      #16                 // Field x:F
+     187: putfield      #35                 // Field sX:F
+     190: aload_0
+     191: aload_0
+     192: getfield      #19                 // Field y:F
+     195: putfield      #36                 // Field sY:F
+     198: aload_0
+     199: fload_1
+     200: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     203: getfield      #33                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedWidth:I
+     206: iconst_2
+     207: idiv
+     208: i2f
+     209: fsub
+     210: putfield      #37                 // Field tX:F
+     213: aload_0
+     214: fload_2
+     215: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     218: getfield      #34                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedHeight:I
+     221: iconst_2
+     222: idiv
+     223: i2f
+     224: fsub
+     225: putfield      #38                 // Field tY:F
+     228: aload_0
+     229: new           #39                 // class com/badlogic/gdx/graphics/Color
+     232: dup
+     233: ldc           #40                 // float 0.5f
+     235: fconst_1
+     236: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     239: fconst_0
+     240: ldc           #23                 // float 0.4f
+     242: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     245: ldc           #40                 // float 0.5f
+     247: fconst_1
+     248: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     251: fconst_0
+     252: invokespecial #41                 // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     255: putfield      #42                 // Field color:Lcom/badlogic/gdx/graphics/Color;
+     258: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getstatic     #43                 // Field com/badlogic/gdx/math/Interpolation.elasticIn:Lcom/badlogic/gdx/math/Interpolation$ElasticIn;
+       4: aload_0
+       5: getfield      #29                 // Field targetAngle:F
+       8: aload_0
+       9: getfield      #31                 // Field startingAngle:F
+      12: aload_0
+      13: getfield      #20                 // Field duration:F
+      16: invokevirtual #44                 // Method com/badlogic/gdx/math/Interpolation$ElasticIn.apply:(FFF)F
+      19: putfield      #32                 // Field rotation:F
+      22: aload_0
+      23: getfield      #20                 // Field duration:F
+      26: ldc           #40                 // float 0.5f
+      28: fcmpl
+      29: ifle          94
+      32: aload_0
+      33: getstatic     #43                 // Field com/badlogic/gdx/math/Interpolation.elasticIn:Lcom/badlogic/gdx/math/Interpolation$ElasticIn;
+      36: aload_0
+      37: getfield      #25                 // Field targetScale:F
+      40: aload_0
+      41: getfield      #25                 // Field targetScale:F
+      44: ldc           #45                 // float 10.0f
+      46: fmul
+      47: aload_0
+      48: getfield      #20                 // Field duration:F
+      51: ldc           #40                 // float 0.5f
+      53: fsub
+      54: fconst_2
+      55: fmul
+      56: invokevirtual #44                 // Method com/badlogic/gdx/math/Interpolation$ElasticIn.apply:(FFF)F
+      59: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      62: fmul
+      63: putfield      #22                 // Field scale:F
+      66: aload_0
+      67: getfield      #42                 // Field color:Lcom/badlogic/gdx/graphics/Color;
+      70: getstatic     #46                 // Field com/badlogic/gdx/math/Interpolation.fade:Lcom/badlogic/gdx/math/Interpolation;
+      73: ldc           #47                 // float 0.6f
+      75: fconst_0
+      76: aload_0
+      77: getfield      #20                 // Field duration:F
+      80: ldc           #40                 // float 0.5f
+      82: fsub
+      83: fconst_2
+      84: fmul
+      85: invokevirtual #48                 // Method com/badlogic/gdx/math/Interpolation.apply:(FFF)F
+      88: putfield      #49                 // Field com/badlogic/gdx/graphics/Color.a:F
+      91: goto          142
+      94: aload_0
+      95: getstatic     #50                 // Field com/badlogic/gdx/math/Interpolation.exp10Out:Lcom/badlogic/gdx/math/Interpolation$ExpOut;
+      98: aload_0
+      99: getfield      #37                 // Field tX:F
+     102: aload_0
+     103: getfield      #35                 // Field sX:F
+     106: aload_0
+     107: getfield      #20                 // Field duration:F
+     110: fconst_2
+     111: fmul
+     112: invokevirtual #51                 // Method com/badlogic/gdx/math/Interpolation$ExpOut.apply:(FFF)F
+     115: putfield      #16                 // Field x:F
+     118: aload_0
+     119: getstatic     #50                 // Field com/badlogic/gdx/math/Interpolation.exp10Out:Lcom/badlogic/gdx/math/Interpolation$ExpOut;
+     122: aload_0
+     123: getfield      #38                 // Field tY:F
+     126: aload_0
+     127: getfield      #36                 // Field sY:F
+     130: aload_0
+     131: getfield      #20                 // Field duration:F
+     134: fconst_2
+     135: fmul
+     136: invokevirtual #51                 // Method com/badlogic/gdx/math/Interpolation$ExpOut.apply:(FFF)F
+     139: putfield      #19                 // Field y:F
+     142: aload_0
+     143: getfield      #20                 // Field duration:F
+     146: ldc           #52                 // float 0.05f
+     148: fcmpg
+     149: ifge          213
+     152: aload_0
+     153: getfield      #2                  // Field shownSlash:Z
+     156: ifne          213
+     159: getstatic     #53                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectsQueue:Ljava/util/ArrayList;
+     162: new           #54                 // class com/megacrit/cardcrawl/vfx/combat/AdditiveSlashImpactEffect
+     165: dup
+     166: aload_0
+     167: getfield      #37                 // Field tX:F
+     170: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     173: getfield      #33                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedWidth:I
+     176: i2f
+     177: fconst_2
+     178: fdiv
+     179: fadd
+     180: aload_0
+     181: getfield      #38                 // Field tY:F
+     184: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     187: getfield      #34                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedHeight:I
+     190: i2f
+     191: fconst_2
+     192: fdiv
+     193: fadd
+     194: aload_0
+     195: getfield      #42                 // Field color:Lcom/badlogic/gdx/graphics/Color;
+     198: invokevirtual #55                 // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+     201: invokespecial #56                 // Method com/megacrit/cardcrawl/vfx/combat/AdditiveSlashImpactEffect."<init>":(FFLcom/badlogic/gdx/graphics/Color;)V
+     204: invokevirtual #57                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     207: pop
+     208: aload_0
+     209: iconst_1
+     210: putfield      #2                  // Field shownSlash:Z
+     213: aload_0
+     214: dup
+     215: getfield      #20                 // Field duration:F
+     218: getstatic     #58                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+     221: invokeinterface #59,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+     226: fsub
+     227: putfield      #20                 // Field duration:F
+     230: aload_0
+     231: getfield      #20                 // Field duration:F
+     234: fconst_0
+     235: fcmpg
+     236: ifge          270
+     239: aload_0
+     240: iconst_1
+     241: putfield      #60                 // Field isDone:Z
+     244: getstatic     #61                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.screenShake:Lcom/megacrit/cardcrawl/helpers/ScreenShake;
+     247: getstatic     #62                 // Field com/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity.MED:Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity;
+     250: getstatic     #63                 // Field com/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur.SHORT:Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur;
+     253: invokestatic  #64                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+     256: invokevirtual #65                 // Method com/megacrit/cardcrawl/helpers/ScreenShake.shake:(Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity;Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur;Z)V
+     259: getstatic     #66                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     262: ldc           #67                 // String ATTACK_FAST
+     264: ldc           #68                 // float 0.2f
+     266: invokevirtual #69                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;F)J
+     269: pop2
+     270: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_1
+       1: sipush        770
+       4: iconst_1
+       5: invokevirtual #71                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setBlendFunction:(II)V
+       8: aload_1
+       9: aload_0
+      10: getfield      #42                 // Field color:Lcom/badlogic/gdx/graphics/Color;
+      13: invokevirtual #72                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      16: aload_1
+      17: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      20: aload_0
+      21: getfield      #16                 // Field x:F
+      24: aload_0
+      25: getfield      #19                 // Field y:F
+      28: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      31: getfield      #33                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedWidth:I
+      34: i2f
+      35: fconst_2
+      36: fdiv
+      37: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      40: getfield      #34                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedHeight:I
+      43: i2f
+      44: fconst_2
+      45: fdiv
+      46: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      49: getfield      #33                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedWidth:I
+      52: i2f
+      53: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      56: getfield      #34                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedHeight:I
+      59: i2f
+      60: aload_0
+      61: getfield      #22                 // Field scale:F
+      64: fconst_1
+      65: ldc           #73                 // float 1.2f
+      67: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+      70: fmul
+      71: aload_0
+      72: getfield      #22                 // Field scale:F
+      75: fconst_1
+      76: ldc           #73                 // float 1.2f
+      78: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+      81: fmul
+      82: aload_0
+      83: getfield      #32                 // Field rotation:F
+      86: invokevirtual #74                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/g2d/TextureRegion;FFFFFFFFF)V
+      89: aload_1
+      90: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      93: aload_0
+      94: getfield      #16                 // Field x:F
+      97: aload_0
+      98: getfield      #19                 // Field y:F
+     101: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     104: getfield      #33                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedWidth:I
+     107: i2f
+     108: fconst_2
+     109: fdiv
+     110: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     113: getfield      #34                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedHeight:I
+     116: i2f
+     117: fconst_2
+     118: fdiv
+     119: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     122: getfield      #33                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedWidth:I
+     125: i2f
+     126: getstatic     #3                  // Field img:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     129: getfield      #34                 // Field com/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion.packedHeight:I
+     132: i2f
+     133: aload_0
+     134: getfield      #22                 // Field scale:F
+     137: ldc           #75                 // float 0.9f
+     139: ldc           #24                 // float 1.1f
+     141: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     144: fmul
+     145: aload_0
+     146: getfield      #22                 // Field scale:F
+     149: ldc           #75                 // float 0.9f
+     151: ldc           #24                 // float 1.1f
+     153: invokestatic  #11                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     156: fmul
+     157: aload_0
+     158: getfield      #32                 // Field rotation:F
+     161: invokevirtual #74                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/g2d/TextureRegion;FFFFFFFFF)V
+     164: aload_1
+     165: sipush        770
+     168: sipush        771
+     171: invokevirtual #71                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setBlendFunction:(II)V
+     174: return
+
+  public void dispose();
+    descriptor: ()V
+    Code:
+       0: return
+}

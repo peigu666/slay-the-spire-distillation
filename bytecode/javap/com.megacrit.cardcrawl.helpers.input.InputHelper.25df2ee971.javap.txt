@@ -1,0 +1,450 @@
+Compiled from "InputHelper.java"
+public class com.megacrit.cardcrawl.helpers.input.InputHelper {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  public static int mX;
+    descriptor: I
+
+  public static int mY;
+    descriptor: I
+
+  public static boolean isMouseDown;
+    descriptor: Z
+
+  public static boolean isMouseDown_R;
+    descriptor: Z
+
+  private static boolean isPrevMouseDown;
+    descriptor: Z
+
+  private static boolean isPrevMouseDown_R;
+    descriptor: Z
+
+  public static boolean justClickedLeft;
+    descriptor: Z
+
+  public static boolean justClickedRight;
+    descriptor: Z
+
+  public static boolean touchDown;
+    descriptor: Z
+
+  public static boolean touchUp;
+    descriptor: Z
+
+  public static boolean justReleasedClickLeft;
+    descriptor: Z
+
+  public static boolean justReleasedClickRight;
+    descriptor: Z
+
+  public static boolean scrolledUp;
+    descriptor: Z
+
+  public static boolean scrolledDown;
+    descriptor: Z
+
+  public static boolean pressedEscape;
+    descriptor: Z
+
+  private static com.megacrit.cardcrawl.helpers.input.ScrollInputProcessor processor;
+    descriptor: Lcom/megacrit/cardcrawl/helpers/input/ScrollInputProcessor;
+
+  public static int scrollY;
+    descriptor: I
+
+  private static boolean ignoreOneCycle;
+    descriptor: Z
+
+  public static final int[] SHORTCUT_MODIFIER_KEYS;
+    descriptor: [I
+
+  public com.megacrit.cardcrawl.helpers.input.InputHelper();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void initialize();
+    descriptor: ()V
+    Code:
+       0: new           #2                  // class com/megacrit/cardcrawl/helpers/input/ScrollInputProcessor
+       3: dup
+       4: invokespecial #3                  // Method com/megacrit/cardcrawl/helpers/input/ScrollInputProcessor."<init>":()V
+       7: putstatic     #4                  // Field processor:Lcom/megacrit/cardcrawl/helpers/input/ScrollInputProcessor;
+      10: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      13: getstatic     #4                  // Field processor:Lcom/megacrit/cardcrawl/helpers/input/ScrollInputProcessor;
+      16: invokeinterface #6,  2            // InterfaceMethod com/badlogic/gdx/Input.setInputProcessor:(Lcom/badlogic/gdx/InputProcessor;)V
+      21: getstatic     #7                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      24: ldc           #8                  // String Setting input processor to Scroller
+      26: invokeinterface #9,  2            // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      31: invokestatic  #10                 // Method com/megacrit/cardcrawl/helpers/input/InputActionSet.load:()V
+      34: return
+
+  public static void regainInputFocus();
+    descriptor: ()V
+    Code:
+       0: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+       3: getstatic     #4                  // Field processor:Lcom/megacrit/cardcrawl/helpers/input/ScrollInputProcessor;
+       6: invokeinterface #6,  2            // InterfaceMethod com/badlogic/gdx/Input.setInputProcessor:(Lcom/badlogic/gdx/InputProcessor;)V
+      11: iconst_1
+      12: putstatic     #11                 // Field ignoreOneCycle:Z
+      15: return
+
+  public static void updateFirst();
+    descriptor: ()V
+    Code:
+       0: getstatic     #11                 // Field ignoreOneCycle:Z
+       3: ifeq          11
+       6: iconst_0
+       7: putstatic     #11                 // Field ignoreOneCycle:Z
+      10: return
+      11: getstatic     #12                 // Field com/megacrit/cardcrawl/core/Settings.isTouchScreen:Z
+      14: ifne          103
+      17: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      20: invokeinterface #13,  1           // InterfaceMethod com/badlogic/gdx/Input.getX:()I
+      25: putstatic     #14                 // Field mX:I
+      28: getstatic     #14                 // Field mX:I
+      31: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      34: if_icmple     46
+      37: getstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      40: putstatic     #14                 // Field mX:I
+      43: goto          56
+      46: getstatic     #14                 // Field mX:I
+      49: ifge          56
+      52: iconst_0
+      53: putstatic     #14                 // Field mX:I
+      56: getstatic     #16                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      59: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      62: invokeinterface #17,  1           // InterfaceMethod com/badlogic/gdx/Input.getY:()I
+      67: isub
+      68: putstatic     #18                 // Field mY:I
+      71: getstatic     #18                 // Field mY:I
+      74: getstatic     #16                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      77: if_icmple     89
+      80: getstatic     #16                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      83: putstatic     #18                 // Field mY:I
+      86: goto          148
+      89: getstatic     #18                 // Field mY:I
+      92: iconst_1
+      93: if_icmpge     148
+      96: iconst_1
+      97: putstatic     #18                 // Field mY:I
+     100: goto          148
+     103: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+     106: invokeinterface #13,  1           // InterfaceMethod com/badlogic/gdx/Input.getX:()I
+     111: getstatic     #19                 // Field com/megacrit/cardcrawl/core/Settings.VERT_LETTERBOX_AMT:I
+     114: iadd
+     115: putstatic     #14                 // Field mX:I
+     118: getstatic     #16                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     121: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+     124: invokeinterface #17,  1           // InterfaceMethod com/badlogic/gdx/Input.getY:()I
+     129: isub
+     130: getstatic     #20                 // Field com/megacrit/cardcrawl/core/Settings.HORIZ_LETTERBOX_AMT:I
+     133: iadd
+     134: putstatic     #18                 // Field mY:I
+     137: getstatic     #18                 // Field mY:I
+     140: iconst_1
+     141: if_icmpge     148
+     144: iconst_1
+     145: putstatic     #18                 // Field mY:I
+     148: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+     151: iconst_0
+     152: invokeinterface #22,  2           // InterfaceMethod com/badlogic/gdx/Input.isButtonPressed:(I)Z
+     157: putstatic     #23                 // Field isMouseDown:Z
+     160: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+     163: iconst_1
+     164: invokeinterface #22,  2           // InterfaceMethod com/badlogic/gdx/Input.isButtonPressed:(I)Z
+     169: putstatic     #24                 // Field isMouseDown_R:Z
+     172: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+     175: invokeinterface #25,  1           // InterfaceMethod com/badlogic/gdx/Input.getDeltaX:()I
+     180: ifeq          202
+     183: getstatic     #26                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     186: ifnull        202
+     189: getstatic     #26                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     192: getfield      #27                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.isInKeyboardMode:Z
+     195: ifeq          202
+     198: iconst_0
+     199: putstatic     #28                 // Field com/megacrit/cardcrawl/core/GameCursor.hidden:Z
+     202: getstatic     #29                 // Field isPrevMouseDown:Z
+     205: ifne          214
+     208: getstatic     #23                 // Field isMouseDown:Z
+     211: ifne          220
+     214: getstatic     #30                 // Field touchDown:Z
+     217: ifeq          302
+     220: getstatic     #31                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.cursor:Lcom/megacrit/cardcrawl/core/GameCursor;
+     223: getfield      #32                 // Field com/megacrit/cardcrawl/core/GameCursor.color:Lcom/badlogic/gdx/graphics/Color;
+     226: ldc           #33                 // float 0.7f
+     228: putfield      #34                 // Field com/badlogic/gdx/graphics/Color.a:F
+     231: iconst_0
+     232: putstatic     #30                 // Field touchDown:Z
+     235: iconst_1
+     236: putstatic     #35                 // Field justClickedLeft:Z
+     239: getstatic     #36                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+     242: ifeq          248
+     245: invokestatic  #37                 // Method leaveControllerMode:()V
+     248: getstatic     #38                 // Field com/megacrit/cardcrawl/core/Settings.isDebug:Z
+     251: ifeq          328
+     254: getstatic     #7                  // Field logger:Lorg/apache/logging/log4j/Logger;
+     257: new           #39                 // class java/lang/StringBuilder
+     260: dup
+     261: invokespecial #40                 // Method java/lang/StringBuilder."<init>":()V
+     264: ldc           #41                 // String Clicked: (
+     266: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     269: getstatic     #14                 // Field mX:I
+     272: invokevirtual #43                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     275: ldc           #44                 // String ,
+     277: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     280: getstatic     #18                 // Field mY:I
+     283: invokevirtual #43                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     286: ldc           #45                 // String )
+     288: invokevirtual #42                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     291: invokevirtual #46                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     294: invokeinterface #9,  2            // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     299: goto          328
+     302: getstatic     #29                 // Field isPrevMouseDown:Z
+     305: ifeq          314
+     308: getstatic     #23                 // Field isMouseDown:Z
+     311: ifeq          320
+     314: getstatic     #47                 // Field touchUp:Z
+     317: ifeq          328
+     320: iconst_0
+     321: putstatic     #47                 // Field touchUp:Z
+     324: iconst_1
+     325: putstatic     #48                 // Field justReleasedClickLeft:Z
+     328: getstatic     #49                 // Field isPrevMouseDown_R:Z
+     331: ifne          356
+     334: getstatic     #24                 // Field isMouseDown_R:Z
+     337: ifeq          356
+     340: iconst_1
+     341: putstatic     #50                 // Field justClickedRight:Z
+     344: getstatic     #36                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+     347: ifeq          372
+     350: invokestatic  #37                 // Method leaveControllerMode:()V
+     353: goto          372
+     356: getstatic     #49                 // Field isPrevMouseDown_R:Z
+     359: ifeq          372
+     362: getstatic     #24                 // Field isMouseDown_R:Z
+     365: ifne          372
+     368: iconst_1
+     369: putstatic     #51                 // Field justReleasedClickRight:Z
+     372: getstatic     #52                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.cancel:Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+     375: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/input/InputAction.isJustPressed:()Z
+     378: putstatic     #54                 // Field pressedEscape:Z
+     381: getstatic     #24                 // Field isMouseDown_R:Z
+     384: putstatic     #49                 // Field isPrevMouseDown_R:Z
+     387: getstatic     #23                 // Field isMouseDown:Z
+     390: putstatic     #29                 // Field isPrevMouseDown:Z
+     393: return
+
+  private static void leaveControllerMode();
+    descriptor: ()V
+    Code:
+       0: getstatic     #55                 // Field com/megacrit/cardcrawl/core/Settings.isConsoleBuild:Z
+       3: ifeq          23
+       6: getstatic     #7                  // Field logger:Lorg/apache/logging/log4j/Logger;
+       9: ldc           #56                 // String ENTERING TOUCH SCREEN MODE
+      11: invokeinterface #9,  2            // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      16: iconst_1
+      17: putstatic     #12                 // Field com/megacrit/cardcrawl/core/Settings.isTouchScreen:Z
+      20: goto          39
+      23: getstatic     #7                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      26: ldc           #57                 // String LEAVING CONTROLLER MODE
+      28: invokeinterface #9,  2            // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      33: getstatic     #58                 // Field com/megacrit/cardcrawl/core/Settings.TOUCHSCREEN_ENABLED:Z
+      36: putstatic     #12                 // Field com/megacrit/cardcrawl/core/Settings.isTouchScreen:Z
+      39: iconst_0
+      40: putstatic     #36                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+      43: iconst_0
+      44: putstatic     #28                 // Field com/megacrit/cardcrawl/core/GameCursor.hidden:Z
+      47: getstatic     #26                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      50: ifnull        79
+      53: invokestatic  #59                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.isPlayerInDungeon:()Z
+      56: ifeq          79
+      59: getstatic     #26                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      62: iconst_0
+      63: putfield      #60                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.viewingRelics:Z
+      66: getstatic     #61                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topPanel:Lcom/megacrit/cardcrawl/ui/panels/TopPanel;
+      69: iconst_0
+      70: putfield      #62                 // Field com/megacrit/cardcrawl/ui/panels/TopPanel.selectPotionMode:Z
+      73: getstatic     #26                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      76: invokevirtual #63                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.releaseCard:()V
+      79: return
+
+  public static void updateLast();
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: putstatic     #35                 // Field justClickedLeft:Z
+       4: iconst_0
+       5: putstatic     #50                 // Field justClickedRight:Z
+       8: iconst_0
+       9: putstatic     #48                 // Field justReleasedClickLeft:Z
+      12: iconst_0
+      13: putstatic     #51                 // Field justReleasedClickRight:Z
+      16: iconst_0
+      17: putstatic     #64                 // Field scrolledUp:Z
+      20: iconst_0
+      21: putstatic     #65                 // Field scrolledDown:Z
+      24: return
+
+  public static com.megacrit.cardcrawl.cards.AbstractCard getCardSelectedByHotkey(com.megacrit.cardcrawl.cards.CardGroup);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/CardGroup;)Lcom/megacrit/cardcrawl/cards/AbstractCard;
+    Code:
+       0: iconst_0
+       1: istore_1
+       2: iload_1
+       3: getstatic     #66                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCardActions:[Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+       6: arraylength
+       7: if_icmpge     47
+      10: iload_1
+      11: aload_0
+      12: invokevirtual #67                 // Method com/megacrit/cardcrawl/cards/CardGroup.size:()I
+      15: if_icmpge     47
+      18: getstatic     #66                 // Field com/megacrit/cardcrawl/helpers/input/InputActionSet.selectCardActions:[Lcom/megacrit/cardcrawl/helpers/input/InputAction;
+      21: iload_1
+      22: aaload
+      23: invokevirtual #53                 // Method com/megacrit/cardcrawl/helpers/input/InputAction.isJustPressed:()Z
+      26: ifeq          41
+      29: aload_0
+      30: getfield      #68                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+      33: iload_1
+      34: invokevirtual #69                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      37: checkcast     #70                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      40: areturn
+      41: iinc          1, 1
+      44: goto          2
+      47: aconst_null
+      48: areturn
+
+  public static boolean isShortcutModifierKeyPressed();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #71                 // Field SHORTCUT_MODIFIER_KEYS:[I
+       3: astore_0
+       4: aload_0
+       5: arraylength
+       6: istore_1
+       7: iconst_0
+       8: istore_2
+       9: iload_2
+      10: iload_1
+      11: if_icmpge     38
+      14: aload_0
+      15: iload_2
+      16: iaload
+      17: istore_3
+      18: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      21: iload_3
+      22: invokeinterface #72,  2           // InterfaceMethod com/badlogic/gdx/Input.isKeyPressed:(I)Z
+      27: ifeq          32
+      30: iconst_1
+      31: ireturn
+      32: iinc          2, 1
+      35: goto          9
+      38: iconst_0
+      39: ireturn
+
+  public static boolean isPasteJustPressed();
+    descriptor: ()Z
+    Code:
+       0: invokestatic  #73                 // Method isShortcutModifierKeyPressed:()Z
+       3: ifeq          23
+       6: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+       9: bipush        50
+      11: invokeinterface #75,  2           // InterfaceMethod com/badlogic/gdx/Input.isKeyJustPressed:(I)Z
+      16: ifeq          23
+      19: iconst_1
+      20: goto          24
+      23: iconst_0
+      24: ireturn
+
+  public static boolean didMoveMouse();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+       3: invokeinterface #25,  1           // InterfaceMethod com/badlogic/gdx/Input.getDeltaX:()I
+       8: ifne          22
+      11: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      14: invokeinterface #76,  1           // InterfaceMethod com/badlogic/gdx/Input.getDeltaY:()I
+      19: ifeq          26
+      22: iconst_1
+      23: goto          27
+      26: iconst_0
+      27: ireturn
+
+  public static void moveCursorToNeutralPosition();
+    descriptor: ()V
+    Code:
+       0: getstatic     #12                 // Field com/megacrit/cardcrawl/core/Settings.isTouchScreen:Z
+       3: ifeq          37
+       6: getstatic     #36                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+       9: ifne          37
+      12: getstatic     #5                  // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      15: bipush        10
+      17: getstatic     #16                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      20: iconst_2
+      21: idiv
+      22: invokeinterface #77,  3           // InterfaceMethod com/badlogic/gdx/Input.setCursorPosition:(II)V
+      27: getstatic     #31                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.cursor:Lcom/megacrit/cardcrawl/core/GameCursor;
+      30: getfield      #32                 // Field com/megacrit/cardcrawl/core/GameCursor.color:Lcom/badlogic/gdx/graphics/Color;
+      33: fconst_0
+      34: putfield      #34                 // Field com/badlogic/gdx/graphics/Color.a:F
+      37: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #78                 // class com/megacrit/cardcrawl/helpers/input/InputHelper
+       2: invokevirtual #79                 // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #80                 // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #7                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: iconst_0
+      12: putstatic     #23                 // Field isMouseDown:Z
+      15: iconst_0
+      16: putstatic     #24                 // Field isMouseDown_R:Z
+      19: iconst_0
+      20: putstatic     #29                 // Field isPrevMouseDown:Z
+      23: iconst_0
+      24: putstatic     #49                 // Field isPrevMouseDown_R:Z
+      27: iconst_0
+      28: putstatic     #35                 // Field justClickedLeft:Z
+      31: iconst_0
+      32: putstatic     #50                 // Field justClickedRight:Z
+      35: iconst_0
+      36: putstatic     #30                 // Field touchDown:Z
+      39: iconst_0
+      40: putstatic     #47                 // Field touchUp:Z
+      43: iconst_0
+      44: putstatic     #48                 // Field justReleasedClickLeft:Z
+      47: iconst_0
+      48: putstatic     #51                 // Field justReleasedClickRight:Z
+      51: iconst_0
+      52: putstatic     #64                 // Field scrolledUp:Z
+      55: iconst_0
+      56: putstatic     #65                 // Field scrolledDown:Z
+      59: iconst_0
+      60: putstatic     #54                 // Field pressedEscape:Z
+      63: iconst_0
+      64: putstatic     #81                 // Field scrollY:I
+      67: iconst_0
+      68: putstatic     #11                 // Field ignoreOneCycle:Z
+      71: iconst_3
+      72: newarray       int
+      74: dup
+      75: iconst_0
+      76: sipush        129
+      79: iastore
+      80: dup
+      81: iconst_1
+      82: sipush        130
+      85: iastore
+      86: dup
+      87: iconst_2
+      88: bipush        63
+      90: iastore
+      91: putstatic     #71                 // Field SHORTCUT_MODIFIER_KEYS:[I
+      94: return
+}

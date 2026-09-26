@@ -1,0 +1,589 @@
+Compiled from "Lightning.java"
+public class com.megacrit.cardcrawl.orbs.Lightning extends com.megacrit.cardcrawl.orbs.AbstractOrb {
+  public static final java.lang.String ORB_ID;
+    descriptor: Ljava/lang/String;
+
+  private static final com.megacrit.cardcrawl.localization.OrbStrings orbString;
+    descriptor: Lcom/megacrit/cardcrawl/localization/OrbStrings;
+
+  private float vfxTimer;
+    descriptor: F
+
+  private static final float PI_DIV_16;
+    descriptor: F
+
+  private static final float ORB_WAVY_DIST;
+    descriptor: F
+
+  private static final float PI_4;
+    descriptor: F
+
+  private static final float ORB_BORDER_SCALE;
+    descriptor: F
+
+  public com.megacrit.cardcrawl.orbs.Lightning();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #2                  // Method com/megacrit/cardcrawl/orbs/AbstractOrb."<init>":()V
+       4: aload_0
+       5: fconst_1
+       6: putfield      #3                  // Field vfxTimer:F
+       9: aload_0
+      10: ldc           #5                  // String Lightning
+      12: putfield      #6                  // Field ID:Ljava/lang/String;
+      15: aload_0
+      16: getstatic     #7                  // Field com/megacrit/cardcrawl/helpers/ImageMaster.ORB_LIGHTNING:Lcom/badlogic/gdx/graphics/Texture;
+      19: putfield      #8                  // Field img:Lcom/badlogic/gdx/graphics/Texture;
+      22: aload_0
+      23: getstatic     #9                  // Field orbString:Lcom/megacrit/cardcrawl/localization/OrbStrings;
+      26: getfield      #10                 // Field com/megacrit/cardcrawl/localization/OrbStrings.NAME:Ljava/lang/String;
+      29: putfield      #11                 // Field name:Ljava/lang/String;
+      32: aload_0
+      33: bipush        8
+      35: putfield      #12                 // Field baseEvokeAmount:I
+      38: aload_0
+      39: aload_0
+      40: getfield      #12                 // Field baseEvokeAmount:I
+      43: putfield      #13                 // Field evokeAmount:I
+      46: aload_0
+      47: iconst_3
+      48: putfield      #14                 // Field basePassiveAmount:I
+      51: aload_0
+      52: aload_0
+      53: getfield      #14                 // Field basePassiveAmount:I
+      56: putfield      #15                 // Field passiveAmount:I
+      59: aload_0
+      60: invokevirtual #16                 // Method updateDescription:()V
+      63: aload_0
+      64: ldc           #17                 // float 360.0f
+      66: invokestatic  #18                 // Method com/badlogic/gdx/math/MathUtils.random:(F)F
+      69: putfield      #19                 // Field angle:F
+      72: aload_0
+      73: ldc           #21                 // float 0.5f
+      75: putfield      #22                 // Field channelAnimTimer:F
+      78: return
+
+  public void updateDescription();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokevirtual #23                 // Method applyFocus:()V
+       4: aload_0
+       5: new           #24                 // class java/lang/StringBuilder
+       8: dup
+       9: invokespecial #25                 // Method java/lang/StringBuilder."<init>":()V
+      12: getstatic     #9                  // Field orbString:Lcom/megacrit/cardcrawl/localization/OrbStrings;
+      15: getfield      #26                 // Field com/megacrit/cardcrawl/localization/OrbStrings.DESCRIPTION:[Ljava/lang/String;
+      18: iconst_0
+      19: aaload
+      20: invokevirtual #27                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      23: aload_0
+      24: getfield      #15                 // Field passiveAmount:I
+      27: invokevirtual #28                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      30: getstatic     #9                  // Field orbString:Lcom/megacrit/cardcrawl/localization/OrbStrings;
+      33: getfield      #26                 // Field com/megacrit/cardcrawl/localization/OrbStrings.DESCRIPTION:[Ljava/lang/String;
+      36: iconst_1
+      37: aaload
+      38: invokevirtual #27                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      41: aload_0
+      42: getfield      #13                 // Field evokeAmount:I
+      45: invokevirtual #28                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      48: getstatic     #9                  // Field orbString:Lcom/megacrit/cardcrawl/localization/OrbStrings;
+      51: getfield      #26                 // Field com/megacrit/cardcrawl/localization/OrbStrings.DESCRIPTION:[Ljava/lang/String;
+      54: iconst_2
+      55: aaload
+      56: invokevirtual #27                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      59: invokevirtual #29                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      62: putfield      #30                 // Field description:Ljava/lang/String;
+      65: return
+
+  public void onEvoke();
+    descriptor: ()V
+    Code:
+       0: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: ldc           #33                 // String Electro
+       5: invokevirtual #34                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasPower:(Ljava/lang/String;)Z
+       8: ifeq          45
+      11: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      14: new           #36                 // class com/megacrit/cardcrawl/actions/defect/LightningOrbEvokeAction
+      17: dup
+      18: new           #37                 // class com/megacrit/cardcrawl/cards/DamageInfo
+      21: dup
+      22: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      25: aload_0
+      26: getfield      #13                 // Field evokeAmount:I
+      29: getstatic     #38                 // Field com/megacrit/cardcrawl/cards/DamageInfo$DamageType.THORNS:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+      32: invokespecial #39                 // Method com/megacrit/cardcrawl/cards/DamageInfo."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;ILcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;)V
+      35: iconst_1
+      36: invokespecial #40                 // Method com/megacrit/cardcrawl/actions/defect/LightningOrbEvokeAction."<init>":(Lcom/megacrit/cardcrawl/cards/DamageInfo;Z)V
+      39: invokevirtual #41                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      42: goto          76
+      45: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      48: new           #36                 // class com/megacrit/cardcrawl/actions/defect/LightningOrbEvokeAction
+      51: dup
+      52: new           #37                 // class com/megacrit/cardcrawl/cards/DamageInfo
+      55: dup
+      56: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      59: aload_0
+      60: getfield      #13                 // Field evokeAmount:I
+      63: getstatic     #38                 // Field com/megacrit/cardcrawl/cards/DamageInfo$DamageType.THORNS:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+      66: invokespecial #39                 // Method com/megacrit/cardcrawl/cards/DamageInfo."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;ILcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;)V
+      69: iconst_0
+      70: invokespecial #40                 // Method com/megacrit/cardcrawl/actions/defect/LightningOrbEvokeAction."<init>":(Lcom/megacrit/cardcrawl/cards/DamageInfo;Z)V
+      73: invokevirtual #41                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      76: return
+
+  public void onEndOfTurn();
+    descriptor: ()V
+    Code:
+       0: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: ldc           #33                 // String Electro
+       5: invokevirtual #34                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasPower:(Ljava/lang/String;)Z
+       8: ifeq          92
+      11: ldc           #42                 // float 0.2f
+      13: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      16: getfield      #43                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.orbs:Ljava/util/ArrayList;
+      19: invokevirtual #44                 // Method java/util/ArrayList.size:()I
+      22: i2f
+      23: fdiv
+      24: fstore_1
+      25: getstatic     #45                 // Field com/megacrit/cardcrawl/core/Settings.FAST_MODE:Z
+      28: ifeq          33
+      31: fconst_0
+      32: fstore_1
+      33: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      36: new           #46                 // class com/megacrit/cardcrawl/actions/animations/VFXAction
+      39: dup
+      40: new           #47                 // class com/megacrit/cardcrawl/vfx/combat/OrbFlareEffect
+      43: dup
+      44: aload_0
+      45: getstatic     #48                 // Field com/megacrit/cardcrawl/vfx/combat/OrbFlareEffect$OrbFlareColor.LIGHTNING:Lcom/megacrit/cardcrawl/vfx/combat/OrbFlareEffect$OrbFlareColor;
+      48: invokespecial #49                 // Method com/megacrit/cardcrawl/vfx/combat/OrbFlareEffect."<init>":(Lcom/megacrit/cardcrawl/orbs/AbstractOrb;Lcom/megacrit/cardcrawl/vfx/combat/OrbFlareEffect$OrbFlareColor;)V
+      51: fload_1
+      52: invokespecial #50                 // Method com/megacrit/cardcrawl/actions/animations/VFXAction."<init>":(Lcom/megacrit/cardcrawl/vfx/AbstractGameEffect;F)V
+      55: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      58: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      61: new           #36                 // class com/megacrit/cardcrawl/actions/defect/LightningOrbEvokeAction
+      64: dup
+      65: new           #37                 // class com/megacrit/cardcrawl/cards/DamageInfo
+      68: dup
+      69: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      72: aload_0
+      73: getfield      #15                 // Field passiveAmount:I
+      76: getstatic     #38                 // Field com/megacrit/cardcrawl/cards/DamageInfo$DamageType.THORNS:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+      79: invokespecial #39                 // Method com/megacrit/cardcrawl/cards/DamageInfo."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;ILcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;)V
+      82: iconst_1
+      83: invokespecial #40                 // Method com/megacrit/cardcrawl/actions/defect/LightningOrbEvokeAction."<init>":(Lcom/megacrit/cardcrawl/cards/DamageInfo;Z)V
+      86: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      89: goto          124
+      92: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      95: new           #52                 // class com/megacrit/cardcrawl/actions/defect/LightningOrbPassiveAction
+      98: dup
+      99: new           #37                 // class com/megacrit/cardcrawl/cards/DamageInfo
+     102: dup
+     103: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     106: aload_0
+     107: getfield      #15                 // Field passiveAmount:I
+     110: getstatic     #38                 // Field com/megacrit/cardcrawl/cards/DamageInfo$DamageType.THORNS:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+     113: invokespecial #39                 // Method com/megacrit/cardcrawl/cards/DamageInfo."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;ILcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;)V
+     116: aload_0
+     117: iconst_0
+     118: invokespecial #53                 // Method com/megacrit/cardcrawl/actions/defect/LightningOrbPassiveAction."<init>":(Lcom/megacrit/cardcrawl/cards/DamageInfo;Lcom/megacrit/cardcrawl/orbs/AbstractOrb;Z)V
+     121: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     124: return
+
+  private void triggerPassiveEffect(com.megacrit.cardcrawl.cards.DamageInfo, boolean);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/DamageInfo;Z)V
+    Code:
+       0: iload_2
+       1: ifne          129
+       4: invokestatic  #54                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getRandomMonster:()Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+       7: astore_3
+       8: aload_3
+       9: ifnull        126
+      12: ldc           #42                 // float 0.2f
+      14: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      17: getfield      #43                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.orbs:Ljava/util/ArrayList;
+      20: invokevirtual #44                 // Method java/util/ArrayList.size:()I
+      23: i2f
+      24: fdiv
+      25: fstore        4
+      27: getstatic     #45                 // Field com/megacrit/cardcrawl/core/Settings.FAST_MODE:Z
+      30: ifeq          36
+      33: fconst_0
+      34: fstore        4
+      36: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      39: new           #55                 // class com/megacrit/cardcrawl/actions/common/DamageAction
+      42: dup
+      43: aload_3
+      44: aload_1
+      45: getstatic     #56                 // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.NONE:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      48: iconst_1
+      49: invokespecial #57                 // Method com/megacrit/cardcrawl/actions/common/DamageAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/cards/DamageInfo;Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;Z)V
+      52: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      55: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      58: new           #46                 // class com/megacrit/cardcrawl/actions/animations/VFXAction
+      61: dup
+      62: new           #47                 // class com/megacrit/cardcrawl/vfx/combat/OrbFlareEffect
+      65: dup
+      66: aload_0
+      67: getstatic     #48                 // Field com/megacrit/cardcrawl/vfx/combat/OrbFlareEffect$OrbFlareColor.LIGHTNING:Lcom/megacrit/cardcrawl/vfx/combat/OrbFlareEffect$OrbFlareColor;
+      70: invokespecial #49                 // Method com/megacrit/cardcrawl/vfx/combat/OrbFlareEffect."<init>":(Lcom/megacrit/cardcrawl/orbs/AbstractOrb;Lcom/megacrit/cardcrawl/vfx/combat/OrbFlareEffect$OrbFlareColor;)V
+      73: fload         4
+      75: invokespecial #50                 // Method com/megacrit/cardcrawl/actions/animations/VFXAction."<init>":(Lcom/megacrit/cardcrawl/vfx/AbstractGameEffect;F)V
+      78: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      81: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      84: new           #46                 // class com/megacrit/cardcrawl/actions/animations/VFXAction
+      87: dup
+      88: new           #58                 // class com/megacrit/cardcrawl/vfx/combat/LightningEffect
+      91: dup
+      92: aload_3
+      93: getfield      #59                 // Field com/megacrit/cardcrawl/core/AbstractCreature.drawX:F
+      96: aload_3
+      97: getfield      #60                 // Field com/megacrit/cardcrawl/core/AbstractCreature.drawY:F
+     100: invokespecial #61                 // Method com/megacrit/cardcrawl/vfx/combat/LightningEffect."<init>":(FF)V
+     103: fload         4
+     105: invokespecial #50                 // Method com/megacrit/cardcrawl/actions/animations/VFXAction."<init>":(Lcom/megacrit/cardcrawl/vfx/AbstractGameEffect;F)V
+     108: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     111: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     114: new           #62                 // class com/megacrit/cardcrawl/actions/utility/SFXAction
+     117: dup
+     118: ldc           #63                 // String ORB_LIGHTNING_EVOKE
+     120: invokespecial #64                 // Method com/megacrit/cardcrawl/actions/utility/SFXAction."<init>":(Ljava/lang/String;)V
+     123: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     126: goto          304
+     129: ldc           #42                 // float 0.2f
+     131: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     134: getfield      #43                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.orbs:Ljava/util/ArrayList;
+     137: invokevirtual #44                 // Method java/util/ArrayList.size:()I
+     140: i2f
+     141: fdiv
+     142: fstore_3
+     143: getstatic     #45                 // Field com/megacrit/cardcrawl/core/Settings.FAST_MODE:Z
+     146: ifeq          151
+     149: fconst_0
+     150: fstore_3
+     151: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     154: new           #46                 // class com/megacrit/cardcrawl/actions/animations/VFXAction
+     157: dup
+     158: new           #47                 // class com/megacrit/cardcrawl/vfx/combat/OrbFlareEffect
+     161: dup
+     162: aload_0
+     163: getstatic     #48                 // Field com/megacrit/cardcrawl/vfx/combat/OrbFlareEffect$OrbFlareColor.LIGHTNING:Lcom/megacrit/cardcrawl/vfx/combat/OrbFlareEffect$OrbFlareColor;
+     166: invokespecial #49                 // Method com/megacrit/cardcrawl/vfx/combat/OrbFlareEffect."<init>":(Lcom/megacrit/cardcrawl/orbs/AbstractOrb;Lcom/megacrit/cardcrawl/vfx/combat/OrbFlareEffect$OrbFlareColor;)V
+     169: fload_3
+     170: invokespecial #50                 // Method com/megacrit/cardcrawl/actions/animations/VFXAction."<init>":(Lcom/megacrit/cardcrawl/vfx/AbstractGameEffect;F)V
+     173: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     176: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     179: new           #65                 // class com/megacrit/cardcrawl/actions/common/DamageAllEnemiesAction
+     182: dup
+     183: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     186: aload_1
+     187: getfield      #66                 // Field com/megacrit/cardcrawl/cards/DamageInfo.base:I
+     190: iconst_1
+     191: invokestatic  #67                 // Method com/megacrit/cardcrawl/cards/DamageInfo.createDamageMatrix:(IZ)[I
+     194: getstatic     #38                 // Field com/megacrit/cardcrawl/cards/DamageInfo$DamageType.THORNS:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+     197: getstatic     #56                 // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.NONE:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+     200: invokespecial #68                 // Method com/megacrit/cardcrawl/actions/common/DamageAllEnemiesAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;[ILcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;)V
+     203: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     206: invokestatic  #69                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getMonsters:()Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+     209: getfield      #70                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+     212: invokevirtual #71                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     215: astore        4
+     217: aload         4
+     219: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     224: ifeq          289
+     227: aload         4
+     229: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     234: checkcast     #74                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     237: astore        5
+     239: aload         5
+     241: invokevirtual #75                 // Method com/megacrit/cardcrawl/monsters/AbstractMonster.isDeadOrEscaped:()Z
+     244: ifne          286
+     247: aload         5
+     249: getfield      #76                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.halfDead:Z
+     252: ifne          286
+     255: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     258: new           #46                 // class com/megacrit/cardcrawl/actions/animations/VFXAction
+     261: dup
+     262: new           #58                 // class com/megacrit/cardcrawl/vfx/combat/LightningEffect
+     265: dup
+     266: aload         5
+     268: getfield      #77                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.drawX:F
+     271: aload         5
+     273: getfield      #78                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.drawY:F
+     276: invokespecial #61                 // Method com/megacrit/cardcrawl/vfx/combat/LightningEffect."<init>":(FF)V
+     279: fload_3
+     280: invokespecial #50                 // Method com/megacrit/cardcrawl/actions/animations/VFXAction."<init>":(Lcom/megacrit/cardcrawl/vfx/AbstractGameEffect;F)V
+     283: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     286: goto          217
+     289: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     292: new           #62                 // class com/megacrit/cardcrawl/actions/utility/SFXAction
+     295: dup
+     296: ldc           #63                 // String ORB_LIGHTNING_EVOKE
+     298: invokespecial #64                 // Method com/megacrit/cardcrawl/actions/utility/SFXAction."<init>":(Ljava/lang/String;)V
+     301: invokevirtual #51                 // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     304: return
+
+  public void triggerEvokeAnimation();
+    descriptor: ()V
+    Code:
+       0: getstatic     #79                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+       3: ldc           #63                 // String ORB_LIGHTNING_EVOKE
+       5: ldc           #80                 // float 0.1f
+       7: invokevirtual #81                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;F)J
+      10: pop2
+      11: getstatic     #82                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectsQueue:Ljava/util/ArrayList;
+      14: new           #83                 // class com/megacrit/cardcrawl/vfx/combat/LightningOrbActivateEffect
+      17: dup
+      18: aload_0
+      19: getfield      #84                 // Field cX:F
+      22: aload_0
+      23: getfield      #85                 // Field cY:F
+      26: invokespecial #86                 // Method com/megacrit/cardcrawl/vfx/combat/LightningOrbActivateEffect."<init>":(FF)V
+      29: invokevirtual #87                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      32: pop
+      33: return
+
+  public void updateAnimation();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #88                 // Method com/megacrit/cardcrawl/orbs/AbstractOrb.updateAnimation:()V
+       4: aload_0
+       5: dup
+       6: getfield      #19                 // Field angle:F
+       9: getstatic     #89                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+      12: invokeinterface #90,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      17: ldc           #91                 // float 180.0f
+      19: fmul
+      20: fadd
+      21: putfield      #19                 // Field angle:F
+      24: aload_0
+      25: dup
+      26: getfield      #3                  // Field vfxTimer:F
+      29: getstatic     #89                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+      32: invokeinterface #90,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      37: fsub
+      38: putfield      #3                  // Field vfxTimer:F
+      41: aload_0
+      42: getfield      #3                  // Field vfxTimer:F
+      45: fconst_0
+      46: fcmpg
+      47: ifge          111
+      50: getstatic     #92                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+      53: new           #93                 // class com/megacrit/cardcrawl/vfx/combat/LightningOrbPassiveEffect
+      56: dup
+      57: aload_0
+      58: getfield      #84                 // Field cX:F
+      61: aload_0
+      62: getfield      #85                 // Field cY:F
+      65: invokespecial #94                 // Method com/megacrit/cardcrawl/vfx/combat/LightningOrbPassiveEffect."<init>":(FF)V
+      68: invokevirtual #87                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      71: pop
+      72: invokestatic  #95                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+      75: ifeq          100
+      78: getstatic     #92                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+      81: new           #93                 // class com/megacrit/cardcrawl/vfx/combat/LightningOrbPassiveEffect
+      84: dup
+      85: aload_0
+      86: getfield      #84                 // Field cX:F
+      89: aload_0
+      90: getfield      #85                 // Field cY:F
+      93: invokespecial #94                 // Method com/megacrit/cardcrawl/vfx/combat/LightningOrbPassiveEffect."<init>":(FF)V
+      96: invokevirtual #87                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      99: pop
+     100: aload_0
+     101: ldc           #96                 // float 0.15f
+     103: ldc           #97                 // float 0.8f
+     105: invokestatic  #98                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     108: putfield      #3                  // Field vfxTimer:F
+     111: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #99                 // Field shineColor:Lcom/badlogic/gdx/graphics/Color;
+       4: aload_0
+       5: getfield      #100                // Field c:Lcom/badlogic/gdx/graphics/Color;
+       8: getfield      #101                // Field com/badlogic/gdx/graphics/Color.a:F
+      11: fconst_2
+      12: fdiv
+      13: putfield      #101                // Field com/badlogic/gdx/graphics/Color.a:F
+      16: aload_1
+      17: aload_0
+      18: getfield      #99                 // Field shineColor:Lcom/badlogic/gdx/graphics/Color;
+      21: invokevirtual #102                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      24: aload_1
+      25: sipush        770
+      28: iconst_1
+      29: invokevirtual #104                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setBlendFunction:(II)V
+      32: aload_1
+      33: aload_0
+      34: getfield      #8                  // Field img:Lcom/badlogic/gdx/graphics/Texture;
+      37: aload_0
+      38: getfield      #84                 // Field cX:F
+      41: ldc           #105                // float 48.0f
+      43: fsub
+      44: aload_0
+      45: getfield      #85                 // Field cY:F
+      48: ldc           #105                // float 48.0f
+      50: fsub
+      51: aload_0
+      52: getfield      #106                // Field bobEffect:Lcom/megacrit/cardcrawl/vfx/BobEffect;
+      55: getfield      #107                // Field com/megacrit/cardcrawl/vfx/BobEffect.y:F
+      58: fadd
+      59: ldc           #105                // float 48.0f
+      61: ldc           #105                // float 48.0f
+      63: ldc           #108                // float 96.0f
+      65: ldc           #108                // float 96.0f
+      67: aload_0
+      68: getfield      #109                // Field scale:F
+      71: aload_0
+      72: getfield      #19                 // Field angle:F
+      75: ldc           #110                // float 12.566371f
+      77: fdiv
+      78: invokestatic  #111                // Method com/badlogic/gdx/math/MathUtils.sin:(F)F
+      81: ldc           #112                // float 0.05f
+      83: fmul
+      84: fadd
+      85: ldc           #113                // float 0.19634955f
+      87: fadd
+      88: aload_0
+      89: getfield      #109                // Field scale:F
+      92: ldc           #114                // float 1.2f
+      94: fmul
+      95: aload_0
+      96: getfield      #19                 // Field angle:F
+      99: iconst_0
+     100: iconst_0
+     101: bipush        96
+     103: bipush        96
+     105: iconst_0
+     106: iconst_0
+     107: invokevirtual #115                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     110: aload_1
+     111: aload_0
+     112: getfield      #8                  // Field img:Lcom/badlogic/gdx/graphics/Texture;
+     115: aload_0
+     116: getfield      #84                 // Field cX:F
+     119: ldc           #105                // float 48.0f
+     121: fsub
+     122: aload_0
+     123: getfield      #85                 // Field cY:F
+     126: ldc           #105                // float 48.0f
+     128: fsub
+     129: aload_0
+     130: getfield      #106                // Field bobEffect:Lcom/megacrit/cardcrawl/vfx/BobEffect;
+     133: getfield      #107                // Field com/megacrit/cardcrawl/vfx/BobEffect.y:F
+     136: fadd
+     137: ldc           #105                // float 48.0f
+     139: ldc           #105                // float 48.0f
+     141: ldc           #108                // float 96.0f
+     143: ldc           #108                // float 96.0f
+     145: aload_0
+     146: getfield      #109                // Field scale:F
+     149: ldc           #114                // float 1.2f
+     151: fmul
+     152: aload_0
+     153: getfield      #109                // Field scale:F
+     156: aload_0
+     157: getfield      #19                 // Field angle:F
+     160: ldc           #110                // float 12.566371f
+     162: fdiv
+     163: invokestatic  #111                // Method com/badlogic/gdx/math/MathUtils.sin:(F)F
+     166: ldc           #112                // float 0.05f
+     168: fmul
+     169: fadd
+     170: ldc           #113                // float 0.19634955f
+     172: fadd
+     173: aload_0
+     174: getfield      #19                 // Field angle:F
+     177: fneg
+     178: iconst_0
+     179: iconst_0
+     180: bipush        96
+     182: bipush        96
+     184: iconst_0
+     185: iconst_0
+     186: invokevirtual #115                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     189: aload_1
+     190: sipush        770
+     193: sipush        771
+     196: invokevirtual #104                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setBlendFunction:(II)V
+     199: aload_1
+     200: aload_0
+     201: getfield      #100                // Field c:Lcom/badlogic/gdx/graphics/Color;
+     204: invokevirtual #102                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     207: aload_1
+     208: aload_0
+     209: getfield      #8                  // Field img:Lcom/badlogic/gdx/graphics/Texture;
+     212: aload_0
+     213: getfield      #84                 // Field cX:F
+     216: ldc           #105                // float 48.0f
+     218: fsub
+     219: aload_0
+     220: getfield      #85                 // Field cY:F
+     223: ldc           #105                // float 48.0f
+     225: fsub
+     226: aload_0
+     227: getfield      #106                // Field bobEffect:Lcom/megacrit/cardcrawl/vfx/BobEffect;
+     230: getfield      #107                // Field com/megacrit/cardcrawl/vfx/BobEffect.y:F
+     233: fadd
+     234: ldc           #105                // float 48.0f
+     236: ldc           #105                // float 48.0f
+     238: ldc           #108                // float 96.0f
+     240: ldc           #108                // float 96.0f
+     242: aload_0
+     243: getfield      #109                // Field scale:F
+     246: aload_0
+     247: getfield      #109                // Field scale:F
+     250: aload_0
+     251: getfield      #19                 // Field angle:F
+     254: ldc           #116                // float 12.0f
+     256: fdiv
+     257: iconst_0
+     258: iconst_0
+     259: bipush        96
+     261: bipush        96
+     263: iconst_0
+     264: iconst_0
+     265: invokevirtual #115                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFFFFFFFIIIIZZ)V
+     268: aload_0
+     269: aload_1
+     270: invokevirtual #117                // Method renderText:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     273: aload_0
+     274: getfield      #118                // Field hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+     277: aload_1
+     278: invokevirtual #119                // Method com/megacrit/cardcrawl/helpers/Hitbox.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     281: return
+
+  public void playChannelSFX();
+    descriptor: ()V
+    Code:
+       0: getstatic     #79                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+       3: ldc           #120                // String ORB_LIGHTNING_CHANNEL
+       5: ldc           #80                 // float 0.1f
+       7: invokevirtual #81                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;F)J
+      10: pop2
+      11: return
+
+  public com.megacrit.cardcrawl.orbs.AbstractOrb makeCopy();
+    descriptor: ()Lcom/megacrit/cardcrawl/orbs/AbstractOrb;
+    Code:
+       0: new           #4                  // class com/megacrit/cardcrawl/orbs/Lightning
+       3: dup
+       4: invokespecial #121                // Method "<init>":()V
+       7: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #122                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #5                  // String Lightning
+       5: invokevirtual #123                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getOrbString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/OrbStrings;
+       8: putstatic     #9                  // Field orbString:Lcom/megacrit/cardcrawl/localization/OrbStrings;
+      11: return
+}

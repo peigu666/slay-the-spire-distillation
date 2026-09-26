@@ -1,0 +1,257 @@
+Compiled from "DeathPatches.java"
+public class spireTogether.patches.DeathPatches {
+  public static boolean allowDeath;
+    descriptor: Z
+
+  public spireTogether.patches.DeathPatches();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void TrueDeath();
+    descriptor: ()V
+    Code:
+       0: getstatic     #2                  // Field allowDeath:Z
+       3: ifne          47
+       6: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       9: iconst_1
+      10: putfield      #4                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.isDead:Z
+      13: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      16: iconst_0
+      17: putfield      #5                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentHealth:I
+      20: iconst_1
+      21: putstatic     #2                  // Field allowDeath:Z
+      24: invokestatic  #6                  // Method spireTogether/util/SpireHelp$Gameplay.DeleteCurrentSave:()V
+      27: iconst_0
+      28: iconst_0
+      29: invokestatic  #7                  // Method spireTogether/util/SpireHelp$Multiplayer.ResetMod:(ZZ)V
+      32: iconst_1
+      33: putstatic     #8                  // Field spireTogether/network/steam/SteamCallbacksMainThread.purgeRequests:Z
+      36: new           #9                  // class com/megacrit/cardcrawl/screens/DeathScreen
+      39: dup
+      40: aconst_null
+      41: invokespecial #10                 // Method com/megacrit/cardcrawl/screens/DeathScreen."<init>":(Lcom/megacrit/cardcrawl/monsters/MonsterGroup;)V
+      44: putstatic     #11                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.deathScreen:Lcom/megacrit/cardcrawl/screens/DeathScreen;
+      47: return
+
+  public static void HandleFakePlayerDeath();
+    descriptor: ()V
+    Code:
+       0: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: iconst_1
+       4: putfield      #5                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentHealth:I
+       7: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      10: iconst_0
+      11: putfield      #4                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.isDead:Z
+      14: getstatic     #12                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.overlayMenu:Lcom/megacrit/cardcrawl/core/OverlayMenu;
+      17: invokevirtual #13                 // Method com/megacrit/cardcrawl/core/OverlayMenu.hideCombatPanels:()V
+      20: iconst_0
+      21: invokestatic  #14                 // Method spireTogether/monsters/CharacterEntity.GetForSelf:(Z)LspireTogether/monsters/CharacterEntity;
+      24: invokevirtual #15                 // Method spireTogether/monsters/CharacterEntity.GetGhostSkin:()Lskindex/skins/player/PlayerSkin;
+      27: astore_0
+      28: aload_0
+      29: ifnull        41
+      32: aload_0
+      33: invokevirtual #16                 // Method skindex/skins/player/PlayerSkin.loadOnPlayer:()Z
+      36: pop
+      37: aload_0
+      38: invokestatic  #17                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerSkin:(Lskindex/skins/player/PlayerSkin;)V
+      41: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      44: getfield      #18                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+      47: invokevirtual #19                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      50: astore_1
+      51: aload_1
+      52: invokeinterface #20,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      57: ifeq          87
+      60: aload_1
+      61: invokeinterface #21,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      66: checkcast     #22                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+      69: astore_2
+      70: aload_2
+      71: instanceof    #23                 // class spireTogether/relics/CustomMultiplayerRelic
+      74: ifeq          84
+      77: aload_2
+      78: checkcast     #23                 // class spireTogether/relics/CustomMultiplayerRelic
+      81: invokevirtual #24                 // Method spireTogether/relics/CustomMultiplayerRelic.onDeath:()V
+      84: goto          51
+      87: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      90: getfield      #25                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.powers:Ljava/util/ArrayList;
+      93: invokevirtual #19                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      96: astore_1
+      97: aload_1
+      98: invokeinterface #20,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     103: ifeq          133
+     106: aload_1
+     107: invokeinterface #21,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     112: checkcast     #26                 // class com/megacrit/cardcrawl/powers/AbstractPower
+     115: astore_2
+     116: aload_2
+     117: instanceof    #27                 // class spireTogether/powers/CustomMultiplayerPower
+     120: ifeq          130
+     123: aload_2
+     124: checkcast     #27                 // class spireTogether/powers/CustomMultiplayerPower
+     127: invokevirtual #28                 // Method spireTogether/powers/CustomMultiplayerPower.onDeath:()V
+     130: goto          97
+     133: return
+
+  public static void HandleResurrect(java.lang.Integer, boolean);
+    descriptor: (Ljava/lang/Integer;Z)V
+    Code:
+       0: aload_0
+       1: aconst_null
+       2: aconst_null
+       3: aconst_null
+       4: iload_1
+       5: invokestatic  #29                 // Method HandleResurrect:(Ljava/lang/Integer;LspireTogether/network/P2P/P2PPlayer$HealthStatus;Ljava/lang/String;LspireTogether/network/objects/rooms/NetworkLocation;Z)V
+       8: return
+
+  public static void HandleResurrect(java.lang.Integer, spireTogether.network.P2P.P2PPlayer$HealthStatus, java.lang.String, spireTogether.network.objects.rooms.NetworkLocation, boolean);
+    descriptor: (Ljava/lang/Integer;LspireTogether/network/P2P/P2PPlayer$HealthStatus;Ljava/lang/String;LspireTogether/network/objects/rooms/NetworkLocation;Z)V
+    Code:
+       0: aload_0
+       1: ifnonnull     8
+       4: invokestatic  #30                 // Method spireTogether/util/SpireHelp$Gameplay.CalculateRezHP:()Ljava/lang/Integer;
+       7: astore_0
+       8: aload_0
+       9: invokevirtual #31                 // Method java/lang/Integer.intValue:()I
+      12: ifne          20
+      15: iconst_1
+      16: invokestatic  #32                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      19: astore_0
+      20: aload_1
+      21: ifnull        31
+      24: aload_1
+      25: getstatic     #33                 // Field spireTogether/network/P2P/P2PPlayer$HealthStatus.DEAD:LspireTogether/network/P2P/P2PPlayer$HealthStatus;
+      28: if_acmpne     35
+      31: getstatic     #34                 // Field spireTogether/network/P2P/P2PPlayer$HealthStatus.ALIVE:LspireTogether/network/P2P/P2PPlayer$HealthStatus;
+      34: astore_1
+      35: aconst_null
+      36: astore        5
+      38: aload_2
+      39: ifnull        54
+      42: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      45: getfield      #35                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.chosenClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      48: aload_2
+      49: invokestatic  #36                 // Method skindex/registering/SkindexRegistry.getPlayerSkinByClassAndId:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Ljava/lang/String;)Lskindex/skins/player/PlayerSkin;
+      52: astore        5
+      54: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      57: aload_0
+      58: invokevirtual #31                 // Method java/lang/Integer.intValue:()I
+      61: putfield      #5                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentHealth:I
+      64: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      67: iconst_0
+      68: putfield      #4                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.isDead:Z
+      71: invokestatic  #37                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      74: iload         4
+      76: invokevirtual #38                 // Method spireTogether/network/P2P/P2PPlayer.UpdateHealth:(Z)V
+      79: invokestatic  #37                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      82: aload_1
+      83: putfield      #39                 // Field spireTogether/network/P2P/P2PPlayer.healthStatus:LspireTogether/network/P2P/P2PPlayer$HealthStatus;
+      86: iload         4
+      88: ifeq          95
+      91: aload_1
+      92: invokestatic  #40                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerHealthStatus:(LspireTogether/network/P2P/P2PPlayer$HealthStatus;)V
+      95: aload         5
+      97: ifnull        114
+     100: aload         5
+     102: invokevirtual #16                 // Method skindex/skins/player/PlayerSkin.loadOnPlayer:()Z
+     105: pop
+     106: aload         5
+     108: invokestatic  #17                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerSkin:(Lskindex/skins/player/PlayerSkin;)V
+     111: goto          142
+     114: invokestatic  #37                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     117: invokevirtual #41                 // Method spireTogether/network/P2P/P2PPlayer.GetSkin:()Lskindex/skins/player/PlayerSkin;
+     120: ifnull        142
+     123: invokestatic  #37                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     126: invokevirtual #41                 // Method spireTogether/network/P2P/P2PPlayer.GetSkin:()Lskindex/skins/player/PlayerSkin;
+     129: invokevirtual #16                 // Method skindex/skins/player/PlayerSkin.loadOnPlayer:()Z
+     132: pop
+     133: invokestatic  #37                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     136: invokevirtual #41                 // Method spireTogether/network/P2P/P2PPlayer.GetSkin:()Lskindex/skins/player/PlayerSkin;
+     139: invokestatic  #17                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerSkin:(Lskindex/skins/player/PlayerSkin;)V
+     142: invokestatic  #42                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     145: instanceof    #43                 // class com/megacrit/cardcrawl/rooms/RestRoom
+     148: ifeq          179
+     151: invokestatic  #42                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     154: checkcast     #43                 // class com/megacrit/cardcrawl/rooms/RestRoom
+     157: new           #44                 // class com/megacrit/cardcrawl/rooms/CampfireUI
+     160: dup
+     161: invokespecial #45                 // Method com/megacrit/cardcrawl/rooms/CampfireUI."<init>":()V
+     164: putfield      #46                 // Field com/megacrit/cardcrawl/rooms/RestRoom.campfireUI:Lcom/megacrit/cardcrawl/rooms/CampfireUI;
+     167: invokestatic  #42                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     170: checkcast     #43                 // class com/megacrit/cardcrawl/rooms/RestRoom
+     173: getfield      #46                 // Field com/megacrit/cardcrawl/rooms/RestRoom.campfireUI:Lcom/megacrit/cardcrawl/rooms/CampfireUI;
+     176: invokevirtual #47                 // Method com/megacrit/cardcrawl/rooms/CampfireUI.reopen:()V
+     179: invokestatic  #42                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     182: getfield      #48                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     185: getstatic     #49                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMBAT:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     188: if_acmpne     197
+     191: getstatic     #12                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.overlayMenu:Lcom/megacrit/cardcrawl/core/OverlayMenu;
+     194: invokevirtual #50                 // Method com/megacrit/cardcrawl/core/OverlayMenu.showCombatPanels:()V
+     197: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     200: invokevirtual #51                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.healthBarUpdatedEvent:()V
+     203: invokestatic  #52                 // Method spireTogether/network/P2P/P2PCallbacks.OnFFResurrected:()V
+     206: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     209: getfield      #18                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+     212: invokevirtual #19                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     215: astore        6
+     217: aload         6
+     219: invokeinterface #20,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     224: ifeq          258
+     227: aload         6
+     229: invokeinterface #21,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     234: checkcast     #22                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+     237: astore        7
+     239: aload         7
+     241: instanceof    #23                 // class spireTogether/relics/CustomMultiplayerRelic
+     244: ifeq          255
+     247: aload         7
+     249: checkcast     #23                 // class spireTogether/relics/CustomMultiplayerRelic
+     252: invokevirtual #53                 // Method spireTogether/relics/CustomMultiplayerRelic.onFFResurrected:()V
+     255: goto          217
+     258: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     261: getfield      #25                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.powers:Ljava/util/ArrayList;
+     264: invokevirtual #19                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     267: astore        6
+     269: aload         6
+     271: invokeinterface #20,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     276: ifeq          310
+     279: aload         6
+     281: invokeinterface #21,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     286: checkcast     #26                 // class com/megacrit/cardcrawl/powers/AbstractPower
+     289: astore        7
+     291: aload         7
+     293: instanceof    #27                 // class spireTogether/powers/CustomMultiplayerPower
+     296: ifeq          307
+     299: aload         7
+     301: checkcast     #27                 // class spireTogether/powers/CustomMultiplayerPower
+     304: invokevirtual #54                 // Method spireTogether/powers/CustomMultiplayerPower.onFFResurrected:()V
+     307: goto          269
+     310: return
+
+  public static boolean IsPlayerDead();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #55                 // Field spireTogether/SpireTogetherMod.isConnected:Z
+       3: ifne          8
+       6: iconst_1
+       7: ireturn
+       8: invokestatic  #37                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      11: invokevirtual #56                 // Method spireTogether/network/P2P/P2PPlayer.IsTechnicallyDead:()Z
+      14: ifeq          27
+      17: getstatic     #2                  // Field allowDeath:Z
+      20: ifne          27
+      23: iconst_1
+      24: goto          28
+      27: iconst_0
+      28: ireturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: putstatic     #2                  // Field allowDeath:Z
+       4: return
+}

@@ -1,0 +1,525 @@
+Compiled from "RoomEntryPatch.java"
+public class spireTogether.patches.network.RoomEntryPatch {
+  public static java.lang.Integer roomActionCounter;
+    descriptor: Ljava/lang/Integer;
+
+  public static java.lang.Integer infiniteCounter;
+    descriptor: Ljava/lang/Integer;
+
+  public static boolean doubleBoss;
+    descriptor: Z
+
+  public static java.lang.Integer timeoutCounter;
+    descriptor: Ljava/lang/Integer;
+
+  public static boolean refreshKeys;
+    descriptor: Z
+
+  public static boolean generatedRoom;
+    descriptor: Z
+
+  public static java.lang.Long startSecond;
+    descriptor: Ljava/lang/Long;
+
+  public static boolean waitingForServerResponse;
+    descriptor: Z
+
+  public static boolean allowPreBattlePrep;
+    descriptor: Z
+
+  public spireTogether.patches.network.RoomEntryPatch();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void OnEntry();
+    descriptor: ()V
+    Code:
+       0: getstatic     #2                  // Field spireTogether/SpireTogetherMod.isConnected:Z
+       3: ifeq          248
+       6: iconst_0
+       7: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      10: invokestatic  #4                  // Method setRoomActionCounter:(Ljava/lang/Integer;)V
+      13: getstatic     #5                  // Field doubleBoss:Z
+      16: ifeq          30
+      19: iconst_1
+      20: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      23: invokestatic  #4                  // Method setRoomActionCounter:(Ljava/lang/Integer;)V
+      26: iconst_0
+      27: putstatic     #5                  // Field doubleBoss:Z
+      30: new           #6                  // class java/util/ArrayList
+      33: dup
+      34: invokespecial #7                  // Method java/util/ArrayList."<init>":()V
+      37: invokestatic  #8                  // Method java/util/Collections.synchronizedList:(Ljava/util/List;)Ljava/util/List;
+      40: putstatic     #9                  // Field spireTogether/patches/CharacterEntityUpdateAndRender.escapingPlayers:Ljava/util/List;
+      43: getstatic     #10                 // Field refreshKeys:Z
+      46: ifeq          98
+      49: getstatic     #11                 // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+      52: getfield      #12                 // Field spireTogether/network/P2P/P2PClientData.collectedKeys:[Z
+      55: iconst_0
+      56: baload
+      57: ifeq          64
+      60: iconst_1
+      61: putstatic     #13                 // Field com/megacrit/cardcrawl/core/Settings.hasRubyKey:Z
+      64: getstatic     #11                 // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+      67: getfield      #12                 // Field spireTogether/network/P2P/P2PClientData.collectedKeys:[Z
+      70: iconst_1
+      71: baload
+      72: ifeq          79
+      75: iconst_1
+      76: putstatic     #14                 // Field com/megacrit/cardcrawl/core/Settings.hasEmeraldKey:Z
+      79: getstatic     #11                 // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+      82: getfield      #12                 // Field spireTogether/network/P2P/P2PClientData.collectedKeys:[Z
+      85: iconst_2
+      86: baload
+      87: ifeq          94
+      90: iconst_1
+      91: putstatic     #15                 // Field com/megacrit/cardcrawl/core/Settings.hasSapphireKey:Z
+      94: iconst_0
+      95: putstatic     #10                 // Field refreshKeys:Z
+      98: invokestatic  #16                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     101: instanceof    #17                 // class com/megacrit/cardcrawl/rooms/RestRoom
+     104: ifeq          114
+     107: iconst_0
+     108: invokestatic  #18                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     111: putstatic     #19                 // Field spireTogether/campfireOptions/TradeOption.alreadyTraded:Ljava/lang/Boolean;
+     114: iconst_1
+     115: invokestatic  #20                 // Method spireTogether/util/SpireHelp$Gameplay.GetMapLocation:(Z)LspireTogether/network/objects/rooms/NetworkLocation;
+     118: astore_0
+     119: aload_0
+     120: ifnonnull     124
+     123: return
+     124: new           #21                 // class java/lang/StringBuilder
+     127: dup
+     128: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+     131: ldc           #23                 // String Entering a room at
+     133: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     136: aload_0
+     137: invokevirtual #25                 // Method spireTogether/network/objects/rooms/NetworkLocation.toString:()Ljava/lang/String;
+     140: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     143: ldc           #26                 // String .
+     145: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     148: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     151: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+     154: aload_0
+     155: invokestatic  #29                 // Method ResetRoomParams:(LspireTogether/network/objects/rooms/NetworkLocation;)V
+     158: aload_0
+     159: invokestatic  #30                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerLocation:(LspireTogether/network/objects/rooms/NetworkLocation;)V
+     162: iconst_0
+     163: invokestatic  #31                 // Method spireTogether/network/P2P/P2PManager.GetAllPlayers:(Z)Ljava/util/Iterator;
+     166: astore_1
+     167: aload_1
+     168: invokeinterface #32,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     173: ifeq          222
+     176: aload_1
+     177: invokeinterface #33,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     182: checkcast     #34                 // class spireTogether/network/P2P/P2PPlayer
+     185: astore_2
+     186: aload_2
+     187: invokevirtual #35                 // Method spireTogether/network/P2P/P2PPlayer.ReloadInfobox:()V
+     190: aload_2
+     191: invokevirtual #36                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+     194: astore_3
+     195: aload_3
+     196: ifnull        219
+     199: aload_2
+     200: invokevirtual #37                 // Method spireTogether/network/P2P/P2PPlayer.IsPlayerInSameRoomAndAction:()Z
+     203: ifeq          214
+     206: aload_3
+     207: fconst_1
+     208: putfield      #38                 // Field spireTogether/monsters/CharacterEntity.alpha:F
+     211: goto          219
+     214: aload_3
+     215: fconst_0
+     216: putfield      #38                 // Field spireTogether/monsters/CharacterEntity.alpha:F
+     219: goto          167
+     222: goto          248
+     225: astore_0
+     226: new           #21                 // class java/lang/StringBuilder
+     229: dup
+     230: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+     233: ldc           #40                 // String Error entering a room. Message:
+     235: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     238: aload_0
+     239: invokevirtual #41                 // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+     242: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     245: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+     248: return
+    Exception table:
+       from    to  target type
+           6   123   225   Class java/lang/Exception
+         124   222   225   Class java/lang/Exception
+
+  public static void ResetRoomParams(spireTogether.network.objects.rooms.NetworkLocation);
+    descriptor: (LspireTogether/network/objects/rooms/NetworkLocation;)V
+    Code:
+       0: invokestatic  #42                 // Method spireTogether/patches/EndTurnTimerPatches.ResetTimer:()V
+       3: iconst_0
+       4: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       7: putstatic     #43                 // Field timeoutCounter:Ljava/lang/Integer;
+      10: invokestatic  #44                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      13: iconst_1
+      14: invokevirtual #45                 // Method spireTogether/network/P2P/P2PPlayer.ClearPowers:(Z)V
+      17: invokestatic  #44                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      20: aload_0
+      21: invokevirtual #46                 // Method spireTogether/network/P2P/P2PPlayer.UpdateLocation:(LspireTogether/network/objects/rooms/NetworkLocation;)V
+      24: invokestatic  #44                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      27: iconst_0
+      28: iconst_1
+      29: invokevirtual #47                 // Method spireTogether/network/P2P/P2PPlayer.UpdateEndedTurn:(ZZ)V
+      32: invokestatic  #44                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      35: getstatic     #48                 // Field spireTogether/network/P2P/P2PPlayer$TradingStatus.IDLE:LspireTogether/network/P2P/P2PPlayer$TradingStatus;
+      38: putfield      #49                 // Field spireTogether/network/P2P/P2PPlayer.tradingStatus:LspireTogether/network/P2P/P2PPlayer$TradingStatus;
+      41: new           #50                 // class java/util/Random
+      44: dup
+      45: aload_0
+      46: getfield      #51                 // Field spireTogether/network/objects/rooms/NetworkLocation.x:Ljava/lang/Integer;
+      49: invokevirtual #52                 // Method java/lang/Integer.intValue:()I
+      52: bipush        100
+      54: imul
+      55: aload_0
+      56: getfield      #53                 // Field spireTogether/network/objects/rooms/NetworkLocation.y:Ljava/lang/Integer;
+      59: invokevirtual #52                 // Method java/lang/Integer.intValue:()I
+      62: bipush        10
+      64: imul
+      65: iadd
+      66: getstatic     #54                 // Field roomActionCounter:Ljava/lang/Integer;
+      69: invokevirtual #52                 // Method java/lang/Integer.intValue:()I
+      72: iadd
+      73: i2l
+      74: invokespecial #55                 // Method java/util/Random."<init>":(J)V
+      77: putstatic     #56                 // Field spireTogether/util/SpireHelp$Util.roomRng:Ljava/util/Random;
+      80: iconst_0
+      81: putstatic     #57                 // Field generatedRoom:Z
+      84: getstatic     #58                 // Field spireTogether/util/SpireVariables$GameStatus.NONE:LspireTogether/util/SpireVariables$GameStatus;
+      87: putstatic     #59                 // Field spireTogether/util/SpireVariables.currGameStatus:LspireTogether/util/SpireVariables$GameStatus;
+      90: iconst_0
+      91: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      94: putstatic     #60                 // Field spireTogether/patches/SpawnedMonsterManager.monsterSpawnCount:Ljava/lang/Integer;
+      97: getstatic     #61                 // Field spireTogether/util/DevConfig.pf_fillPlayerSlots:Ljava/lang/Integer;
+     100: invokevirtual #52                 // Method java/lang/Integer.intValue:()I
+     103: ifle          149
+     106: iconst_0
+     107: invokestatic  #31                 // Method spireTogether/network/P2P/P2PManager.GetAllPlayers:(Z)Ljava/util/Iterator;
+     110: astore_1
+     111: aload_1
+     112: invokeinterface #32,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     117: ifeq          149
+     120: aload_1
+     121: invokeinterface #33,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     126: checkcast     #34                 // class spireTogether/network/P2P/P2PPlayer
+     129: astore_2
+     130: aload_2
+     131: instanceof    #62                 // class spireTogether/network/P2P/DummyPlayer
+     134: ifeq          146
+     137: aload_2
+     138: aload_0
+     139: invokevirtual #46                 // Method spireTogether/network/P2P/P2PPlayer.UpdateLocation:(LspireTogether/network/objects/rooms/NetworkLocation;)V
+     142: aload_2
+     143: invokevirtual #35                 // Method spireTogether/network/P2P/P2PPlayer.ReloadInfobox:()V
+     146: goto          111
+     149: return
+
+  public static void ProcessRoomEntry();
+    descriptor: ()V
+    Code:
+       0: iconst_1
+       1: invokestatic  #20                 // Method spireTogether/util/SpireHelp$Gameplay.GetMapLocation:(Z)LspireTogether/network/objects/rooms/NetworkLocation;
+       4: astore_0
+       5: aload_0
+       6: invokestatic  #63                 // Method spireTogether/util/Blacklist.RoomDataSyncAllowed:(LspireTogether/network/objects/rooms/NetworkLocation;)Z
+       9: ifne          13
+      12: return
+      13: aload_0
+      14: invokestatic  #64                 // Method spireTogether/other/RoomDataManager.GetRoomCache:(LspireTogether/network/objects/rooms/NetworkLocation;)LspireTogether/network/objects/rooms/NetworkRoom;
+      17: astore_1
+      18: aload_0
+      19: invokestatic  #65                 // Method spireTogether/other/RoomDataManager.GetRoomStatus:(LspireTogether/network/objects/rooms/NetworkLocation;)LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+      22: astore_2
+      23: aload_1
+      24: ifnull        149
+      27: ldc           #66                 // String Room cache already exists. Loading.
+      29: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      32: aload_1
+      33: invokevirtual #67                 // Method spireTogether/network/objects/rooms/NetworkRoom.Load:()V
+      36: invokestatic  #68                 // Method spireTogether/util/SpireHelp$Gameplay.AreMonstersPresent:()Z
+      39: ifeq          148
+      42: aload_2
+      43: getstatic     #69                 // Field spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.COMBAT_CLEARED:LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+      46: if_acmpne     95
+      49: new           #21                 // class java/lang/StringBuilder
+      52: dup
+      53: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+      56: aload_0
+      57: invokevirtual #25                 // Method spireTogether/network/objects/rooms/NetworkLocation.toString:()Ljava/lang/String;
+      60: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      63: ldc           #70                 // String  for action
+      65: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      68: aload_0
+      69: getfield      #71                 // Field spireTogether/network/objects/rooms/NetworkLocation.action:Ljava/lang/Integer;
+      72: invokevirtual #41                 // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+      75: ldc           #72                 // String  marked as cleared. Clearing room and skipping sync.
+      77: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      80: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      83: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      86: getstatic     #58                 // Field spireTogether/util/SpireVariables$GameStatus.NONE:LspireTogether/util/SpireVariables$GameStatus;
+      89: putstatic     #59                 // Field spireTogether/util/SpireVariables.currGameStatus:LspireTogether/util/SpireVariables$GameStatus;
+      92: invokestatic  #73                 // Method spireTogether/util/SpireHelp$Gameplay.KillAllMonstersAndFinishCombat:()V
+      95: aload_2
+      96: getstatic     #74                 // Field spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.COMBAT_ESCAPED:LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+      99: if_acmpne     148
+     102: new           #21                 // class java/lang/StringBuilder
+     105: dup
+     106: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+     109: aload_0
+     110: invokevirtual #25                 // Method spireTogether/network/objects/rooms/NetworkLocation.toString:()Ljava/lang/String;
+     113: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     116: ldc           #70                 // String  for action
+     118: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     121: aload_0
+     122: getfield      #71                 // Field spireTogether/network/objects/rooms/NetworkLocation.action:Ljava/lang/Integer;
+     125: invokevirtual #41                 // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+     128: ldc           #75                 // String  marked as escaped. Clearing room and skipping sync.
+     130: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     133: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     136: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+     139: getstatic     #58                 // Field spireTogether/util/SpireVariables$GameStatus.NONE:LspireTogether/util/SpireVariables$GameStatus;
+     142: putstatic     #59                 // Field spireTogether/util/SpireVariables.currGameStatus:LspireTogether/util/SpireVariables$GameStatus;
+     145: invokestatic  #76                 // Method spireTogether/util/SpireHelp$Gameplay.EscapeAllMonstersAndFinishCombat:()V
+     148: return
+     149: aload_0
+     150: invokestatic  #77                 // Method spireTogether/other/RoomDataManager.GetRoomGenerator:(LspireTogether/network/objects/rooms/NetworkLocation;)Ljava/lang/Integer;
+     153: astore_3
+     154: aload_3
+     155: ifnonnull     174
+     158: ldc           #78                 // String No room cache or room generator, asking server for permission to generate a room.
+     160: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+     163: iconst_1
+     164: putstatic     #79                 // Field waitingForServerResponse:Z
+     167: aload_0
+     168: invokestatic  #80                 // Method spireTogether/network/P2P/P2PMessageSender.Send_RequestRoomGenData:(LspireTogether/network/objects/rooms/NetworkLocation;)V
+     171: goto          224
+     174: aload_3
+     175: invokestatic  #81                 // Method spireTogether/network/P2P/P2PManager.GetPlayer:(Ljava/lang/Integer;)LspireTogether/network/P2P/P2PPlayer;
+     178: ifnull        211
+     181: ldc           #82                 // String Generator exists for room and is connected, waiting on data.
+     183: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+     186: iconst_0
+     187: putstatic     #79                 // Field waitingForServerResponse:Z
+     190: aconst_null
+     191: putstatic     #83                 // Field startSecond:Ljava/lang/Long;
+     194: aload_0
+     195: getstatic     #84                 // Field spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.IN_GENERATION:LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+     198: iconst_0
+     199: invokestatic  #85                 // Method spireTogether/other/RoomDataManager.SetRoomStatus:(LspireTogether/network/objects/rooms/NetworkLocation;LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;Z)V
+     202: getstatic     #86                 // Field spireTogether/util/SpireVariables$GameStatus.WAITING_FOR_DATA:LspireTogether/util/SpireVariables$GameStatus;
+     205: putstatic     #59                 // Field spireTogether/util/SpireVariables.currGameStatus:LspireTogether/util/SpireVariables$GameStatus;
+     208: goto          224
+     211: ldc           #87                 // String Generator exists but is not connected, checking with server.
+     213: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+     216: iconst_1
+     217: putstatic     #79                 // Field waitingForServerResponse:Z
+     220: aload_0
+     221: invokestatic  #80                 // Method spireTogether/network/P2P/P2PMessageSender.Send_RequestRoomGenData:(LspireTogether/network/objects/rooms/NetworkLocation;)V
+     224: return
+
+  public static void setRoomActionCounter(java.lang.Integer);
+    descriptor: (Ljava/lang/Integer;)V
+    Code:
+       0: aload_0
+       1: putstatic     #54                 // Field roomActionCounter:Ljava/lang/Integer;
+       4: new           #21                 // class java/lang/StringBuilder
+       7: dup
+       8: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+      11: ldc           #88                 // String Set room action counter to
+      13: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      16: aload_0
+      17: invokevirtual #41                 // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+      20: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      23: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      26: invokestatic  #44                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      29: aload_0
+      30: invokevirtual #89                 // Method spireTogether/network/P2P/P2PPlayer.UpdateRoomActionCounter:(Ljava/lang/Integer;)V
+      33: aload_0
+      34: invokestatic  #90                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerActionCount:(Ljava/lang/Integer;)V
+      37: return
+
+  public static void AllowRoomGeneration();
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: putstatic     #79                 // Field waitingForServerResponse:Z
+       4: aconst_null
+       5: putstatic     #83                 // Field startSecond:Ljava/lang/Long;
+       8: ldc           #91                 // String Got OK to generate room. Checking if cache exists
+      10: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      13: iconst_1
+      14: invokestatic  #20                 // Method spireTogether/util/SpireHelp$Gameplay.GetMapLocation:(Z)LspireTogether/network/objects/rooms/NetworkLocation;
+      17: astore_0
+      18: aload_0
+      19: invokestatic  #64                 // Method spireTogether/other/RoomDataManager.GetRoomCache:(LspireTogether/network/objects/rooms/NetworkLocation;)LspireTogether/network/objects/rooms/NetworkRoom;
+      22: astore_1
+      23: aload_1
+      24: ifnull        43
+      27: ldc           #92                 // String Found cached room
+      29: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      32: aload_1
+      33: invokevirtual #93                 // Method spireTogether/network/objects/rooms/NetworkRoom.PrintData:()V
+      36: aload_1
+      37: invokevirtual #67                 // Method spireTogether/network/objects/rooms/NetworkRoom.Load:()V
+      40: goto          99
+      43: new           #21                 // class java/lang/StringBuilder
+      46: dup
+      47: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+      50: ldc           #94                 // String Could not find data to load. Room status at
+      52: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      55: aload_0
+      56: invokevirtual #25                 // Method spireTogether/network/objects/rooms/NetworkLocation.toString:()Ljava/lang/String;
+      59: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      62: ldc           #70                 // String  for action
+      64: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      67: getstatic     #54                 // Field roomActionCounter:Ljava/lang/Integer;
+      70: invokevirtual #41                 // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+      73: ldc           #95                 // String  is now GENERATE.
+      75: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      78: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      81: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      84: aload_0
+      85: getstatic     #96                 // Field spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.GENERATE:LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+      88: iconst_0
+      89: invokestatic  #85                 // Method spireTogether/other/RoomDataManager.SetRoomStatus:(LspireTogether/network/objects/rooms/NetworkLocation;LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;Z)V
+      92: aload_0
+      93: getstatic     #84                 // Field spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.IN_GENERATION:LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+      96: invokestatic  #97                 // Method spireTogether/network/P2P/P2PMessageSender.Send_RoomStatusChanged:(LspireTogether/network/objects/rooms/NetworkLocation;LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;)V
+      99: iconst_1
+     100: invokestatic  #98                 // Method GenerateRoomAndUpdateServer:(Z)V
+     103: return
+
+  public static void GenerateRoomAndUpdateServer(boolean);
+    descriptor: (Z)V
+    Code:
+       0: iload_0
+       1: ifeq          49
+       4: iconst_1
+       5: putstatic     #99                 // Field allowPreBattlePrep:Z
+       8: invokestatic  #100                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.resetPlayer:()V
+      11: iconst_1
+      12: putstatic     #99                 // Field allowPreBattlePrep:Z
+      15: getstatic     #101                // Field spireTogether/util/SpireVariables$GameStatus.PRE_PLAYER_TURN:LspireTogether/util/SpireVariables$GameStatus;
+      18: putstatic     #59                 // Field spireTogether/util/SpireVariables.currGameStatus:LspireTogether/util/SpireVariables$GameStatus;
+      21: invokestatic  #16                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      24: getfield      #102                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      27: getstatic     #103                // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMBAT:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      30: if_acmpne     45
+      33: getstatic     #104                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.loading_post_combat:Z
+      36: ifne          45
+      39: getstatic     #105                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      42: invokevirtual #106                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.preBattlePrep:()V
+      45: iconst_0
+      46: putstatic     #99                 // Field allowPreBattlePrep:Z
+      49: iconst_1
+      50: invokestatic  #20                 // Method spireTogether/util/SpireHelp$Gameplay.GetMapLocation:(Z)LspireTogether/network/objects/rooms/NetworkLocation;
+      53: astore_1
+      54: new           #21                 // class java/lang/StringBuilder
+      57: dup
+      58: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+      61: ldc           #107                // String Generating room for:
+      63: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      66: aload_1
+      67: invokevirtual #25                 // Method spireTogether/network/objects/rooms/NetworkLocation.toString:()Ljava/lang/String;
+      70: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      73: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      76: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      79: invokestatic  #16                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      82: invokestatic  #108                // Method spireTogether/network/objects/rooms/NetworkRoom.Generate:(Lcom/megacrit/cardcrawl/rooms/AbstractRoom;)LspireTogether/network/objects/rooms/NetworkRoom;
+      85: astore_2
+      86: aload_2
+      87: invokestatic  #109                // Method spireTogether/other/RoomDataManager.SetRoomCache:(LspireTogether/network/objects/rooms/NetworkRoom;)V
+      90: aload_2
+      91: invokestatic  #110                // Method spireTogether/network/P2P/P2PMessageSender.Send_RoomDataChanged:(LspireTogether/network/objects/rooms/NetworkRoom;)V
+      94: iconst_1
+      95: putstatic     #57                 // Field generatedRoom:Z
+      98: aload_1
+      99: getstatic     #111                // Field spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.LOADED:LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+     102: iconst_1
+     103: invokestatic  #85                 // Method spireTogether/other/RoomDataManager.SetRoomStatus:(LspireTogether/network/objects/rooms/NetworkLocation;LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;Z)V
+     106: getstatic     #101                // Field spireTogether/util/SpireVariables$GameStatus.PRE_PLAYER_TURN:LspireTogether/util/SpireVariables$GameStatus;
+     109: putstatic     #59                 // Field spireTogether/util/SpireVariables.currGameStatus:LspireTogether/util/SpireVariables$GameStatus;
+     112: return
+
+  public static void DeclineRoomGeneration(java.lang.Integer);
+    descriptor: (Ljava/lang/Integer;)V
+    Code:
+       0: iconst_0
+       1: putstatic     #79                 // Field waitingForServerResponse:Z
+       4: aconst_null
+       5: putstatic     #83                 // Field startSecond:Ljava/lang/Long;
+       8: ldc           #112                // String Got NO to generating a room. Waiting on data.
+      10: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      13: invokestatic  #113                // Method spireTogether/util/SpireHelp$Gameplay.GetMapLocation:()LspireTogether/network/objects/rooms/NetworkLocation;
+      16: astore_1
+      17: aload_1
+      18: getstatic     #84                 // Field spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.IN_GENERATION:LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+      21: iconst_0
+      22: invokestatic  #85                 // Method spireTogether/other/RoomDataManager.SetRoomStatus:(LspireTogether/network/objects/rooms/NetworkLocation;LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;Z)V
+      25: getstatic     #86                 // Field spireTogether/util/SpireVariables$GameStatus.WAITING_FOR_DATA:LspireTogether/util/SpireVariables$GameStatus;
+      28: putstatic     #59                 // Field spireTogether/util/SpireVariables.currGameStatus:LspireTogether/util/SpireVariables$GameStatus;
+      31: aload_0
+      32: ifnull        45
+      35: ldc           #114                // String Asking original player for room data.
+      37: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      40: aload_1
+      41: aload_0
+      42: invokestatic  #115                // Method spireTogether/network/P2P/P2PMessageSender.Send_RequestRoomData:(LspireTogether/network/objects/rooms/NetworkLocation;Ljava/lang/Integer;)V
+      45: return
+
+  public static void IncrementActionCounter();
+    descriptor: ()V
+    Code:
+       0: getstatic     #54                 // Field roomActionCounter:Ljava/lang/Integer;
+       3: invokevirtual #52                 // Method java/lang/Integer.intValue:()I
+       6: iconst_1
+       7: iadd
+       8: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      11: invokestatic  #4                  // Method setRoomActionCounter:(Ljava/lang/Integer;)V
+      14: iconst_0
+      15: invokestatic  #20                 // Method spireTogether/util/SpireHelp$Gameplay.GetMapLocation:(Z)LspireTogether/network/objects/rooms/NetworkLocation;
+      18: invokestatic  #29                 // Method ResetRoomParams:(LspireTogether/network/objects/rooms/NetworkLocation;)V
+      21: new           #21                 // class java/lang/StringBuilder
+      24: dup
+      25: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+      28: ldc           #116                // String New room action counter is
+      30: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      33: getstatic     #54                 // Field roomActionCounter:Ljava/lang/Integer;
+      36: invokevirtual #41                 // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+      39: ldc           #117                // String  and room status is IN_GENERATION
+      41: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      44: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      47: invokestatic  #28                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      50: invokestatic  #118                // Method ProcessRoomEntry:()V
+      53: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       4: putstatic     #54                 // Field roomActionCounter:Ljava/lang/Integer;
+       7: iconst_0
+       8: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      11: putstatic     #119                // Field infiniteCounter:Ljava/lang/Integer;
+      14: iconst_0
+      15: putstatic     #5                  // Field doubleBoss:Z
+      18: iconst_0
+      19: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      22: putstatic     #43                 // Field timeoutCounter:Ljava/lang/Integer;
+      25: iconst_0
+      26: putstatic     #10                 // Field refreshKeys:Z
+      29: iconst_0
+      30: putstatic     #57                 // Field generatedRoom:Z
+      33: iconst_1
+      34: putstatic     #99                 // Field allowPreBattlePrep:Z
+      37: return
+}

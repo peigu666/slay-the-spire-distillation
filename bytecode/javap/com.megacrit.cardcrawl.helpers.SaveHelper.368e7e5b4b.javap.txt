@@ -1,0 +1,1023 @@
+Compiled from "SaveHelper.java"
+public class com.megacrit.cardcrawl.helpers.SaveHelper {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  public com.megacrit.cardcrawl.helpers.SaveHelper();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void initialize();
+    descriptor: ()V
+    Code:
+       0: return
+
+  private static java.lang.Boolean isGog();
+    descriptor: ()Ljava/lang/Boolean;
+    Code:
+       0: getstatic     #2                  // Field com/megacrit/cardcrawl/core/CardCrawlGame.publisherIntegration:Lcom/megacrit/cardcrawl/integrations/PublisherIntegration;
+       3: invokeinterface #3,  1            // InterfaceMethod com/megacrit/cardcrawl/integrations/PublisherIntegration.getType:()Lcom/megacrit/cardcrawl/integrations/DistributorFactory$Distributor;
+       8: getstatic     #4                  // Field com/megacrit/cardcrawl/integrations/DistributorFactory$Distributor.GOG:Lcom/megacrit/cardcrawl/integrations/DistributorFactory$Distributor;
+      11: if_acmpne     18
+      14: iconst_1
+      15: goto          19
+      18: iconst_0
+      19: invokestatic  #5                  // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      22: areturn
+
+  private static java.lang.String getSaveDir();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.isBeta:Z
+       3: ifne          15
+       6: invokestatic  #7                  // Method isGog:()Ljava/lang/Boolean;
+       9: invokevirtual #8                  // Method java/lang/Boolean.booleanValue:()Z
+      12: ifeq          18
+      15: ldc           #9                  // String betaPreferences
+      17: areturn
+      18: ldc           #10                 // String preferences
+      20: areturn
+
+  public static boolean doesPrefExist(java.lang.String);
+    descriptor: (Ljava/lang/String;)Z
+    Code:
+       0: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+       3: new           #12                 // class java/lang/StringBuilder
+       6: dup
+       7: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      10: invokestatic  #14                 // Method getSaveDir:()Ljava/lang/String;
+      13: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      16: getstatic     #16                 // Field java/io/File.separator:Ljava/lang/String;
+      19: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      22: aload_0
+      23: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      26: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      29: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+      34: invokevirtual #19                 // Method com/badlogic/gdx/files/FileHandle.exists:()Z
+      37: ireturn
+
+  public static void deletePrefs(int);
+    descriptor: (I)V
+    Code:
+       0: new           #12                 // class java/lang/StringBuilder
+       3: dup
+       4: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+       7: invokestatic  #14                 // Method getSaveDir:()Ljava/lang/String;
+      10: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      13: getstatic     #16                 // Field java/io/File.separator:Ljava/lang/String;
+      16: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      19: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      22: astore_1
+      23: new           #12                 // class java/lang/StringBuilder
+      26: dup
+      27: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      30: aload_1
+      31: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      34: ldc           #20                 // String STSDataVagabond
+      36: iload_0
+      37: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+      40: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      43: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      46: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+      49: new           #12                 // class java/lang/StringBuilder
+      52: dup
+      53: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      56: aload_1
+      57: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      60: ldc           #23                 // String STSDataTheSilent
+      62: iload_0
+      63: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+      66: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      69: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      72: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+      75: new           #12                 // class java/lang/StringBuilder
+      78: dup
+      79: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      82: aload_1
+      83: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      86: ldc           #24                 // String STSDataDefect
+      88: iload_0
+      89: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+      92: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      95: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      98: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     101: new           #12                 // class java/lang/StringBuilder
+     104: dup
+     105: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     108: aload_1
+     109: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     112: ldc           #25                 // String STSDataWatcher
+     114: iload_0
+     115: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     118: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     121: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     124: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     127: new           #12                 // class java/lang/StringBuilder
+     130: dup
+     131: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     134: aload_1
+     135: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     138: ldc           #26                 // String STSAchievements
+     140: iload_0
+     141: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     144: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     147: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     150: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     153: new           #12                 // class java/lang/StringBuilder
+     156: dup
+     157: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     160: aload_1
+     161: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     164: ldc           #27                 // String STSDaily
+     166: iload_0
+     167: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     170: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     173: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     176: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     179: new           #12                 // class java/lang/StringBuilder
+     182: dup
+     183: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     186: aload_1
+     187: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     190: ldc           #28                 // String STSSeenBosses
+     192: iload_0
+     193: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     196: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     199: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     202: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     205: new           #12                 // class java/lang/StringBuilder
+     208: dup
+     209: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     212: aload_1
+     213: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     216: ldc           #29                 // String STSSeenCards
+     218: iload_0
+     219: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     222: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     225: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     228: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     231: new           #12                 // class java/lang/StringBuilder
+     234: dup
+     235: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     238: aload_1
+     239: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     242: ldc           #30                 // String STSBetaCardPreference
+     244: iload_0
+     245: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     248: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     251: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     254: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     257: new           #12                 // class java/lang/StringBuilder
+     260: dup
+     261: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     264: aload_1
+     265: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     268: ldc           #31                 // String STSSeenRelics
+     270: iload_0
+     271: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     274: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     277: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     280: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     283: new           #12                 // class java/lang/StringBuilder
+     286: dup
+     287: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     290: aload_1
+     291: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     294: ldc           #32                 // String STSUnlockProgress
+     296: iload_0
+     297: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     300: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     303: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     306: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     309: new           #12                 // class java/lang/StringBuilder
+     312: dup
+     313: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     316: aload_1
+     317: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     320: ldc           #33                 // String STSUnlocks
+     322: iload_0
+     323: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     326: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     329: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     332: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     335: new           #12                 // class java/lang/StringBuilder
+     338: dup
+     339: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     342: aload_1
+     343: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     346: ldc           #34                 // String STSGameplaySettings
+     348: iload_0
+     349: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     352: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     355: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     358: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     361: new           #12                 // class java/lang/StringBuilder
+     364: dup
+     365: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     368: aload_1
+     369: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     372: ldc           #35                 // String STSInputSettings
+     374: iload_0
+     375: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     378: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     381: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     384: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     387: new           #12                 // class java/lang/StringBuilder
+     390: dup
+     391: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     394: aload_1
+     395: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     398: ldc           #36                 // String STSInputSettings_Controller
+     400: iload_0
+     401: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     404: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     407: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     410: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     413: new           #12                 // class java/lang/StringBuilder
+     416: dup
+     417: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     420: aload_1
+     421: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     424: ldc           #37                 // String STSSound
+     426: iload_0
+     427: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     430: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     433: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     436: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     439: new           #12                 // class java/lang/StringBuilder
+     442: dup
+     443: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     446: aload_1
+     447: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     450: ldc           #38                 // String STSPlayer
+     452: iload_0
+     453: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     456: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     459: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     462: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     465: new           #12                 // class java/lang/StringBuilder
+     468: dup
+     469: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     472: aload_1
+     473: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     476: ldc           #39                 // String STSTips
+     478: iload_0
+     479: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     482: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     485: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     488: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     491: new           #12                 // class java/lang/StringBuilder
+     494: dup
+     495: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     498: ldc           #40                 // String runs
+     500: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     503: getstatic     #16                 // Field java/io/File.separator:Ljava/lang/String;
+     506: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     509: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     512: astore_1
+     513: new           #12                 // class java/lang/StringBuilder
+     516: dup
+     517: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     520: aload_1
+     521: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     524: ldc           #41                 // String IRONCLAD
+     526: iload_0
+     527: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     530: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     533: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     536: invokestatic  #42                 // Method deleteFolder:(Ljava/lang/String;)V
+     539: new           #12                 // class java/lang/StringBuilder
+     542: dup
+     543: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     546: aload_1
+     547: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     550: ldc           #43                 // String THE_SILENT
+     552: iload_0
+     553: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     556: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     559: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     562: invokestatic  #42                 // Method deleteFolder:(Ljava/lang/String;)V
+     565: new           #12                 // class java/lang/StringBuilder
+     568: dup
+     569: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     572: aload_1
+     573: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     576: ldc           #44                 // String DEFECT
+     578: iload_0
+     579: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     582: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     585: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     588: invokestatic  #42                 // Method deleteFolder:(Ljava/lang/String;)V
+     591: new           #12                 // class java/lang/StringBuilder
+     594: dup
+     595: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     598: aload_1
+     599: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     602: ldc           #45                 // String WATCHER
+     604: iload_0
+     605: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     608: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     611: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     614: invokestatic  #42                 // Method deleteFolder:(Ljava/lang/String;)V
+     617: new           #12                 // class java/lang/StringBuilder
+     620: dup
+     621: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     624: aload_1
+     625: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     628: ldc           #46                 // String DAILY
+     630: iload_0
+     631: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     634: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     637: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     640: invokestatic  #42                 // Method deleteFolder:(Ljava/lang/String;)V
+     643: new           #12                 // class java/lang/StringBuilder
+     646: dup
+     647: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     650: ldc           #47                 // String saves
+     652: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     655: getstatic     #16                 // Field java/io/File.separator:Ljava/lang/String;
+     658: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     661: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     664: astore_1
+     665: new           #12                 // class java/lang/StringBuilder
+     668: dup
+     669: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     672: aload_1
+     673: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     676: ldc           #48                 // String IRONCLAD.autosave
+     678: iload_0
+     679: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     682: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     685: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     688: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     691: new           #12                 // class java/lang/StringBuilder
+     694: dup
+     695: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     698: aload_1
+     699: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     702: ldc           #49                 // String DEFECT.autosave
+     704: iload_0
+     705: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     708: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     711: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     714: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     717: new           #12                 // class java/lang/StringBuilder
+     720: dup
+     721: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     724: aload_1
+     725: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     728: ldc           #50                 // String THE_SILENT.autosave
+     730: iload_0
+     731: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     734: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     737: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     740: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     743: new           #12                 // class java/lang/StringBuilder
+     746: dup
+     747: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     750: aload_1
+     751: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     754: ldc           #51                 // String WATCHER.autosave
+     756: iload_0
+     757: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     760: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     763: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     766: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     769: new           #12                 // class java/lang/StringBuilder
+     772: dup
+     773: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     776: aload_1
+     777: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     780: ldc           #52                 // String IRONCLAD.autosave.backUp
+     782: iload_0
+     783: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     786: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     789: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     792: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     795: new           #12                 // class java/lang/StringBuilder
+     798: dup
+     799: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     802: aload_1
+     803: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     806: ldc           #53                 // String DEFECT.autosave.backUp
+     808: iload_0
+     809: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     812: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     815: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     818: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     821: new           #12                 // class java/lang/StringBuilder
+     824: dup
+     825: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     828: aload_1
+     829: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     832: ldc           #54                 // String THE_SILENT.autosave.backUp
+     834: iload_0
+     835: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     838: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     841: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     844: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     847: new           #12                 // class java/lang/StringBuilder
+     850: dup
+     851: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     854: aload_1
+     855: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     858: ldc           #55                 // String WATCHER.autosave.backUp
+     860: iload_0
+     861: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     864: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     867: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     870: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     873: getstatic     #6                  // Field com/megacrit/cardcrawl/core/Settings.isBeta:Z
+     876: ifne          888
+     879: invokestatic  #7                  // Method isGog:()Ljava/lang/Boolean;
+     882: invokevirtual #8                  // Method java/lang/Boolean.booleanValue:()Z
+     885: ifeq          1096
+     888: new           #12                 // class java/lang/StringBuilder
+     891: dup
+     892: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     895: aload_1
+     896: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     899: ldc           #56                 // String IRONCLAD.autosaveBETA
+     901: iload_0
+     902: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     905: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     908: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     911: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     914: new           #12                 // class java/lang/StringBuilder
+     917: dup
+     918: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     921: aload_1
+     922: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     925: ldc           #57                 // String DEFECT.autosaveBETA
+     927: iload_0
+     928: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     931: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     934: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     937: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     940: new           #12                 // class java/lang/StringBuilder
+     943: dup
+     944: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     947: aload_1
+     948: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     951: ldc           #58                 // String THE_SILENT.autosaveBETA
+     953: iload_0
+     954: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     957: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     960: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     963: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     966: new           #12                 // class java/lang/StringBuilder
+     969: dup
+     970: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     973: aload_1
+     974: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     977: ldc           #59                 // String WATCHER.autosaveBETA
+     979: iload_0
+     980: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+     983: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     986: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     989: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+     992: new           #12                 // class java/lang/StringBuilder
+     995: dup
+     996: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     999: aload_1
+    1000: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1003: ldc           #60                 // String IRONCLAD.autosaveBETA.backUp
+    1005: iload_0
+    1006: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+    1009: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1012: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1015: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+    1018: new           #12                 // class java/lang/StringBuilder
+    1021: dup
+    1022: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+    1025: aload_1
+    1026: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1029: ldc           #61                 // String DEFECT.autosaveBETA.backUp
+    1031: iload_0
+    1032: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+    1035: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1038: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1041: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+    1044: new           #12                 // class java/lang/StringBuilder
+    1047: dup
+    1048: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+    1051: aload_1
+    1052: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1055: ldc           #62                 // String THE_SILENT.autosaveBETA.backUp
+    1057: iload_0
+    1058: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+    1061: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1064: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1067: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+    1070: new           #12                 // class java/lang/StringBuilder
+    1073: dup
+    1074: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+    1077: aload_1
+    1078: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1081: ldc           #63                 // String WATCHER.autosaveBETA.backUp
+    1083: iload_0
+    1084: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+    1087: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1090: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1093: invokestatic  #22                 // Method deleteFile:(Ljava/lang/String;)V
+    1096: getstatic     #64                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlotPref:Lcom/megacrit/cardcrawl/helpers/Prefs;
+    1099: ldc           #65                 // String PROFILE_NAME
+    1101: iload_0
+    1102: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+    1105: ldc           #66                 // String
+    1107: invokevirtual #67                 // Method com/megacrit/cardcrawl/helpers/Prefs.putString:(Ljava/lang/String;Ljava/lang/String;)V
+    1110: getstatic     #64                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlotPref:Lcom/megacrit/cardcrawl/helpers/Prefs;
+    1113: ldc           #68                 // String COMPLETION
+    1115: iload_0
+    1116: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+    1119: fconst_0
+    1120: invokevirtual #69                 // Method com/megacrit/cardcrawl/helpers/Prefs.putFloat:(Ljava/lang/String;F)V
+    1123: getstatic     #64                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlotPref:Lcom/megacrit/cardcrawl/helpers/Prefs;
+    1126: ldc           #70                 // String PLAYTIME
+    1128: iload_0
+    1129: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+    1132: lconst_0
+    1133: invokevirtual #71                 // Method com/megacrit/cardcrawl/helpers/Prefs.putLong:(Ljava/lang/String;J)V
+    1136: getstatic     #64                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlotPref:Lcom/megacrit/cardcrawl/helpers/Prefs;
+    1139: invokevirtual #72                 // Method com/megacrit/cardcrawl/helpers/Prefs.flush:()V
+    1142: iload_0
+    1143: getstatic     #73                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlot:I
+    1146: if_icmpeq     1156
+    1149: getstatic     #73                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlot:I
+    1152: iconst_m1
+    1153: if_icmpne     1277
+    1156: ldc           #66                 // String
+    1158: astore_2
+    1159: iconst_0
+    1160: istore_3
+    1161: iconst_0
+    1162: istore        4
+    1164: iload         4
+    1166: iconst_3
+    1167: if_icmpge     1248
+    1170: getstatic     #64                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlotPref:Lcom/megacrit/cardcrawl/helpers/Prefs;
+    1173: ldc           #65                 // String PROFILE_NAME
+    1175: iload         4
+    1177: invokestatic  #21                 // Method slotName:(Ljava/lang/String;I)Ljava/lang/String;
+    1180: ldc           #66                 // String
+    1182: invokevirtual #74                 // Method com/megacrit/cardcrawl/helpers/Prefs.getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    1185: astore_2
+    1186: aload_2
+    1187: ldc           #66                 // String
+    1189: invokevirtual #75                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1192: ifne          1242
+    1195: getstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+    1198: new           #12                 // class java/lang/StringBuilder
+    1201: dup
+    1202: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+    1205: ldc           #77                 // String Current slot deleted, DEFAULT_SLOT is now
+    1207: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1210: iload         4
+    1212: invokevirtual #78                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    1215: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1218: invokeinterface #79,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+    1223: getstatic     #64                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlotPref:Lcom/megacrit/cardcrawl/helpers/Prefs;
+    1226: ldc           #80                 // String DEFAULT_SLOT
+    1228: iload         4
+    1230: invokevirtual #81                 // Method com/megacrit/cardcrawl/helpers/Prefs.putInteger:(Ljava/lang/String;I)V
+    1233: iconst_1
+    1234: istore_3
+    1235: iconst_1
+    1236: putstatic     #82                 // Field com/megacrit/cardcrawl/screens/mainMenu/SaveSlotScreen.slotDeleted:Z
+    1239: goto          1248
+    1242: iinc          4, 1
+    1245: goto          1164
+    1248: iload_3
+    1249: ifne          1271
+    1252: getstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+    1255: ldc           #83                 // String All slots deleted, DEFAULT_SLOT is now -1
+    1257: invokeinterface #79,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+    1262: getstatic     #64                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlotPref:Lcom/megacrit/cardcrawl/helpers/Prefs;
+    1265: ldc           #80                 // String DEFAULT_SLOT
+    1267: iconst_m1
+    1268: invokevirtual #81                 // Method com/megacrit/cardcrawl/helpers/Prefs.putInteger:(Ljava/lang/String;I)V
+    1271: getstatic     #64                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlotPref:Lcom/megacrit/cardcrawl/helpers/Prefs;
+    1274: invokevirtual #72                 // Method com/megacrit/cardcrawl/helpers/Prefs.flush:()V
+    1277: return
+
+  private static void deleteFile(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: getstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+       3: new           #12                 // class java/lang/StringBuilder
+       6: dup
+       7: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      10: ldc           #84                 // String Deleting
+      12: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      15: aload_0
+      16: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      19: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      22: invokeinterface #79,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      27: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+      30: aload_0
+      31: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+      36: invokevirtual #85                 // Method com/badlogic/gdx/files/FileHandle.delete:()Z
+      39: ifeq          69
+      42: getstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      45: new           #12                 // class java/lang/StringBuilder
+      48: dup
+      49: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      52: aload_0
+      53: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      56: ldc           #86                 // String  deleted.
+      58: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      61: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      64: invokeinterface #79,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      69: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+      72: new           #12                 // class java/lang/StringBuilder
+      75: dup
+      76: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      79: aload_0
+      80: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      83: ldc           #87                 // String .backUp
+      85: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      88: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      91: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+      96: invokevirtual #85                 // Method com/badlogic/gdx/files/FileHandle.delete:()Z
+      99: ifeq          129
+     102: getstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+     105: new           #12                 // class java/lang/StringBuilder
+     108: dup
+     109: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     112: aload_0
+     113: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     116: ldc           #88                 // String .backUp deleted.
+     118: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     121: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     124: invokeinterface #79,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     129: return
+
+  private static void deleteFolder(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: getstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+       3: new           #12                 // class java/lang/StringBuilder
+       6: dup
+       7: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      10: ldc           #84                 // String Deleting
+      12: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      15: aload_0
+      16: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      19: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      22: invokeinterface #79,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      27: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+      30: aload_0
+      31: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+      36: invokevirtual #89                 // Method com/badlogic/gdx/files/FileHandle.deleteDirectory:()Z
+      39: ifeq          69
+      42: getstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      45: new           #12                 // class java/lang/StringBuilder
+      48: dup
+      49: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      52: aload_0
+      53: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      56: ldc           #86                 // String  deleted.
+      58: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      61: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      64: invokeinterface #79,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      69: return
+
+  public static java.lang.String slotName(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)Ljava/lang/String;
+    Code:
+       0: iload_1
+       1: tableswitch   { // 0 to 2
+
+                     0: 28
+
+                     1: 31
+
+                     2: 31
+               default: 31
+          }
+      28: goto          55
+      31: new           #12                 // class java/lang/StringBuilder
+      34: dup
+      35: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      38: iload_1
+      39: invokevirtual #78                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      42: ldc           #90                 // String _
+      44: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      47: aload_0
+      48: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      51: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      54: astore_0
+      55: aload_0
+      56: areturn
+
+  public static com.megacrit.cardcrawl.helpers.Prefs getPrefs(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lcom/megacrit/cardcrawl/helpers/Prefs;
+    Code:
+       0: getstatic     #73                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlot:I
+       3: tableswitch   { // 0 to 2
+
+                     0: 28
+
+                     1: 31
+
+                     2: 31
+               default: 31
+          }
+      28: goto          57
+      31: new           #12                 // class java/lang/StringBuilder
+      34: dup
+      35: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      38: getstatic     #73                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlot:I
+      41: invokevirtual #78                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      44: ldc           #90                 // String _
+      46: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      49: aload_0
+      50: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      53: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      56: astore_0
+      57: new           #91                 // class com/google/gson/Gson
+      60: dup
+      61: invokespecial #92                 // Method com/google/gson/Gson."<init>":()V
+      64: astore_1
+      65: new           #93                 // class com/megacrit/cardcrawl/helpers/Prefs
+      68: dup
+      69: invokespecial #94                 // Method com/megacrit/cardcrawl/helpers/Prefs."<init>":()V
+      72: astore_2
+      73: new           #95                 // class com/megacrit/cardcrawl/helpers/SaveHelper$1
+      76: dup
+      77: invokespecial #96                 // Method com/megacrit/cardcrawl/helpers/SaveHelper$1."<init>":()V
+      80: invokevirtual #97                 // Method com/megacrit/cardcrawl/helpers/SaveHelper$1.getType:()Ljava/lang/reflect/Type;
+      83: astore_3
+      84: new           #12                 // class java/lang/StringBuilder
+      87: dup
+      88: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      91: invokestatic  #14                 // Method getSaveDir:()Ljava/lang/String;
+      94: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      97: getstatic     #16                 // Field java/io/File.separator:Ljava/lang/String;
+     100: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     103: aload_0
+     104: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     107: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     110: astore        4
+     112: aconst_null
+     113: astore        5
+     115: aload         4
+     117: invokestatic  #98                 // Method loadJson:(Ljava/lang/String;)Ljava/lang/String;
+     120: astore        5
+     122: aload         5
+     124: invokevirtual #99                 // Method java/lang/String.isEmpty:()Z
+     127: ifeq          183
+     130: getstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+     133: new           #12                 // class java/lang/StringBuilder
+     136: dup
+     137: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+     140: ldc           #100                // String Empty Pref file: name=
+     142: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     145: aload_0
+     146: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     149: ldc           #101                // String , filepath=
+     151: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     154: aload         4
+     156: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     159: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     162: invokeinterface #102,  2          // InterfaceMethod org/apache/logging/log4j/Logger.error:(Ljava/lang/String;)V
+     167: aload         5
+     169: aload         4
+     171: aload_0
+     172: invokestatic  #103                // Method handleCorruption:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+     175: aload_0
+     176: invokestatic  #104                // Method getPrefs:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/helpers/Prefs;
+     179: astore_2
+     180: goto          197
+     183: aload_2
+     184: aload_1
+     185: aload         5
+     187: aload_3
+     188: invokevirtual #105                // Method com/google/gson/Gson.fromJson:(Ljava/lang/String;Ljava/lang/reflect/Type;)Ljava/lang/Object;
+     191: checkcast     #106                // class java/util/Map
+     194: putfield      #107                // Field com/megacrit/cardcrawl/helpers/Prefs.data:Ljava/util/Map;
+     197: goto          227
+     200: astore        6
+     202: getstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+     205: ldc           #109                // String Corrupt Pref file
+     207: aload         6
+     209: invokeinterface #110,  3          // InterfaceMethod org/apache/logging/log4j/Logger.error:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     214: aload         5
+     216: aload         4
+     218: aload_0
+     219: invokestatic  #103                // Method handleCorruption:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+     222: aload_0
+     223: invokestatic  #104                // Method getPrefs:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/helpers/Prefs;
+     226: astore_2
+     227: aload_2
+     228: aload         4
+     230: putfield      #111                // Field com/megacrit/cardcrawl/helpers/Prefs.filepath:Ljava/lang/String;
+     233: aload_2
+     234: areturn
+    Exception table:
+       from    to  target type
+         115   197   200   Class com/google/gson/JsonSyntaxException
+
+  private static void handleCorruption(java.lang.String, java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+    Code:
+       0: aload_1
+       1: invokestatic  #112                // Method preserveCorruptFile:(Ljava/lang/String;)V
+       4: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+       7: new           #12                 // class java/lang/StringBuilder
+      10: dup
+      11: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      14: aload_1
+      15: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      18: ldc           #87                 // String .backUp
+      20: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      23: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      26: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+      31: astore_3
+      32: aload_3
+      33: invokevirtual #19                 // Method com/badlogic/gdx/files/FileHandle.exists:()Z
+      36: ifeq          79
+      39: aload_3
+      40: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+      43: aload_1
+      44: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+      49: invokevirtual #113                // Method com/badlogic/gdx/files/FileHandle.moveTo:(Lcom/badlogic/gdx/files/FileHandle;)V
+      52: getstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      55: new           #12                 // class java/lang/StringBuilder
+      58: dup
+      59: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      62: ldc           #114                // String Original corrupted, backup loaded for
+      64: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      67: aload_1
+      68: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      71: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      74: invokeinterface #79,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      79: return
+
+  public static void preserveCorruptFile(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+       3: aload_0
+       4: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+       9: astore_1
+      10: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+      13: new           #12                 // class java/lang/StringBuilder
+      16: dup
+      17: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      20: ldc           #116                // String sendToDevs
+      22: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      25: getstatic     #16                 // Field java/io/File.separator:Ljava/lang/String;
+      28: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      31: aload_0
+      32: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      35: ldc           #117                // String .corrupt
+      37: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      40: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      43: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+      48: astore_2
+      49: aload_1
+      50: aload_2
+      51: invokevirtual #113                // Method com/badlogic/gdx/files/FileHandle.moveTo:(Lcom/badlogic/gdx/files/FileHandle;)V
+      54: return
+
+  private static java.lang.String loadJson(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/String;
+    Code:
+       0: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+       3: aload_0
+       4: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+       9: invokevirtual #19                 // Method com/badlogic/gdx/files/FileHandle.exists:()Z
+      12: ifeq          34
+      15: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+      18: aload_0
+      19: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+      24: getstatic     #118                // Field java/nio/charset/StandardCharsets.UTF_8:Ljava/nio/charset/Charset;
+      27: invokestatic  #119                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+      30: invokevirtual #120                // Method com/badlogic/gdx/files/FileHandle.readString:(Ljava/lang/String;)Ljava/lang/String;
+      33: areturn
+      34: new           #121                // class java/util/HashMap
+      37: dup
+      38: invokespecial #122                // Method java/util/HashMap."<init>":()V
+      41: astore_1
+      42: new           #91                 // class com/google/gson/Gson
+      45: dup
+      46: invokespecial #92                 // Method com/google/gson/Gson."<init>":()V
+      49: astore_2
+      50: aload_0
+      51: aload_2
+      52: aload_1
+      53: invokevirtual #123                // Method com/google/gson/Gson.toJson:(Ljava/lang/Object;)Ljava/lang/String;
+      56: invokestatic  #124                // Method com/megacrit/cardcrawl/helpers/AsyncSaver.save:(Ljava/lang/String;Ljava/lang/String;)V
+      59: ldc           #125                // String {}
+      61: areturn
+
+  public static boolean saveExists();
+    descriptor: ()Z
+    Code:
+       0: new           #12                 // class java/lang/StringBuilder
+       3: dup
+       4: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+       7: astore_0
+       8: aload_0
+       9: invokestatic  #14                 // Method getSaveDir:()Ljava/lang/String;
+      12: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      15: getstatic     #16                 // Field java/io/File.separator:Ljava/lang/String;
+      18: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      21: pop
+      22: getstatic     #73                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlot:I
+      25: tableswitch   { // 0 to 3
+
+                     0: 56
+
+                     1: 66
+
+                     2: 66
+
+                     3: 66
+               default: 82
+          }
+      56: aload_0
+      57: ldc           #38                 // String STSPlayer
+      59: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      62: pop
+      63: goto          89
+      66: aload_0
+      67: getstatic     #73                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.saveSlot:I
+      70: invokevirtual #78                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      73: ldc           #126                // String _STSPlayer
+      75: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      78: pop
+      79: goto          89
+      82: aload_0
+      83: ldc           #38                 // String STSPlayer
+      85: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      88: pop
+      89: getstatic     #11                 // Field com/badlogic/gdx/Gdx.files:Lcom/badlogic/gdx/Files;
+      92: aload_0
+      93: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      96: invokeinterface #18,  2           // InterfaceMethod com/badlogic/gdx/Files.local:(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;
+     101: invokevirtual #19                 // Method com/badlogic/gdx/files/FileHandle.exists:()Z
+     104: ireturn
+
+  public static void saveIfAppropriate(com.megacrit.cardcrawl.saveAndContinue.SaveFile$SaveType);
+    descriptor: (Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile$SaveType;)V
+    Code:
+       0: invokestatic  #127                // Method shouldSave:()Z
+       3: ifne          7
+       6: return
+       7: new           #128                // class com/megacrit/cardcrawl/saveAndContinue/SaveFile
+      10: dup
+      11: aload_0
+      12: invokespecial #129                // Method com/megacrit/cardcrawl/saveAndContinue/SaveFile."<init>":(Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile$SaveType;)V
+      15: astore_1
+      16: aload_1
+      17: invokestatic  #130                // Method com/megacrit/cardcrawl/saveAndContinue/SaveAndContinue.save:(Lcom/megacrit/cardcrawl/saveAndContinue/SaveFile;)V
+      20: getstatic     #131                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+      23: new           #132                // class com/megacrit/cardcrawl/vfx/GameSavedEffect
+      26: dup
+      27: invokespecial #133                // Method com/megacrit/cardcrawl/vfx/GameSavedEffect."<init>":()V
+      30: invokevirtual #134                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      33: pop
+      34: return
+
+  public static boolean shouldSave();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #135                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.nextRoom:Lcom/megacrit/cardcrawl/map/MapRoomNode;
+       3: ifnull        20
+       6: getstatic     #135                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.nextRoom:Lcom/megacrit/cardcrawl/map/MapRoomNode;
+       9: invokevirtual #136                // Method com/megacrit/cardcrawl/map/MapRoomNode.getRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      12: instanceof    #137                // class com/megacrit/cardcrawl/rooms/TrueVictoryRoom
+      15: ifeq          20
+      18: iconst_0
+      19: ireturn
+      20: getstatic     #138                // Field com/megacrit/cardcrawl/core/Settings.isDemo:Z
+      23: ifne          30
+      26: iconst_1
+      27: goto          31
+      30: iconst_0
+      31: ireturn
+
+  public static boolean shouldDeleteSave();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #138                // Field com/megacrit/cardcrawl/core/Settings.isDemo:Z
+       3: ifne          10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: ireturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #139                // class com/megacrit/cardcrawl/helpers/SaveHelper
+       2: invokevirtual #140                // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #141                // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #76                 // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: return
+}

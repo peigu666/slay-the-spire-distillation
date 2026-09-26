@@ -1,0 +1,358 @@
+Compiled from "CInputHelper.java"
+public class com.megacrit.cardcrawl.helpers.controller.CInputHelper {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  public static com.badlogic.gdx.utils.Array<com.badlogic.gdx.controllers.Controller> controllers;
+    descriptor: Lcom/badlogic/gdx/utils/Array;
+
+  public static com.badlogic.gdx.controllers.Controller controller;
+    descriptor: Lcom/badlogic/gdx/controllers/Controller;
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.helpers.controller.CInputAction> actions;
+    descriptor: Ljava/util/ArrayList;
+
+  public static com.megacrit.cardcrawl.helpers.controller.CInputListener listener;
+    descriptor: Lcom/megacrit/cardcrawl/helpers/controller/CInputListener;
+
+  private static boolean initializedController;
+    descriptor: Z
+
+  public static com.megacrit.cardcrawl.helpers.controller.CInputHelper$ControllerModel model;
+    descriptor: Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+
+  public com.megacrit.cardcrawl.helpers.controller.CInputHelper();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void loadSettings();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #2                  // Method com/megacrit/cardcrawl/helpers/controller/CInputActionSet.load:()V
+       3: return
+
+  public static void initializeIfAble();
+    descriptor: ()V
+    Code:
+       0: getstatic     #3                  // Field initializedController:Z
+       3: ifne          270
+       6: invokestatic  #4                  // Method org/lwjgl/opengl/Display.isActive:()Z
+       9: ifeq          270
+      12: iconst_1
+      13: putstatic     #3                  // Field initializedController:Z
+      16: getstatic     #5                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      19: ldc           #6                  // String [CONTROLLER] Utilizing DirectInput
+      21: invokeinterface #7,  2            // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      26: invokestatic  #8                  // Method com/badlogic/gdx/controllers/Controllers.getControllers:()Lcom/badlogic/gdx/utils/Array;
+      29: putstatic     #9                  // Field controllers:Lcom/badlogic/gdx/utils/Array;
+      32: goto          48
+      35: astore_0
+      36: getstatic     #5                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      39: aload_0
+      40: invokevirtual #11                 // Method java/lang/Exception.getMessage:()Ljava/lang/String;
+      43: invokeinterface #7,  2            // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      48: getstatic     #9                  // Field controllers:Lcom/badlogic/gdx/utils/Array;
+      51: ifnonnull     65
+      54: getstatic     #5                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      57: ldc           #12                 // String [ERROR] getControllers() returned null
+      59: invokeinterface #7,  2            // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      64: return
+      65: iconst_0
+      66: istore_0
+      67: iload_0
+      68: getstatic     #9                  // Field controllers:Lcom/badlogic/gdx/utils/Array;
+      71: getfield      #13                 // Field com/badlogic/gdx/utils/Array.size:I
+      74: if_icmpge     133
+      77: getstatic     #5                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      80: new           #14                 // class java/lang/StringBuilder
+      83: dup
+      84: invokespecial #15                 // Method java/lang/StringBuilder."<init>":()V
+      87: ldc           #16                 // String CONTROLLER[
+      89: invokevirtual #17                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      92: iload_0
+      93: invokevirtual #18                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      96: ldc           #19                 // String ]
+      98: invokevirtual #17                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     101: getstatic     #9                  // Field controllers:Lcom/badlogic/gdx/utils/Array;
+     104: iload_0
+     105: invokevirtual #20                 // Method com/badlogic/gdx/utils/Array.get:(I)Ljava/lang/Object;
+     108: checkcast     #21                 // class com/badlogic/gdx/controllers/Controller
+     111: invokeinterface #22,  1           // InterfaceMethod com/badlogic/gdx/controllers/Controller.getName:()Ljava/lang/String;
+     116: invokevirtual #17                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     119: invokevirtual #23                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     122: invokeinterface #7,  2            // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     127: iinc          0, 1
+     130: goto          67
+     133: getstatic     #9                  // Field controllers:Lcom/badlogic/gdx/utils/Array;
+     136: getfield      #13                 // Field com/badlogic/gdx/utils/Array.size:I
+     139: ifeq          260
+     142: iconst_1
+     143: putstatic     #24                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+     146: iconst_0
+     147: putstatic     #25                 // Field com/megacrit/cardcrawl/core/Settings.isTouchScreen:Z
+     150: new           #26                 // class com/megacrit/cardcrawl/helpers/controller/CInputListener
+     153: dup
+     154: invokespecial #27                 // Method com/megacrit/cardcrawl/helpers/controller/CInputListener."<init>":()V
+     157: putstatic     #28                 // Field listener:Lcom/megacrit/cardcrawl/helpers/controller/CInputListener;
+     160: getstatic     #9                  // Field controllers:Lcom/badlogic/gdx/utils/Array;
+     163: invokevirtual #29                 // Method com/badlogic/gdx/utils/Array.first:()Ljava/lang/Object;
+     166: checkcast     #21                 // class com/badlogic/gdx/controllers/Controller
+     169: putstatic     #30                 // Field controller:Lcom/badlogic/gdx/controllers/Controller;
+     172: getstatic     #30                 // Field controller:Lcom/badlogic/gdx/controllers/Controller;
+     175: getstatic     #28                 // Field listener:Lcom/megacrit/cardcrawl/helpers/controller/CInputListener;
+     178: invokeinterface #31,  2           // InterfaceMethod com/badlogic/gdx/controllers/Controller.addListener:(Lcom/badlogic/gdx/controllers/ControllerListener;)V
+     183: getstatic     #30                 // Field controller:Lcom/badlogic/gdx/controllers/Controller;
+     186: invokeinterface #22,  1           // InterfaceMethod com/badlogic/gdx/controllers/Controller.getName:()Ljava/lang/String;
+     191: ldc           #32                 // String 360
+     193: invokevirtual #33                 // Method java/lang/String.contains:(Ljava/lang/CharSequence;)Z
+     196: ifeq          214
+     199: getstatic     #34                 // Field com/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel.XBOX_360:Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+     202: putstatic     #35                 // Field model:Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+     205: getstatic     #34                 // Field com/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel.XBOX_360:Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+     208: invokestatic  #36                 // Method com/megacrit/cardcrawl/helpers/ImageMaster.loadControllerImages:(Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;)V
+     211: goto          270
+     214: getstatic     #30                 // Field controller:Lcom/badlogic/gdx/controllers/Controller;
+     217: invokeinterface #22,  1           // InterfaceMethod com/badlogic/gdx/controllers/Controller.getName:()Ljava/lang/String;
+     222: ldc           #37                 // String Xbox One
+     224: invokevirtual #33                 // Method java/lang/String.contains:(Ljava/lang/CharSequence;)Z
+     227: ifeq          245
+     230: getstatic     #38                 // Field com/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel.XBOX_ONE:Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+     233: putstatic     #35                 // Field model:Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+     236: getstatic     #38                 // Field com/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel.XBOX_ONE:Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+     239: invokestatic  #36                 // Method com/megacrit/cardcrawl/helpers/ImageMaster.loadControllerImages:(Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;)V
+     242: goto          270
+     245: getstatic     #34                 // Field com/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel.XBOX_360:Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+     248: putstatic     #35                 // Field model:Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+     251: getstatic     #34                 // Field com/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel.XBOX_360:Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+     254: invokestatic  #36                 // Method com/megacrit/cardcrawl/helpers/ImageMaster.loadControllerImages:(Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;)V
+     257: goto          270
+     260: getstatic     #5                  // Field logger:Lorg/apache/logging/log4j/Logger;
+     263: ldc           #39                 // String [CONTROLLER] No controllers detected
+     265: invokeinterface #7,  2            // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     270: return
+    Exception table:
+       from    to  target type
+          26    32    35   Class java/lang/Exception
+
+  public static void setController(com.badlogic.gdx.controllers.Controller);
+    descriptor: (Lcom/badlogic/gdx/controllers/Controller;)V
+    Code:
+       0: iconst_1
+       1: putstatic     #24                 // Field com/megacrit/cardcrawl/core/Settings.isControllerMode:Z
+       4: iconst_0
+       5: putstatic     #25                 // Field com/megacrit/cardcrawl/core/Settings.isTouchScreen:Z
+       8: aload_0
+       9: putstatic     #30                 // Field controller:Lcom/badlogic/gdx/controllers/Controller;
+      12: getstatic     #30                 // Field controller:Lcom/badlogic/gdx/controllers/Controller;
+      15: getstatic     #28                 // Field listener:Lcom/megacrit/cardcrawl/helpers/controller/CInputListener;
+      18: invokeinterface #31,  2           // InterfaceMethod com/badlogic/gdx/controllers/Controller.addListener:(Lcom/badlogic/gdx/controllers/ControllerListener;)V
+      23: getstatic     #28                 // Field listener:Lcom/megacrit/cardcrawl/helpers/controller/CInputListener;
+      26: invokestatic  #40                 // Method com/badlogic/gdx/controllers/Controllers.removeListener:(Lcom/badlogic/gdx/controllers/ControllerListener;)V
+      29: return
+
+  public static void setCursor(com.megacrit.cardcrawl.helpers.Hitbox);
+    descriptor: (Lcom/megacrit/cardcrawl/helpers/Hitbox;)V
+    Code:
+       0: aload_0
+       1: ifnull        48
+       4: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+       7: aload_0
+       8: getfield      #42                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+      11: f2i
+      12: isub
+      13: istore_1
+      14: iload_1
+      15: ifge          23
+      18: iconst_0
+      19: istore_1
+      20: goto          34
+      23: iload_1
+      24: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      27: if_icmple     34
+      30: getstatic     #41                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      33: istore_1
+      34: getstatic     #43                 // Field com/badlogic/gdx/Gdx.input:Lcom/badlogic/gdx/Input;
+      37: aload_0
+      38: getfield      #44                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+      41: f2i
+      42: iload_1
+      43: invokeinterface #45,  3           // InterfaceMethod com/badlogic/gdx/Input.setCursorPosition:(II)V
+      48: return
+
+  public static void updateLast();
+    descriptor: ()V
+    Code:
+       0: getstatic     #46                 // Field actions:Ljava/util/ArrayList;
+       3: invokevirtual #47                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       6: astore_0
+       7: aload_0
+       8: invokeinterface #48,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          39
+      16: aload_0
+      17: invokeinterface #49,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #50                 // class com/megacrit/cardcrawl/helpers/controller/CInputAction
+      25: astore_1
+      26: aload_1
+      27: iconst_0
+      28: putfield      #51                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.justPressed:Z
+      31: aload_1
+      32: iconst_0
+      33: putfield      #52                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.justReleased:Z
+      36: goto          7
+      39: return
+
+  public static boolean listenerPress(int);
+    descriptor: (I)Z
+    Code:
+       0: getstatic     #46                 // Field actions:Ljava/util/ArrayList;
+       3: invokevirtual #47                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       6: astore_1
+       7: aload_1
+       8: invokeinterface #48,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          50
+      16: aload_1
+      17: invokeinterface #49,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #50                 // class com/megacrit/cardcrawl/helpers/controller/CInputAction
+      25: astore_2
+      26: aload_2
+      27: getfield      #53                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.keycode:I
+      30: iload_0
+      31: if_icmpne     47
+      34: aload_2
+      35: iconst_1
+      36: putfield      #51                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.justPressed:Z
+      39: aload_2
+      40: iconst_1
+      41: putfield      #54                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.pressed:Z
+      44: goto          50
+      47: goto          7
+      50: iconst_0
+      51: ireturn
+
+  public static boolean listenerRelease(int);
+    descriptor: (I)Z
+    Code:
+       0: getstatic     #46                 // Field actions:Ljava/util/ArrayList;
+       3: invokevirtual #47                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       6: astore_1
+       7: aload_1
+       8: invokeinterface #48,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          50
+      16: aload_1
+      17: invokeinterface #49,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #50                 // class com/megacrit/cardcrawl/helpers/controller/CInputAction
+      25: astore_2
+      26: aload_2
+      27: getfield      #53                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.keycode:I
+      30: iload_0
+      31: if_icmpne     47
+      34: aload_2
+      35: iconst_1
+      36: putfield      #52                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.justReleased:Z
+      39: aload_2
+      40: iconst_0
+      41: putfield      #54                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.pressed:Z
+      44: goto          50
+      47: goto          7
+      50: iconst_0
+      51: ireturn
+
+  public static boolean isJustPressed(int);
+    descriptor: (I)Z
+    Code:
+       0: getstatic     #46                 // Field actions:Ljava/util/ArrayList;
+       3: invokevirtual #47                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       6: astore_1
+       7: aload_1
+       8: invokeinterface #48,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          42
+      16: aload_1
+      17: invokeinterface #49,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #50                 // class com/megacrit/cardcrawl/helpers/controller/CInputAction
+      25: astore_2
+      26: aload_2
+      27: getfield      #53                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.keycode:I
+      30: iload_0
+      31: if_icmpne     39
+      34: aload_2
+      35: getfield      #51                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.justPressed:Z
+      38: ireturn
+      39: goto          7
+      42: iconst_0
+      43: ireturn
+
+  public static boolean isJustReleased(int);
+    descriptor: (I)Z
+    Code:
+       0: getstatic     #46                 // Field actions:Ljava/util/ArrayList;
+       3: invokevirtual #47                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       6: astore_1
+       7: aload_1
+       8: invokeinterface #48,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          42
+      16: aload_1
+      17: invokeinterface #49,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #50                 // class com/megacrit/cardcrawl/helpers/controller/CInputAction
+      25: astore_2
+      26: aload_2
+      27: getfield      #53                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.keycode:I
+      30: iload_0
+      31: if_icmpne     39
+      34: aload_2
+      35: getfield      #52                 // Field com/megacrit/cardcrawl/helpers/controller/CInputAction.justReleased:Z
+      38: ireturn
+      39: goto          7
+      42: iconst_0
+      43: ireturn
+
+  public static void regainInputFocus();
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: putstatic     #55                 // Field com/megacrit/cardcrawl/helpers/controller/CInputListener.remapping:Z
+       4: return
+
+  public static boolean isTopPanelActive();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topPanel:Lcom/megacrit/cardcrawl/ui/panels/TopPanel;
+       3: getfield      #57                 // Field com/megacrit/cardcrawl/ui/panels/TopPanel.selectPotionMode:Z
+       6: ifne          30
+       9: getstatic     #58                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      12: getfield      #59                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.viewingRelics:Z
+      15: ifne          30
+      18: getstatic     #56                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topPanel:Lcom/megacrit/cardcrawl/ui/panels/TopPanel;
+      21: getfield      #60                 // Field com/megacrit/cardcrawl/ui/panels/TopPanel.potionUi:Lcom/megacrit/cardcrawl/ui/panels/PotionPopUp;
+      24: getfield      #61                 // Field com/megacrit/cardcrawl/ui/panels/PotionPopUp.isHidden:Z
+      27: ifne          34
+      30: iconst_1
+      31: goto          35
+      34: iconst_0
+      35: ireturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #62                 // class com/megacrit/cardcrawl/helpers/controller/CInputHelper
+       2: invokevirtual #63                 // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #64                 // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #5                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: aconst_null
+      12: putstatic     #9                  // Field controllers:Lcom/badlogic/gdx/utils/Array;
+      15: aconst_null
+      16: putstatic     #30                 // Field controller:Lcom/badlogic/gdx/controllers/Controller;
+      19: new           #65                 // class java/util/ArrayList
+      22: dup
+      23: invokespecial #66                 // Method java/util/ArrayList."<init>":()V
+      26: putstatic     #46                 // Field actions:Ljava/util/ArrayList;
+      29: aconst_null
+      30: putstatic     #28                 // Field listener:Lcom/megacrit/cardcrawl/helpers/controller/CInputListener;
+      33: iconst_0
+      34: putstatic     #3                  // Field initializedController:Z
+      37: aconst_null
+      38: putstatic     #35                 // Field model:Lcom/megacrit/cardcrawl/helpers/controller/CInputHelper$ControllerModel;
+      41: return
+}

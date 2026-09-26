@@ -1,0 +1,171 @@
+Compiled from "ShuffleAllAction.java"
+public class com.megacrit.cardcrawl.actions.defect.ShuffleAllAction extends com.megacrit.cardcrawl.actions.AbstractGameAction {
+  private static final com.megacrit.cardcrawl.localization.TutorialStrings tutorialStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/TutorialStrings;
+
+  public static final java.lang.String[] MSG;
+    descriptor: [Ljava/lang/String;
+
+  public static final java.lang.String[] LABEL;
+    descriptor: [Ljava/lang/String;
+
+  private boolean shuffled;
+    descriptor: Z
+
+  private boolean vfxDone;
+    descriptor: Z
+
+  private int count;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.actions.defect.ShuffleAllAction();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/actions/AbstractGameAction."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #2                  // Field shuffled:Z
+       9: aload_0
+      10: iconst_0
+      11: putfield      #3                  // Field vfxDone:Z
+      14: aload_0
+      15: iconst_0
+      16: putfield      #4                  // Field count:I
+      19: aload_0
+      20: aconst_null
+      21: aconst_null
+      22: iconst_0
+      23: invokevirtual #5                  // Method setValues:(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+      26: aload_0
+      27: getstatic     #6                  // Field com/megacrit/cardcrawl/actions/AbstractGameAction$ActionType.SHUFFLE:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      30: putfield      #7                  // Field actionType:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      33: getstatic     #8                  // Field com/megacrit/cardcrawl/helpers/TipTracker.tips:Ljava/util/HashMap;
+      36: ldc           #10                 // String SHUFFLE_TIP
+      38: invokevirtual #11                 // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      41: checkcast     #12                 // class java/lang/Boolean
+      44: invokevirtual #13                 // Method java/lang/Boolean.booleanValue:()Z
+      47: ifne          90
+      50: new           #14                 // class com/megacrit/cardcrawl/ui/FtueTip
+      53: dup
+      54: getstatic     #15                 // Field LABEL:[Ljava/lang/String;
+      57: iconst_0
+      58: aaload
+      59: getstatic     #16                 // Field MSG:[Ljava/lang/String;
+      62: iconst_0
+      63: aaload
+      64: getstatic     #17                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      67: i2f
+      68: fconst_2
+      69: fdiv
+      70: getstatic     #18                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      73: i2f
+      74: fconst_2
+      75: fdiv
+      76: getstatic     #19                 // Field com/megacrit/cardcrawl/ui/FtueTip$TipType.SHUFFLE:Lcom/megacrit/cardcrawl/ui/FtueTip$TipType;
+      79: invokespecial #20                 // Method com/megacrit/cardcrawl/ui/FtueTip."<init>":(Ljava/lang/String;Ljava/lang/String;FFLcom/megacrit/cardcrawl/ui/FtueTip$TipType;)V
+      82: putstatic     #21                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.ftue:Lcom/megacrit/cardcrawl/ui/FtueTip;
+      85: ldc           #10                 // String SHUFFLE_TIP
+      87: invokestatic  #22                 // Method com/megacrit/cardcrawl/helpers/TipTracker.neverShowAgain:(Ljava/lang/String;)V
+      90: getstatic     #23                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      93: getfield      #24                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+      96: invokevirtual #25                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      99: astore_1
+     100: aload_1
+     101: invokeinterface #26,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     106: ifeq          126
+     109: aload_1
+     110: invokeinterface #27,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     115: checkcast     #28                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+     118: astore_2
+     119: aload_2
+     120: invokevirtual #29                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.onShuffle:()V
+     123: goto          100
+     126: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field shuffled:Z
+       4: ifne          42
+       7: aload_0
+       8: iconst_1
+       9: putfield      #2                  // Field shuffled:Z
+      12: getstatic     #23                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      15: astore_1
+      16: aload_0
+      17: new           #30                 // class com/megacrit/cardcrawl/actions/common/PutOnDeckAction
+      20: dup
+      21: aload_1
+      22: aload_1
+      23: bipush        99
+      25: iconst_1
+      26: invokespecial #31                 // Method com/megacrit/cardcrawl/actions/common/PutOnDeckAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;IZ)V
+      29: invokevirtual #32                 // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      32: aload_1
+      33: getfield      #33                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.discardPile:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      36: getstatic     #34                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.shuffleRng:Lcom/megacrit/cardcrawl/random/Random;
+      39: invokevirtual #35                 // Method com/megacrit/cardcrawl/cards/CardGroup.shuffle:(Lcom/megacrit/cardcrawl/random/Random;)V
+      42: aload_0
+      43: getfield      #3                  // Field vfxDone:Z
+      46: ifne          137
+      49: getstatic     #23                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      52: getfield      #33                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.discardPile:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      55: getfield      #36                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+      58: invokevirtual #25                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      61: astore_1
+      62: aload_1
+      63: invokeinterface #26,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      68: ifeq          132
+      71: aload_0
+      72: dup
+      73: getfield      #4                  // Field count:I
+      76: iconst_1
+      77: iadd
+      78: putfield      #4                  // Field count:I
+      81: aload_1
+      82: invokeinterface #27,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      87: checkcast     #37                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      90: astore_2
+      91: aload_1
+      92: invokeinterface #38,  1           // InterfaceMethod java/util/Iterator.remove:()V
+      97: aload_0
+      98: getfield      #4                  // Field count:I
+     101: bipush        11
+     103: if_icmpge     120
+     106: invokestatic  #39                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     109: getfield      #40                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.souls:Lcom/megacrit/cardcrawl/cards/SoulGroup;
+     112: aload_2
+     113: iconst_0
+     114: invokevirtual #41                 // Method com/megacrit/cardcrawl/cards/SoulGroup.shuffle:(Lcom/megacrit/cardcrawl/cards/AbstractCard;Z)V
+     117: goto          131
+     120: invokestatic  #39                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     123: getfield      #40                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.souls:Lcom/megacrit/cardcrawl/cards/SoulGroup;
+     126: aload_2
+     127: iconst_1
+     128: invokevirtual #41                 // Method com/megacrit/cardcrawl/cards/SoulGroup.shuffle:(Lcom/megacrit/cardcrawl/cards/AbstractCard;Z)V
+     131: return
+     132: aload_0
+     133: iconst_1
+     134: putfield      #3                  // Field vfxDone:Z
+     137: aload_0
+     138: iconst_1
+     139: putfield      #42                 // Field isDone:Z
+     142: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #43                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #44                 // String Shuffle Tip
+       5: invokevirtual #45                 // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getTutorialString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/TutorialStrings;
+       8: putstatic     #46                 // Field tutorialStrings:Lcom/megacrit/cardcrawl/localization/TutorialStrings;
+      11: getstatic     #46                 // Field tutorialStrings:Lcom/megacrit/cardcrawl/localization/TutorialStrings;
+      14: getfield      #47                 // Field com/megacrit/cardcrawl/localization/TutorialStrings.TEXT:[Ljava/lang/String;
+      17: putstatic     #16                 // Field MSG:[Ljava/lang/String;
+      20: getstatic     #46                 // Field tutorialStrings:Lcom/megacrit/cardcrawl/localization/TutorialStrings;
+      23: getfield      #48                 // Field com/megacrit/cardcrawl/localization/TutorialStrings.LABEL:[Ljava/lang/String;
+      26: putstatic     #15                 // Field LABEL:[Ljava/lang/String;
+      29: return
+}

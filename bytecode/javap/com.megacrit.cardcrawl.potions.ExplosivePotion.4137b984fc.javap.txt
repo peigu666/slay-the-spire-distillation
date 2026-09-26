@@ -1,0 +1,142 @@
+Compiled from "ExplosivePotion.java"
+public class com.megacrit.cardcrawl.potions.ExplosivePotion extends com.megacrit.cardcrawl.potions.AbstractPotion {
+  public static final java.lang.String POTION_ID;
+    descriptor: Ljava/lang/String;
+
+  private static final com.megacrit.cardcrawl.localization.PotionStrings potionStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/PotionStrings;
+
+  public com.megacrit.cardcrawl.potions.ExplosivePotion();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getstatic     #1                  // Field potionStrings:Lcom/megacrit/cardcrawl/localization/PotionStrings;
+       4: getfield      #2                  // Field com/megacrit/cardcrawl/localization/PotionStrings.NAME:Ljava/lang/String;
+       7: ldc           #4                  // String Explosive Potion
+       9: getstatic     #5                  // Field com/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity.COMMON:Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity;
+      12: getstatic     #6                  // Field com/megacrit/cardcrawl/potions/AbstractPotion$PotionSize.H:Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionSize;
+      15: getstatic     #7                  // Field com/megacrit/cardcrawl/potions/AbstractPotion$PotionColor.EXPLOSIVE:Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionColor;
+      18: invokespecial #8                  // Method com/megacrit/cardcrawl/potions/AbstractPotion."<init>":(Ljava/lang/String;Ljava/lang/String;Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionRarity;Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionSize;Lcom/megacrit/cardcrawl/potions/AbstractPotion$PotionColor;)V
+      21: aload_0
+      22: iconst_1
+      23: putfield      #9                  // Field isThrown:Z
+      26: return
+
+  public void initializeData();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: aload_0
+       2: invokevirtual #10                 // Method getPotency:()I
+       5: putfield      #11                 // Field potency:I
+       8: aload_0
+       9: new           #12                 // class java/lang/StringBuilder
+      12: dup
+      13: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+      16: getstatic     #1                  // Field potionStrings:Lcom/megacrit/cardcrawl/localization/PotionStrings;
+      19: getfield      #14                 // Field com/megacrit/cardcrawl/localization/PotionStrings.DESCRIPTIONS:[Ljava/lang/String;
+      22: iconst_0
+      23: aaload
+      24: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      27: aload_0
+      28: getfield      #11                 // Field potency:I
+      31: invokevirtual #16                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      34: getstatic     #1                  // Field potionStrings:Lcom/megacrit/cardcrawl/localization/PotionStrings;
+      37: getfield      #14                 // Field com/megacrit/cardcrawl/localization/PotionStrings.DESCRIPTIONS:[Ljava/lang/String;
+      40: iconst_1
+      41: aaload
+      42: invokevirtual #15                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      45: invokevirtual #17                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      48: putfield      #18                 // Field description:Ljava/lang/String;
+      51: aload_0
+      52: getfield      #19                 // Field tips:Ljava/util/ArrayList;
+      55: invokevirtual #20                 // Method java/util/ArrayList.clear:()V
+      58: aload_0
+      59: getfield      #19                 // Field tips:Ljava/util/ArrayList;
+      62: new           #21                 // class com/megacrit/cardcrawl/helpers/PowerTip
+      65: dup
+      66: aload_0
+      67: getfield      #22                 // Field name:Ljava/lang/String;
+      70: aload_0
+      71: getfield      #18                 // Field description:Ljava/lang/String;
+      74: invokespecial #23                 // Method com/megacrit/cardcrawl/helpers/PowerTip."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+      77: invokevirtual #24                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      80: pop
+      81: return
+
+  public void use(com.megacrit.cardcrawl.core.AbstractCreature);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+    Code:
+       0: invokestatic  #25                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getMonsters:()Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+       3: getfield      #26                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+       6: invokevirtual #27                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       9: astore_2
+      10: aload_2
+      11: invokeinterface #28,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          73
+      19: aload_2
+      20: invokeinterface #29,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #30                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+      28: astore_3
+      29: aload_3
+      30: invokevirtual #31                 // Method com/megacrit/cardcrawl/monsters/AbstractMonster.isDeadOrEscaped:()Z
+      33: ifne          70
+      36: aload_0
+      37: new           #32                 // class com/megacrit/cardcrawl/actions/animations/VFXAction
+      40: dup
+      41: new           #33                 // class com/megacrit/cardcrawl/vfx/combat/ExplosionSmallEffect
+      44: dup
+      45: aload_3
+      46: getfield      #34                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      49: getfield      #35                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cX:F
+      52: aload_3
+      53: getfield      #34                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      56: getfield      #36                 // Field com/megacrit/cardcrawl/helpers/Hitbox.cY:F
+      59: invokespecial #37                 // Method com/megacrit/cardcrawl/vfx/combat/ExplosionSmallEffect."<init>":(FF)V
+      62: ldc           #38                 // float 0.1f
+      64: invokespecial #39                 // Method com/megacrit/cardcrawl/actions/animations/VFXAction."<init>":(Lcom/megacrit/cardcrawl/vfx/AbstractGameEffect;F)V
+      67: invokevirtual #40                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      70: goto          10
+      73: aload_0
+      74: new           #41                 // class com/megacrit/cardcrawl/actions/utility/WaitAction
+      77: dup
+      78: ldc           #42                 // float 0.5f
+      80: invokespecial #43                 // Method com/megacrit/cardcrawl/actions/utility/WaitAction."<init>":(F)V
+      83: invokevirtual #40                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      86: aload_0
+      87: new           #44                 // class com/megacrit/cardcrawl/actions/common/DamageAllEnemiesAction
+      90: dup
+      91: aconst_null
+      92: aload_0
+      93: getfield      #11                 // Field potency:I
+      96: iconst_1
+      97: invokestatic  #45                 // Method com/megacrit/cardcrawl/cards/DamageInfo.createDamageMatrix:(IZ)[I
+     100: getstatic     #46                 // Field com/megacrit/cardcrawl/cards/DamageInfo$DamageType.NORMAL:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+     103: getstatic     #47                 // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.NONE:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+     106: invokespecial #48                 // Method com/megacrit/cardcrawl/actions/common/DamageAllEnemiesAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;[ILcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;)V
+     109: invokevirtual #40                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     112: return
+
+  public int getPotency(int);
+    descriptor: (I)I
+    Code:
+       0: bipush        10
+       2: ireturn
+
+  public com.megacrit.cardcrawl.potions.AbstractPotion makeCopy();
+    descriptor: ()Lcom/megacrit/cardcrawl/potions/AbstractPotion;
+    Code:
+       0: new           #3                  // class com/megacrit/cardcrawl/potions/ExplosivePotion
+       3: dup
+       4: invokespecial #49                 // Method "<init>":()V
+       7: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #50                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #4                  // String Explosive Potion
+       5: invokevirtual #51                 // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getPotionString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/PotionStrings;
+       8: putstatic     #1                  // Field potionStrings:Lcom/megacrit/cardcrawl/localization/PotionStrings;
+      11: return
+}

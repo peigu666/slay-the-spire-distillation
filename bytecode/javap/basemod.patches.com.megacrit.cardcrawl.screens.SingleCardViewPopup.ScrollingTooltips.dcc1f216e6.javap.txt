@@ -1,0 +1,138 @@
+Compiled from "ScrollingTooltips.java"
+public class basemod.patches.com.megacrit.cardcrawl.screens.SingleCardViewPopup.ScrollingTooltips {
+  private static float BODY_TEXT_WIDTH;
+    descriptor: F
+
+  private static float TIP_DESC_LINE_SPACING;
+    descriptor: F
+
+  private static float BOX_EDGE_H;
+    descriptor: F
+
+  public basemod.patches.com.megacrit.cardcrawl.screens.SingleCardViewPopup.ScrollingTooltips();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  private static float powerTipsHeight(java.util.ArrayList<com.megacrit.cardcrawl.helpers.PowerTip>);
+    descriptor: (Ljava/util/ArrayList;)F
+    Code:
+       0: invokestatic  #2                  // Method getSizes:()V
+       3: fconst_0
+       4: fstore_1
+       5: aload_0
+       6: invokevirtual #3                  // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       9: astore_2
+      10: aload_2
+      11: invokeinterface #4,  1            // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          70
+      19: aload_2
+      20: invokeinterface #5,  1            // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #6                  // class com/megacrit/cardcrawl/helpers/PowerTip
+      28: astore_3
+      29: getstatic     #7                  // Field com/megacrit/cardcrawl/helpers/FontHelper.tipBodyFont:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+      32: aload_3
+      33: getfield      #8                  // Field com/megacrit/cardcrawl/helpers/PowerTip.body:Ljava/lang/String;
+      36: getstatic     #9                  // Field BODY_TEXT_WIDTH:F
+      39: getstatic     #10                 // Field TIP_DESC_LINE_SPACING:F
+      42: invokestatic  #11                 // Method com/megacrit/cardcrawl/helpers/FontHelper.getSmartHeight:(Lcom/badlogic/gdx/graphics/g2d/BitmapFont;Ljava/lang/String;FF)F
+      45: fneg
+      46: ldc           #12                 // float 7.0f
+      48: getstatic     #13                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      51: fmul
+      52: fsub
+      53: fstore        4
+      55: fload_1
+      56: fload         4
+      58: getstatic     #14                 // Field BOX_EDGE_H:F
+      61: ldc           #15                 // float 3.15f
+      63: fmul
+      64: fadd
+      65: fadd
+      66: fstore_1
+      67: goto          10
+      70: fload_1
+      71: freturn
+
+  private static void getSizes();
+    descriptor: ()V
+    Code:
+       0: getstatic     #9                  // Field BODY_TEXT_WIDTH:F
+       3: fconst_0
+       4: fcmpg
+       5: ifge          56
+       8: ldc           #16                 // class com/megacrit/cardcrawl/helpers/TipHelper
+      10: ldc           #17                 // String BODY_TEXT_WIDTH
+      12: invokestatic  #18                 // Method basemod/ReflectionHacks.getPrivateStatic:(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;
+      15: checkcast     #19                 // class java/lang/Float
+      18: invokevirtual #20                 // Method java/lang/Float.floatValue:()F
+      21: putstatic     #9                  // Field BODY_TEXT_WIDTH:F
+      24: ldc           #16                 // class com/megacrit/cardcrawl/helpers/TipHelper
+      26: ldc           #21                 // String TIP_DESC_LINE_SPACING
+      28: invokestatic  #18                 // Method basemod/ReflectionHacks.getPrivateStatic:(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;
+      31: checkcast     #19                 // class java/lang/Float
+      34: invokevirtual #20                 // Method java/lang/Float.floatValue:()F
+      37: putstatic     #10                 // Field TIP_DESC_LINE_SPACING:F
+      40: ldc           #16                 // class com/megacrit/cardcrawl/helpers/TipHelper
+      42: ldc           #22                 // String BOX_EDGE_H
+      44: invokestatic  #18                 // Method basemod/ReflectionHacks.getPrivateStatic:(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;
+      47: checkcast     #19                 // class java/lang/Float
+      50: invokevirtual #20                 // Method java/lang/Float.floatValue:()F
+      53: putstatic     #14                 // Field BOX_EDGE_H:F
+      56: return
+
+  public static void queueScrollingPowerTips(float, float, java.util.ArrayList<com.megacrit.cardcrawl.helpers.PowerTip>, float);
+    descriptor: (FFLjava/util/ArrayList;F)V
+    Code:
+       0: fload_1
+       1: ldc           #23                 // float 20.0f
+       3: getstatic     #13                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+       6: fmul
+       7: fsub
+       8: fstore_1
+       9: aload_2
+      10: invokestatic  #24                 // Method powerTipsHeight:(Ljava/util/ArrayList;)F
+      13: fstore        4
+      15: fload         4
+      17: fload_3
+      18: fcmpl
+      19: ifle          40
+      22: getstatic     #25                 // Field basemod/patches/com/megacrit/cardcrawl/screens/SingleCardViewPopup/ScrollingTooltips$IsScrolling.isScrolling:Lcom/evacipated/cardcrawl/modthespire/lib/StaticSpireField;
+      25: fload_3
+      26: invokestatic  #26                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+      29: invokevirtual #27                 // Method com/evacipated/cardcrawl/modthespire/lib/StaticSpireField.set:(Ljava/lang/Object;)V
+      32: fload         4
+      34: fload_3
+      35: fsub
+      36: invokestatic  #28                 // Method basemod/patches/com/megacrit/cardcrawl/screens/SingleCardViewPopup/ScrollingTooltips$Fields.access$202:(F)F
+      39: pop
+      40: fload_0
+      41: fload_1
+      42: aload_2
+      43: invokestatic  #29                 // Method com/megacrit/cardcrawl/helpers/TipHelper.queuePowerTips:(FFLjava/util/ArrayList;)V
+      46: return
+
+  public static boolean isScrolling();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #25                 // Field basemod/patches/com/megacrit/cardcrawl/screens/SingleCardViewPopup/ScrollingTooltips$IsScrolling.isScrolling:Lcom/evacipated/cardcrawl/modthespire/lib/StaticSpireField;
+       3: invokevirtual #30                 // Method com/evacipated/cardcrawl/modthespire/lib/StaticSpireField.get:()Ljava/lang/Object;
+       6: checkcast     #19                 // class java/lang/Float
+       9: invokevirtual #20                 // Method java/lang/Float.floatValue:()F
+      12: fconst_0
+      13: fcmpl
+      14: ifle          21
+      17: iconst_1
+      18: goto          22
+      21: iconst_0
+      22: ireturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #31                 // float -1.0f
+       2: putstatic     #9                  // Field BODY_TEXT_WIDTH:F
+       5: return
+}

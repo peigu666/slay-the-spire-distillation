@@ -1,0 +1,128 @@
+Compiled from "UnceasingTop.java"
+public class com.megacrit.cardcrawl.relics.UnceasingTop extends com.megacrit.cardcrawl.relics.AbstractRelic {
+  public static final java.lang.String ID;
+    descriptor: Ljava/lang/String;
+
+  private boolean canDraw;
+    descriptor: Z
+
+  private boolean disabledUntilEndOfTurn;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.relics.UnceasingTop();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: ldc           #2                  // String Unceasing Top
+       3: ldc           #3                  // String top.png
+       5: getstatic     #4                  // Field com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.RARE:Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+       8: getstatic     #5                  // Field com/megacrit/cardcrawl/relics/AbstractRelic$LandingSound.CLINK:Lcom/megacrit/cardcrawl/relics/AbstractRelic$LandingSound;
+      11: invokespecial #6                  // Method com/megacrit/cardcrawl/relics/AbstractRelic."<init>":(Ljava/lang/String;Ljava/lang/String;Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;Lcom/megacrit/cardcrawl/relics/AbstractRelic$LandingSound;)V
+      14: aload_0
+      15: iconst_0
+      16: putfield      #7                  // Field canDraw:Z
+      19: aload_0
+      20: iconst_0
+      21: putfield      #8                  // Field disabledUntilEndOfTurn:Z
+      24: return
+
+  public java.lang.String getUpdatedDescription();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #9                  // Field DESCRIPTIONS:[Ljava/lang/String;
+       4: iconst_0
+       5: aaload
+       6: areturn
+
+  public void atPreBattle();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: putfield      #7                  // Field canDraw:Z
+       5: return
+
+  public void atTurnStart();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: iconst_1
+       2: putfield      #7                  // Field canDraw:Z
+       5: aload_0
+       6: iconst_0
+       7: putfield      #8                  // Field disabledUntilEndOfTurn:Z
+      10: return
+
+  public void disableUntilTurnEnds();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: iconst_1
+       2: putfield      #8                  // Field disabledUntilEndOfTurn:Z
+       5: return
+
+  public void onRefreshHand();
+    descriptor: ()V
+    Code:
+       0: getstatic     #10                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       3: getfield      #11                 // Field com/megacrit/cardcrawl/actions/GameActionManager.actions:Ljava/util/ArrayList;
+       6: invokevirtual #12                 // Method java/util/ArrayList.isEmpty:()Z
+       9: ifeq          134
+      12: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      15: getfield      #14                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      18: invokevirtual #15                 // Method com/megacrit/cardcrawl/cards/CardGroup.isEmpty:()Z
+      21: ifeq          134
+      24: getstatic     #10                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      27: getfield      #16                 // Field com/megacrit/cardcrawl/actions/GameActionManager.turnHasEnded:Z
+      30: ifne          134
+      33: aload_0
+      34: getfield      #7                  // Field canDraw:Z
+      37: ifeq          134
+      40: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      43: ldc           #18                 // String No Draw
+      45: invokevirtual #19                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasPower:(Ljava/lang/String;)Z
+      48: ifne          134
+      51: getstatic     #20                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.isScreenUp:Z
+      54: ifne          134
+      57: invokestatic  #21                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      60: getfield      #22                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      63: getstatic     #23                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMBAT:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      66: if_acmpne     134
+      69: aload_0
+      70: getfield      #8                  // Field disabledUntilEndOfTurn:Z
+      73: ifne          134
+      76: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      79: getfield      #24                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.discardPile:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      82: invokevirtual #25                 // Method com/megacrit/cardcrawl/cards/CardGroup.size:()I
+      85: ifgt          100
+      88: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      91: getfield      #26                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.drawPile:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      94: invokevirtual #25                 // Method com/megacrit/cardcrawl/cards/CardGroup.size:()I
+      97: ifle          134
+     100: aload_0
+     101: invokevirtual #27                 // Method flash:()V
+     104: aload_0
+     105: new           #28                 // class com/megacrit/cardcrawl/actions/common/RelicAboveCreatureAction
+     108: dup
+     109: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     112: aload_0
+     113: invokespecial #29                 // Method com/megacrit/cardcrawl/actions/common/RelicAboveCreatureAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+     116: invokevirtual #30                 // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     119: aload_0
+     120: new           #31                 // class com/megacrit/cardcrawl/actions/common/DrawCardAction
+     123: dup
+     124: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     127: iconst_1
+     128: invokespecial #32                 // Method com/megacrit/cardcrawl/actions/common/DrawCardAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+     131: invokevirtual #33                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     134: return
+
+  public com.megacrit.cardcrawl.relics.AbstractRelic makeCopy();
+    descriptor: ()Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+    Code:
+       0: new           #1                  // class com/megacrit/cardcrawl/relics/UnceasingTop
+       3: dup
+       4: invokespecial #34                 // Method "<init>":()V
+       7: areturn
+}

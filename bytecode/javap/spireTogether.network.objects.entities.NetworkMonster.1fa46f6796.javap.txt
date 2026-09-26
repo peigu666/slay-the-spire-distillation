@@ -1,0 +1,1009 @@
+Compiled from "NetworkMonster.java"
+public class spireTogether.network.objects.entities.NetworkMonster extends spireTogether.network.objects.NetworkClassObject implements java.io.Serializable {
+  static final long serialVersionUID;
+    descriptor: J
+
+  public java.lang.Integer HP;
+    descriptor: Ljava/lang/Integer;
+
+  public java.lang.Integer maxHP;
+    descriptor: Ljava/lang/Integer;
+
+  public java.lang.Integer block;
+    descriptor: Ljava/lang/Integer;
+
+  public java.util.ArrayList<spireTogether.network.objects.entities.NetworkPower> powers;
+    descriptor: Ljava/util/ArrayList;
+
+  public java.lang.String state;
+    descriptor: Ljava/lang/String;
+
+  public java.lang.Integer origMaxHP;
+    descriptor: Ljava/lang/Integer;
+
+  public java.lang.Integer moveRollCounter;
+    descriptor: Ljava/lang/Integer;
+
+  public spireTogether.network.objects.entities.NetworkIntent intent;
+    descriptor: LspireTogether/network/objects/entities/NetworkIntent;
+
+  public java.lang.Float constructorX;
+    descriptor: Ljava/lang/Float;
+
+  public java.lang.Float constructorY;
+    descriptor: Ljava/lang/Float;
+
+  public java.lang.String uniqueID;
+    descriptor: Ljava/lang/String;
+
+  public java.util.ArrayList<java.lang.Byte> moveHistory;
+    descriptor: Ljava/util/ArrayList;
+
+  public static java.lang.String[] ignoredFields;
+    descriptor: [Ljava/lang/String;
+
+  public static spireTogether.network.objects.entities.NetworkMonster Generate(com.megacrit.cardcrawl.monsters.AbstractMonster);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)LspireTogether/network/objects/entities/NetworkMonster;
+    Code:
+       0: aload_0
+       1: aload_0
+       2: invokestatic  #1                  // Method GetAppropriateObject:(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)LspireTogether/network/objects/entities/NetworkMonster;
+       5: getstatic     #2                  // Field ignoredFields:[Ljava/lang/String;
+       8: invokestatic  #3                  // Method CopyValues:(Ljava/lang/Object;LspireTogether/network/objects/NetworkClassObject;[Ljava/lang/String;)LspireTogether/network/objects/NetworkClassObject;
+      11: checkcast     #4                  // class spireTogether/network/objects/entities/NetworkMonster
+      14: areturn
+
+  protected static spireTogether.network.objects.entities.NetworkMonster GetAppropriateObject(com.megacrit.cardcrawl.monsters.AbstractMonster);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)LspireTogether/network/objects/entities/NetworkMonster;
+    Code:
+       0: aload_0
+       1: instanceof    #5                  // class com/megacrit/cardcrawl/monsters/city/GremlinLeader
+       4: ifeq          19
+       7: new           #6                  // class spireTogether/network/objects/entities/specific/monsters/NetworkGremlinLeader
+      10: dup
+      11: aload_0
+      12: checkcast     #5                  // class com/megacrit/cardcrawl/monsters/city/GremlinLeader
+      15: invokespecial #7                  // Method spireTogether/network/objects/entities/specific/monsters/NetworkGremlinLeader."<init>":(Lcom/megacrit/cardcrawl/monsters/city/GremlinLeader;)V
+      18: areturn
+      19: aload_0
+      20: instanceof    #8                  // class com/megacrit/cardcrawl/monsters/beyond/Reptomancer
+      23: ifeq          38
+      26: new           #9                  // class spireTogether/network/objects/entities/specific/monsters/NetworkReptomancer
+      29: dup
+      30: aload_0
+      31: checkcast     #8                  // class com/megacrit/cardcrawl/monsters/beyond/Reptomancer
+      34: invokespecial #10                 // Method spireTogether/network/objects/entities/specific/monsters/NetworkReptomancer."<init>":(Lcom/megacrit/cardcrawl/monsters/beyond/Reptomancer;)V
+      37: areturn
+      38: new           #4                  // class spireTogether/network/objects/entities/NetworkMonster
+      41: dup
+      42: aload_0
+      43: invokespecial #11                 // Method "<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+      46: areturn
+
+  protected spireTogether.network.objects.entities.NetworkMonster(com.megacrit.cardcrawl.monsters.AbstractMonster);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #12                 // Method spireTogether/network/objects/NetworkClassObject."<init>":(Ljava/lang/Object;)V
+       5: aload_0
+       6: aload_1
+       7: getfield      #13                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+      10: invokestatic  #14                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      13: putfield      #15                 // Field HP:Ljava/lang/Integer;
+      16: aload_0
+      17: aload_1
+      18: getfield      #16                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentBlock:I
+      21: invokestatic  #14                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      24: putfield      #17                 // Field block:Ljava/lang/Integer;
+      27: aload_0
+      28: aload_1
+      29: getfield      #18                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.maxHealth:I
+      32: invokestatic  #14                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      35: putfield      #19                 // Field maxHP:Ljava/lang/Integer;
+      38: aload_0
+      39: new           #20                 // class spireTogether/network/objects/entities/NetworkIntent
+      42: dup
+      43: aload_1
+      44: invokespecial #21                 // Method spireTogether/network/objects/entities/NetworkIntent."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+      47: putfield      #22                 // Field intent:LspireTogether/network/objects/entities/NetworkIntent;
+      50: aload_0
+      51: getfield      #22                 // Field intent:LspireTogether/network/objects/entities/NetworkIntent;
+      54: getfield      #23                 // Field spireTogether/network/objects/entities/NetworkIntent.gameTurn:I
+      57: iconst_1
+      58: if_icmpne     69
+      61: aload_0
+      62: getfield      #22                 // Field intent:LspireTogether/network/objects/entities/NetworkIntent;
+      65: iconst_0
+      66: putfield      #23                 // Field spireTogether/network/objects/entities/NetworkIntent.gameTurn:I
+      69: aload_0
+      70: aload_1
+      71: getfield      #24                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.drawX:F
+      74: getstatic     #25                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      77: i2f
+      78: ldc           #26                 // float 0.75f
+      80: fmul
+      81: fsub
+      82: getstatic     #27                 // Field spireTogether/util/SpireVariables.scale:Lcom/badlogic/gdx/math/Vector2;
+      85: getfield      #28                 // Field com/badlogic/gdx/math/Vector2.x:F
+      88: fdiv
+      89: invokestatic  #29                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+      92: putfield      #30                 // Field constructorX:Ljava/lang/Float;
+      95: aload_0
+      96: aload_1
+      97: getfield      #31                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.drawY:F
+     100: getstatic     #32                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.floorY:F
+     103: fsub
+     104: getstatic     #27                 // Field spireTogether/util/SpireVariables.scale:Lcom/badlogic/gdx/math/Vector2;
+     107: getfield      #33                 // Field com/badlogic/gdx/math/Vector2.y:F
+     110: fdiv
+     111: invokestatic  #29                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+     114: putfield      #34                 // Field constructorY:Ljava/lang/Float;
+     117: aload_0
+     118: new           #35                 // class java/util/ArrayList
+     121: dup
+     122: invokespecial #36                 // Method java/util/ArrayList."<init>":()V
+     125: putfield      #37                 // Field powers:Ljava/util/ArrayList;
+     128: iconst_0
+     129: istore_2
+     130: iload_2
+     131: aload_1
+     132: getfield      #38                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.powers:Ljava/util/ArrayList;
+     135: invokevirtual #39                 // Method java/util/ArrayList.size:()I
+     138: if_icmpge     169
+     141: aload_0
+     142: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+     145: aload_1
+     146: getfield      #38                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.powers:Ljava/util/ArrayList;
+     149: iload_2
+     150: invokevirtual #40                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     153: checkcast     #41                 // class com/megacrit/cardcrawl/powers/AbstractPower
+     156: invokestatic  #42                 // Method spireTogether/network/objects/entities/NetworkPower.Generate:(Lcom/megacrit/cardcrawl/powers/AbstractPower;)LspireTogether/network/objects/entities/NetworkPower;
+     159: invokevirtual #43                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     162: pop
+     163: iinc          2, 1
+     166: goto          130
+     169: aload_0
+     170: getstatic     #44                 // Field spireTogether/patches/monsters/MonsterFieldPatches$MonsterFieldPatcher.uniqueID:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     173: aload_1
+     174: invokevirtual #45                 // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     177: checkcast     #46                 // class java/lang/String
+     180: putfield      #47                 // Field uniqueID:Ljava/lang/String;
+     183: aload_0
+     184: aload_1
+     185: getfield      #48                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.moveHistory:Ljava/util/ArrayList;
+     188: putfield      #49                 // Field moveHistory:Ljava/util/ArrayList;
+     191: aload_0
+     192: getstatic     #50                 // Field spireTogether/patches/monsters/MonsterFieldPatches$MonsterFieldPatcher.state:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     195: aload_1
+     196: invokevirtual #45                 // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     199: checkcast     #46                 // class java/lang/String
+     202: putfield      #51                 // Field state:Ljava/lang/String;
+     205: aload_0
+     206: getstatic     #52                 // Field spireTogether/patches/monsters/MonsterFieldPatches$MonsterFieldPatcher.origMaxHP:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     209: aload_1
+     210: invokevirtual #45                 // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     213: checkcast     #53                 // class java/lang/Integer
+     216: putfield      #54                 // Field origMaxHP:Ljava/lang/Integer;
+     219: aload_0
+     220: getstatic     #55                 // Field spireTogether/patches/monsters/MonsterFieldPatches$MonsterFieldPatcher.rollMoveCounter:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     223: aload_1
+     224: invokevirtual #45                 // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     227: checkcast     #53                 // class java/lang/Integer
+     230: putfield      #56                 // Field moveRollCounter:Ljava/lang/Integer;
+     233: aload_0
+     234: new           #35                 // class java/util/ArrayList
+     237: dup
+     238: invokespecial #36                 // Method java/util/ArrayList."<init>":()V
+     241: putfield      #57                 // Field extraData:Ljava/util/ArrayList;
+     244: return
+
+  public com.megacrit.cardcrawl.monsters.AbstractMonster ToStandard();
+    descriptor: ()Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+    Code:
+       0: aload_0
+       1: aload_0
+       2: invokevirtual #58                 // Method GetClass:()Ljava/lang/Class;
+       5: aload_0
+       6: getfield      #30                 // Field constructorX:Ljava/lang/Float;
+       9: aload_0
+      10: getfield      #34                 // Field constructorY:Ljava/lang/Float;
+      13: invokevirtual #59                 // Method Construct:(Ljava/lang/Class;Ljava/lang/Float;Ljava/lang/Float;)Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+      16: astore_1
+      17: getstatic     #44                 // Field spireTogether/patches/monsters/MonsterFieldPatches$MonsterFieldPatcher.uniqueID:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+      20: aload_1
+      21: aload_0
+      22: getfield      #47                 // Field uniqueID:Ljava/lang/String;
+      25: invokevirtual #60                 // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.set:(Ljava/lang/Object;Ljava/lang/Object;)V
+      28: goto          76
+      31: astore_2
+      32: new           #62                 // class java/lang/StringBuilder
+      35: dup
+      36: invokespecial #63                 // Method java/lang/StringBuilder."<init>":()V
+      39: ldc           #64                 // String Couldn\'t construct monster with constructor \'
+      41: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      44: aload_0
+      45: getfield      #66                 // Field classID:Ljava/lang/String;
+      48: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      51: ldc           #67                 // String \' due to \'
+      53: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      56: aload_2
+      57: invokevirtual #68                 // Method java/lang/ClassNotFoundException.getMessage:()Ljava/lang/String;
+      60: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      63: ldc           #69                 // String \'
+      65: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      68: invokevirtual #70                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      71: invokestatic  #71                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      74: aconst_null
+      75: areturn
+      76: aload_1
+      77: ifnonnull     82
+      80: aconst_null
+      81: areturn
+      82: aload_1
+      83: new           #35                 // class java/util/ArrayList
+      86: dup
+      87: invokespecial #36                 // Method java/util/ArrayList."<init>":()V
+      90: putfield      #38                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.powers:Ljava/util/ArrayList;
+      93: aload_0
+      94: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      97: invokevirtual #72                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     100: astore_2
+     101: aload_2
+     102: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     107: ifeq          145
+     110: aload_2
+     111: invokeinterface #74,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     116: checkcast     #75                 // class spireTogether/network/objects/entities/NetworkPower
+     119: astore_3
+     120: aload_3
+     121: aload_1
+     122: invokevirtual #76                 // Method spireTogether/network/objects/entities/NetworkPower.ToStandard:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)Lcom/megacrit/cardcrawl/powers/AbstractPower;
+     125: astore        4
+     127: aload         4
+     129: ifnull        142
+     132: aload_1
+     133: getfield      #38                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.powers:Ljava/util/ArrayList;
+     136: aload         4
+     138: invokevirtual #43                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     141: pop
+     142: goto          101
+     145: aload_1
+     146: aload_0
+     147: getfield      #15                 // Field HP:Ljava/lang/Integer;
+     150: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+     153: putfield      #13                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+     156: aload_1
+     157: aload_0
+     158: getfield      #19                 // Field maxHP:Ljava/lang/Integer;
+     161: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+     164: putfield      #18                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.maxHealth:I
+     167: aload_1
+     168: aload_0
+     169: getfield      #17                 // Field block:Ljava/lang/Integer;
+     172: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+     175: putfield      #16                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentBlock:I
+     178: aload_1
+     179: aload_0
+     180: getfield      #49                 // Field moveHistory:Ljava/util/ArrayList;
+     183: putfield      #48                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.moveHistory:Ljava/util/ArrayList;
+     186: aload_1
+     187: getfield      #48                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.moveHistory:Ljava/util/ArrayList;
+     190: ifnonnull     204
+     193: aload_1
+     194: new           #35                 // class java/util/ArrayList
+     197: dup
+     198: invokespecial #36                 // Method java/util/ArrayList."<init>":()V
+     201: putfield      #48                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.moveHistory:Ljava/util/ArrayList;
+     204: aload_0
+     205: getfield      #22                 // Field intent:LspireTogether/network/objects/entities/NetworkIntent;
+     208: invokevirtual #78                 // Method spireTogether/network/objects/entities/NetworkIntent.ToStandard:()Lcom/megacrit/cardcrawl/monsters/EnemyMoveInfo;
+     211: astore_2
+     212: aload_2
+     213: getfield      #79                 // Field com/megacrit/cardcrawl/monsters/EnemyMoveInfo.intent:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+     216: getstatic     #80                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.DEBUG:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+     219: if_acmpeq     229
+     222: ldc           #81                 // String move
+     224: aload_1
+     225: aload_2
+     226: invokestatic  #82                 // Method spireTogether/util/Reflection.setFieldValue:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+     229: aload_0
+     230: getfield      #51                 // Field state:Ljava/lang/String;
+     233: ldc           #83                 // String
+     235: invokevirtual #84                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     238: ifne          249
+     241: aload_1
+     242: aload_0
+     243: getfield      #51                 // Field state:Ljava/lang/String;
+     246: invokestatic  #85                 // Method spireTogether/util/SpireHelp$Gameplay.ChangeMonsterStateWithoutAction:(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/String;)V
+     249: getstatic     #52                 // Field spireTogether/patches/monsters/MonsterFieldPatches$MonsterFieldPatcher.origMaxHP:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     252: aload_1
+     253: aload_0
+     254: getfield      #54                 // Field origMaxHP:Ljava/lang/Integer;
+     257: invokevirtual #60                 // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.set:(Ljava/lang/Object;Ljava/lang/Object;)V
+     260: getstatic     #55                 // Field spireTogether/patches/monsters/MonsterFieldPatches$MonsterFieldPatcher.rollMoveCounter:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     263: aload_1
+     264: aload_0
+     265: getfield      #56                 // Field moveRollCounter:Ljava/lang/Integer;
+     268: invokevirtual #60                 // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.set:(Ljava/lang/Object;Ljava/lang/Object;)V
+     271: aload_1
+     272: aload_0
+     273: getfield      #57                 // Field extraData:Ljava/util/ArrayList;
+     276: invokestatic  #86                 // Method spireTogether/util/Reflection.LoadFieldValuesOnObject:(Ljava/lang/Object;Ljava/util/ArrayList;)V
+     279: aload_1
+     280: areturn
+    Exception table:
+       from    to  target type
+           0    28    31   Class java/lang/ClassNotFoundException
+
+  protected com.megacrit.cardcrawl.monsters.AbstractMonster Construct(java.lang.Class, java.lang.Float, java.lang.Float);
+    descriptor: (Ljava/lang/Class;Ljava/lang/Float;Ljava/lang/Float;)Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #87                 // Method constructFromConstructorOverride:(Ljava/lang/Class;)Ljava/lang/Object;
+       5: checkcast     #88                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+       8: astore        4
+      10: aload         4
+      12: ifnull        18
+      15: aload         4
+      17: areturn
+      18: aload_1
+      19: invokevirtual #89                 // Method java/lang/Class.getDeclaredConstructors:()[Ljava/lang/reflect/Constructor;
+      22: astore        5
+      24: aload         5
+      26: arraylength
+      27: istore        6
+      29: iconst_0
+      30: istore        7
+      32: iload         7
+      34: iload         6
+      36: if_icmpge     225
+      39: aload         5
+      41: iload         7
+      43: aaload
+      44: astore        8
+      46: aload         8
+      48: invokevirtual #90                 // Method java/lang/reflect/Constructor.getParameterTypes:()[Ljava/lang/Class;
+      51: astore        9
+      53: aload         9
+      55: iconst_2
+      56: anewarray     #91                 // class java/lang/Class
+      59: dup
+      60: iconst_0
+      61: getstatic     #92                 // Field java/lang/Float.TYPE:Ljava/lang/Class;
+      64: aastore
+      65: dup
+      66: iconst_1
+      67: getstatic     #92                 // Field java/lang/Float.TYPE:Ljava/lang/Class;
+      70: aastore
+      71: invokestatic  #93                 // Method java/util/Arrays.equals:([Ljava/lang/Object;[Ljava/lang/Object;)Z
+      74: ifeq          98
+      77: aload         8
+      79: iconst_2
+      80: anewarray     #94                 // class java/lang/Object
+      83: dup
+      84: iconst_0
+      85: aload_2
+      86: aastore
+      87: dup
+      88: iconst_1
+      89: aload_3
+      90: aastore
+      91: invokevirtual #95                 // Method java/lang/reflect/Constructor.newInstance:([Ljava/lang/Object;)Ljava/lang/Object;
+      94: checkcast     #88                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+      97: areturn
+      98: aload         9
+     100: iconst_3
+     101: anewarray     #91                 // class java/lang/Class
+     104: dup
+     105: iconst_0
+     106: getstatic     #92                 // Field java/lang/Float.TYPE:Ljava/lang/Class;
+     109: aastore
+     110: dup
+     111: iconst_1
+     112: getstatic     #92                 // Field java/lang/Float.TYPE:Ljava/lang/Class;
+     115: aastore
+     116: dup
+     117: iconst_2
+     118: getstatic     #96                 // Field java/lang/Integer.TYPE:Ljava/lang/Class;
+     121: aastore
+     122: invokestatic  #93                 // Method java/util/Arrays.equals:([Ljava/lang/Object;[Ljava/lang/Object;)Z
+     125: ifeq          156
+     128: aload         8
+     130: iconst_3
+     131: anewarray     #94                 // class java/lang/Object
+     134: dup
+     135: iconst_0
+     136: aload_2
+     137: aastore
+     138: dup
+     139: iconst_1
+     140: aload_3
+     141: aastore
+     142: dup
+     143: iconst_2
+     144: iconst_0
+     145: invokestatic  #14                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     148: aastore
+     149: invokevirtual #95                 // Method java/lang/reflect/Constructor.newInstance:([Ljava/lang/Object;)Ljava/lang/Object;
+     152: checkcast     #88                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     155: areturn
+     156: aload         9
+     158: iconst_1
+     159: anewarray     #91                 // class java/lang/Class
+     162: dup
+     163: iconst_0
+     164: getstatic     #97                 // Field java/lang/Boolean.TYPE:Ljava/lang/Class;
+     167: aastore
+     168: invokestatic  #93                 // Method java/util/Arrays.equals:([Ljava/lang/Object;[Ljava/lang/Object;)Z
+     171: ifeq          194
+     174: aload         8
+     176: iconst_1
+     177: anewarray     #94                 // class java/lang/Object
+     180: dup
+     181: iconst_0
+     182: iconst_1
+     183: invokestatic  #98                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     186: aastore
+     187: invokevirtual #95                 // Method java/lang/reflect/Constructor.newInstance:([Ljava/lang/Object;)Ljava/lang/Object;
+     190: checkcast     #88                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     193: areturn
+     194: aload         9
+     196: iconst_0
+     197: anewarray     #91                 // class java/lang/Class
+     200: invokestatic  #93                 // Method java/util/Arrays.equals:([Ljava/lang/Object;[Ljava/lang/Object;)Z
+     203: ifeq          219
+     206: aload         8
+     208: iconst_0
+     209: anewarray     #94                 // class java/lang/Object
+     212: invokevirtual #95                 // Method java/lang/reflect/Constructor.newInstance:([Ljava/lang/Object;)Ljava/lang/Object;
+     215: checkcast     #88                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     218: areturn
+     219: iinc          7, 1
+     222: goto          32
+     225: aload_1
+     226: iconst_4
+     227: anewarray     #94                 // class java/lang/Object
+     230: dup
+     231: iconst_0
+     232: aload_2
+     233: aastore
+     234: dup
+     235: iconst_1
+     236: aload_3
+     237: aastore
+     238: dup
+     239: iconst_2
+     240: iconst_0
+     241: invokestatic  #14                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     244: aastore
+     245: dup
+     246: iconst_3
+     247: iconst_1
+     248: invokestatic  #98                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     251: aastore
+     252: invokestatic  #99                 // Method SearchForConstructor:(Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Object;
+     255: checkcast     #88                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     258: areturn
+     259: astore        4
+     261: getstatic     #101                // Field spireTogether/SpireTogetherMod.logger:Lorg/apache/logging/log4j/Logger;
+     264: new           #62                 // class java/lang/StringBuilder
+     267: dup
+     268: invokespecial #63                 // Method java/lang/StringBuilder."<init>":()V
+     271: ldc           #102                // String Couldn\'t find appropriate constructor for
+     273: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     276: aload_0
+     277: getfield      #66                 // Field classID:Ljava/lang/String;
+     280: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     283: ldc           #103                // String , skipping sync.
+     285: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     288: invokevirtual #70                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     291: invokeinterface #104,  2          // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     296: aconst_null
+     297: areturn
+    Exception table:
+       from    to  target type
+           0    17   259   Class java/lang/Exception
+          18    97   259   Class java/lang/Exception
+          98   155   259   Class java/lang/Exception
+         156   193   259   Class java/lang/Exception
+         194   218   259   Class java/lang/Exception
+         219   258   259   Class java/lang/Exception
+
+  public void ReadjustHPForOneExtraPerson();
+    descriptor: ()V
+    Code:
+       0: getstatic     #105                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+       3: getfield      #106                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+       6: astore_1
+       7: aload_0
+       8: getfield      #19                 // Field maxHP:Ljava/lang/Integer;
+      11: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+      14: istore_2
+      15: aload_0
+      16: getfield      #54                 // Field origMaxHP:Ljava/lang/Integer;
+      19: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+      22: i2d
+      23: aload_1
+      24: getfield      #107                // Field spireTogether/network/objects/settings/GameSettings.enemyHealthPercentBase:Ljava/lang/Integer;
+      27: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+      30: i2d
+      31: ldc2_w        #108                // double 100.0d
+      34: ddiv
+      35: dmul
+      36: d2i
+      37: istore_3
+      38: iload_3
+      39: iload_3
+      40: aload_1
+      41: getfield      #110                // Field spireTogether/network/objects/settings/GameSettings.enemyHealthPercentScaled:Ljava/lang/Integer;
+      44: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+      47: i2d
+      48: ldc2_w        #108                // double 100.0d
+      51: ddiv
+      52: d2i
+      53: imul
+      54: iadd
+      55: istore_3
+      56: aload_0
+      57: iload_3
+      58: invokestatic  #14                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      61: putfield      #19                 // Field maxHP:Ljava/lang/Integer;
+      64: aload_0
+      65: aload_0
+      66: getfield      #15                 // Field HP:Ljava/lang/Integer;
+      69: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+      72: aload_0
+      73: getfield      #19                 // Field maxHP:Ljava/lang/Integer;
+      76: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+      79: iload_2
+      80: isub
+      81: iadd
+      82: invokestatic  #14                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      85: putfield      #15                 // Field HP:Ljava/lang/Integer;
+      88: return
+
+  public void preMonsterPrepare(com.megacrit.cardcrawl.monsters.AbstractMonster);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+    Code:
+       0: return
+
+  public void postMonsterPrepare(com.megacrit.cardcrawl.monsters.AbstractMonster);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+    Code:
+       0: return
+
+  public java.lang.String GetData();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: new           #62                 // class java/lang/StringBuilder
+       3: dup
+       4: invokespecial #63                 // Method java/lang/StringBuilder."<init>":()V
+       7: aload_0
+       8: invokevirtual #111                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+      11: invokevirtual #112                // Method java/lang/Class.getSimpleName:()Ljava/lang/String;
+      14: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      17: ldc           #113                // String  with CID
+      19: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      22: aload_0
+      23: getfield      #66                 // Field classID:Ljava/lang/String;
+      26: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      29: ldc           #114                // String  and UID
+      31: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      34: aload_0
+      35: getfield      #47                 // Field uniqueID:Ljava/lang/String;
+      38: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      41: ldc           #115                // String  has intent
+      43: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      46: aload_0
+      47: getfield      #22                 // Field intent:LspireTogether/network/objects/entities/NetworkIntent;
+      50: getfield      #116                // Field spireTogether/network/objects/entities/NetworkIntent.intent:Lcom/megacrit/cardcrawl/monsters/AbstractMonster$Intent;
+      53: invokevirtual #117                // Method com/megacrit/cardcrawl/monsters/AbstractMonster$Intent.name:()Ljava/lang/String;
+      56: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      59: ldc           #118                // String . Move history is of size
+      61: invokevirtual #65                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      64: aload_0
+      65: getfield      #49                 // Field moveHistory:Ljava/util/ArrayList;
+      68: invokevirtual #39                 // Method java/util/ArrayList.size:()I
+      71: invokevirtual #119                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      74: invokevirtual #70                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      77: areturn
+
+  public void AddPower(spireTogether.network.objects.entities.NetworkPower);
+    descriptor: (LspireTogether/network/objects/entities/NetworkPower;)V
+    Code:
+       0: iconst_0
+       1: istore_2
+       2: iconst_0
+       3: istore_3
+       4: iload_3
+       5: aload_0
+       6: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+       9: invokevirtual #39                 // Method java/util/ArrayList.size:()I
+      12: if_icmpge     86
+      15: aload_0
+      16: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      19: iload_3
+      20: invokevirtual #40                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      23: checkcast     #75                 // class spireTogether/network/objects/entities/NetworkPower
+      26: getfield      #120                // Field spireTogether/network/objects/entities/NetworkPower.realPowerID:Ljava/lang/String;
+      29: aload_1
+      30: getfield      #120                // Field spireTogether/network/objects/entities/NetworkPower.realPowerID:Ljava/lang/String;
+      33: invokevirtual #84                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      36: ifeq          80
+      39: iconst_1
+      40: istore_2
+      41: aload_0
+      42: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      45: iload_3
+      46: invokevirtual #40                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      49: checkcast     #75                 // class spireTogether/network/objects/entities/NetworkPower
+      52: astore        4
+      54: aload         4
+      56: aload         4
+      58: getfield      #121                // Field spireTogether/network/objects/entities/NetworkPower.amount:Ljava/lang/Integer;
+      61: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+      64: aload_1
+      65: getfield      #121                // Field spireTogether/network/objects/entities/NetworkPower.amount:Ljava/lang/Integer;
+      68: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+      71: iadd
+      72: invokestatic  #14                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      75: dup_x1
+      76: putfield      #121                // Field spireTogether/network/objects/entities/NetworkPower.amount:Ljava/lang/Integer;
+      79: pop
+      80: iinc          3, 1
+      83: goto          4
+      86: iload_2
+      87: ifne          99
+      90: aload_0
+      91: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      94: aload_1
+      95: invokevirtual #43                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      98: pop
+      99: return
+
+  public void ReducePower(spireTogether.network.objects.entities.NetworkPower);
+    descriptor: (LspireTogether/network/objects/entities/NetworkPower;)V
+    Code:
+       0: iconst_0
+       1: istore_2
+       2: iconst_0
+       3: istore_3
+       4: iload_3
+       5: aload_0
+       6: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+       9: invokevirtual #39                 // Method java/util/ArrayList.size:()I
+      12: if_icmpge     86
+      15: aload_0
+      16: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      19: iload_3
+      20: invokevirtual #40                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      23: checkcast     #75                 // class spireTogether/network/objects/entities/NetworkPower
+      26: getfield      #120                // Field spireTogether/network/objects/entities/NetworkPower.realPowerID:Ljava/lang/String;
+      29: aload_1
+      30: getfield      #120                // Field spireTogether/network/objects/entities/NetworkPower.realPowerID:Ljava/lang/String;
+      33: invokevirtual #84                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      36: ifeq          80
+      39: iconst_1
+      40: istore_2
+      41: aload_0
+      42: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      45: iload_3
+      46: invokevirtual #40                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      49: checkcast     #75                 // class spireTogether/network/objects/entities/NetworkPower
+      52: astore        4
+      54: aload         4
+      56: aload         4
+      58: getfield      #121                // Field spireTogether/network/objects/entities/NetworkPower.amount:Ljava/lang/Integer;
+      61: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+      64: aload_1
+      65: getfield      #121                // Field spireTogether/network/objects/entities/NetworkPower.amount:Ljava/lang/Integer;
+      68: invokevirtual #77                 // Method java/lang/Integer.intValue:()I
+      71: isub
+      72: invokestatic  #14                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      75: dup_x1
+      76: putfield      #121                // Field spireTogether/network/objects/entities/NetworkPower.amount:Ljava/lang/Integer;
+      79: pop
+      80: iinc          3, 1
+      83: goto          4
+      86: iload_2
+      87: ifne          99
+      90: aload_0
+      91: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      94: aload_1
+      95: invokevirtual #43                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      98: pop
+      99: return
+
+  public void LosePower(spireTogether.network.objects.entities.NetworkPower);
+    descriptor: (LspireTogether/network/objects/entities/NetworkPower;)V
+    Code:
+       0: iconst_0
+       1: istore_2
+       2: iload_2
+       3: aload_0
+       4: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+       7: invokevirtual #39                 // Method java/util/ArrayList.size:()I
+      10: if_icmpge     55
+      13: aload_0
+      14: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      17: iload_2
+      18: invokevirtual #40                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      21: checkcast     #75                 // class spireTogether/network/objects/entities/NetworkPower
+      24: getfield      #120                // Field spireTogether/network/objects/entities/NetworkPower.realPowerID:Ljava/lang/String;
+      27: aload_1
+      28: getfield      #120                // Field spireTogether/network/objects/entities/NetworkPower.realPowerID:Ljava/lang/String;
+      31: invokevirtual #84                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      34: ifeq          49
+      37: aload_0
+      38: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      41: iload_2
+      42: invokevirtual #122                // Method java/util/ArrayList.remove:(I)Ljava/lang/Object;
+      45: pop
+      46: goto          55
+      49: iinc          2, 1
+      52: goto          2
+      55: return
+
+  public void SetPower(spireTogether.network.objects.entities.NetworkPower);
+    descriptor: (LspireTogether/network/objects/entities/NetworkPower;)V
+    Code:
+       0: iconst_0
+       1: istore_2
+       2: iload_2
+       3: aload_0
+       4: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+       7: invokevirtual #39                 // Method java/util/ArrayList.size:()I
+      10: if_icmpge     56
+      13: aload_0
+      14: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      17: iload_2
+      18: invokevirtual #40                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      21: checkcast     #75                 // class spireTogether/network/objects/entities/NetworkPower
+      24: getfield      #120                // Field spireTogether/network/objects/entities/NetworkPower.realPowerID:Ljava/lang/String;
+      27: aload_1
+      28: getfield      #120                // Field spireTogether/network/objects/entities/NetworkPower.realPowerID:Ljava/lang/String;
+      31: invokevirtual #84                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      34: ifeq          50
+      37: aload_0
+      38: getfield      #37                 // Field powers:Ljava/util/ArrayList;
+      41: iload_2
+      42: aload_1
+      43: invokevirtual #123                // Method java/util/ArrayList.set:(ILjava/lang/Object;)Ljava/lang/Object;
+      46: pop
+      47: goto          56
+      50: iinc          2, 1
+      53: goto          2
+      56: return
+
+  public void AddExtraData(java.util.ArrayList<spireTogether.util.SerializablePair<java.lang.String, java.lang.Object>>);
+    descriptor: (Ljava/util/ArrayList;)V
+    Code:
+       0: aload_1
+       1: invokevirtual #72                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       4: astore_2
+       5: aload_2
+       6: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      11: ifeq          111
+      14: aload_2
+      15: invokeinterface #74,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      20: checkcast     #124                // class spireTogether/util/SerializablePair
+      23: astore_3
+      24: iconst_0
+      25: istore        4
+      27: aload_0
+      28: getfield      #57                 // Field extraData:Ljava/util/ArrayList;
+      31: invokevirtual #72                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      34: astore        5
+      36: aload         5
+      38: invokeinterface #73,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      43: ifeq          94
+      46: aload         5
+      48: invokeinterface #74,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      53: checkcast     #124                // class spireTogether/util/SerializablePair
+      56: astore        6
+      58: aload_3
+      59: invokevirtual #125                // Method spireTogether/util/SerializablePair.getKey:()Ljava/lang/Object;
+      62: checkcast     #46                 // class java/lang/String
+      65: aload         6
+      67: invokevirtual #125                // Method spireTogether/util/SerializablePair.getKey:()Ljava/lang/Object;
+      70: invokevirtual #84                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      73: ifeq          91
+      76: iconst_1
+      77: istore        4
+      79: aload         6
+      81: aload_3
+      82: invokevirtual #126                // Method spireTogether/util/SerializablePair.getValue:()Ljava/lang/Object;
+      85: invokevirtual #127                // Method spireTogether/util/SerializablePair.setValue:(Ljava/lang/Object;)V
+      88: goto          94
+      91: goto          36
+      94: iload         4
+      96: ifne          108
+      99: aload_0
+     100: getfield      #57                 // Field extraData:Ljava/util/ArrayList;
+     103: aload_3
+     104: invokevirtual #43                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     107: pop
+     108: goto          5
+     111: return
+
+  public java.lang.Object ToStandard();
+    descriptor: ()Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: invokevirtual #128                // Method ToStandard:()Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+       4: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: bipush        41
+       2: anewarray     #46                 // class java/lang/String
+       5: dup
+       6: iconst_0
+       7: ldc           #129                // String hb
+       9: aastore
+      10: dup
+      11: iconst_1
+      12: ldc           #130                // String healthHb
+      14: aastore
+      15: dup
+      16: iconst_2
+      17: ldc           #131                // String intentHb
+      19: aastore
+      20: dup
+      21: iconst_3
+      22: ldc           #132                // String healthBarWidth
+      24: aastore
+      25: dup
+      26: iconst_4
+      27: ldc           #133                // String targetHealthBarWidth
+      29: aastore
+      30: dup
+      31: iconst_5
+      32: ldc           #134                // String healthBarAnimTimer
+      34: aastore
+      35: dup
+      36: bipush        6
+      38: ldc           #135                // String drawX
+      40: aastore
+      41: dup
+      42: bipush        7
+      44: ldc           #136                // String drawY
+      46: aastore
+      47: dup
+      48: bipush        8
+      50: ldc           #137                // String color
+      52: aastore
+      53: dup
+      54: bipush        9
+      56: ldc           #138                // String intentParticleTimer
+      58: aastore
+      59: dup
+      60: bipush        10
+      62: ldc           #139                // String intentAlpha
+      64: aastore
+      65: dup
+      66: bipush        11
+      68: ldc           #140                // String intentAlphaTarget
+      70: aastore
+      71: dup
+      72: bipush        12
+      74: ldc           #141                // String healthHideTimer
+      76: aastore
+      77: dup
+      78: bipush        13
+      80: ldc           #142                // String hbAlpha
+      82: aastore
+      83: dup
+      84: bipush        14
+      86: ldc           #143                // String hbYOffset
+      88: aastore
+      89: dup
+      90: bipush        15
+      92: ldc           #144                // String reticleOffset
+      94: aastore
+      95: dup
+      96: bipush        16
+      98: ldc           #145                // String hb_h
+     100: aastore
+     101: dup
+     102: bipush        17
+     104: ldc           #146                // String intent
+     106: aastore
+     107: dup
+     108: bipush        18
+     110: ldc           #147                // String nextMove
+     112: aastore
+     113: dup
+     114: bipush        19
+     116: ldc           #148                // String intentBaseDmg
+     118: aastore
+     119: dup
+     120: bipush        20
+     122: ldc           #149                // String intentMultiAmt
+     124: aastore
+     125: dup
+     126: bipush        21
+     128: ldc           #150                // String isMultiDmg
+     130: aastore
+     131: dup
+     132: bipush        22
+     134: ldc           #151                // String tipIntent
+     136: aastore
+     137: dup
+     138: bipush        23
+     140: ldc           #152                // String intentAngle
+     142: aastore
+     143: dup
+     144: bipush        24
+     146: ldc           #153                // String damage
+     148: aastore
+     149: dup
+     150: bipush        25
+     152: ldc           #81                 // String move
+     154: aastore
+     155: dup
+     156: bipush        26
+     158: ldc           #154                // String currentHealth
+     160: aastore
+     161: dup
+     162: bipush        27
+     164: ldc           #155                // String animation
+     166: aastore
+     167: dup
+     168: bipush        28
+     170: ldc           #156                // String animationTimer
+     172: aastore
+     173: dup
+     174: bipush        29
+     176: ldc           #157                // String lastDamageTaken
+     178: aastore
+     179: dup
+     180: bipush        30
+     182: ldc           #158                // String animX
+     184: aastore
+     185: dup
+     186: bipush        31
+     188: ldc           #159                // String currentBlock
+     190: aastore
+     191: dup
+     192: bipush        32
+     194: ldc           #160                // String gold
+     196: aastore
+     197: dup
+     198: bipush        33
+     200: ldc           #161                // String displayGold
+     202: aastore
+     203: dup
+     204: bipush        34
+     206: ldc           #162                // String dialogX
+     208: aastore
+     209: dup
+     210: bipush        35
+     212: ldc           #163                // String dialogY
+     214: aastore
+     215: dup
+     216: bipush        36
+     218: ldc           #164                // String blockScale
+     220: aastore
+     221: dup
+     222: bipush        37
+     224: ldc           #165                // String blockTextColor
+     226: aastore
+     227: dup
+     228: bipush        38
+     230: ldc           #166                // String dmgTaken
+     232: aastore
+     233: dup
+     234: bipush        39
+     236: ldc           #167                // String powers
+     238: aastore
+     239: dup
+     240: bipush        40
+     242: ldc           #168                // String intentDmg
+     244: aastore
+     245: putstatic     #2                  // Field ignoredFields:[Ljava/lang/String;
+     248: return
+}

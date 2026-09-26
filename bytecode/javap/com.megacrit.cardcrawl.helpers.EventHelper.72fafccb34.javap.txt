@@ -1,0 +1,1981 @@
+Compiled from "EventHelper.java"
+public class com.megacrit.cardcrawl.helpers.EventHelper {
+  private static final org.apache.logging.log4j.Logger logger;
+    descriptor: Lorg/apache/logging/log4j/Logger;
+
+  private static final float BASE_ELITE_CHANCE;
+    descriptor: F
+
+  private static final float BASE_MONSTER_CHANCE;
+    descriptor: F
+
+  private static final float BASE_SHOP_CHANCE;
+    descriptor: F
+
+  private static final float BASE_TREASURE_CHANCE;
+    descriptor: F
+
+  private static final float RAMP_ELITE_CHANCE;
+    descriptor: F
+
+  private static final float RAMP_MONSTER_CHANCE;
+    descriptor: F
+
+  private static final float RAMP_SHOP_CHANCE;
+    descriptor: F
+
+  private static final float RAMP_TREASURE_CHANCE;
+    descriptor: F
+
+  private static final float RESET_ELITE_CHANCE;
+    descriptor: F
+
+  private static final float RESET_MONSTER_CHANCE;
+    descriptor: F
+
+  private static final float RESET_SHOP_CHANCE;
+    descriptor: F
+
+  private static final float RESET_TREASURE_CHANCE;
+    descriptor: F
+
+  private static float ELITE_CHANCE;
+    descriptor: F
+
+  private static float MONSTER_CHANCE;
+    descriptor: F
+
+  private static float SHOP_CHANCE;
+    descriptor: F
+
+  public static float TREASURE_CHANCE;
+    descriptor: F
+
+  private static java.util.ArrayList<java.lang.Float> saveFilePreviousChances;
+    descriptor: Ljava/util/ArrayList;
+
+  private static java.lang.String saveFileLastEventChoice;
+    descriptor: Ljava/lang/String;
+
+  public com.megacrit.cardcrawl.helpers.EventHelper();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #2                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static com.megacrit.cardcrawl.helpers.EventHelper$RoomResult roll();
+    descriptor: ()Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+    Code:
+       0: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.eventRng:Lcom/megacrit/cardcrawl/random/Random;
+       3: invokestatic  #4                  // Method roll:(Lcom/megacrit/cardcrawl/random/Random;)Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+       6: areturn
+
+  public static com.megacrit.cardcrawl.helpers.EventHelper$RoomResult roll(com.megacrit.cardcrawl.random.Random);
+    descriptor: (Lcom/megacrit/cardcrawl/random/Random;)Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+    Code:
+       0: invokestatic  #5                  // Method getChances:()Ljava/util/ArrayList;
+       3: putstatic     #6                  // Field saveFilePreviousChances:Ljava/util/ArrayList;
+       6: aload_0
+       7: invokevirtual #7                  // Method com/megacrit/cardcrawl/random/Random.random:()F
+      10: fstore_1
+      11: getstatic     #8                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      14: new           #9                  // class java/lang/StringBuilder
+      17: dup
+      18: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+      21: ldc           #11                 // String Rolling for room type... EVENT_RNG_COUNTER:
+      23: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      26: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.eventRng:Lcom/megacrit/cardcrawl/random/Random;
+      29: getfield      #13                 // Field com/megacrit/cardcrawl/random/Random.counter:I
+      32: invokevirtual #14                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      35: invokevirtual #15                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      38: invokeinterface #16,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+      43: iconst_0
+      44: istore_2
+      45: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      48: ldc           #19                 // String Tiny Chest
+      50: invokevirtual #20                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+      53: ifeq          94
+      56: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      59: ldc           #19                 // String Tiny Chest
+      61: invokevirtual #21                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+      64: astore_3
+      65: aload_3
+      66: dup
+      67: getfield      #22                 // Field com/megacrit/cardcrawl/relics/AbstractRelic.counter:I
+      70: iconst_1
+      71: iadd
+      72: putfield      #22                 // Field com/megacrit/cardcrawl/relics/AbstractRelic.counter:I
+      75: aload_3
+      76: getfield      #22                 // Field com/megacrit/cardcrawl/relics/AbstractRelic.counter:I
+      79: iconst_4
+      80: if_icmpne     94
+      83: aload_3
+      84: iconst_0
+      85: putfield      #22                 // Field com/megacrit/cardcrawl/relics/AbstractRelic.counter:I
+      88: aload_3
+      89: invokevirtual #23                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.flash:()V
+      92: iconst_1
+      93: istore_2
+      94: getstatic     #8                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      97: new           #9                  // class java/lang/StringBuilder
+     100: dup
+     101: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+     104: ldc           #24                 // String ROLL:
+     106: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     109: fload_1
+     110: invokevirtual #25                 // Method java/lang/StringBuilder.append:(F)Ljava/lang/StringBuilder;
+     113: invokevirtual #15                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     116: invokeinterface #16,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     121: getstatic     #8                  // Field logger:Lorg/apache/logging/log4j/Logger;
+     124: new           #9                  // class java/lang/StringBuilder
+     127: dup
+     128: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+     131: ldc           #26                 // String ELIT:
+     133: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     136: getstatic     #27                 // Field ELITE_CHANCE:F
+     139: invokevirtual #25                 // Method java/lang/StringBuilder.append:(F)Ljava/lang/StringBuilder;
+     142: invokevirtual #15                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     145: invokeinterface #16,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     150: getstatic     #8                  // Field logger:Lorg/apache/logging/log4j/Logger;
+     153: new           #9                  // class java/lang/StringBuilder
+     156: dup
+     157: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+     160: ldc           #28                 // String MNST:
+     162: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     165: getstatic     #29                 // Field MONSTER_CHANCE:F
+     168: invokevirtual #25                 // Method java/lang/StringBuilder.append:(F)Ljava/lang/StringBuilder;
+     171: invokevirtual #15                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     174: invokeinterface #16,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     179: getstatic     #8                  // Field logger:Lorg/apache/logging/log4j/Logger;
+     182: new           #9                  // class java/lang/StringBuilder
+     185: dup
+     186: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+     189: ldc           #30                 // String SHOP:
+     191: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     194: getstatic     #31                 // Field SHOP_CHANCE:F
+     197: invokevirtual #25                 // Method java/lang/StringBuilder.append:(F)Ljava/lang/StringBuilder;
+     200: invokevirtual #15                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     203: invokeinterface #16,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     208: getstatic     #8                  // Field logger:Lorg/apache/logging/log4j/Logger;
+     211: new           #9                  // class java/lang/StringBuilder
+     214: dup
+     215: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+     218: ldc           #32                 // String TRSR:
+     220: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     223: getstatic     #33                 // Field TREASURE_CHANCE:F
+     226: invokevirtual #25                 // Method java/lang/StringBuilder.append:(F)Ljava/lang/StringBuilder;
+     229: invokevirtual #15                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     232: invokeinterface #16,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     237: iconst_0
+     238: istore_3
+     239: ldc           #35                 // String DeadlyEvents
+     241: invokestatic  #36                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+     244: ifeq          255
+     247: getstatic     #27                 // Field ELITE_CHANCE:F
+     250: ldc           #37                 // float 100.0f
+     252: fmul
+     253: f2i
+     254: istore_3
+     255: getstatic     #38                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.floorNum:I
+     258: bipush        6
+     260: if_icmpge     265
+     263: iconst_0
+     264: istore_3
+     265: getstatic     #29                 // Field MONSTER_CHANCE:F
+     268: ldc           #37                 // float 100.0f
+     270: fmul
+     271: f2i
+     272: istore        4
+     274: getstatic     #31                 // Field SHOP_CHANCE:F
+     277: ldc           #37                 // float 100.0f
+     279: fmul
+     280: f2i
+     281: istore        5
+     283: invokestatic  #39                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     286: instanceof    #40                 // class com/megacrit/cardcrawl/rooms/ShopRoom
+     289: ifeq          295
+     292: iconst_0
+     293: istore        5
+     295: getstatic     #33                 // Field TREASURE_CHANCE:F
+     298: ldc           #37                 // float 100.0f
+     300: fmul
+     301: f2i
+     302: istore        6
+     304: iconst_0
+     305: istore        7
+     307: bipush        100
+     309: anewarray     #41                 // class com/megacrit/cardcrawl/helpers/EventHelper$RoomResult
+     312: astore        8
+     314: aload         8
+     316: getstatic     #42                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.EVENT:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     319: invokestatic  #43                 // Method java/util/Arrays.fill:([Ljava/lang/Object;Ljava/lang/Object;)V
+     322: ldc           #35                 // String DeadlyEvents
+     324: invokestatic  #36                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+     327: ifeq          390
+     330: aload         8
+     332: bipush        99
+     334: iload         7
+     336: invokestatic  #44                 // Method java/lang/Math.min:(II)I
+     339: bipush        100
+     341: iload         7
+     343: iload_3
+     344: iadd
+     345: invokestatic  #44                 // Method java/lang/Math.min:(II)I
+     348: getstatic     #45                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.ELITE:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     351: invokestatic  #46                 // Method java/util/Arrays.fill:([Ljava/lang/Object;IILjava/lang/Object;)V
+     354: iload         7
+     356: iload_3
+     357: iadd
+     358: istore        7
+     360: aload         8
+     362: bipush        99
+     364: iload         7
+     366: invokestatic  #44                 // Method java/lang/Math.min:(II)I
+     369: bipush        100
+     371: iload         7
+     373: iload_3
+     374: iadd
+     375: invokestatic  #44                 // Method java/lang/Math.min:(II)I
+     378: getstatic     #45                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.ELITE:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     381: invokestatic  #46                 // Method java/util/Arrays.fill:([Ljava/lang/Object;IILjava/lang/Object;)V
+     384: iload         7
+     386: iload_3
+     387: iadd
+     388: istore        7
+     390: aload         8
+     392: bipush        99
+     394: iload         7
+     396: invokestatic  #44                 // Method java/lang/Math.min:(II)I
+     399: bipush        100
+     401: iload         7
+     403: iload         4
+     405: iadd
+     406: invokestatic  #44                 // Method java/lang/Math.min:(II)I
+     409: getstatic     #47                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.MONSTER:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     412: invokestatic  #46                 // Method java/util/Arrays.fill:([Ljava/lang/Object;IILjava/lang/Object;)V
+     415: iload         7
+     417: iload         4
+     419: iadd
+     420: istore        7
+     422: aload         8
+     424: bipush        99
+     426: iload         7
+     428: invokestatic  #44                 // Method java/lang/Math.min:(II)I
+     431: bipush        100
+     433: iload         7
+     435: iload         5
+     437: iadd
+     438: invokestatic  #44                 // Method java/lang/Math.min:(II)I
+     441: getstatic     #48                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.SHOP:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     444: invokestatic  #46                 // Method java/util/Arrays.fill:([Ljava/lang/Object;IILjava/lang/Object;)V
+     447: iload         7
+     449: iload         5
+     451: iadd
+     452: istore        7
+     454: aload         8
+     456: bipush        99
+     458: iload         7
+     460: invokestatic  #44                 // Method java/lang/Math.min:(II)I
+     463: bipush        100
+     465: iload         7
+     467: iload         6
+     469: iadd
+     470: invokestatic  #44                 // Method java/lang/Math.min:(II)I
+     473: getstatic     #49                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.TREASURE:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     476: invokestatic  #46                 // Method java/util/Arrays.fill:([Ljava/lang/Object;IILjava/lang/Object;)V
+     479: aload         8
+     481: fload_1
+     482: ldc           #37                 // float 100.0f
+     484: fmul
+     485: f2i
+     486: aaload
+     487: astore        9
+     489: iload_2
+     490: ifeq          498
+     493: getstatic     #49                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.TREASURE:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     496: astore        9
+     498: aload         9
+     500: getstatic     #45                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.ELITE:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     503: if_acmpne     526
+     506: fconst_0
+     507: putstatic     #27                 // Field ELITE_CHANCE:F
+     510: ldc           #35                 // String DeadlyEvents
+     512: invokestatic  #36                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+     515: ifeq          535
+     518: ldc           #50                 // float 0.1f
+     520: putstatic     #27                 // Field ELITE_CHANCE:F
+     523: goto          535
+     526: getstatic     #27                 // Field ELITE_CHANCE:F
+     529: ldc           #50                 // float 0.1f
+     531: fadd
+     532: putstatic     #27                 // Field ELITE_CHANCE:F
+     535: aload         9
+     537: getstatic     #47                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.MONSTER:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     540: if_acmpne     578
+     543: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     546: ldc           #52                 // String Juzu Bracelet
+     548: invokevirtual #20                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+     551: ifeq          570
+     554: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     557: ldc           #52                 // String Juzu Bracelet
+     559: invokevirtual #21                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+     562: invokevirtual #23                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.flash:()V
+     565: getstatic     #42                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.EVENT:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     568: astore        9
+     570: ldc           #50                 // float 0.1f
+     572: putstatic     #29                 // Field MONSTER_CHANCE:F
+     575: goto          587
+     578: getstatic     #29                 // Field MONSTER_CHANCE:F
+     581: ldc           #50                 // float 0.1f
+     583: fadd
+     584: putstatic     #29                 // Field MONSTER_CHANCE:F
+     587: aload         9
+     589: getstatic     #48                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.SHOP:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     592: if_acmpne     603
+     595: ldc           #53                 // float 0.03f
+     597: putstatic     #31                 // Field SHOP_CHANCE:F
+     600: goto          612
+     603: getstatic     #31                 // Field SHOP_CHANCE:F
+     606: ldc           #53                 // float 0.03f
+     608: fadd
+     609: putstatic     #31                 // Field SHOP_CHANCE:F
+     612: getstatic     #54                 // Field com/megacrit/cardcrawl/core/Settings.isEndless:Z
+     615: ifeq          697
+     618: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     621: ldc           #56                 // String MimicInfestation
+     623: invokevirtual #57                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasBlight:(Ljava/lang/String;)Z
+     626: ifeq          697
+     629: aload         9
+     631: getstatic     #49                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.TREASURE:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     634: if_acmpne     739
+     637: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     640: ldc           #52                 // String Juzu Bracelet
+     642: invokevirtual #20                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+     645: ifeq          667
+     648: getstatic     #17                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     651: ldc           #52                 // String Juzu Bracelet
+     653: invokevirtual #21                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+     656: invokevirtual #23                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.flash:()V
+     659: getstatic     #42                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.EVENT:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     662: astore        9
+     664: goto          672
+     667: getstatic     #45                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.ELITE:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     670: astore        9
+     672: ldc           #58                 // float 0.02f
+     674: putstatic     #33                 // Field TREASURE_CHANCE:F
+     677: ldc           #35                 // String DeadlyEvents
+     679: invokestatic  #36                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+     682: ifeq          739
+     685: getstatic     #33                 // Field TREASURE_CHANCE:F
+     688: ldc           #58                 // float 0.02f
+     690: fadd
+     691: putstatic     #33                 // Field TREASURE_CHANCE:F
+     694: goto          739
+     697: aload         9
+     699: getstatic     #49                 // Field com/megacrit/cardcrawl/helpers/EventHelper$RoomResult.TREASURE:Lcom/megacrit/cardcrawl/helpers/EventHelper$RoomResult;
+     702: if_acmpne     713
+     705: ldc           #58                 // float 0.02f
+     707: putstatic     #33                 // Field TREASURE_CHANCE:F
+     710: goto          739
+     713: getstatic     #33                 // Field TREASURE_CHANCE:F
+     716: ldc           #58                 // float 0.02f
+     718: fadd
+     719: putstatic     #33                 // Field TREASURE_CHANCE:F
+     722: ldc           #35                 // String DeadlyEvents
+     724: invokestatic  #36                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+     727: ifeq          739
+     730: getstatic     #33                 // Field TREASURE_CHANCE:F
+     733: ldc           #58                 // float 0.02f
+     735: fadd
+     736: putstatic     #33                 // Field TREASURE_CHANCE:F
+     739: aload         9
+     741: areturn
+
+  public static void resetProbabilities();
+    descriptor: ()V
+    Code:
+       0: aconst_null
+       1: putstatic     #6                  // Field saveFilePreviousChances:Ljava/util/ArrayList;
+       4: fconst_0
+       5: putstatic     #27                 // Field ELITE_CHANCE:F
+       8: ldc           #50                 // float 0.1f
+      10: putstatic     #29                 // Field MONSTER_CHANCE:F
+      13: ldc           #53                 // float 0.03f
+      15: putstatic     #31                 // Field SHOP_CHANCE:F
+      18: ldc           #58                 // float 0.02f
+      20: putstatic     #33                 // Field TREASURE_CHANCE:F
+      23: return
+
+  public static void setChances(java.util.ArrayList<java.lang.Float>);
+    descriptor: (Ljava/util/ArrayList;)V
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: invokevirtual #59                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+       5: checkcast     #60                 // class java/lang/Float
+       8: invokevirtual #61                 // Method java/lang/Float.floatValue:()F
+      11: putstatic     #27                 // Field ELITE_CHANCE:F
+      14: aload_0
+      15: iconst_1
+      16: invokevirtual #59                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      19: checkcast     #60                 // class java/lang/Float
+      22: invokevirtual #61                 // Method java/lang/Float.floatValue:()F
+      25: putstatic     #29                 // Field MONSTER_CHANCE:F
+      28: aload_0
+      29: iconst_2
+      30: invokevirtual #59                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      33: checkcast     #60                 // class java/lang/Float
+      36: invokevirtual #61                 // Method java/lang/Float.floatValue:()F
+      39: putstatic     #31                 // Field SHOP_CHANCE:F
+      42: aload_0
+      43: iconst_3
+      44: invokevirtual #59                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      47: checkcast     #60                 // class java/lang/Float
+      50: invokevirtual #61                 // Method java/lang/Float.floatValue:()F
+      53: putstatic     #33                 // Field TREASURE_CHANCE:F
+      56: return
+
+  public static java.util.ArrayList<java.lang.Float> getChances();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #62                 // class java/util/ArrayList
+       3: dup
+       4: invokespecial #63                 // Method java/util/ArrayList."<init>":()V
+       7: astore_0
+       8: aload_0
+       9: getstatic     #27                 // Field ELITE_CHANCE:F
+      12: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+      15: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      18: pop
+      19: aload_0
+      20: getstatic     #29                 // Field MONSTER_CHANCE:F
+      23: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+      26: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      29: pop
+      30: aload_0
+      31: getstatic     #31                 // Field SHOP_CHANCE:F
+      34: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+      37: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      40: pop
+      41: aload_0
+      42: getstatic     #33                 // Field TREASURE_CHANCE:F
+      45: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+      48: invokevirtual #65                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      51: pop
+      52: aload_0
+      53: areturn
+
+  public static java.util.ArrayList<java.lang.Float> getChancesPreRoll();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: getstatic     #6                  // Field saveFilePreviousChances:Ljava/util/ArrayList;
+       3: ifnull        10
+       6: getstatic     #6                  // Field saveFilePreviousChances:Ljava/util/ArrayList;
+       9: areturn
+      10: invokestatic  #5                  // Method getChances:()Ljava/util/ArrayList;
+      13: areturn
+
+  public static java.lang.String getMostRecentEventID();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #66                 // Field saveFileLastEventChoice:Ljava/lang/String;
+       3: areturn
+
+  public static com.megacrit.cardcrawl.events.AbstractEvent getEvent(java.lang.String);
+    descriptor: (Ljava/lang/String;)Lcom/megacrit/cardcrawl/events/AbstractEvent;
+    Code:
+       0: getstatic     #67                 // Field com/megacrit/cardcrawl/core/Settings.isDev:Z
+       3: ifeq          6
+       6: aload_0
+       7: putstatic     #66                 // Field saveFileLastEventChoice:Ljava/lang/String;
+      10: aload_0
+      11: astore_1
+      12: iconst_m1
+      13: istore_2
+      14: aload_1
+      15: invokevirtual #68                 // Method java/lang/String.hashCode:()I
+      18: lookupswitch  { // 51
+
+           -2022548400: 835
+
+           -1998240723: 1105
+
+           -1971074156: 580
+
+           -1914822917: 820
+
+           -1819469228: 1135
+
+           -1766312002: 985
+
+           -1757506145: 1030
+
+           -1731176390: 775
+
+           -1699225493: 610
+
+           -1655196495: 1180
+
+           -1511782511: 910
+
+           -1321370043: 865
+
+           -1178669457: 1075
+
+            -980968223: 805
+
+            -833416624: 436
+
+            -646914399: 940
+
+            -308228690: 1060
+
+            -258741642: 625
+
+            -207216254: 1045
+
+            -192277265: 730
+
+            -191855422: 715
+
+             -85879143: 955
+
+                 76141: 506
+
+               2424440: 1000
+
+              19316684: 1015
+
+             114917293: 790
+
+             195217658: 535
+
+             236474855: 1150
+
+             580837991: 1120
+
+             591082013: 492
+
+             740516280: 670
+
+             815072724: 760
+
+             933905419: 640
+
+             998956998: 1165
+
+            1051874140: 1090
+
+            1088076555: 478
+
+            1104324102: 565
+
+            1121505076: 970
+
+            1167999560: 655
+
+            1208556260: 745
+
+            1689970904: 520
+
+            1694921927: 595
+
+            1813457356: 550
+
+            1824060574: 700
+
+            1917982011: 464
+
+            1953642014: 850
+
+            1956330105: 895
+
+            1962578239: 685
+
+            1985970164: 925
+
+            2055237045: 450
+
+            2132136932: 880
+               default: 1192
+          }
+     436: aload_1
+     437: ldc           #69                 // String Accursed Blacksmith
+     439: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     442: ifeq          1192
+     445: iconst_0
+     446: istore_2
+     447: goto          1192
+     450: aload_1
+     451: ldc           #71                 // String Bonfire Elementals
+     453: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     456: ifeq          1192
+     459: iconst_1
+     460: istore_2
+     461: goto          1192
+     464: aload_1
+     465: ldc           #72                 // String Fountain of Cleansing
+     467: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     470: ifeq          1192
+     473: iconst_2
+     474: istore_2
+     475: goto          1192
+     478: aload_1
+     479: ldc           #73                 // String Designer
+     481: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     484: ifeq          1192
+     487: iconst_3
+     488: istore_2
+     489: goto          1192
+     492: aload_1
+     493: ldc           #74                 // String Duplicator
+     495: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     498: ifeq          1192
+     501: iconst_4
+     502: istore_2
+     503: goto          1192
+     506: aload_1
+     507: ldc           #75                 // String Lab
+     509: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     512: ifeq          1192
+     515: iconst_5
+     516: istore_2
+     517: goto          1192
+     520: aload_1
+     521: ldc           #76                 // String Match and Keep!
+     523: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     526: ifeq          1192
+     529: bipush        6
+     531: istore_2
+     532: goto          1192
+     535: aload_1
+     536: ldc           #77                 // String Golden Shrine
+     538: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     541: ifeq          1192
+     544: bipush        7
+     546: istore_2
+     547: goto          1192
+     550: aload_1
+     551: ldc           #78                 // String Purifier
+     553: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     556: ifeq          1192
+     559: bipush        8
+     561: istore_2
+     562: goto          1192
+     565: aload_1
+     566: ldc           #79                 // String Transmorgrifier
+     568: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     571: ifeq          1192
+     574: bipush        9
+     576: istore_2
+     577: goto          1192
+     580: aload_1
+     581: ldc           #80                 // String Wheel of Change
+     583: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     586: ifeq          1192
+     589: bipush        10
+     591: istore_2
+     592: goto          1192
+     595: aload_1
+     596: ldc           #81                 // String Upgrade Shrine
+     598: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     601: ifeq          1192
+     604: bipush        11
+     606: istore_2
+     607: goto          1192
+     610: aload_1
+     611: ldc           #82                 // String FaceTrader
+     613: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     616: ifeq          1192
+     619: bipush        12
+     621: istore_2
+     622: goto          1192
+     625: aload_1
+     626: ldc           #83                 // String NoteForYourself
+     628: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     631: ifeq          1192
+     634: bipush        13
+     636: istore_2
+     637: goto          1192
+     640: aload_1
+     641: ldc           #84                 // String WeMeetAgain
+     643: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     646: ifeq          1192
+     649: bipush        14
+     651: istore_2
+     652: goto          1192
+     655: aload_1
+     656: ldc           #85                 // String The Woman in Blue
+     658: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     661: ifeq          1192
+     664: bipush        15
+     666: istore_2
+     667: goto          1192
+     670: aload_1
+     671: ldc           #86                 // String Big Fish
+     673: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     676: ifeq          1192
+     679: bipush        16
+     681: istore_2
+     682: goto          1192
+     685: aload_1
+     686: ldc           #87                 // String The Cleric
+     688: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     691: ifeq          1192
+     694: bipush        17
+     696: istore_2
+     697: goto          1192
+     700: aload_1
+     701: ldc           #88                 // String Dead Adventurer
+     703: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     706: ifeq          1192
+     709: bipush        18
+     711: istore_2
+     712: goto          1192
+     715: aload_1
+     716: ldc           #89                 // String Golden Wing
+     718: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     721: ifeq          1192
+     724: bipush        19
+     726: istore_2
+     727: goto          1192
+     730: aload_1
+     731: ldc           #90                 // String Golden Idol
+     733: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     736: ifeq          1192
+     739: bipush        20
+     741: istore_2
+     742: goto          1192
+     745: aload_1
+     746: ldc           #91                 // String World of Goop
+     748: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     751: ifeq          1192
+     754: bipush        21
+     756: istore_2
+     757: goto          1192
+     760: aload_1
+     761: ldc           #92                 // String Forgotten Altar
+     763: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     766: ifeq          1192
+     769: bipush        22
+     771: istore_2
+     772: goto          1192
+     775: aload_1
+     776: ldc           #93                 // String Scrap Ooze
+     778: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     781: ifeq          1192
+     784: bipush        23
+     786: istore_2
+     787: goto          1192
+     790: aload_1
+     791: ldc           #94                 // String Liars Game
+     793: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     796: ifeq          1192
+     799: bipush        24
+     801: istore_2
+     802: goto          1192
+     805: aload_1
+     806: ldc           #95                 // String Living Wall
+     808: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     811: ifeq          1192
+     814: bipush        25
+     816: istore_2
+     817: goto          1192
+     820: aload_1
+     821: ldc           #96                 // String Mushrooms
+     823: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     826: ifeq          1192
+     829: bipush        26
+     831: istore_2
+     832: goto          1192
+     835: aload_1
+     836: ldc           #97                 // String N\'loth
+     838: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     841: ifeq          1192
+     844: bipush        27
+     846: istore_2
+     847: goto          1192
+     850: aload_1
+     851: ldc           #98                 // String Shining Light
+     853: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     856: ifeq          1192
+     859: bipush        28
+     861: istore_2
+     862: goto          1192
+     865: aload_1
+     866: ldc           #99                 // String Vampires
+     868: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     871: ifeq          1192
+     874: bipush        29
+     876: istore_2
+     877: goto          1192
+     880: aload_1
+     881: ldc           #100                // String Ghosts
+     883: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     886: ifeq          1192
+     889: bipush        30
+     891: istore_2
+     892: goto          1192
+     895: aload_1
+     896: ldc           #101                // String Addict
+     898: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     901: ifeq          1192
+     904: bipush        31
+     906: istore_2
+     907: goto          1192
+     910: aload_1
+     911: ldc           #102                // String Back to Basics
+     913: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     916: ifeq          1192
+     919: bipush        32
+     921: istore_2
+     922: goto          1192
+     925: aload_1
+     926: ldc           #103                // String Beggar
+     928: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     931: ifeq          1192
+     934: bipush        33
+     936: istore_2
+     937: goto          1192
+     940: aload_1
+     941: ldc           #104                // String Cursed Tome
+     943: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     946: ifeq          1192
+     949: bipush        34
+     951: istore_2
+     952: goto          1192
+     955: aload_1
+     956: ldc           #105                // String Drug Dealer
+     958: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     961: ifeq          1192
+     964: bipush        35
+     966: istore_2
+     967: goto          1192
+     970: aload_1
+     971: ldc           #106                // String Knowing Skull
+     973: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     976: ifeq          1192
+     979: bipush        36
+     981: istore_2
+     982: goto          1192
+     985: aload_1
+     986: ldc           #107                // String Masked Bandits
+     988: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     991: ifeq          1192
+     994: bipush        37
+     996: istore_2
+     997: goto          1192
+    1000: aload_1
+    1001: ldc           #108                // String Nest
+    1003: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1006: ifeq          1192
+    1009: bipush        38
+    1011: istore_2
+    1012: goto          1192
+    1015: aload_1
+    1016: ldc           #109                // String The Library
+    1018: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1021: ifeq          1192
+    1024: bipush        39
+    1026: istore_2
+    1027: goto          1192
+    1030: aload_1
+    1031: ldc           #110                // String The Mausoleum
+    1033: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1036: ifeq          1192
+    1039: bipush        40
+    1041: istore_2
+    1042: goto          1192
+    1045: aload_1
+    1046: ldc           #111                // String The Joust
+    1048: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1051: ifeq          1192
+    1054: bipush        41
+    1056: istore_2
+    1057: goto          1192
+    1060: aload_1
+    1061: ldc           #112                // String Colosseum
+    1063: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1066: ifeq          1192
+    1069: bipush        42
+    1071: istore_2
+    1072: goto          1192
+    1075: aload_1
+    1076: ldc           #113                // String Mysterious Sphere
+    1078: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1081: ifeq          1192
+    1084: bipush        43
+    1086: istore_2
+    1087: goto          1192
+    1090: aload_1
+    1091: ldc           #114                // String SecretPortal
+    1093: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1096: ifeq          1192
+    1099: bipush        44
+    1101: istore_2
+    1102: goto          1192
+    1105: aload_1
+    1106: ldc           #115                // String Tomb of Lord Red Mask
+    1108: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1111: ifeq          1192
+    1114: bipush        45
+    1116: istore_2
+    1117: goto          1192
+    1120: aload_1
+    1121: ldc           #116                // String Falling
+    1123: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1126: ifeq          1192
+    1129: bipush        46
+    1131: istore_2
+    1132: goto          1192
+    1135: aload_1
+    1136: ldc           #117                // String Winding Halls
+    1138: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1141: ifeq          1192
+    1144: bipush        47
+    1146: istore_2
+    1147: goto          1192
+    1150: aload_1
+    1151: ldc           #118                // String The Moai Head
+    1153: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1156: ifeq          1192
+    1159: bipush        48
+    1161: istore_2
+    1162: goto          1192
+    1165: aload_1
+    1166: ldc           #119                // String SensoryStone
+    1168: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1171: ifeq          1192
+    1174: bipush        49
+    1176: istore_2
+    1177: goto          1192
+    1180: aload_1
+    1181: ldc           #120                // String MindBloom
+    1183: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1186: ifeq          1192
+    1189: bipush        50
+    1191: istore_2
+    1192: iload_2
+    1193: tableswitch   { // 0 to 50
+
+                     0: 1412
+
+                     1: 1420
+
+                     2: 1428
+
+                     3: 1436
+
+                     4: 1444
+
+                     5: 1452
+
+                     6: 1460
+
+                     7: 1468
+
+                     8: 1476
+
+                     9: 1484
+
+                    10: 1492
+
+                    11: 1500
+
+                    12: 1508
+
+                    13: 1516
+
+                    14: 1524
+
+                    15: 1532
+
+                    16: 1540
+
+                    17: 1548
+
+                    18: 1556
+
+                    19: 1564
+
+                    20: 1572
+
+                    21: 1580
+
+                    22: 1588
+
+                    23: 1596
+
+                    24: 1604
+
+                    25: 1612
+
+                    26: 1620
+
+                    27: 1628
+
+                    28: 1636
+
+                    29: 1644
+
+                    30: 1652
+
+                    31: 1660
+
+                    32: 1668
+
+                    33: 1676
+
+                    34: 1684
+
+                    35: 1692
+
+                    36: 1700
+
+                    37: 1708
+
+                    38: 1716
+
+                    39: 1724
+
+                    40: 1732
+
+                    41: 1740
+
+                    42: 1748
+
+                    43: 1756
+
+                    44: 1764
+
+                    45: 1772
+
+                    46: 1780
+
+                    47: 1788
+
+                    48: 1796
+
+                    49: 1804
+
+                    50: 1812
+               default: 1820
+          }
+    1412: new           #121                // class com/megacrit/cardcrawl/events/shrines/AccursedBlacksmith
+    1415: dup
+    1416: invokespecial #122                // Method com/megacrit/cardcrawl/events/shrines/AccursedBlacksmith."<init>":()V
+    1419: areturn
+    1420: new           #123                // class com/megacrit/cardcrawl/events/shrines/Bonfire
+    1423: dup
+    1424: invokespecial #124                // Method com/megacrit/cardcrawl/events/shrines/Bonfire."<init>":()V
+    1427: areturn
+    1428: new           #125                // class com/megacrit/cardcrawl/events/shrines/FountainOfCurseRemoval
+    1431: dup
+    1432: invokespecial #126                // Method com/megacrit/cardcrawl/events/shrines/FountainOfCurseRemoval."<init>":()V
+    1435: areturn
+    1436: new           #127                // class com/megacrit/cardcrawl/events/shrines/Designer
+    1439: dup
+    1440: invokespecial #128                // Method com/megacrit/cardcrawl/events/shrines/Designer."<init>":()V
+    1443: areturn
+    1444: new           #129                // class com/megacrit/cardcrawl/events/shrines/Duplicator
+    1447: dup
+    1448: invokespecial #130                // Method com/megacrit/cardcrawl/events/shrines/Duplicator."<init>":()V
+    1451: areturn
+    1452: new           #131                // class com/megacrit/cardcrawl/events/shrines/Lab
+    1455: dup
+    1456: invokespecial #132                // Method com/megacrit/cardcrawl/events/shrines/Lab."<init>":()V
+    1459: areturn
+    1460: new           #133                // class com/megacrit/cardcrawl/events/shrines/GremlinMatchGame
+    1463: dup
+    1464: invokespecial #134                // Method com/megacrit/cardcrawl/events/shrines/GremlinMatchGame."<init>":()V
+    1467: areturn
+    1468: new           #135                // class com/megacrit/cardcrawl/events/shrines/GoldShrine
+    1471: dup
+    1472: invokespecial #136                // Method com/megacrit/cardcrawl/events/shrines/GoldShrine."<init>":()V
+    1475: areturn
+    1476: new           #137                // class com/megacrit/cardcrawl/events/shrines/PurificationShrine
+    1479: dup
+    1480: invokespecial #138                // Method com/megacrit/cardcrawl/events/shrines/PurificationShrine."<init>":()V
+    1483: areturn
+    1484: new           #139                // class com/megacrit/cardcrawl/events/shrines/Transmogrifier
+    1487: dup
+    1488: invokespecial #140                // Method com/megacrit/cardcrawl/events/shrines/Transmogrifier."<init>":()V
+    1491: areturn
+    1492: new           #141                // class com/megacrit/cardcrawl/events/shrines/GremlinWheelGame
+    1495: dup
+    1496: invokespecial #142                // Method com/megacrit/cardcrawl/events/shrines/GremlinWheelGame."<init>":()V
+    1499: areturn
+    1500: new           #143                // class com/megacrit/cardcrawl/events/shrines/UpgradeShrine
+    1503: dup
+    1504: invokespecial #144                // Method com/megacrit/cardcrawl/events/shrines/UpgradeShrine."<init>":()V
+    1507: areturn
+    1508: new           #145                // class com/megacrit/cardcrawl/events/shrines/FaceTrader
+    1511: dup
+    1512: invokespecial #146                // Method com/megacrit/cardcrawl/events/shrines/FaceTrader."<init>":()V
+    1515: areturn
+    1516: new           #147                // class com/megacrit/cardcrawl/events/shrines/NoteForYourself
+    1519: dup
+    1520: invokespecial #148                // Method com/megacrit/cardcrawl/events/shrines/NoteForYourself."<init>":()V
+    1523: areturn
+    1524: new           #149                // class com/megacrit/cardcrawl/events/shrines/WeMeetAgain
+    1527: dup
+    1528: invokespecial #150                // Method com/megacrit/cardcrawl/events/shrines/WeMeetAgain."<init>":()V
+    1531: areturn
+    1532: new           #151                // class com/megacrit/cardcrawl/events/shrines/WomanInBlue
+    1535: dup
+    1536: invokespecial #152                // Method com/megacrit/cardcrawl/events/shrines/WomanInBlue."<init>":()V
+    1539: areturn
+    1540: new           #153                // class com/megacrit/cardcrawl/events/exordium/BigFish
+    1543: dup
+    1544: invokespecial #154                // Method com/megacrit/cardcrawl/events/exordium/BigFish."<init>":()V
+    1547: areturn
+    1548: new           #155                // class com/megacrit/cardcrawl/events/exordium/Cleric
+    1551: dup
+    1552: invokespecial #156                // Method com/megacrit/cardcrawl/events/exordium/Cleric."<init>":()V
+    1555: areturn
+    1556: new           #157                // class com/megacrit/cardcrawl/events/exordium/DeadAdventurer
+    1559: dup
+    1560: invokespecial #158                // Method com/megacrit/cardcrawl/events/exordium/DeadAdventurer."<init>":()V
+    1563: areturn
+    1564: new           #159                // class com/megacrit/cardcrawl/events/exordium/GoldenWing
+    1567: dup
+    1568: invokespecial #160                // Method com/megacrit/cardcrawl/events/exordium/GoldenWing."<init>":()V
+    1571: areturn
+    1572: new           #161                // class com/megacrit/cardcrawl/events/exordium/GoldenIdolEvent
+    1575: dup
+    1576: invokespecial #162                // Method com/megacrit/cardcrawl/events/exordium/GoldenIdolEvent."<init>":()V
+    1579: areturn
+    1580: new           #163                // class com/megacrit/cardcrawl/events/exordium/GoopPuddle
+    1583: dup
+    1584: invokespecial #164                // Method com/megacrit/cardcrawl/events/exordium/GoopPuddle."<init>":()V
+    1587: areturn
+    1588: new           #165                // class com/megacrit/cardcrawl/events/city/ForgottenAltar
+    1591: dup
+    1592: invokespecial #166                // Method com/megacrit/cardcrawl/events/city/ForgottenAltar."<init>":()V
+    1595: areturn
+    1596: new           #167                // class com/megacrit/cardcrawl/events/exordium/ScrapOoze
+    1599: dup
+    1600: invokespecial #168                // Method com/megacrit/cardcrawl/events/exordium/ScrapOoze."<init>":()V
+    1603: areturn
+    1604: new           #169                // class com/megacrit/cardcrawl/events/exordium/Sssserpent
+    1607: dup
+    1608: invokespecial #170                // Method com/megacrit/cardcrawl/events/exordium/Sssserpent."<init>":()V
+    1611: areturn
+    1612: new           #171                // class com/megacrit/cardcrawl/events/exordium/LivingWall
+    1615: dup
+    1616: invokespecial #172                // Method com/megacrit/cardcrawl/events/exordium/LivingWall."<init>":()V
+    1619: areturn
+    1620: new           #173                // class com/megacrit/cardcrawl/events/exordium/Mushrooms
+    1623: dup
+    1624: invokespecial #174                // Method com/megacrit/cardcrawl/events/exordium/Mushrooms."<init>":()V
+    1627: areturn
+    1628: new           #175                // class com/megacrit/cardcrawl/events/shrines/Nloth
+    1631: dup
+    1632: invokespecial #176                // Method com/megacrit/cardcrawl/events/shrines/Nloth."<init>":()V
+    1635: areturn
+    1636: new           #177                // class com/megacrit/cardcrawl/events/exordium/ShiningLight
+    1639: dup
+    1640: invokespecial #178                // Method com/megacrit/cardcrawl/events/exordium/ShiningLight."<init>":()V
+    1643: areturn
+    1644: new           #179                // class com/megacrit/cardcrawl/events/city/Vampires
+    1647: dup
+    1648: invokespecial #180                // Method com/megacrit/cardcrawl/events/city/Vampires."<init>":()V
+    1651: areturn
+    1652: new           #181                // class com/megacrit/cardcrawl/events/city/Ghosts
+    1655: dup
+    1656: invokespecial #182                // Method com/megacrit/cardcrawl/events/city/Ghosts."<init>":()V
+    1659: areturn
+    1660: new           #183                // class com/megacrit/cardcrawl/events/city/Addict
+    1663: dup
+    1664: invokespecial #184                // Method com/megacrit/cardcrawl/events/city/Addict."<init>":()V
+    1667: areturn
+    1668: new           #185                // class com/megacrit/cardcrawl/events/city/BackToBasics
+    1671: dup
+    1672: invokespecial #186                // Method com/megacrit/cardcrawl/events/city/BackToBasics."<init>":()V
+    1675: areturn
+    1676: new           #187                // class com/megacrit/cardcrawl/events/city/Beggar
+    1679: dup
+    1680: invokespecial #188                // Method com/megacrit/cardcrawl/events/city/Beggar."<init>":()V
+    1683: areturn
+    1684: new           #189                // class com/megacrit/cardcrawl/events/city/CursedTome
+    1687: dup
+    1688: invokespecial #190                // Method com/megacrit/cardcrawl/events/city/CursedTome."<init>":()V
+    1691: areturn
+    1692: new           #191                // class com/megacrit/cardcrawl/events/city/DrugDealer
+    1695: dup
+    1696: invokespecial #192                // Method com/megacrit/cardcrawl/events/city/DrugDealer."<init>":()V
+    1699: areturn
+    1700: new           #193                // class com/megacrit/cardcrawl/events/city/KnowingSkull
+    1703: dup
+    1704: invokespecial #194                // Method com/megacrit/cardcrawl/events/city/KnowingSkull."<init>":()V
+    1707: areturn
+    1708: new           #195                // class com/megacrit/cardcrawl/events/city/MaskedBandits
+    1711: dup
+    1712: invokespecial #196                // Method com/megacrit/cardcrawl/events/city/MaskedBandits."<init>":()V
+    1715: areturn
+    1716: new           #197                // class com/megacrit/cardcrawl/events/city/Nest
+    1719: dup
+    1720: invokespecial #198                // Method com/megacrit/cardcrawl/events/city/Nest."<init>":()V
+    1723: areturn
+    1724: new           #199                // class com/megacrit/cardcrawl/events/city/TheLibrary
+    1727: dup
+    1728: invokespecial #200                // Method com/megacrit/cardcrawl/events/city/TheLibrary."<init>":()V
+    1731: areturn
+    1732: new           #201                // class com/megacrit/cardcrawl/events/city/TheMausoleum
+    1735: dup
+    1736: invokespecial #202                // Method com/megacrit/cardcrawl/events/city/TheMausoleum."<init>":()V
+    1739: areturn
+    1740: new           #203                // class com/megacrit/cardcrawl/events/city/TheJoust
+    1743: dup
+    1744: invokespecial #204                // Method com/megacrit/cardcrawl/events/city/TheJoust."<init>":()V
+    1747: areturn
+    1748: new           #205                // class com/megacrit/cardcrawl/events/city/Colosseum
+    1751: dup
+    1752: invokespecial #206                // Method com/megacrit/cardcrawl/events/city/Colosseum."<init>":()V
+    1755: areturn
+    1756: new           #207                // class com/megacrit/cardcrawl/events/beyond/MysteriousSphere
+    1759: dup
+    1760: invokespecial #208                // Method com/megacrit/cardcrawl/events/beyond/MysteriousSphere."<init>":()V
+    1763: areturn
+    1764: new           #209                // class com/megacrit/cardcrawl/events/beyond/SecretPortal
+    1767: dup
+    1768: invokespecial #210                // Method com/megacrit/cardcrawl/events/beyond/SecretPortal."<init>":()V
+    1771: areturn
+    1772: new           #211                // class com/megacrit/cardcrawl/events/beyond/TombRedMask
+    1775: dup
+    1776: invokespecial #212                // Method com/megacrit/cardcrawl/events/beyond/TombRedMask."<init>":()V
+    1779: areturn
+    1780: new           #213                // class com/megacrit/cardcrawl/events/beyond/Falling
+    1783: dup
+    1784: invokespecial #214                // Method com/megacrit/cardcrawl/events/beyond/Falling."<init>":()V
+    1787: areturn
+    1788: new           #215                // class com/megacrit/cardcrawl/events/beyond/WindingHalls
+    1791: dup
+    1792: invokespecial #216                // Method com/megacrit/cardcrawl/events/beyond/WindingHalls."<init>":()V
+    1795: areturn
+    1796: new           #217                // class com/megacrit/cardcrawl/events/beyond/MoaiHead
+    1799: dup
+    1800: invokespecial #218                // Method com/megacrit/cardcrawl/events/beyond/MoaiHead."<init>":()V
+    1803: areturn
+    1804: new           #219                // class com/megacrit/cardcrawl/events/beyond/SensoryStone
+    1807: dup
+    1808: invokespecial #220                // Method com/megacrit/cardcrawl/events/beyond/SensoryStone."<init>":()V
+    1811: areturn
+    1812: new           #221                // class com/megacrit/cardcrawl/events/beyond/MindBloom
+    1815: dup
+    1816: invokespecial #222                // Method com/megacrit/cardcrawl/events/beyond/MindBloom."<init>":()V
+    1819: areturn
+    1820: getstatic     #8                  // Field logger:Lorg/apache/logging/log4j/Logger;
+    1823: new           #9                  // class java/lang/StringBuilder
+    1826: dup
+    1827: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+    1830: ldc           #223                // String ---------------------------\nERROR: Unspecified key:
+    1832: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1835: aload_0
+    1836: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1839: ldc           #224                // String  in EventHelper.\n---------------------------
+    1841: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    1844: invokevirtual #15                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+    1847: invokeinterface #16,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+    1852: aconst_null
+    1853: areturn
+
+  public static java.lang.String getEventName(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: astore_1
+       2: iconst_m1
+       3: istore_2
+       4: aload_1
+       5: invokevirtual #68                 // Method java/lang/String.hashCode:()I
+       8: lookupswitch  { // 51
+
+           -2022548400: 827
+
+           -1998240723: 1097
+
+           -1971074156: 572
+
+           -1914822917: 812
+
+           -1819469228: 1127
+
+           -1766312002: 977
+
+           -1757506145: 1022
+
+           -1731176390: 767
+
+           -1699225493: 602
+
+           -1655196495: 1172
+
+           -1511782511: 902
+
+           -1321370043: 857
+
+           -1178669457: 1067
+
+            -980968223: 797
+
+            -833416624: 428
+
+            -646914399: 932
+
+            -308228690: 1052
+
+            -258741642: 617
+
+            -207216254: 1037
+
+            -192277265: 722
+
+            -191855422: 707
+
+             -85879143: 947
+
+                 76141: 498
+
+               2424440: 992
+
+              19316684: 1007
+
+             114917293: 782
+
+             195217658: 527
+
+             236474855: 1142
+
+             580837991: 1112
+
+             591082013: 484
+
+             740516280: 662
+
+             815072724: 752
+
+             933905419: 632
+
+             998956998: 1157
+
+            1051874140: 1082
+
+            1088076555: 470
+
+            1104324102: 557
+
+            1121505076: 962
+
+            1167999560: 647
+
+            1208556260: 737
+
+            1689970904: 512
+
+            1694921927: 587
+
+            1813457356: 542
+
+            1824060574: 692
+
+            1917982011: 456
+
+            1953642014: 842
+
+            1956330105: 887
+
+            1962578239: 677
+
+            1985970164: 917
+
+            2055237045: 442
+
+            2132136932: 872
+               default: 1184
+          }
+     428: aload_1
+     429: ldc           #69                 // String Accursed Blacksmith
+     431: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     434: ifeq          1184
+     437: iconst_0
+     438: istore_2
+     439: goto          1184
+     442: aload_1
+     443: ldc           #71                 // String Bonfire Elementals
+     445: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     448: ifeq          1184
+     451: iconst_1
+     452: istore_2
+     453: goto          1184
+     456: aload_1
+     457: ldc           #72                 // String Fountain of Cleansing
+     459: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     462: ifeq          1184
+     465: iconst_2
+     466: istore_2
+     467: goto          1184
+     470: aload_1
+     471: ldc           #73                 // String Designer
+     473: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     476: ifeq          1184
+     479: iconst_3
+     480: istore_2
+     481: goto          1184
+     484: aload_1
+     485: ldc           #74                 // String Duplicator
+     487: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     490: ifeq          1184
+     493: iconst_4
+     494: istore_2
+     495: goto          1184
+     498: aload_1
+     499: ldc           #75                 // String Lab
+     501: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     504: ifeq          1184
+     507: iconst_5
+     508: istore_2
+     509: goto          1184
+     512: aload_1
+     513: ldc           #76                 // String Match and Keep!
+     515: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     518: ifeq          1184
+     521: bipush        6
+     523: istore_2
+     524: goto          1184
+     527: aload_1
+     528: ldc           #77                 // String Golden Shrine
+     530: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     533: ifeq          1184
+     536: bipush        7
+     538: istore_2
+     539: goto          1184
+     542: aload_1
+     543: ldc           #78                 // String Purifier
+     545: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     548: ifeq          1184
+     551: bipush        8
+     553: istore_2
+     554: goto          1184
+     557: aload_1
+     558: ldc           #79                 // String Transmorgrifier
+     560: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     563: ifeq          1184
+     566: bipush        9
+     568: istore_2
+     569: goto          1184
+     572: aload_1
+     573: ldc           #80                 // String Wheel of Change
+     575: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     578: ifeq          1184
+     581: bipush        10
+     583: istore_2
+     584: goto          1184
+     587: aload_1
+     588: ldc           #81                 // String Upgrade Shrine
+     590: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     593: ifeq          1184
+     596: bipush        11
+     598: istore_2
+     599: goto          1184
+     602: aload_1
+     603: ldc           #82                 // String FaceTrader
+     605: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     608: ifeq          1184
+     611: bipush        12
+     613: istore_2
+     614: goto          1184
+     617: aload_1
+     618: ldc           #83                 // String NoteForYourself
+     620: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     623: ifeq          1184
+     626: bipush        13
+     628: istore_2
+     629: goto          1184
+     632: aload_1
+     633: ldc           #84                 // String WeMeetAgain
+     635: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     638: ifeq          1184
+     641: bipush        14
+     643: istore_2
+     644: goto          1184
+     647: aload_1
+     648: ldc           #85                 // String The Woman in Blue
+     650: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     653: ifeq          1184
+     656: bipush        15
+     658: istore_2
+     659: goto          1184
+     662: aload_1
+     663: ldc           #86                 // String Big Fish
+     665: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     668: ifeq          1184
+     671: bipush        16
+     673: istore_2
+     674: goto          1184
+     677: aload_1
+     678: ldc           #87                 // String The Cleric
+     680: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     683: ifeq          1184
+     686: bipush        17
+     688: istore_2
+     689: goto          1184
+     692: aload_1
+     693: ldc           #88                 // String Dead Adventurer
+     695: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     698: ifeq          1184
+     701: bipush        18
+     703: istore_2
+     704: goto          1184
+     707: aload_1
+     708: ldc           #89                 // String Golden Wing
+     710: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     713: ifeq          1184
+     716: bipush        19
+     718: istore_2
+     719: goto          1184
+     722: aload_1
+     723: ldc           #90                 // String Golden Idol
+     725: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     728: ifeq          1184
+     731: bipush        20
+     733: istore_2
+     734: goto          1184
+     737: aload_1
+     738: ldc           #91                 // String World of Goop
+     740: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     743: ifeq          1184
+     746: bipush        21
+     748: istore_2
+     749: goto          1184
+     752: aload_1
+     753: ldc           #92                 // String Forgotten Altar
+     755: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     758: ifeq          1184
+     761: bipush        22
+     763: istore_2
+     764: goto          1184
+     767: aload_1
+     768: ldc           #93                 // String Scrap Ooze
+     770: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     773: ifeq          1184
+     776: bipush        23
+     778: istore_2
+     779: goto          1184
+     782: aload_1
+     783: ldc           #94                 // String Liars Game
+     785: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     788: ifeq          1184
+     791: bipush        24
+     793: istore_2
+     794: goto          1184
+     797: aload_1
+     798: ldc           #95                 // String Living Wall
+     800: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     803: ifeq          1184
+     806: bipush        25
+     808: istore_2
+     809: goto          1184
+     812: aload_1
+     813: ldc           #96                 // String Mushrooms
+     815: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     818: ifeq          1184
+     821: bipush        26
+     823: istore_2
+     824: goto          1184
+     827: aload_1
+     828: ldc           #97                 // String N\'loth
+     830: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     833: ifeq          1184
+     836: bipush        27
+     838: istore_2
+     839: goto          1184
+     842: aload_1
+     843: ldc           #98                 // String Shining Light
+     845: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     848: ifeq          1184
+     851: bipush        28
+     853: istore_2
+     854: goto          1184
+     857: aload_1
+     858: ldc           #99                 // String Vampires
+     860: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     863: ifeq          1184
+     866: bipush        29
+     868: istore_2
+     869: goto          1184
+     872: aload_1
+     873: ldc           #100                // String Ghosts
+     875: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     878: ifeq          1184
+     881: bipush        30
+     883: istore_2
+     884: goto          1184
+     887: aload_1
+     888: ldc           #101                // String Addict
+     890: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     893: ifeq          1184
+     896: bipush        31
+     898: istore_2
+     899: goto          1184
+     902: aload_1
+     903: ldc           #102                // String Back to Basics
+     905: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     908: ifeq          1184
+     911: bipush        32
+     913: istore_2
+     914: goto          1184
+     917: aload_1
+     918: ldc           #103                // String Beggar
+     920: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     923: ifeq          1184
+     926: bipush        33
+     928: istore_2
+     929: goto          1184
+     932: aload_1
+     933: ldc           #104                // String Cursed Tome
+     935: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     938: ifeq          1184
+     941: bipush        34
+     943: istore_2
+     944: goto          1184
+     947: aload_1
+     948: ldc           #105                // String Drug Dealer
+     950: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     953: ifeq          1184
+     956: bipush        35
+     958: istore_2
+     959: goto          1184
+     962: aload_1
+     963: ldc           #106                // String Knowing Skull
+     965: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     968: ifeq          1184
+     971: bipush        36
+     973: istore_2
+     974: goto          1184
+     977: aload_1
+     978: ldc           #107                // String Masked Bandits
+     980: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     983: ifeq          1184
+     986: bipush        37
+     988: istore_2
+     989: goto          1184
+     992: aload_1
+     993: ldc           #108                // String Nest
+     995: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     998: ifeq          1184
+    1001: bipush        38
+    1003: istore_2
+    1004: goto          1184
+    1007: aload_1
+    1008: ldc           #109                // String The Library
+    1010: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1013: ifeq          1184
+    1016: bipush        39
+    1018: istore_2
+    1019: goto          1184
+    1022: aload_1
+    1023: ldc           #110                // String The Mausoleum
+    1025: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1028: ifeq          1184
+    1031: bipush        40
+    1033: istore_2
+    1034: goto          1184
+    1037: aload_1
+    1038: ldc           #111                // String The Joust
+    1040: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1043: ifeq          1184
+    1046: bipush        41
+    1048: istore_2
+    1049: goto          1184
+    1052: aload_1
+    1053: ldc           #112                // String Colosseum
+    1055: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1058: ifeq          1184
+    1061: bipush        42
+    1063: istore_2
+    1064: goto          1184
+    1067: aload_1
+    1068: ldc           #113                // String Mysterious Sphere
+    1070: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1073: ifeq          1184
+    1076: bipush        43
+    1078: istore_2
+    1079: goto          1184
+    1082: aload_1
+    1083: ldc           #114                // String SecretPortal
+    1085: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1088: ifeq          1184
+    1091: bipush        44
+    1093: istore_2
+    1094: goto          1184
+    1097: aload_1
+    1098: ldc           #115                // String Tomb of Lord Red Mask
+    1100: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1103: ifeq          1184
+    1106: bipush        45
+    1108: istore_2
+    1109: goto          1184
+    1112: aload_1
+    1113: ldc           #116                // String Falling
+    1115: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1118: ifeq          1184
+    1121: bipush        46
+    1123: istore_2
+    1124: goto          1184
+    1127: aload_1
+    1128: ldc           #117                // String Winding Halls
+    1130: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1133: ifeq          1184
+    1136: bipush        47
+    1138: istore_2
+    1139: goto          1184
+    1142: aload_1
+    1143: ldc           #118                // String The Moai Head
+    1145: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1148: ifeq          1184
+    1151: bipush        48
+    1153: istore_2
+    1154: goto          1184
+    1157: aload_1
+    1158: ldc           #119                // String SensoryStone
+    1160: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1163: ifeq          1184
+    1166: bipush        49
+    1168: istore_2
+    1169: goto          1184
+    1172: aload_1
+    1173: ldc           #120                // String MindBloom
+    1175: invokevirtual #70                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1178: ifeq          1184
+    1181: bipush        50
+    1183: istore_2
+    1184: iload_2
+    1185: tableswitch   { // 0 to 50
+
+                     0: 1404
+
+                     1: 1408
+
+                     2: 1412
+
+                     3: 1416
+
+                     4: 1420
+
+                     5: 1424
+
+                     6: 1428
+
+                     7: 1432
+
+                     8: 1436
+
+                     9: 1440
+
+                    10: 1444
+
+                    11: 1448
+
+                    12: 1452
+
+                    13: 1456
+
+                    14: 1460
+
+                    15: 1464
+
+                    16: 1468
+
+                    17: 1472
+
+                    18: 1476
+
+                    19: 1480
+
+                    20: 1484
+
+                    21: 1488
+
+                    22: 1492
+
+                    23: 1496
+
+                    24: 1500
+
+                    25: 1504
+
+                    26: 1508
+
+                    27: 1512
+
+                    28: 1516
+
+                    29: 1520
+
+                    30: 1524
+
+                    31: 1528
+
+                    32: 1532
+
+                    33: 1536
+
+                    34: 1540
+
+                    35: 1544
+
+                    36: 1548
+
+                    37: 1552
+
+                    38: 1556
+
+                    39: 1560
+
+                    40: 1564
+
+                    41: 1568
+
+                    42: 1572
+
+                    43: 1576
+
+                    44: 1580
+
+                    45: 1584
+
+                    46: 1588
+
+                    47: 1592
+
+                    48: 1596
+
+                    49: 1600
+
+                    50: 1604
+               default: 1608
+          }
+    1404: getstatic     #225                // Field com/megacrit/cardcrawl/events/shrines/AccursedBlacksmith.NAME:Ljava/lang/String;
+    1407: areturn
+    1408: getstatic     #226                // Field com/megacrit/cardcrawl/events/shrines/Bonfire.NAME:Ljava/lang/String;
+    1411: areturn
+    1412: getstatic     #227                // Field com/megacrit/cardcrawl/events/shrines/FountainOfCurseRemoval.NAME:Ljava/lang/String;
+    1415: areturn
+    1416: getstatic     #228                // Field com/megacrit/cardcrawl/events/shrines/Designer.NAME:Ljava/lang/String;
+    1419: areturn
+    1420: getstatic     #229                // Field com/megacrit/cardcrawl/events/shrines/Duplicator.NAME:Ljava/lang/String;
+    1423: areturn
+    1424: getstatic     #230                // Field com/megacrit/cardcrawl/events/shrines/Lab.NAME:Ljava/lang/String;
+    1427: areturn
+    1428: getstatic     #231                // Field com/megacrit/cardcrawl/events/shrines/GremlinMatchGame.NAME:Ljava/lang/String;
+    1431: areturn
+    1432: getstatic     #232                // Field com/megacrit/cardcrawl/events/shrines/GoldShrine.NAME:Ljava/lang/String;
+    1435: areturn
+    1436: getstatic     #233                // Field com/megacrit/cardcrawl/events/shrines/PurificationShrine.NAME:Ljava/lang/String;
+    1439: areturn
+    1440: getstatic     #234                // Field com/megacrit/cardcrawl/events/shrines/Transmogrifier.NAME:Ljava/lang/String;
+    1443: areturn
+    1444: getstatic     #235                // Field com/megacrit/cardcrawl/events/shrines/GremlinWheelGame.NAME:Ljava/lang/String;
+    1447: areturn
+    1448: getstatic     #236                // Field com/megacrit/cardcrawl/events/shrines/UpgradeShrine.NAME:Ljava/lang/String;
+    1451: areturn
+    1452: getstatic     #237                // Field com/megacrit/cardcrawl/events/shrines/FaceTrader.NAME:Ljava/lang/String;
+    1455: areturn
+    1456: getstatic     #238                // Field com/megacrit/cardcrawl/events/shrines/NoteForYourself.NAME:Ljava/lang/String;
+    1459: areturn
+    1460: getstatic     #239                // Field com/megacrit/cardcrawl/events/shrines/WeMeetAgain.NAME:Ljava/lang/String;
+    1463: areturn
+    1464: getstatic     #240                // Field com/megacrit/cardcrawl/events/shrines/WomanInBlue.NAME:Ljava/lang/String;
+    1467: areturn
+    1468: getstatic     #241                // Field com/megacrit/cardcrawl/events/exordium/BigFish.NAME:Ljava/lang/String;
+    1471: areturn
+    1472: getstatic     #242                // Field com/megacrit/cardcrawl/events/exordium/Cleric.NAME:Ljava/lang/String;
+    1475: areturn
+    1476: getstatic     #243                // Field com/megacrit/cardcrawl/events/exordium/DeadAdventurer.NAME:Ljava/lang/String;
+    1479: areturn
+    1480: getstatic     #244                // Field com/megacrit/cardcrawl/events/exordium/GoldenWing.NAME:Ljava/lang/String;
+    1483: areturn
+    1484: getstatic     #245                // Field com/megacrit/cardcrawl/events/exordium/GoldenIdolEvent.NAME:Ljava/lang/String;
+    1487: areturn
+    1488: getstatic     #246                // Field com/megacrit/cardcrawl/events/exordium/GoopPuddle.NAME:Ljava/lang/String;
+    1491: areturn
+    1492: getstatic     #247                // Field com/megacrit/cardcrawl/events/city/ForgottenAltar.NAME:Ljava/lang/String;
+    1495: areturn
+    1496: getstatic     #248                // Field com/megacrit/cardcrawl/events/exordium/ScrapOoze.NAME:Ljava/lang/String;
+    1499: areturn
+    1500: getstatic     #249                // Field com/megacrit/cardcrawl/events/exordium/Sssserpent.NAME:Ljava/lang/String;
+    1503: areturn
+    1504: getstatic     #250                // Field com/megacrit/cardcrawl/events/exordium/LivingWall.NAME:Ljava/lang/String;
+    1507: areturn
+    1508: getstatic     #251                // Field com/megacrit/cardcrawl/events/exordium/Mushrooms.NAME:Ljava/lang/String;
+    1511: areturn
+    1512: getstatic     #252                // Field com/megacrit/cardcrawl/events/shrines/Nloth.NAME:Ljava/lang/String;
+    1515: areturn
+    1516: getstatic     #253                // Field com/megacrit/cardcrawl/events/exordium/ShiningLight.NAME:Ljava/lang/String;
+    1519: areturn
+    1520: getstatic     #254                // Field com/megacrit/cardcrawl/events/city/Vampires.NAME:Ljava/lang/String;
+    1523: areturn
+    1524: getstatic     #255                // Field com/megacrit/cardcrawl/events/city/Ghosts.NAME:Ljava/lang/String;
+    1527: areturn
+    1528: getstatic     #256                // Field com/megacrit/cardcrawl/events/city/Addict.NAME:Ljava/lang/String;
+    1531: areturn
+    1532: getstatic     #257                // Field com/megacrit/cardcrawl/events/city/BackToBasics.NAME:Ljava/lang/String;
+    1535: areturn
+    1536: getstatic     #258                // Field com/megacrit/cardcrawl/events/city/Beggar.NAME:Ljava/lang/String;
+    1539: areturn
+    1540: getstatic     #259                // Field com/megacrit/cardcrawl/events/city/CursedTome.NAME:Ljava/lang/String;
+    1543: areturn
+    1544: getstatic     #260                // Field com/megacrit/cardcrawl/events/city/DrugDealer.NAME:Ljava/lang/String;
+    1547: areturn
+    1548: getstatic     #261                // Field com/megacrit/cardcrawl/events/city/KnowingSkull.NAME:Ljava/lang/String;
+    1551: areturn
+    1552: getstatic     #262                // Field com/megacrit/cardcrawl/events/city/MaskedBandits.NAME:Ljava/lang/String;
+    1555: areturn
+    1556: getstatic     #263                // Field com/megacrit/cardcrawl/events/city/Nest.NAME:Ljava/lang/String;
+    1559: areturn
+    1560: getstatic     #264                // Field com/megacrit/cardcrawl/events/city/TheLibrary.NAME:Ljava/lang/String;
+    1563: areturn
+    1564: getstatic     #265                // Field com/megacrit/cardcrawl/events/city/TheMausoleum.NAME:Ljava/lang/String;
+    1567: areturn
+    1568: getstatic     #266                // Field com/megacrit/cardcrawl/events/city/TheJoust.NAME:Ljava/lang/String;
+    1571: areturn
+    1572: getstatic     #267                // Field com/megacrit/cardcrawl/events/city/Colosseum.NAME:Ljava/lang/String;
+    1575: areturn
+    1576: getstatic     #268                // Field com/megacrit/cardcrawl/events/beyond/MysteriousSphere.NAME:Ljava/lang/String;
+    1579: areturn
+    1580: getstatic     #269                // Field com/megacrit/cardcrawl/events/beyond/SecretPortal.NAME:Ljava/lang/String;
+    1583: areturn
+    1584: getstatic     #270                // Field com/megacrit/cardcrawl/events/beyond/TombRedMask.NAME:Ljava/lang/String;
+    1587: areturn
+    1588: getstatic     #271                // Field com/megacrit/cardcrawl/events/beyond/Falling.NAME:Ljava/lang/String;
+    1591: areturn
+    1592: getstatic     #272                // Field com/megacrit/cardcrawl/events/beyond/WindingHalls.NAME:Ljava/lang/String;
+    1595: areturn
+    1596: getstatic     #273                // Field com/megacrit/cardcrawl/events/beyond/MoaiHead.NAME:Ljava/lang/String;
+    1599: areturn
+    1600: getstatic     #274                // Field com/megacrit/cardcrawl/events/beyond/SensoryStone.NAME:Ljava/lang/String;
+    1603: areturn
+    1604: getstatic     #275                // Field com/megacrit/cardcrawl/events/beyond/MindBloom.NAME:Ljava/lang/String;
+    1607: areturn
+    1608: ldc_w         #276                // String
+    1611: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #1                  // class com/megacrit/cardcrawl/helpers/EventHelper
+       2: invokevirtual #277                // Method java/lang/Class.getName:()Ljava/lang/String;
+       5: invokestatic  #278                // Method org/apache/logging/log4j/LogManager.getLogger:(Ljava/lang/String;)Lorg/apache/logging/log4j/Logger;
+       8: putstatic     #8                  // Field logger:Lorg/apache/logging/log4j/Logger;
+      11: ldc           #50                 // float 0.1f
+      13: putstatic     #27                 // Field ELITE_CHANCE:F
+      16: ldc           #50                 // float 0.1f
+      18: putstatic     #29                 // Field MONSTER_CHANCE:F
+      21: ldc           #53                 // float 0.03f
+      23: putstatic     #31                 // Field SHOP_CHANCE:F
+      26: ldc           #58                 // float 0.02f
+      28: putstatic     #33                 // Field TREASURE_CHANCE:F
+      31: return
+}

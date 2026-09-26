@@ -1,0 +1,102 @@
+Compiled from "MonsterRoom.java"
+public class com.megacrit.cardcrawl.rooms.MonsterRoom extends com.megacrit.cardcrawl.rooms.AbstractRoom {
+  public com.megacrit.cardcrawl.screens.DiscardPileViewScreen discardPileViewScreen;
+    descriptor: Lcom/megacrit/cardcrawl/screens/DiscardPileViewScreen;
+
+  public static final float COMBAT_WAIT_TIME;
+    descriptor: F
+
+  public com.megacrit.cardcrawl.rooms.MonsterRoom();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/rooms/AbstractRoom."<init>":()V
+       4: aload_0
+       5: getstatic     #2                  // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMBAT:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+       8: putfield      #3                  // Field phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      11: aload_0
+      12: ldc           #4                  // String M
+      14: putfield      #5                  // Field mapSymbol:Ljava/lang/String;
+      17: aload_0
+      18: getstatic     #6                  // Field com/megacrit/cardcrawl/helpers/ImageMaster.MAP_NODE_ENEMY:Lcom/badlogic/gdx/graphics/Texture;
+      21: putfield      #7                  // Field mapImg:Lcom/badlogic/gdx/graphics/Texture;
+      24: aload_0
+      25: getstatic     #8                  // Field com/megacrit/cardcrawl/helpers/ImageMaster.MAP_NODE_ENEMY_OUTLINE:Lcom/badlogic/gdx/graphics/Texture;
+      28: putfield      #9                  // Field mapImgOutline:Lcom/badlogic/gdx/graphics/Texture;
+      31: aload_0
+      32: new           #10                 // class com/megacrit/cardcrawl/screens/DiscardPileViewScreen
+      35: dup
+      36: invokespecial #11                 // Method com/megacrit/cardcrawl/screens/DiscardPileViewScreen."<init>":()V
+      39: putfield      #12                 // Field discardPileViewScreen:Lcom/megacrit/cardcrawl/screens/DiscardPileViewScreen;
+      42: return
+
+  public void dropReward();
+    descriptor: ()V
+    Code:
+       0: ldc           #14                 // String Vintage
+       2: invokestatic  #15                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+       5: ifeq          39
+       8: invokestatic  #16                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      11: instanceof    #17                 // class com/megacrit/cardcrawl/rooms/MonsterRoomElite
+      14: ifne          39
+      17: invokestatic  #16                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      20: instanceof    #18                 // class com/megacrit/cardcrawl/rooms/MonsterRoomBoss
+      23: ifeq          29
+      26: goto          39
+      29: aload_0
+      30: invokespecial #19                 // Method returnRandomRelicTier:()Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+      33: astore_1
+      34: aload_0
+      35: aload_1
+      36: invokevirtual #20                 // Method addRelicToRewards:(Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;)V
+      39: return
+
+  private com.megacrit.cardcrawl.relics.AbstractRelic$RelicTier returnRandomRelicTier();
+    descriptor: ()Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+    Code:
+       0: getstatic     #21                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.relicRng:Lcom/megacrit/cardcrawl/random/Random;
+       3: iconst_0
+       4: bipush        99
+       6: invokevirtual #22                 // Method com/megacrit/cardcrawl/random/Random.random:(II)I
+       9: istore_1
+      10: iload_1
+      11: bipush        50
+      13: if_icmpge     20
+      16: getstatic     #23                 // Field com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.COMMON:Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+      19: areturn
+      20: iload_1
+      21: bipush        85
+      23: if_icmple     30
+      26: getstatic     #24                 // Field com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.RARE:Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+      29: areturn
+      30: getstatic     #25                 // Field com/megacrit/cardcrawl/relics/AbstractRelic$RelicTier.UNCOMMON:Lcom/megacrit/cardcrawl/relics/AbstractRelic$RelicTier;
+      33: areturn
+
+  public void onPlayerEntry();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: aconst_null
+       2: invokevirtual #26                 // Method playBGM:(Ljava/lang/String;)V
+       5: aload_0
+       6: getfield      #27                 // Field monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+       9: ifnonnull     29
+      12: aload_0
+      13: getstatic     #28                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.dungeon:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon;
+      16: invokevirtual #29                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getMonsterForRoomCreation:()Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      19: putfield      #27                 // Field monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      22: aload_0
+      23: getfield      #27                 // Field monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      26: invokevirtual #30                 // Method com/megacrit/cardcrawl/monsters/MonsterGroup.init:()V
+      29: ldc           #32                 // float 0.1f
+      31: putstatic     #33                 // Field waitTimer:F
+      34: return
+
+  public void setMonster(com.megacrit.cardcrawl.monsters.MonsterGroup);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/MonsterGroup;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #27                 // Field monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+       5: return
+}

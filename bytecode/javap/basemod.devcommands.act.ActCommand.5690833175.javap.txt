@@ -1,0 +1,262 @@
+Compiled from "ActCommand.java"
+public class basemod.devcommands.act.ActCommand extends basemod.devcommands.ConsoleCommand {
+  private static java.util.Map<java.lang.String, java.lang.Integer> acts;
+    descriptor: Ljava/util/Map;
+
+  public static void initialize();
+    descriptor: ()V
+    Code:
+       0: ldc           #2                  // String Exordium
+       2: iconst_1
+       3: invokestatic  #3                  // Method addAct:(Ljava/lang/String;I)V
+       6: ldc           #5                  // String TheCity
+       8: iconst_2
+       9: invokestatic  #3                  // Method addAct:(Ljava/lang/String;I)V
+      12: ldc           #7                  // String TheBeyond
+      14: iconst_3
+      15: invokestatic  #3                  // Method addAct:(Ljava/lang/String;I)V
+      18: ldc           #9                  // String TheEnding
+      20: iconst_4
+      21: invokestatic  #3                  // Method addAct:(Ljava/lang/String;I)V
+      24: ldc           #10                 // String theJungle
+      26: invokestatic  #11                 // Method com/evacipated/cardcrawl/modthespire/Loader.isModLoaded:(Ljava/lang/String;)Z
+      29: ifeq          38
+      32: ldc           #12                 // String theJungle:Jungle
+      34: iconst_2
+      35: invokestatic  #3                  // Method addAct:(Ljava/lang/String;I)V
+      38: return
+
+  public static void addAct(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)V
+    Code:
+       0: getstatic     #13                 // Field acts:Ljava/util/Map;
+       3: aload_0
+       4: invokeinterface #14,  2           // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+       9: ifne          47
+      12: aload_0
+      13: ldc           #15                 // String boss
+      15: invokevirtual #16                 // Method java/lang/String.equalsIgnoreCase:(Ljava/lang/String;)Z
+      18: ifne          47
+      21: aload_0
+      22: ldc           #17                 // String num
+      24: invokevirtual #16                 // Method java/lang/String.equalsIgnoreCase:(Ljava/lang/String;)Z
+      27: ifne          47
+      30: getstatic     #13                 // Field acts:Ljava/util/Map;
+      33: aload_0
+      34: iload_1
+      35: invokestatic  #18                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      38: invokeinterface #19,  3           // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      43: pop
+      44: goto          79
+      47: getstatic     #20                 // Field basemod/BaseMod.logger:Lorg/apache/logging/log4j/Logger;
+      50: new           #21                 // class java/lang/StringBuilder
+      53: dup
+      54: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+      57: ldc           #23                 // String Act
+      59: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      62: aload_0
+      63: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      66: ldc           #25                 // String  is already registered!
+      68: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      71: invokevirtual #26                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      74: invokeinterface #27,  2           // InterfaceMethod org/apache/logging/log4j/Logger.error:(Ljava/lang/String;)V
+      79: return
+
+  public basemod.devcommands.act.ActCommand();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #28                 // Method basemod/devcommands/ConsoleCommand."<init>":()V
+       4: aload_0
+       5: iconst_1
+       6: putfield      #29                 // Field requiresPlayer:Z
+       9: aload_0
+      10: iconst_1
+      11: putfield      #30                 // Field minExtraTokens:I
+      14: aload_0
+      15: iconst_1
+      16: putfield      #31                 // Field simpleCheck:Z
+      19: return
+
+  public void execute(java.lang.String[], int);
+    descriptor: ([Ljava/lang/String;I)V
+    Code:
+       0: aload_1
+       1: iload_2
+       2: aaload
+       3: ldc           #15                 // String boss
+       5: invokevirtual #16                 // Method java/lang/String.equalsIgnoreCase:(Ljava/lang/String;)Z
+       8: ifeq          73
+      11: ldc           #32                 // String Skipping to bossroom
+      13: invokestatic  #33                 // Method basemod/DevConsole.log:(Ljava/lang/String;)V
+      16: aload_0
+      17: invokespecial #34                 // Method prepareTransition:()V
+      20: getstatic     #35                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.currMapNode:Lcom/megacrit/cardcrawl/map/MapRoomNode;
+      23: new           #36                 // class com/megacrit/cardcrawl/rooms/MonsterRoomBoss
+      26: dup
+      27: invokespecial #37                 // Method com/megacrit/cardcrawl/rooms/MonsterRoomBoss."<init>":()V
+      30: putfield      #38                 // Field com/megacrit/cardcrawl/map/MapRoomNode.room:Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      33: invokestatic  #39                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      36: invokevirtual #40                 // Method com/megacrit/cardcrawl/rooms/AbstractRoom.onPlayerEntry:()V
+      39: getstatic     #41                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon$RenderScene.NORMAL:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$RenderScene;
+      42: putstatic     #42                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.rs:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$RenderScene;
+      45: getstatic     #43                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.combatRewardScreen:Lcom/megacrit/cardcrawl/screens/CombatRewardScreen;
+      48: invokevirtual #44                 // Method com/megacrit/cardcrawl/screens/CombatRewardScreen.clear:()V
+      51: aconst_null
+      52: putstatic     #45                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.previousScreen:Lcom/megacrit/cardcrawl/dungeons/AbstractDungeon$CurrentScreen;
+      55: invokestatic  #46                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.closeCurrentScreen:()V
+      58: getstatic     #47                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      61: invokevirtual #48                 // Method com/megacrit/cardcrawl/audio/MusicMaster.silenceTempBgmInstantly:()V
+      64: getstatic     #47                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      67: invokevirtual #49                 // Method com/megacrit/cardcrawl/audio/MusicMaster.silenceBGMInstantly:()V
+      70: goto          226
+      73: aload_1
+      74: iload_2
+      75: aaload
+      76: ldc           #17                 // String num
+      78: invokevirtual #16                 // Method java/lang/String.equalsIgnoreCase:(Ljava/lang/String;)Z
+      81: ifeq          111
+      84: new           #21                 // class java/lang/StringBuilder
+      87: dup
+      88: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+      91: ldc           #50                 // String Current Actnumber:
+      93: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      96: getstatic     #51                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actNum:I
+      99: invokevirtual #52                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     102: invokevirtual #26                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     105: invokestatic  #33                 // Method basemod/DevConsole.log:(Ljava/lang/String;)V
+     108: goto          226
+     111: getstatic     #13                 // Field acts:Ljava/util/Map;
+     114: aload_1
+     115: iload_2
+     116: aaload
+     117: invokeinterface #14,  2           // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+     122: ifeq          221
+     125: new           #21                 // class java/lang/StringBuilder
+     128: dup
+     129: invokespecial #22                 // Method java/lang/StringBuilder."<init>":()V
+     132: ldc           #53                 // String Skipping to act
+     134: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     137: aload_1
+     138: iload_2
+     139: aaload
+     140: invokevirtual #24                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     143: invokevirtual #26                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     146: invokestatic  #33                 // Method basemod/DevConsole.log:(Ljava/lang/String;)V
+     149: getstatic     #54                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.floorNum:I
+     152: iconst_1
+     153: if_icmpgt     160
+     156: iconst_2
+     157: putstatic     #54                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.floorNum:I
+     160: aload_0
+     161: invokespecial #34                 // Method prepareTransition:()V
+     164: aload_1
+     165: iload_2
+     166: aaload
+     167: putstatic     #55                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.nextDungeon:Ljava/lang/String;
+     170: new           #56                 // class com/megacrit/cardcrawl/screens/DungeonTransitionScreen
+     173: dup
+     174: aload_1
+     175: iload_2
+     176: aaload
+     177: invokespecial #57                 // Method com/megacrit/cardcrawl/screens/DungeonTransitionScreen."<init>":(Ljava/lang/String;)V
+     180: putstatic     #58                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.dungeonTransitionScreen:Lcom/megacrit/cardcrawl/screens/DungeonTransitionScreen;
+     183: getstatic     #13                 // Field acts:Ljava/util/Map;
+     186: aload_1
+     187: iload_2
+     188: aaload
+     189: invokeinterface #59,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     194: checkcast     #60                 // class java/lang/Integer
+     197: invokevirtual #61                 // Method java/lang/Integer.intValue:()I
+     200: iconst_1
+     201: isub
+     202: putstatic     #51                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actNum:I
+     205: invokestatic  #39                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     208: getstatic     #62                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMPLETE:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     211: putfield      #63                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     214: goto          226
+     217: astore_3
+     218: goto          226
+     221: ldc           #65                 // String Invalid Act ID
+     223: invokestatic  #33                 // Method basemod/DevConsole.log:(Ljava/lang/String;)V
+     226: return
+    Exception table:
+       from    to  target type
+         125   214   217   Class java/lang/Exception
+
+  public java.util.ArrayList<java.lang.String> extraOptions(java.lang.String[], int);
+    descriptor: ([Ljava/lang/String;I)Ljava/util/ArrayList;
+    Code:
+       0: new           #66                 // class java/util/ArrayList
+       3: dup
+       4: invokespecial #67                 // Method java/util/ArrayList."<init>":()V
+       7: astore_3
+       8: aload_3
+       9: ldc           #15                 // String boss
+      11: invokevirtual #68                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      14: pop
+      15: aload_3
+      16: ldc           #17                 // String num
+      18: invokevirtual #68                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      21: pop
+      22: getstatic     #13                 // Field acts:Ljava/util/Map;
+      25: invokeinterface #69,  1           // InterfaceMethod java/util/Map.keySet:()Ljava/util/Set;
+      30: invokeinterface #70,  1           // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+      35: astore        4
+      37: aload         4
+      39: invokeinterface #71,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      44: ifeq          69
+      47: aload         4
+      49: invokeinterface #72,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      54: checkcast     #73                 // class java/lang/String
+      57: astore        5
+      59: aload_3
+      60: aload         5
+      62: invokevirtual #68                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      65: pop
+      66: goto          37
+      69: aload_3
+      70: areturn
+
+  private void prepareTransition();
+    descriptor: ()V
+    Code:
+       0: getstatic     #74                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: getfield      #75                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.hand:Lcom/megacrit/cardcrawl/cards/CardGroup;
+       6: getfield      #76                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+       9: invokevirtual #77                 // Method java/util/ArrayList.clear:()V
+      12: getstatic     #78                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      15: invokevirtual #79                 // Method com/megacrit/cardcrawl/actions/GameActionManager.clear:()V
+      18: getstatic     #80                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectsQueue:Ljava/util/ArrayList;
+      21: invokevirtual #77                 // Method java/util/ArrayList.clear:()V
+      24: getstatic     #81                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+      27: invokevirtual #77                 // Method java/util/ArrayList.clear:()V
+      30: getstatic     #82                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topLevelEffects:Ljava/util/ArrayList;
+      33: invokevirtual #83                 // Method java/util/ArrayList.size:()I
+      36: iconst_1
+      37: isub
+      38: istore_1
+      39: iload_1
+      40: ifle          70
+      43: getstatic     #82                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topLevelEffects:Ljava/util/ArrayList;
+      46: iload_1
+      47: invokevirtual #84                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      50: instanceof    #85                 // class com/megacrit/cardcrawl/vfx/combat/BattleStartEffect
+      53: ifeq          64
+      56: getstatic     #82                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topLevelEffects:Ljava/util/ArrayList;
+      59: iload_1
+      60: invokevirtual #86                 // Method java/util/ArrayList.remove:(I)Ljava/lang/Object;
+      63: pop
+      64: iinc          1, -1
+      67: goto          39
+      70: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: new           #87                 // class java/util/HashMap
+       3: dup
+       4: invokespecial #88                 // Method java/util/HashMap."<init>":()V
+       7: putstatic     #13                 // Field acts:Ljava/util/Map;
+      10: return
+}

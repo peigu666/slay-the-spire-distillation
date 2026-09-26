@@ -4,7 +4,7 @@
 
 Mod JAR 内资源路径是相对于 JAR 根目录的正斜杠路径，代码通过 `Class.getResource`、`Gdx.files.internal`、`ImageMaster` 或 BaseMod 的加载器访问。不要把 `E:\SteamLibrary...` 写进 Mod；把资源放在自己的前缀目录下，例如 `mymodResources/images/...` 和 `mymodResources/localization/eng/...`。
 
-本机已安装 Mod 的真实资源路径可查 `environment/resource_inventory.jsonl`，其中 `source_jar` 和 `resource_path` 能帮助 AI 复现现有项目的命名约定。
+本机已安装 Mod 的 JAR 内资源路径可查 `environment/resource_inventory.jsonl`；JAR 外部的 Workshop 图片、音频、配置和其他文件可查 `environment/workshop_external_files.jsonl`。两者都只提供路径和指纹，不把二进制内容复制进知识库。
 
 ## 字符串
 

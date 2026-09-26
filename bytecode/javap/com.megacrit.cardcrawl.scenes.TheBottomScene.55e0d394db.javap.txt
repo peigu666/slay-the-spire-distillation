@@ -1,0 +1,968 @@
+Compiled from "TheBottomScene.java"
+public class com.megacrit.cardcrawl.scenes.TheBottomScene extends com.megacrit.cardcrawl.scenes.AbstractScene {
+  private boolean renderLeftWall;
+    descriptor: Z
+
+  private boolean renderSolidMid;
+    descriptor: Z
+
+  private boolean renderHollowMid;
+    descriptor: Z
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion fg;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion mg;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion leftWall;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion hollowWall;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion solidWall;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private boolean renderCeilingMod1;
+    descriptor: Z
+
+  private boolean renderCeilingMod2;
+    descriptor: Z
+
+  private boolean renderCeilingMod3;
+    descriptor: Z
+
+  private boolean renderCeilingMod4;
+    descriptor: Z
+
+  private boolean renderCeilingMod5;
+    descriptor: Z
+
+  private boolean renderCeilingMod6;
+    descriptor: Z
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion ceiling;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion ceilingMod1;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion ceilingMod2;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion ceilingMod3;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion ceilingMod4;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion ceilingMod5;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.g2d.TextureAtlas$AtlasRegion ceilingMod6;
+    descriptor: Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+
+  private com.badlogic.gdx.graphics.Color overlayColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private com.badlogic.gdx.graphics.Color whiteColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.vfx.scene.DustEffect> dust;
+    descriptor: Ljava/util/ArrayList;
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.vfx.scene.BottomFogEffect> fog;
+    descriptor: Ljava/util/ArrayList;
+
+  private java.util.ArrayList<com.megacrit.cardcrawl.vfx.scene.InteractableTorchEffect> torches;
+    descriptor: Ljava/util/ArrayList;
+
+  private static final int DUST_AMT;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.scenes.TheBottomScene();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: ldc           #1                  // String bottomScene/scene.atlas
+       3: invokespecial #2                  // Method com/megacrit/cardcrawl/scenes/AbstractScene."<init>":(Ljava/lang/String;)V
+       6: aload_0
+       7: getstatic     #3                  // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+      10: invokevirtual #4                  // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      13: putfield      #5                  // Field overlayColor:Lcom/badlogic/gdx/graphics/Color;
+      16: aload_0
+      17: getstatic     #3                  // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+      20: invokevirtual #4                  // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      23: putfield      #6                  // Field whiteColor:Lcom/badlogic/gdx/graphics/Color;
+      26: aload_0
+      27: new           #7                  // class java/util/ArrayList
+      30: dup
+      31: invokespecial #8                  // Method java/util/ArrayList."<init>":()V
+      34: putfield      #9                  // Field dust:Ljava/util/ArrayList;
+      37: aload_0
+      38: new           #7                  // class java/util/ArrayList
+      41: dup
+      42: invokespecial #8                  // Method java/util/ArrayList."<init>":()V
+      45: putfield      #10                 // Field fog:Ljava/util/ArrayList;
+      48: aload_0
+      49: new           #7                  // class java/util/ArrayList
+      52: dup
+      53: invokespecial #8                  // Method java/util/ArrayList."<init>":()V
+      56: putfield      #11                 // Field torches:Ljava/util/ArrayList;
+      59: aload_0
+      60: aload_0
+      61: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+      64: ldc           #13                 // String mod/fg
+      66: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      69: putfield      #15                 // Field fg:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      72: aload_0
+      73: aload_0
+      74: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+      77: ldc           #16                 // String mod/mg
+      79: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      82: putfield      #17                 // Field mg:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      85: aload_0
+      86: aload_0
+      87: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+      90: ldc           #18                 // String mod/mod1
+      92: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      95: putfield      #19                 // Field leftWall:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      98: aload_0
+      99: aload_0
+     100: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+     103: ldc           #20                 // String mod/mod2
+     105: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     108: putfield      #21                 // Field hollowWall:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     111: aload_0
+     112: aload_0
+     113: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+     116: ldc           #22                 // String mod/midWall
+     118: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     121: putfield      #23                 // Field solidWall:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     124: aload_0
+     125: aload_0
+     126: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+     129: ldc           #24                 // String mod/ceiling
+     131: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     134: putfield      #25                 // Field ceiling:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     137: aload_0
+     138: aload_0
+     139: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+     142: ldc           #26                 // String mod/ceilingMod1
+     144: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     147: putfield      #27                 // Field ceilingMod1:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     150: aload_0
+     151: aload_0
+     152: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+     155: ldc           #28                 // String mod/ceilingMod2
+     157: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     160: putfield      #29                 // Field ceilingMod2:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     163: aload_0
+     164: aload_0
+     165: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+     168: ldc           #30                 // String mod/ceilingMod3
+     170: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     173: putfield      #31                 // Field ceilingMod3:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     176: aload_0
+     177: aload_0
+     178: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+     181: ldc           #32                 // String mod/ceilingMod4
+     183: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     186: putfield      #33                 // Field ceilingMod4:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     189: aload_0
+     190: aload_0
+     191: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+     194: ldc           #34                 // String mod/ceilingMod5
+     196: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     199: putfield      #35                 // Field ceilingMod5:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     202: aload_0
+     203: aload_0
+     204: getfield      #12                 // Field atlas:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;
+     207: ldc           #36                 // String mod/ceilingMod6
+     209: invokevirtual #14                 // Method com/badlogic/gdx/graphics/g2d/TextureAtlas.findRegion:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     212: putfield      #37                 // Field ceilingMod6:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     215: aload_0
+     216: ldc           #38                 // String AMBIANCE_BOTTOM
+     218: putfield      #39                 // Field ambianceName:Ljava/lang/String;
+     221: aload_0
+     222: invokevirtual #40                 // Method fadeInAmbiance:()V
+     225: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #41                 // Method com/megacrit/cardcrawl/scenes/AbstractScene.update:()V
+       4: aload_0
+       5: invokespecial #42                 // Method updateDust:()V
+       8: aload_0
+       9: invokespecial #43                 // Method updateFog:()V
+      12: aload_0
+      13: invokespecial #44                 // Method updateTorches:()V
+      16: return
+
+  private void updateDust();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #9                  // Field dust:Ljava/util/ArrayList;
+       4: invokevirtual #45                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       7: astore_1
+       8: aload_1
+       9: invokeinterface #46,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      14: ifeq          47
+      17: aload_1
+      18: invokeinterface #47,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      23: checkcast     #48                 // class com/megacrit/cardcrawl/vfx/scene/DustEffect
+      26: astore_2
+      27: aload_2
+      28: invokevirtual #49                 // Method com/megacrit/cardcrawl/vfx/scene/DustEffect.update:()V
+      31: aload_2
+      32: getfield      #50                 // Field com/megacrit/cardcrawl/vfx/scene/DustEffect.isDone:Z
+      35: ifeq          44
+      38: aload_1
+      39: invokeinterface #51,  1           // InterfaceMethod java/util/Iterator.remove:()V
+      44: goto          8
+      47: aload_0
+      48: getfield      #9                  // Field dust:Ljava/util/ArrayList;
+      51: invokevirtual #52                 // Method java/util/ArrayList.size:()I
+      54: bipush        96
+      56: if_icmpge     80
+      59: getstatic     #54                 // Field com/megacrit/cardcrawl/core/Settings.DISABLE_EFFECTS:Z
+      62: ifne          80
+      65: aload_0
+      66: getfield      #9                  // Field dust:Ljava/util/ArrayList;
+      69: new           #48                 // class com/megacrit/cardcrawl/vfx/scene/DustEffect
+      72: dup
+      73: invokespecial #55                 // Method com/megacrit/cardcrawl/vfx/scene/DustEffect."<init>":()V
+      76: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      79: pop
+      80: return
+
+  private void updateFog();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field fog:Ljava/util/ArrayList;
+       4: invokevirtual #52                 // Method java/util/ArrayList.size:()I
+       7: bipush        50
+       9: if_icmpge     34
+      12: getstatic     #54                 // Field com/megacrit/cardcrawl/core/Settings.DISABLE_EFFECTS:Z
+      15: ifne          34
+      18: aload_0
+      19: getfield      #10                 // Field fog:Ljava/util/ArrayList;
+      22: new           #57                 // class com/megacrit/cardcrawl/vfx/scene/BottomFogEffect
+      25: dup
+      26: iconst_1
+      27: invokespecial #58                 // Method com/megacrit/cardcrawl/vfx/scene/BottomFogEffect."<init>":(Z)V
+      30: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      33: pop
+      34: aload_0
+      35: getfield      #10                 // Field fog:Ljava/util/ArrayList;
+      38: invokevirtual #45                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      41: astore_1
+      42: aload_1
+      43: invokeinterface #46,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      48: ifeq          81
+      51: aload_1
+      52: invokeinterface #47,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      57: checkcast     #57                 // class com/megacrit/cardcrawl/vfx/scene/BottomFogEffect
+      60: astore_2
+      61: aload_2
+      62: invokevirtual #59                 // Method com/megacrit/cardcrawl/vfx/scene/BottomFogEffect.update:()V
+      65: aload_2
+      66: getfield      #60                 // Field com/megacrit/cardcrawl/vfx/scene/BottomFogEffect.isDone:Z
+      69: ifeq          78
+      72: aload_1
+      73: invokeinterface #51,  1           // InterfaceMethod java/util/Iterator.remove:()V
+      78: goto          42
+      81: return
+
+  private void updateTorches();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+       4: invokevirtual #45                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       7: astore_1
+       8: aload_1
+       9: invokeinterface #46,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      14: ifeq          47
+      17: aload_1
+      18: invokeinterface #47,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      23: checkcast     #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+      26: astore_2
+      27: aload_2
+      28: invokevirtual #62                 // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect.update:()V
+      31: aload_2
+      32: getfield      #63                 // Field com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect.isDone:Z
+      35: ifeq          44
+      38: aload_1
+      39: invokeinterface #51,  1           // InterfaceMethod java/util/Iterator.remove:()V
+      44: goto          8
+      47: return
+
+  public void nextRoom(com.megacrit.cardcrawl.rooms.AbstractRoom);
+    descriptor: (Lcom/megacrit/cardcrawl/rooms/AbstractRoom;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #64                 // Method com/megacrit/cardcrawl/scenes/AbstractScene.nextRoom:(Lcom/megacrit/cardcrawl/rooms/AbstractRoom;)V
+       5: aload_0
+       6: invokevirtual #65                 // Method randomizeScene:()V
+       9: aload_1
+      10: instanceof    #66                 // class com/megacrit/cardcrawl/rooms/MonsterRoomBoss
+      13: ifeq          22
+      16: getstatic     #67                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.music:Lcom/megacrit/cardcrawl/audio/MusicMaster;
+      19: invokevirtual #68                 // Method com/megacrit/cardcrawl/audio/MusicMaster.silenceBGM:()V
+      22: aload_1
+      23: instanceof    #69                 // class com/megacrit/cardcrawl/rooms/EventRoom
+      26: ifne          36
+      29: aload_1
+      30: instanceof    #70                 // class com/megacrit/cardcrawl/rooms/RestRoom
+      33: ifeq          43
+      36: aload_0
+      37: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+      40: invokevirtual #71                 // Method java/util/ArrayList.clear:()V
+      43: aload_0
+      44: invokevirtual #40                 // Method fadeInAmbiance:()V
+      47: return
+
+  public void randomizeScene();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+       3: ifeq          46
+       6: aload_0
+       7: iconst_0
+       8: putfield      #73                 // Field renderSolidMid:Z
+      11: aload_0
+      12: iconst_0
+      13: putfield      #74                 // Field renderLeftWall:Z
+      16: aload_0
+      17: iconst_1
+      18: putfield      #75                 // Field renderHollowMid:Z
+      21: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+      24: ifeq          72
+      27: aload_0
+      28: iconst_1
+      29: putfield      #73                 // Field renderSolidMid:Z
+      32: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+      35: ifeq          72
+      38: aload_0
+      39: iconst_1
+      40: putfield      #74                 // Field renderLeftWall:Z
+      43: goto          72
+      46: aload_0
+      47: iconst_0
+      48: putfield      #74                 // Field renderLeftWall:Z
+      51: aload_0
+      52: iconst_0
+      53: putfield      #75                 // Field renderHollowMid:Z
+      56: aload_0
+      57: iconst_1
+      58: putfield      #73                 // Field renderSolidMid:Z
+      61: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+      64: ifeq          72
+      67: aload_0
+      68: iconst_1
+      69: putfield      #74                 // Field renderLeftWall:Z
+      72: aload_0
+      73: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+      76: putfield      #76                 // Field renderCeilingMod1:Z
+      79: aload_0
+      80: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+      83: putfield      #77                 // Field renderCeilingMod2:Z
+      86: aload_0
+      87: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+      90: putfield      #78                 // Field renderCeilingMod3:Z
+      93: aload_0
+      94: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+      97: putfield      #79                 // Field renderCeilingMod4:Z
+     100: aload_0
+     101: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+     104: putfield      #80                 // Field renderCeilingMod5:Z
+     107: aload_0
+     108: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+     111: putfield      #81                 // Field renderCeilingMod6:Z
+     114: aload_0
+     115: invokespecial #82                 // Method randomizeTorch:()V
+     118: aload_0
+     119: getfield      #5                  // Field overlayColor:Lcom/badlogic/gdx/graphics/Color;
+     122: fconst_0
+     123: ldc           #83                 // float 0.05f
+     125: invokestatic  #84                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     128: putfield      #85                 // Field com/badlogic/gdx/graphics/Color.r:F
+     131: aload_0
+     132: getfield      #5                  // Field overlayColor:Lcom/badlogic/gdx/graphics/Color;
+     135: fconst_0
+     136: ldc           #86                 // float 0.2f
+     138: invokestatic  #84                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     141: putfield      #87                 // Field com/badlogic/gdx/graphics/Color.g:F
+     144: aload_0
+     145: getfield      #5                  // Field overlayColor:Lcom/badlogic/gdx/graphics/Color;
+     148: fconst_0
+     149: ldc           #86                 // float 0.2f
+     151: invokestatic  #84                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     154: putfield      #88                 // Field com/badlogic/gdx/graphics/Color.b:F
+     157: return
+
+  public void renderCombatRoomBg(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_1
+       1: getstatic     #3                  // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+       4: invokevirtual #89                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+       7: aload_0
+       8: aload_1
+       9: aload_0
+      10: getfield      #90                 // Field bg:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      13: iconst_1
+      14: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+      17: aload_0
+      18: getfield      #92                 // Field isCamp:Z
+      21: ifne          59
+      24: aload_0
+      25: getfield      #10                 // Field fog:Ljava/util/ArrayList;
+      28: invokevirtual #45                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      31: astore_2
+      32: aload_2
+      33: invokeinterface #46,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      38: ifeq          59
+      41: aload_2
+      42: invokeinterface #47,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      47: checkcast     #57                 // class com/megacrit/cardcrawl/vfx/scene/BottomFogEffect
+      50: astore_3
+      51: aload_3
+      52: aload_1
+      53: invokevirtual #93                 // Method com/megacrit/cardcrawl/vfx/scene/BottomFogEffect.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      56: goto          32
+      59: aload_1
+      60: getstatic     #3                  // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+      63: invokevirtual #89                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      66: aload_0
+      67: aload_1
+      68: aload_0
+      69: getfield      #17                 // Field mg:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      72: iconst_1
+      73: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+      76: aload_0
+      77: getfield      #75                 // Field renderHollowMid:Z
+      80: ifeq          104
+      83: aload_0
+      84: getfield      #73                 // Field renderSolidMid:Z
+      87: ifne          97
+      90: aload_0
+      91: getfield      #74                 // Field renderLeftWall:Z
+      94: ifeq          104
+      97: aload_1
+      98: getstatic     #94                 // Field com/badlogic/gdx/graphics/Color.GRAY:Lcom/badlogic/gdx/graphics/Color;
+     101: invokevirtual #89                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     104: aload_0
+     105: aload_1
+     106: aload_0
+     107: getfield      #23                 // Field solidWall:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     110: aload_0
+     111: getfield      #73                 // Field renderSolidMid:Z
+     114: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     117: aload_1
+     118: getstatic     #3                  // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+     121: invokevirtual #89                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     124: aload_0
+     125: aload_1
+     126: aload_0
+     127: getfield      #21                 // Field hollowWall:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     130: aload_0
+     131: getfield      #75                 // Field renderHollowMid:Z
+     134: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     137: aload_0
+     138: aload_1
+     139: aload_0
+     140: getfield      #19                 // Field leftWall:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     143: aload_0
+     144: getfield      #74                 // Field renderLeftWall:Z
+     147: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     150: aload_0
+     151: aload_1
+     152: aload_0
+     153: getfield      #25                 // Field ceiling:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     156: iconst_1
+     157: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     160: aload_0
+     161: aload_1
+     162: aload_0
+     163: getfield      #27                 // Field ceilingMod1:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     166: aload_0
+     167: getfield      #76                 // Field renderCeilingMod1:Z
+     170: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     173: aload_0
+     174: aload_1
+     175: aload_0
+     176: getfield      #29                 // Field ceilingMod2:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     179: aload_0
+     180: getfield      #77                 // Field renderCeilingMod2:Z
+     183: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     186: aload_0
+     187: aload_1
+     188: aload_0
+     189: getfield      #31                 // Field ceilingMod3:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     192: aload_0
+     193: getfield      #78                 // Field renderCeilingMod3:Z
+     196: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     199: aload_0
+     200: aload_1
+     201: aload_0
+     202: getfield      #33                 // Field ceilingMod4:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     205: aload_0
+     206: getfield      #79                 // Field renderCeilingMod4:Z
+     209: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     212: aload_0
+     213: aload_1
+     214: aload_0
+     215: getfield      #35                 // Field ceilingMod5:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     218: aload_0
+     219: getfield      #80                 // Field renderCeilingMod5:Z
+     222: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     225: aload_0
+     226: aload_1
+     227: aload_0
+     228: getfield      #37                 // Field ceilingMod6:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     231: aload_0
+     232: getfield      #81                 // Field renderCeilingMod6:Z
+     235: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     238: aload_0
+     239: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     242: invokevirtual #45                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     245: astore_2
+     246: aload_2
+     247: invokeinterface #46,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     252: ifeq          273
+     255: aload_2
+     256: invokeinterface #47,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     261: checkcast     #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     264: astore_3
+     265: aload_3
+     266: aload_1
+     267: invokevirtual #95                 // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+     270: goto          246
+     273: aload_1
+     274: sipush        768
+     277: iconst_1
+     278: invokevirtual #97                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setBlendFunction:(II)V
+     281: aload_1
+     282: aload_0
+     283: getfield      #5                  // Field overlayColor:Lcom/badlogic/gdx/graphics/Color;
+     286: invokevirtual #89                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+     289: aload_1
+     290: getstatic     #98                 // Field com/megacrit/cardcrawl/helpers/ImageMaster.WHITE_SQUARE_IMG:Lcom/badlogic/gdx/graphics/Texture;
+     293: fconst_0
+     294: fconst_0
+     295: getstatic     #99                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     298: i2f
+     299: getstatic     #100                // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     302: i2f
+     303: invokevirtual #101                // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFF)V
+     306: aload_1
+     307: sipush        770
+     310: sipush        771
+     313: invokevirtual #97                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setBlendFunction:(II)V
+     316: return
+
+  private void randomizeTorch();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+       4: invokevirtual #71                 // Method java/util/ArrayList.clear:()V
+       7: ldc           #102                // float 0.1f
+       9: invokestatic  #103                // Method com/badlogic/gdx/math/MathUtils.randomBoolean:(F)Z
+      12: ifeq          45
+      15: aload_0
+      16: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+      19: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+      22: dup
+      23: ldc           #104                // float 1790.0f
+      25: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+      28: fmul
+      29: ldc           #106                // float 850.0f
+      31: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+      34: fmul
+      35: getstatic     #108                // Field com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize.S:Lcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;
+      38: invokespecial #109                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FFLcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;)V
+      41: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      44: pop
+      45: aload_0
+      46: getfield      #75                 // Field renderHollowMid:Z
+      49: ifeq          163
+      52: aload_0
+      53: getfield      #73                 // Field renderSolidMid:Z
+      56: ifne          163
+      59: iconst_2
+      60: invokestatic  #110                // Method com/badlogic/gdx/math/MathUtils.random:(I)I
+      63: istore_1
+      64: iload_1
+      65: ifne          125
+      68: aload_0
+      69: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+      72: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+      75: dup
+      76: ldc           #111                // float 800.0f
+      78: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+      81: fmul
+      82: ldc           #112                // float 768.0f
+      84: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+      87: fmul
+      88: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+      91: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      94: pop
+      95: aload_0
+      96: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+      99: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     102: dup
+     103: ldc           #114                // float 1206.0f
+     105: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     108: fmul
+     109: ldc           #112                // float 768.0f
+     111: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     114: fmul
+     115: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+     118: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     121: pop
+     122: goto          160
+     125: iload_1
+     126: iconst_1
+     127: if_icmpne     160
+     130: aload_0
+     131: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     134: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     137: dup
+     138: ldc           #115                // float 328.0f
+     140: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     143: fmul
+     144: ldc           #116                // float 865.0f
+     146: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     149: fmul
+     150: getstatic     #108                // Field com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize.S:Lcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;
+     153: invokespecial #109                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FFLcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;)V
+     156: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     159: pop
+     160: goto          638
+     163: aload_0
+     164: getfield      #74                 // Field renderLeftWall:Z
+     167: ifne          304
+     170: aload_0
+     171: getfield      #75                 // Field renderHollowMid:Z
+     174: ifne          304
+     177: ldc           #117                // float 0.75f
+     179: invokestatic  #103                // Method com/badlogic/gdx/math/MathUtils.randomBoolean:(F)Z
+     182: ifeq          638
+     185: aload_0
+     186: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     189: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     192: dup
+     193: ldc           #118                // float 613.0f
+     195: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     198: fmul
+     199: ldc           #119                // float 860.0f
+     201: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     204: fmul
+     205: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+     208: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     211: pop
+     212: aload_0
+     213: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     216: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     219: dup
+     220: ldc           #118                // float 613.0f
+     222: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     225: fmul
+     226: ldc           #120                // float 672.0f
+     228: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     231: fmul
+     232: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+     235: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     238: pop
+     239: ldc           #121                // float 0.3f
+     241: invokestatic  #103                // Method com/badlogic/gdx/math/MathUtils.randomBoolean:(F)Z
+     244: ifeq          638
+     247: aload_0
+     248: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     251: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     254: dup
+     255: ldc           #122                // float 1482.0f
+     257: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     260: fmul
+     261: ldc           #119                // float 860.0f
+     263: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     266: fmul
+     267: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+     270: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     273: pop
+     274: aload_0
+     275: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     278: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     281: dup
+     282: ldc           #122                // float 1482.0f
+     284: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     287: fmul
+     288: ldc           #120                // float 672.0f
+     290: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     293: fmul
+     294: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+     297: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     300: pop
+     301: goto          638
+     304: aload_0
+     305: getfield      #73                 // Field renderSolidMid:Z
+     308: ifeq          532
+     311: aload_0
+     312: getfield      #75                 // Field renderHollowMid:Z
+     315: ifeq          532
+     318: aload_0
+     319: getfield      #74                 // Field renderLeftWall:Z
+     322: ifne          491
+     325: iconst_3
+     326: invokestatic  #110                // Method com/badlogic/gdx/math/MathUtils.random:(I)I
+     329: istore_1
+     330: iload_1
+     331: ifne          451
+     334: aload_0
+     335: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     338: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     341: dup
+     342: ldc           #123                // float 912.0f
+     344: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     347: fmul
+     348: ldc           #124                // float 790.0f
+     350: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     353: fmul
+     354: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+     357: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     360: pop
+     361: aload_0
+     362: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     365: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     368: dup
+     369: ldc           #123                // float 912.0f
+     371: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     374: fmul
+     375: ldc           #125                // float 526.0f
+     377: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     380: fmul
+     381: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+     384: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     387: pop
+     388: aload_0
+     389: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     392: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     395: dup
+     396: ldc           #126                // float 844.0f
+     398: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     401: fmul
+     402: ldc           #127                // float 658.0f
+     404: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     407: fmul
+     408: getstatic     #108                // Field com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize.S:Lcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;
+     411: invokespecial #109                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FFLcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;)V
+     414: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     417: pop
+     418: aload_0
+     419: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     422: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     425: dup
+     426: ldc           #128                // float 980.0f
+     428: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     431: fmul
+     432: ldc           #127                // float 658.0f
+     434: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     437: fmul
+     438: getstatic     #108                // Field com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize.S:Lcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;
+     441: invokespecial #109                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FFLcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;)V
+     444: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     447: pop
+     448: goto          488
+     451: iload_1
+     452: iconst_1
+     453: if_icmpeq     461
+     456: iload_1
+     457: iconst_2
+     458: if_icmpne     488
+     461: aload_0
+     462: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     465: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     468: dup
+     469: ldc           #129                // float 1828.0f
+     471: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     474: fmul
+     475: ldc           #130                // float 720.0f
+     477: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     480: fmul
+     481: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+     484: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     487: pop
+     488: goto          638
+     491: ldc           #117                // float 0.75f
+     493: invokestatic  #103                // Method com/badlogic/gdx/math/MathUtils.randomBoolean:(F)Z
+     496: ifeq          638
+     499: aload_0
+     500: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     503: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     506: dup
+     507: ldc           #131                // float 970.0f
+     509: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     512: fmul
+     513: ldc           #132                // float 874.0f
+     515: getstatic     #107                // Field com/megacrit/cardcrawl/core/Settings.yScale:F
+     518: fmul
+     519: getstatic     #133                // Field com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize.L:Lcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;
+     522: invokespecial #109                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FFLcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;)V
+     525: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     528: pop
+     529: goto          638
+     532: aload_0
+     533: getfield      #74                 // Field renderLeftWall:Z
+     536: ifeq          638
+     539: aload_0
+     540: getfield      #75                 // Field renderHollowMid:Z
+     543: ifne          638
+     546: ldc           #117                // float 0.75f
+     548: invokestatic  #103                // Method com/badlogic/gdx/math/MathUtils.randomBoolean:(F)Z
+     551: ifeq          638
+     554: aload_0
+     555: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     558: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     561: dup
+     562: ldc           #131                // float 970.0f
+     564: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     567: fmul
+     568: ldc           #134                // float 873.0f
+     570: getstatic     #135                // Field com/megacrit/cardcrawl/core/Settings.renderScale:F
+     573: fmul
+     574: getstatic     #133                // Field com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize.L:Lcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;
+     577: invokespecial #109                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FFLcom/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect$TorchSize;)V
+     580: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     583: pop
+     584: aload_0
+     585: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     588: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     591: dup
+     592: ldc           #136                // float 616.0f
+     594: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     597: fmul
+     598: ldc           #137                // float 813.0f
+     600: getstatic     #135                // Field com/megacrit/cardcrawl/core/Settings.renderScale:F
+     603: fmul
+     604: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+     607: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     610: pop
+     611: aload_0
+     612: getfield      #11                 // Field torches:Ljava/util/ArrayList;
+     615: new           #61                 // class com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect
+     618: dup
+     619: ldc           #138                // float 1266.0f
+     621: getstatic     #105                // Field com/megacrit/cardcrawl/core/Settings.xScale:F
+     624: fmul
+     625: ldc           #139                // float 708.0f
+     627: getstatic     #135                // Field com/megacrit/cardcrawl/core/Settings.renderScale:F
+     630: fmul
+     631: invokespecial #113                // Method com/megacrit/cardcrawl/vfx/scene/InteractableTorchEffect."<init>":(FF)V
+     634: invokevirtual #56                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     637: pop
+     638: invokestatic  #72                 // Method com/badlogic/gdx/math/MathUtils.randomBoolean:()Z
+     641: putstatic     #140                // Field com/megacrit/cardcrawl/vfx/scene/LightFlareMEffect.renderGreen:Z
+     644: getstatic     #140                // Field com/megacrit/cardcrawl/vfx/scene/LightFlareMEffect.renderGreen:Z
+     647: putstatic     #141                // Field com/megacrit/cardcrawl/vfx/scene/TorchParticleMEffect.renderGreen:Z
+     650: return
+
+  public void renderCombatRoomFg(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #92                 // Field isCamp:Z
+       4: ifne          42
+       7: aload_0
+       8: getfield      #9                  // Field dust:Ljava/util/ArrayList;
+      11: invokevirtual #45                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      14: astore_2
+      15: aload_2
+      16: invokeinterface #46,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      21: ifeq          42
+      24: aload_2
+      25: invokeinterface #47,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      30: checkcast     #48                 // class com/megacrit/cardcrawl/vfx/scene/DustEffect
+      33: astore_3
+      34: aload_3
+      35: aload_1
+      36: invokevirtual #142                // Method com/megacrit/cardcrawl/vfx/scene/DustEffect.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      39: goto          15
+      42: aload_1
+      43: getstatic     #3                  // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+      46: invokevirtual #89                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      49: aload_0
+      50: aload_1
+      51: aload_0
+      52: getfield      #15                 // Field fg:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      55: iconst_1
+      56: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+      59: return
+
+  public void renderCampfireRoom(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_1
+       1: getstatic     #3                  // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+       4: invokevirtual #89                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+       7: aload_0
+       8: aload_1
+       9: aload_0
+      10: getfield      #143                // Field campfireBg:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      13: iconst_1
+      14: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+      17: aload_1
+      18: sipush        770
+      21: iconst_1
+      22: invokevirtual #97                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setBlendFunction:(II)V
+      25: aload_0
+      26: getfield      #6                  // Field whiteColor:Lcom/badlogic/gdx/graphics/Color;
+      29: invokestatic  #144                // Method java/lang/System.currentTimeMillis:()J
+      32: ldc2_w        #145                // long 3l
+      35: ldiv
+      36: ldc2_w        #147                // long 360l
+      39: lrem
+      40: l2f
+      41: invokestatic  #149                // Method com/badlogic/gdx/math/MathUtils.cosDeg:(F)F
+      44: ldc           #150                // float 10.0f
+      46: fdiv
+      47: ldc           #151                // float 0.8f
+      49: fadd
+      50: putfield      #152                // Field com/badlogic/gdx/graphics/Color.a:F
+      53: aload_1
+      54: aload_0
+      55: getfield      #6                  // Field whiteColor:Lcom/badlogic/gdx/graphics/Color;
+      58: invokevirtual #89                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      61: aload_0
+      62: aload_1
+      63: aload_0
+      64: getfield      #153                // Field campfireGlow:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+      67: getstatic     #154                // Field com/megacrit/cardcrawl/rooms/CampfireUI.hidden:Z
+      70: ifne          77
+      73: iconst_1
+      74: goto          78
+      77: iconst_0
+      78: invokevirtual #155                // Method renderQuadrupleSize:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+      81: aload_1
+      82: sipush        770
+      85: sipush        771
+      88: invokevirtual #97                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setBlendFunction:(II)V
+      91: aload_1
+      92: getstatic     #3                  // Field com/badlogic/gdx/graphics/Color.WHITE:Lcom/badlogic/gdx/graphics/Color;
+      95: invokevirtual #89                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+      98: aload_0
+      99: aload_1
+     100: aload_0
+     101: getfield      #156                // Field campfireKindling:Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;
+     104: iconst_1
+     105: invokevirtual #91                 // Method renderAtlasRegionIf:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas$AtlasRegion;Z)V
+     108: return
+}

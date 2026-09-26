@@ -1,0 +1,577 @@
+Compiled from "NetworkCard.java"
+public class spireTogether.network.objects.items.NetworkCard extends spireTogether.network.objects.NetworkClassObject implements java.io.Serializable {
+  static final long serialVersionUID;
+    descriptor: J
+
+  public java.util.UUID uniqueID;
+    descriptor: Ljava/util/UUID;
+
+  public java.lang.Integer timesUpgraded;
+    descriptor: Ljava/lang/Integer;
+
+  private java.lang.String cardId;
+    descriptor: Ljava/lang/String;
+
+  public int[] multiDamage;
+    descriptor: [I
+
+  public java.lang.String targetID;
+    descriptor: Ljava/lang/String;
+
+  public static java.lang.String[] ignoredFields;
+    descriptor: [Ljava/lang/String;
+
+  public static spireTogether.network.objects.items.NetworkCard Generate(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)LspireTogether/network/objects/items/NetworkCard;
+    Code:
+       0: aload_0
+       1: aconst_null
+       2: invokestatic  #1                  // Method Generate:(Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)LspireTogether/network/objects/items/NetworkCard;
+       5: areturn
+
+  public static spireTogether.network.objects.items.NetworkCard Generate(com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.monsters.AbstractMonster);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)LspireTogether/network/objects/items/NetworkCard;
+    Code:
+       0: aload_0
+       1: ifnonnull     6
+       4: aconst_null
+       5: areturn
+       6: aload_0
+       7: aload_0
+       8: aload_1
+       9: invokestatic  #2                  // Method GetAppropriateObject:(Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)LspireTogether/network/objects/items/NetworkCard;
+      12: getstatic     #3                  // Field ignoredFields:[Ljava/lang/String;
+      15: invokestatic  #4                  // Method CopyValues:(Ljava/lang/Object;LspireTogether/network/objects/NetworkClassObject;[Ljava/lang/String;)LspireTogether/network/objects/NetworkClassObject;
+      18: checkcast     #5                  // class spireTogether/network/objects/items/NetworkCard
+      21: areturn
+
+  private static spireTogether.network.objects.items.NetworkCard GetAppropriateObject(com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.monsters.AbstractMonster);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)LspireTogether/network/objects/items/NetworkCard;
+    Code:
+       0: aload_0
+       1: instanceof    #6                  // class spireTogether/cards/CustomMultiplayerCard
+       4: ifeq          20
+       7: new           #7                  // class spireTogether/network/objects/items/NetworkMultiplayerCard
+      10: dup
+      11: aload_0
+      12: checkcast     #6                  // class spireTogether/cards/CustomMultiplayerCard
+      15: aload_1
+      16: invokespecial #8                  // Method spireTogether/network/objects/items/NetworkMultiplayerCard."<init>":(LspireTogether/cards/CustomMultiplayerCard;Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+      19: areturn
+      20: new           #5                  // class spireTogether/network/objects/items/NetworkCard
+      23: dup
+      24: aload_0
+      25: aload_1
+      26: invokespecial #9                  // Method "<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+      29: areturn
+
+  protected spireTogether.network.objects.items.NetworkCard(com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.monsters.AbstractMonster);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #10                 // Method spireTogether/network/objects/NetworkClassObject."<init>":(Ljava/lang/Object;)V
+       5: aload_0
+       6: aload_1
+       7: getfield      #11                 // Field com/megacrit/cardcrawl/cards/AbstractCard.uuid:Ljava/util/UUID;
+      10: putfield      #12                 // Field uniqueID:Ljava/util/UUID;
+      13: aload_0
+      14: aload_2
+      15: invokestatic  #13                 // Method spireTogether/patches/monsters/MonsterFieldPatches.GetMonsterID:(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)Ljava/lang/String;
+      18: putfield      #14                 // Field targetID:Ljava/lang/String;
+      21: aload_0
+      22: aload_1
+      23: getfield      #15                 // Field com/megacrit/cardcrawl/cards/AbstractCard.timesUpgraded:I
+      26: invokestatic  #16                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      29: putfield      #17                 // Field timesUpgraded:Ljava/lang/Integer;
+      32: aload_0
+      33: aload_1
+      34: getfield      #18                 // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+      37: putfield      #19                 // Field cardId:Ljava/lang/String;
+      40: aload_0
+      41: aload_1
+      42: getfield      #20                 // Field com/megacrit/cardcrawl/cards/AbstractCard.multiDamage:[I
+      45: putfield      #21                 // Field multiDamage:[I
+      48: return
+
+  public com.megacrit.cardcrawl.cards.AbstractCard ToStandard();
+    descriptor: ()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method GetClass:()Ljava/lang/Class;
+       4: astore_1
+       5: aload_0
+       6: aload_1
+       7: aload_0
+       8: getfield      #17                 // Field timesUpgraded:Ljava/lang/Integer;
+      11: invokevirtual #23                 // Method Construct:(Ljava/lang/Class;Ljava/lang/Integer;)Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      14: astore_2
+      15: aload_2
+      16: ifnonnull     36
+      19: aload_0
+      20: getfield      #19                 // Field cardId:Ljava/lang/String;
+      23: invokestatic  #24                 // Method com/megacrit/cardcrawl/helpers/CardLibrary.getCard:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      26: astore_2
+      27: aload_2
+      28: ifnull        36
+      31: aload_2
+      32: invokevirtual #25                 // Method com/megacrit/cardcrawl/cards/AbstractCard.makeCopy:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      35: astore_2
+      36: aload_2
+      37: ifnull        80
+      40: aload_2
+      41: aload_0
+      42: getfield      #12                 // Field uniqueID:Ljava/util/UUID;
+      45: putfield      #11                 // Field com/megacrit/cardcrawl/cards/AbstractCard.uuid:Ljava/util/UUID;
+      48: aload_2
+      49: aload_0
+      50: getfield      #17                 // Field timesUpgraded:Ljava/lang/Integer;
+      53: invokevirtual #26                 // Method java/lang/Integer.intValue:()I
+      56: putfield      #15                 // Field com/megacrit/cardcrawl/cards/AbstractCard.timesUpgraded:I
+      59: aload_2
+      60: aload_0
+      61: getfield      #21                 // Field multiDamage:[I
+      64: putfield      #20                 // Field com/megacrit/cardcrawl/cards/AbstractCard.multiDamage:[I
+      67: aload_2
+      68: aload_0
+      69: getfield      #27                 // Field extraData:Ljava/util/ArrayList;
+      72: invokestatic  #28                 // Method spireTogether/util/Reflection.LoadFieldValuesOnObject:(Ljava/lang/Object;Ljava/util/ArrayList;)V
+      75: aload_0
+      76: aload_2
+      77: invokevirtual #29                 // Method findIdealCenterPosition:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      80: aload_2
+      81: areturn
+      82: astore_1
+      83: new           #31                 // class java/lang/StringBuilder
+      86: dup
+      87: invokespecial #32                 // Method java/lang/StringBuilder."<init>":()V
+      90: ldc           #33                 // String Couldn\'t find power class:
+      92: invokevirtual #34                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      95: aload_0
+      96: getfield      #35                 // Field classID:Ljava/lang/String;
+      99: invokevirtual #34                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     102: invokevirtual #36                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     105: invokestatic  #37                 // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+     108: aconst_null
+     109: areturn
+    Exception table:
+       from    to  target type
+           0    81    82   Class java/lang/ClassNotFoundException
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.cards.AbstractCard> ListToStandard(java.util.ArrayList<spireTogether.network.objects.items.NetworkCard>);
+    descriptor: (Ljava/util/ArrayList;)Ljava/util/ArrayList;
+    Code:
+       0: new           #38                 // class java/util/ArrayList
+       3: dup
+       4: invokespecial #39                 // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_0
+       9: invokevirtual #40                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      12: astore_2
+      13: aload_2
+      14: invokeinterface #41,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      19: ifeq          53
+      22: aload_2
+      23: invokeinterface #42,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      28: checkcast     #5                  // class spireTogether/network/objects/items/NetworkCard
+      31: astore_3
+      32: aload_3
+      33: invokevirtual #43                 // Method ToStandard:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      36: astore        4
+      38: aload         4
+      40: ifnull        50
+      43: aload_1
+      44: aload         4
+      46: invokevirtual #44                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      49: pop
+      50: goto          13
+      53: aload_1
+      54: areturn
+
+  public com.megacrit.cardcrawl.cards.AbstractCard Construct(java.lang.Class, java.lang.Integer);
+    descriptor: (Ljava/lang/Class;Ljava/lang/Integer;)Lcom/megacrit/cardcrawl/cards/AbstractCard;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #45                 // Method constructFromConstructorOverride:(Ljava/lang/Class;)Ljava/lang/Object;
+       5: checkcast     #46                 // class com/megacrit/cardcrawl/cards/AbstractCard
+       8: astore_3
+       9: aload_3
+      10: ifnull        15
+      13: aload_3
+      14: areturn
+      15: aload_1
+      16: invokevirtual #47                 // Method java/lang/Class.getDeclaredConstructors:()[Ljava/lang/reflect/Constructor;
+      19: astore        4
+      21: aload         4
+      23: arraylength
+      24: istore        5
+      26: iconst_0
+      27: istore        6
+      29: iload         6
+      31: iload         5
+      33: if_icmpge     123
+      36: aload         4
+      38: iload         6
+      40: aaload
+      41: astore        7
+      43: aload         7
+      45: invokevirtual #48                 // Method java/lang/reflect/Constructor.getParameterTypes:()[Ljava/lang/Class;
+      48: astore        8
+      50: aload         8
+      52: iconst_1
+      53: anewarray     #49                 // class java/lang/Class
+      56: dup
+      57: iconst_0
+      58: getstatic     #50                 // Field java/lang/Integer.TYPE:Ljava/lang/Class;
+      61: aastore
+      62: invokestatic  #51                 // Method java/util/Arrays.equals:([Ljava/lang/Object;[Ljava/lang/Object;)Z
+      65: ifeq          92
+      68: aload         7
+      70: iconst_2
+      71: anewarray     #52                 // class java/lang/Object
+      74: dup
+      75: iconst_0
+      76: aload_2
+      77: aastore
+      78: dup
+      79: iconst_1
+      80: aload_0
+      81: getfield      #17                 // Field timesUpgraded:Ljava/lang/Integer;
+      84: aastore
+      85: invokevirtual #53                 // Method java/lang/reflect/Constructor.newInstance:([Ljava/lang/Object;)Ljava/lang/Object;
+      88: checkcast     #46                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      91: areturn
+      92: aload         8
+      94: iconst_0
+      95: anewarray     #49                 // class java/lang/Class
+      98: invokestatic  #51                 // Method java/util/Arrays.equals:([Ljava/lang/Object;[Ljava/lang/Object;)Z
+     101: ifeq          117
+     104: aload         7
+     106: iconst_0
+     107: anewarray     #52                 // class java/lang/Object
+     110: invokevirtual #53                 // Method java/lang/reflect/Constructor.newInstance:([Ljava/lang/Object;)Ljava/lang/Object;
+     113: checkcast     #46                 // class com/megacrit/cardcrawl/cards/AbstractCard
+     116: areturn
+     117: iinc          6, 1
+     120: goto          29
+     123: aload_1
+     124: iconst_2
+     125: anewarray     #52                 // class java/lang/Object
+     128: dup
+     129: iconst_0
+     130: aload_2
+     131: aastore
+     132: dup
+     133: iconst_1
+     134: aload_0
+     135: getfield      #17                 // Field timesUpgraded:Ljava/lang/Integer;
+     138: aastore
+     139: invokestatic  #54                 // Method SearchForConstructor:(Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Object;
+     142: checkcast     #46                 // class com/megacrit/cardcrawl/cards/AbstractCard
+     145: areturn
+     146: astore_3
+     147: getstatic     #56                 // Field spireTogether/SpireTogetherMod.logger:Lorg/apache/logging/log4j/Logger;
+     150: new           #31                 // class java/lang/StringBuilder
+     153: dup
+     154: invokespecial #32                 // Method java/lang/StringBuilder."<init>":()V
+     157: ldc           #57                 // String Couldn\'t find appropriate constructor for
+     159: invokevirtual #34                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     162: aload_1
+     163: ifnull        173
+     166: aload_1
+     167: invokevirtual #58                 // Method java/lang/Class.getName:()Ljava/lang/String;
+     170: goto          175
+     173: ldc           #59                 // String unknown class
+     175: invokevirtual #34                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     178: ldc           #60                 // String , skipping sync.
+     180: invokevirtual #34                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     183: invokevirtual #36                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     186: invokeinterface #61,  2           // InterfaceMethod org/apache/logging/log4j/Logger.info:(Ljava/lang/String;)V
+     191: aload_3
+     192: invokevirtual #62                 // Method java/lang/Exception.printStackTrace:()V
+     195: aconst_null
+     196: areturn
+    Exception table:
+       from    to  target type
+           0    14   146   Class java/lang/Exception
+          15    91   146   Class java/lang/Exception
+          92   116   146   Class java/lang/Exception
+         117   145   146   Class java/lang/Exception
+
+  public static java.util.ArrayList<spireTogether.network.objects.items.NetworkCard> GetAddedCards(java.util.ArrayList<spireTogether.network.objects.items.NetworkCard>, java.util.ArrayList<spireTogether.network.objects.items.NetworkCard>);
+    descriptor: (Ljava/util/ArrayList;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+    Code:
+       0: new           #38                 // class java/util/ArrayList
+       3: dup
+       4: invokespecial #39                 // Method java/util/ArrayList."<init>":()V
+       7: astore_2
+       8: aload_1
+       9: invokevirtual #40                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      12: astore_3
+      13: aload_3
+      14: invokeinterface #41,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      19: ifeq          95
+      22: aload_3
+      23: invokeinterface #42,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      28: checkcast     #5                  // class spireTogether/network/objects/items/NetworkCard
+      31: astore        4
+      33: iconst_0
+      34: istore        5
+      36: aload_0
+      37: invokevirtual #40                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      40: astore        6
+      42: aload         6
+      44: invokeinterface #41,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      49: ifeq          80
+      52: aload         6
+      54: invokeinterface #42,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      59: checkcast     #5                  // class spireTogether/network/objects/items/NetworkCard
+      62: astore        7
+      64: aload         4
+      66: aload         7
+      68: invokevirtual #63                 // Method equals:(Ljava/lang/Object;)Z
+      71: ifeq          77
+      74: iconst_1
+      75: istore        5
+      77: goto          42
+      80: iload         5
+      82: ifne          92
+      85: aload_2
+      86: aload         4
+      88: invokevirtual #44                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      91: pop
+      92: goto          13
+      95: aload_2
+      96: areturn
+
+  public static java.util.ArrayList<spireTogether.network.objects.items.NetworkCard> GetLostCards(java.util.ArrayList<spireTogether.network.objects.items.NetworkCard>, java.util.ArrayList<spireTogether.network.objects.items.NetworkCard>);
+    descriptor: (Ljava/util/ArrayList;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+    Code:
+       0: aload_1
+       1: aload_0
+       2: invokestatic  #64                 // Method GetAddedCards:(Ljava/util/ArrayList;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+       5: areturn
+
+  public boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+    Code:
+       0: aload_1
+       1: instanceof    #5                  // class spireTogether/network/objects/items/NetworkCard
+       4: ifne          9
+       7: iconst_0
+       8: ireturn
+       9: aload_1
+      10: checkcast     #5                  // class spireTogether/network/objects/items/NetworkCard
+      13: astore_2
+      14: aload_0
+      15: getfield      #12                 // Field uniqueID:Ljava/util/UUID;
+      18: aload_2
+      19: getfield      #12                 // Field uniqueID:Ljava/util/UUID;
+      22: invokevirtual #65                 // Method java/util/UUID.equals:(Ljava/lang/Object;)Z
+      25: ifne          30
+      28: iconst_0
+      29: ireturn
+      30: iconst_1
+      31: ireturn
+
+  protected void findIdealCenterPosition(com.megacrit.cardcrawl.cards.AbstractCard);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+    Code:
+       0: ldc           #66                 // float 30.0f
+       2: getstatic     #67                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+       5: fmul
+       6: fstore_2
+       7: getstatic     #68                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+      10: invokevirtual #69                 // Method java/util/ArrayList.size:()I
+      13: istore_3
+      14: aload_1
+      15: getstatic     #70                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      18: i2f
+      19: ldc           #71                 // float 0.5f
+      21: fmul
+      22: putfield      #72                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_y:F
+      25: iload_3
+      26: tableswitch   { // 0 to 4
+
+                     0: 60
+
+                     1: 74
+
+                     2: 94
+
+                     3: 114
+
+                     4: 136
+               default: 158
+          }
+      60: aload_1
+      61: getstatic     #73                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      64: i2f
+      65: ldc           #71                 // float 0.5f
+      67: fmul
+      68: putfield      #74                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+      71: goto          200
+      74: aload_1
+      75: getstatic     #73                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      78: i2f
+      79: ldc           #71                 // float 0.5f
+      81: fmul
+      82: fload_2
+      83: fsub
+      84: getstatic     #75                 // Field com/megacrit/cardcrawl/cards/AbstractCard.IMG_WIDTH:F
+      87: fsub
+      88: putfield      #74                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+      91: goto          200
+      94: aload_1
+      95: getstatic     #73                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      98: i2f
+      99: ldc           #71                 // float 0.5f
+     101: fmul
+     102: fload_2
+     103: fadd
+     104: getstatic     #75                 // Field com/megacrit/cardcrawl/cards/AbstractCard.IMG_WIDTH:F
+     107: fadd
+     108: putfield      #74                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     111: goto          200
+     114: aload_1
+     115: getstatic     #73                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     118: i2f
+     119: ldc           #71                 // float 0.5f
+     121: fmul
+     122: fload_2
+     123: getstatic     #75                 // Field com/megacrit/cardcrawl/cards/AbstractCard.IMG_WIDTH:F
+     126: fadd
+     127: fconst_2
+     128: fmul
+     129: fsub
+     130: putfield      #74                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     133: goto          200
+     136: aload_1
+     137: getstatic     #73                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     140: i2f
+     141: ldc           #71                 // float 0.5f
+     143: fmul
+     144: fload_2
+     145: getstatic     #75                 // Field com/megacrit/cardcrawl/cards/AbstractCard.IMG_WIDTH:F
+     148: fadd
+     149: fconst_2
+     150: fmul
+     151: fadd
+     152: putfield      #74                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     155: goto          200
+     158: aload_1
+     159: getstatic     #73                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     162: i2f
+     163: ldc           #76                 // float 0.1f
+     165: fmul
+     166: getstatic     #73                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     169: i2f
+     170: ldc           #77                 // float 0.9f
+     172: fmul
+     173: invokestatic  #78                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     176: putfield      #74                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_x:F
+     179: aload_1
+     180: getstatic     #70                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     183: i2f
+     184: ldc           #79                 // float 0.2f
+     186: fmul
+     187: getstatic     #70                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     190: i2f
+     191: ldc           #80                 // float 0.8f
+     193: fmul
+     194: invokestatic  #78                 // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     197: putfield      #72                 // Field com/megacrit/cardcrawl/cards/AbstractCard.target_y:F
+     200: return
+
+  public java.lang.Object ToStandard();
+    descriptor: ()Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: invokevirtual #43                 // Method ToStandard:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+       4: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: bipush        19
+       2: anewarray     #81                 // class java/lang/String
+       5: dup
+       6: iconst_0
+       7: ldc           #82                 // String description
+       9: aastore
+      10: dup
+      11: iconst_1
+      12: ldc           #83                 // String current_y
+      14: aastore
+      15: dup
+      16: iconst_2
+      17: ldc           #84                 // String target_x
+      19: aastore
+      20: dup
+      21: iconst_3
+      22: ldc           #85                 // String target_y
+      24: aastore
+      25: dup
+      26: iconst_4
+      27: ldc           #86                 // String current_x
+      29: aastore
+      30: dup
+      31: iconst_5
+      32: ldc           #87                 // String drawScale
+      34: aastore
+      35: dup
+      36: bipush        6
+      38: ldc           #88                 // String targetDrawScale
+      40: aastore
+      41: dup
+      42: bipush        7
+      44: ldc           #89                 // String darkTimer
+      46: aastore
+      47: dup
+      48: bipush        8
+      50: ldc           #90                 // String typeColor
+      52: aastore
+      53: dup
+      54: bipush        9
+      56: ldc           #91                 // String targetAngle
+      58: aastore
+      59: dup
+      60: bipush        10
+      62: ldc           #92                 // String angle
+      64: aastore
+      65: dup
+      66: bipush        11
+      68: ldc           #93                 // String glowList
+      70: aastore
+      71: dup
+      72: bipush        12
+      74: ldc           #94                 // String glowTimer
+      76: aastore
+      77: dup
+      78: bipush        13
+      80: ldc           #95                 // String isGlowing
+      82: aastore
+      83: dup
+      84: bipush        14
+      86: ldc           #96                 // String tintColor
+      88: aastore
+      89: dup
+      90: bipush        15
+      92: ldc           #97                 // String glowColor
+      94: aastore
+      95: dup
+      96: bipush        16
+      98: ldc           #98                 // String transparency
+     100: aastore
+     101: dup
+     102: bipush        17
+     104: ldc           #99                 // String darken
+     106: aastore
+     107: dup
+     108: bipush        18
+     110: ldc           #100                // String cantUseMessage
+     112: aastore
+     113: putstatic     #3                  // Field ignoredFields:[Ljava/lang/String;
+     116: return
+}

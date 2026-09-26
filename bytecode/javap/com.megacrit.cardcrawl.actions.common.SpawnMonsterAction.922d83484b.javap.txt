@@ -1,0 +1,193 @@
+Compiled from "SpawnMonsterAction.java"
+public class com.megacrit.cardcrawl.actions.common.SpawnMonsterAction extends com.megacrit.cardcrawl.actions.AbstractGameAction {
+  private boolean used;
+    descriptor: Z
+
+  private static final float DURATION;
+    descriptor: F
+
+  private com.megacrit.cardcrawl.monsters.AbstractMonster m;
+    descriptor: Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+
+  private boolean minion;
+    descriptor: Z
+
+  private int targetSlot;
+    descriptor: I
+
+  private boolean useSmartPositioning;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.actions.common.SpawnMonsterAction(com.megacrit.cardcrawl.monsters.AbstractMonster, boolean);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Z)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iload_2
+       3: bipush        -99
+       5: invokespecial #1                  // Method "<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;ZI)V
+       8: aload_0
+       9: iconst_1
+      10: putfield      #2                  // Field useSmartPositioning:Z
+      13: return
+
+  public com.megacrit.cardcrawl.actions.common.SpawnMonsterAction(com.megacrit.cardcrawl.monsters.AbstractMonster, boolean, int);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;ZI)V
+    Code:
+       0: aload_0
+       1: invokespecial #3                  // Method com/megacrit/cardcrawl/actions/AbstractGameAction."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #4                  // Field used:Z
+       9: aload_0
+      10: getstatic     #5                  // Field com/megacrit/cardcrawl/actions/AbstractGameAction$ActionType.SPECIAL:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      13: putfield      #6                  // Field actionType:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      16: aload_0
+      17: ldc           #8                  // float 0.1f
+      19: putfield      #9                  // Field duration:F
+      22: aload_0
+      23: aload_1
+      24: putfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+      27: aload_0
+      28: iload_2
+      29: putfield      #11                 // Field minion:Z
+      32: aload_0
+      33: iload_3
+      34: putfield      #12                 // Field targetSlot:I
+      37: aload_0
+      38: iconst_0
+      39: putfield      #2                  // Field useSmartPositioning:Z
+      42: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #4                  // Field used:Z
+       4: ifne          285
+       7: getstatic     #13                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      10: getfield      #14                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+      13: invokevirtual #15                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      16: astore_1
+      17: aload_1
+      18: invokeinterface #16,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      23: ifeq          47
+      26: aload_1
+      27: invokeinterface #17,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      32: checkcast     #18                 // class com/megacrit/cardcrawl/relics/AbstractRelic
+      35: astore_2
+      36: aload_2
+      37: aload_0
+      38: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+      41: invokevirtual #19                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.onSpawnMonster:(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+      44: goto          17
+      47: aload_0
+      48: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+      51: invokevirtual #20                 // Method com/megacrit/cardcrawl/monsters/AbstractMonster.init:()V
+      54: aload_0
+      55: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+      58: invokevirtual #21                 // Method com/megacrit/cardcrawl/monsters/AbstractMonster.applyPowers:()V
+      61: aload_0
+      62: getfield      #2                  // Field useSmartPositioning:Z
+      65: ifeq          140
+      68: iconst_0
+      69: istore_1
+      70: invokestatic  #22                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      73: getfield      #23                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      76: getfield      #24                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+      79: invokevirtual #15                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      82: astore_2
+      83: aload_2
+      84: invokeinterface #16,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      89: ifeq          123
+      92: aload_2
+      93: invokeinterface #17,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      98: checkcast     #25                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     101: astore_3
+     102: aload_0
+     103: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     106: getfield      #26                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.drawX:F
+     109: aload_3
+     110: getfield      #26                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.drawX:F
+     113: fcmpl
+     114: ifle          120
+     117: iinc          1, 1
+     120: goto          83
+     123: invokestatic  #22                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     126: getfield      #23                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+     129: iload_1
+     130: aload_0
+     131: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     134: invokevirtual #27                 // Method com/megacrit/cardcrawl/monsters/MonsterGroup.addMonster:(ILcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+     137: goto          157
+     140: invokestatic  #22                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     143: getfield      #23                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+     146: aload_0
+     147: getfield      #12                 // Field targetSlot:I
+     150: aload_0
+     151: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     154: invokevirtual #27                 // Method com/megacrit/cardcrawl/monsters/MonsterGroup.addMonster:(ILcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+     157: aload_0
+     158: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     161: invokevirtual #28                 // Method com/megacrit/cardcrawl/monsters/AbstractMonster.showHealthBar:()V
+     164: ldc           #30                 // String Lethality
+     166: invokestatic  #31                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+     169: ifeq          204
+     172: aload_0
+     173: new           #32                 // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+     176: dup
+     177: aload_0
+     178: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     181: aload_0
+     182: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     185: new           #33                 // class com/megacrit/cardcrawl/powers/StrengthPower
+     188: dup
+     189: aload_0
+     190: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     193: iconst_3
+     194: invokespecial #34                 // Method com/megacrit/cardcrawl/powers/StrengthPower."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+     197: iconst_3
+     198: invokespecial #35                 // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;I)V
+     201: invokevirtual #36                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     204: ldc           #38                 // String Time Dilation
+     206: invokestatic  #31                 // Method com/megacrit/cardcrawl/helpers/ModHelper.isModEnabled:(Ljava/lang/String;)Z
+     209: ifeq          243
+     212: aload_0
+     213: new           #32                 // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+     216: dup
+     217: aload_0
+     218: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     221: aload_0
+     222: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     225: new           #39                 // class com/megacrit/cardcrawl/powers/SlowPower
+     228: dup
+     229: aload_0
+     230: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     233: iconst_0
+     234: invokespecial #40                 // Method com/megacrit/cardcrawl/powers/SlowPower."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+     237: invokespecial #41                 // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;)V
+     240: invokevirtual #36                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     243: aload_0
+     244: getfield      #11                 // Field minion:Z
+     247: ifeq          280
+     250: aload_0
+     251: new           #32                 // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+     254: dup
+     255: aload_0
+     256: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     259: aload_0
+     260: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     263: new           #42                 // class com/megacrit/cardcrawl/powers/MinionPower
+     266: dup
+     267: aload_0
+     268: getfield      #10                 // Field m:Lcom/megacrit/cardcrawl/monsters/AbstractMonster;
+     271: invokespecial #43                 // Method com/megacrit/cardcrawl/powers/MinionPower."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+     274: invokespecial #41                 // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;)V
+     277: invokevirtual #44                 // Method addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     280: aload_0
+     281: iconst_1
+     282: putfield      #4                  // Field used:Z
+     285: aload_0
+     286: invokevirtual #45                 // Method tickDuration:()V
+     289: return
+}

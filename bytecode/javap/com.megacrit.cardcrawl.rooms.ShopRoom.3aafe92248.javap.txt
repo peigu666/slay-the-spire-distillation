@@ -1,0 +1,197 @@
+Compiled from "ShopRoom.java"
+public class com.megacrit.cardcrawl.rooms.ShopRoom extends com.megacrit.cardcrawl.rooms.AbstractRoom {
+  private static final com.megacrit.cardcrawl.localization.UIStrings uiStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/UIStrings;
+
+  public static final java.lang.String[] TEXT;
+    descriptor: [Ljava/lang/String;
+
+  public int shopRarityBonus;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.shop.Merchant merchant;
+    descriptor: Lcom/megacrit/cardcrawl/shop/Merchant;
+
+  public com.megacrit.cardcrawl.rooms.ShopRoom();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/rooms/AbstractRoom."<init>":()V
+       4: aload_0
+       5: bipush        6
+       7: putfield      #2                  // Field shopRarityBonus:I
+      10: aload_0
+      11: getstatic     #3                  // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMPLETE:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      14: putfield      #4                  // Field phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      17: aload_0
+      18: aconst_null
+      19: putfield      #5                  // Field merchant:Lcom/megacrit/cardcrawl/shop/Merchant;
+      22: aload_0
+      23: ldc           #6                  // String $
+      25: putfield      #7                  // Field mapSymbol:Ljava/lang/String;
+      28: aload_0
+      29: getstatic     #8                  // Field com/megacrit/cardcrawl/helpers/ImageMaster.MAP_NODE_MERCHANT:Lcom/badlogic/gdx/graphics/Texture;
+      32: putfield      #9                  // Field mapImg:Lcom/badlogic/gdx/graphics/Texture;
+      35: aload_0
+      36: getstatic     #10                 // Field com/megacrit/cardcrawl/helpers/ImageMaster.MAP_NODE_MERCHANT_OUTLINE:Lcom/badlogic/gdx/graphics/Texture;
+      39: putfield      #11                 // Field mapImgOutline:Lcom/badlogic/gdx/graphics/Texture;
+      42: aload_0
+      43: bipush        9
+      45: putfield      #12                 // Field baseRareCardChance:I
+      48: aload_0
+      49: bipush        37
+      51: putfield      #13                 // Field baseUncommonCardChance:I
+      54: return
+
+  public void setMerchant(com.megacrit.cardcrawl.shop.Merchant);
+    descriptor: (Lcom/megacrit/cardcrawl/shop/Merchant;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #5                  // Field merchant:Lcom/megacrit/cardcrawl/shop/Merchant;
+       5: return
+
+  public void onPlayerEntry();
+    descriptor: ()V
+    Code:
+       0: getstatic     #14                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.id:Ljava/lang/String;
+       3: ldc           #16                 // String TheEnding
+       5: invokevirtual #17                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+       8: ifne          17
+      11: aload_0
+      12: ldc           #18                 // String SHOP
+      14: invokevirtual #19                 // Method playBGM:(Ljava/lang/String;)V
+      17: getstatic     #20                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.overlayMenu:Lcom/megacrit/cardcrawl/core/OverlayMenu;
+      20: getfield      #21                 // Field com/megacrit/cardcrawl/core/OverlayMenu.proceedButton:Lcom/megacrit/cardcrawl/ui/buttons/ProceedButton;
+      23: getstatic     #22                 // Field TEXT:[Ljava/lang/String;
+      26: iconst_0
+      27: aaload
+      28: invokevirtual #23                 // Method com/megacrit/cardcrawl/ui/buttons/ProceedButton.setLabel:(Ljava/lang/String;)V
+      31: aload_0
+      32: new           #24                 // class com/megacrit/cardcrawl/shop/Merchant
+      35: dup
+      36: invokespecial #25                 // Method com/megacrit/cardcrawl/shop/Merchant."<init>":()V
+      39: invokevirtual #26                 // Method setMerchant:(Lcom/megacrit/cardcrawl/shop/Merchant;)V
+      42: return
+
+  public com.megacrit.cardcrawl.cards.AbstractCard$CardRarity getCardRarity(int);
+    descriptor: (I)Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iconst_0
+       3: invokevirtual #27                 // Method getCardRarity:(IZ)Lcom/megacrit/cardcrawl/cards/AbstractCard$CardRarity;
+       6: areturn
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #28                 // Method com/megacrit/cardcrawl/rooms/AbstractRoom.update:()V
+       4: aload_0
+       5: getfield      #5                  // Field merchant:Lcom/megacrit/cardcrawl/shop/Merchant;
+       8: ifnull        18
+      11: aload_0
+      12: getfield      #5                  // Field merchant:Lcom/megacrit/cardcrawl/shop/Merchant;
+      15: invokevirtual #29                 // Method com/megacrit/cardcrawl/shop/Merchant.update:()V
+      18: aload_0
+      19: invokespecial #30                 // Method updatePurge:()V
+      22: return
+
+  private void updatePurge();
+    descriptor: ()V
+    Code:
+       0: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.gridSelectScreen:Lcom/megacrit/cardcrawl/screens/select/GridCardSelectScreen;
+       3: getfield      #32                 // Field com/megacrit/cardcrawl/screens/select/GridCardSelectScreen.selectedCards:Ljava/util/ArrayList;
+       6: invokevirtual #33                 // Method java/util/ArrayList.isEmpty:()Z
+       9: ifne          110
+      12: invokestatic  #34                 // Method com/megacrit/cardcrawl/shop/ShopScreen.purgeCard:()V
+      15: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.gridSelectScreen:Lcom/megacrit/cardcrawl/screens/select/GridCardSelectScreen;
+      18: getfield      #32                 // Field com/megacrit/cardcrawl/screens/select/GridCardSelectScreen.selectedCards:Ljava/util/ArrayList;
+      21: invokevirtual #35                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      24: astore_1
+      25: aload_1
+      26: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      31: ifeq          94
+      34: aload_1
+      35: invokeinterface #37,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      40: checkcast     #38                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      43: astore_2
+      44: getstatic     #39                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+      47: aload_2
+      48: invokevirtual #40                 // Method com/megacrit/cardcrawl/cards/AbstractCard.getMetricID:()Ljava/lang/String;
+      51: invokevirtual #41                 // Method com/megacrit/cardcrawl/metrics/MetricData.addPurgedItem:(Ljava/lang/String;)V
+      54: getstatic     #42                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topLevelEffects:Ljava/util/ArrayList;
+      57: new           #43                 // class com/megacrit/cardcrawl/vfx/cardManip/PurgeCardEffect
+      60: dup
+      61: aload_2
+      62: getstatic     #44                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      65: i2f
+      66: fconst_2
+      67: fdiv
+      68: getstatic     #45                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      71: i2f
+      72: fconst_2
+      73: fdiv
+      74: invokespecial #46                 // Method com/megacrit/cardcrawl/vfx/cardManip/PurgeCardEffect."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;FF)V
+      77: invokevirtual #47                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      80: pop
+      81: getstatic     #48                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      84: getfield      #49                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      87: aload_2
+      88: invokevirtual #50                 // Method com/megacrit/cardcrawl/cards/CardGroup.removeCard:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      91: goto          25
+      94: getstatic     #31                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.gridSelectScreen:Lcom/megacrit/cardcrawl/screens/select/GridCardSelectScreen;
+      97: getfield      #32                 // Field com/megacrit/cardcrawl/screens/select/GridCardSelectScreen.selectedCards:Ljava/util/ArrayList;
+     100: invokevirtual #51                 // Method java/util/ArrayList.clear:()V
+     103: getstatic     #52                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.shopScreen:Lcom/megacrit/cardcrawl/shop/ShopScreen;
+     106: iconst_0
+     107: putfield      #53                 // Field com/megacrit/cardcrawl/shop/ShopScreen.purgeAvailable:Z
+     110: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #5                  // Field merchant:Lcom/megacrit/cardcrawl/shop/Merchant;
+       4: ifnull        15
+       7: aload_0
+       8: getfield      #5                  // Field merchant:Lcom/megacrit/cardcrawl/shop/Merchant;
+      11: aload_1
+      12: invokevirtual #54                 // Method com/megacrit/cardcrawl/shop/Merchant.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      15: aload_0
+      16: aload_1
+      17: invokespecial #55                 // Method com/megacrit/cardcrawl/rooms/AbstractRoom.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      20: aload_0
+      21: aload_1
+      22: invokevirtual #56                 // Method renderTips:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      25: return
+
+  public void dispose();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #57                 // Method com/megacrit/cardcrawl/rooms/AbstractRoom.dispose:()V
+       4: aload_0
+       5: getfield      #5                  // Field merchant:Lcom/megacrit/cardcrawl/shop/Merchant;
+       8: ifnull        23
+      11: aload_0
+      12: getfield      #5                  // Field merchant:Lcom/megacrit/cardcrawl/shop/Merchant;
+      15: invokevirtual #58                 // Method com/megacrit/cardcrawl/shop/Merchant.dispose:()V
+      18: aload_0
+      19: aconst_null
+      20: putfield      #5                  // Field merchant:Lcom/megacrit/cardcrawl/shop/Merchant;
+      23: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #59                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #60                 // String ShopRoom
+       5: invokevirtual #61                 // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getUIString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/UIStrings;
+       8: putstatic     #62                 // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      11: getstatic     #62                 // Field uiStrings:Lcom/megacrit/cardcrawl/localization/UIStrings;
+      14: getfield      #63                 // Field com/megacrit/cardcrawl/localization/UIStrings.TEXT:[Ljava/lang/String;
+      17: putstatic     #22                 // Field TEXT:[Ljava/lang/String;
+      20: return
+}

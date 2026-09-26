@@ -1,0 +1,160 @@
+Compiled from "CampfireRecallEffect.java"
+public class com.megacrit.cardcrawl.vfx.campfire.CampfireRecallEffect extends com.megacrit.cardcrawl.vfx.AbstractGameEffect {
+  private static final float DUR;
+    descriptor: F
+
+  private boolean hasRecalled;
+    descriptor: Z
+
+  private com.badlogic.gdx.graphics.Color screenColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public com.megacrit.cardcrawl.vfx.campfire.CampfireRecallEffect();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/vfx/AbstractGameEffect."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #2                  // Field hasRecalled:Z
+       9: aload_0
+      10: getstatic     #3                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.fadeColor:Lcom/badlogic/gdx/graphics/Color;
+      13: invokevirtual #4                  // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+      16: putfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      19: aload_0
+      20: fconst_2
+      21: putfield      #7                  // Field duration:F
+      24: aload_0
+      25: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      28: fconst_0
+      29: putfield      #8                  // Field com/badlogic/gdx/graphics/Color.a:F
+      32: invokestatic  #9                  // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      35: checkcast     #10                 // class com/megacrit/cardcrawl/rooms/RestRoom
+      38: invokevirtual #11                 // Method com/megacrit/cardcrawl/rooms/RestRoom.cutFireSound:()V
+      41: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #7                  // Field duration:F
+       5: getstatic     #12                 // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+       8: invokeinterface #13,  1           // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      13: fsub
+      14: putfield      #7                  // Field duration:F
+      17: aload_0
+      18: invokespecial #14                 // Method updateBlackScreenColor:()V
+      21: aload_0
+      22: getfield      #7                  // Field duration:F
+      25: fconst_1
+      26: fcmpg
+      27: ifge          94
+      30: aload_0
+      31: getfield      #2                  // Field hasRecalled:Z
+      34: ifne          94
+      37: aload_0
+      38: iconst_1
+      39: putfield      #2                  // Field hasRecalled:Z
+      42: getstatic     #15                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+      45: ldc           #16                 // String ATTACK_MAGIC_SLOW_2
+      47: invokevirtual #17                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+      50: pop2
+      51: invokestatic  #9                  // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      54: getfield      #18                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.rewards:Ljava/util/ArrayList;
+      57: invokevirtual #19                 // Method java/util/ArrayList.clear:()V
+      60: getstatic     #20                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.topLevelEffects:Ljava/util/ArrayList;
+      63: new           #21                 // class com/megacrit/cardcrawl/vfx/ObtainKeyEffect
+      66: dup
+      67: getstatic     #22                 // Field com/megacrit/cardcrawl/vfx/ObtainKeyEffect$KeyColor.RED:Lcom/megacrit/cardcrawl/vfx/ObtainKeyEffect$KeyColor;
+      70: invokespecial #23                 // Method com/megacrit/cardcrawl/vfx/ObtainKeyEffect."<init>":(Lcom/megacrit/cardcrawl/vfx/ObtainKeyEffect$KeyColor;)V
+      73: invokevirtual #24                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      76: pop
+      77: invokestatic  #9                  // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      80: getstatic     #25                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMPLETE:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      83: putfield      #26                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      86: getstatic     #27                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.metricData:Lcom/megacrit/cardcrawl/metrics/MetricData;
+      89: ldc           #28                 // String RECALL
+      91: invokevirtual #29                 // Method com/megacrit/cardcrawl/metrics/MetricData.addCampfireChoiceData:(Ljava/lang/String;)V
+      94: aload_0
+      95: getfield      #7                  // Field duration:F
+      98: fconst_0
+      99: fcmpg
+     100: ifge          126
+     103: aload_0
+     104: iconst_1
+     105: putfield      #30                 // Field isDone:Z
+     108: invokestatic  #9                  // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     111: checkcast     #10                 // class com/megacrit/cardcrawl/rooms/RestRoom
+     114: invokevirtual #31                 // Method com/megacrit/cardcrawl/rooms/RestRoom.fadeIn:()V
+     117: invokestatic  #9                  // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     120: getstatic     #25                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMPLETE:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     123: putfield      #26                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+     126: return
+
+  private void updateBlackScreenColor();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field duration:F
+       4: ldc           #32                 // float 1.5f
+       6: fcmpl
+       7: ifle          37
+      10: aload_0
+      11: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      14: getstatic     #33                 // Field com/badlogic/gdx/math/Interpolation.fade:Lcom/badlogic/gdx/math/Interpolation;
+      17: fconst_1
+      18: fconst_0
+      19: aload_0
+      20: getfield      #7                  // Field duration:F
+      23: ldc           #32                 // float 1.5f
+      25: fsub
+      26: fconst_2
+      27: fmul
+      28: invokevirtual #34                 // Method com/badlogic/gdx/math/Interpolation.apply:(FFF)F
+      31: putfield      #8                  // Field com/badlogic/gdx/graphics/Color.a:F
+      34: goto          76
+      37: aload_0
+      38: getfield      #7                  // Field duration:F
+      41: fconst_1
+      42: fcmpg
+      43: ifge          68
+      46: aload_0
+      47: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      50: getstatic     #33                 // Field com/badlogic/gdx/math/Interpolation.fade:Lcom/badlogic/gdx/math/Interpolation;
+      53: fconst_0
+      54: fconst_1
+      55: aload_0
+      56: getfield      #7                  // Field duration:F
+      59: invokevirtual #34                 // Method com/badlogic/gdx/math/Interpolation.apply:(FFF)F
+      62: putfield      #8                  // Field com/badlogic/gdx/graphics/Color.a:F
+      65: goto          76
+      68: aload_0
+      69: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+      72: fconst_1
+      73: putfield      #8                  // Field com/badlogic/gdx/graphics/Color.a:F
+      76: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_1
+       1: aload_0
+       2: getfield      #5                  // Field screenColor:Lcom/badlogic/gdx/graphics/Color;
+       5: invokevirtual #35                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.setColor:(Lcom/badlogic/gdx/graphics/Color;)V
+       8: aload_1
+       9: getstatic     #36                 // Field com/megacrit/cardcrawl/helpers/ImageMaster.WHITE_SQUARE_IMG:Lcom/badlogic/gdx/graphics/Texture;
+      12: fconst_0
+      13: fconst_0
+      14: getstatic     #37                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      17: i2f
+      18: getstatic     #38                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      21: i2f
+      22: invokevirtual #39                 // Method com/badlogic/gdx/graphics/g2d/SpriteBatch.draw:(Lcom/badlogic/gdx/graphics/Texture;FFFF)V
+      25: return
+
+  public void dispose();
+    descriptor: ()V
+    Code:
+       0: return
+}

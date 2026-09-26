@@ -1,0 +1,102 @@
+Compiled from "TransmutationAction.java"
+public class com.megacrit.cardcrawl.actions.unique.TransmutationAction extends com.megacrit.cardcrawl.actions.AbstractGameAction {
+  private boolean freeToPlayOnce;
+    descriptor: Z
+
+  private boolean upgraded;
+    descriptor: Z
+
+  private com.megacrit.cardcrawl.characters.AbstractPlayer p;
+    descriptor: Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+
+  private int energyOnUse;
+    descriptor: I
+
+  public com.megacrit.cardcrawl.actions.unique.TransmutationAction(com.megacrit.cardcrawl.characters.AbstractPlayer, boolean, boolean, int);
+    descriptor: (Lcom/megacrit/cardcrawl/characters/AbstractPlayer;ZZI)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/actions/AbstractGameAction."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #2                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       9: aload_0
+      10: iload_2
+      11: putfield      #3                  // Field upgraded:Z
+      14: aload_0
+      15: iload_3
+      16: putfield      #4                  // Field freeToPlayOnce:Z
+      19: aload_0
+      20: getstatic     #5                  // Field com/megacrit/cardcrawl/core/Settings.ACTION_DUR_XFAST:F
+      23: putfield      #6                  // Field duration:F
+      26: aload_0
+      27: getstatic     #7                  // Field com/megacrit/cardcrawl/actions/AbstractGameAction$ActionType.SPECIAL:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      30: putfield      #8                  // Field actionType:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$ActionType;
+      33: aload_0
+      34: iload         4
+      36: putfield      #9                  // Field energyOnUse:I
+      39: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: getstatic     #10                 // Field com/megacrit/cardcrawl/ui/panels/EnergyPanel.totalCount:I
+       3: istore_1
+       4: aload_0
+       5: getfield      #9                  // Field energyOnUse:I
+       8: iconst_m1
+       9: if_icmpeq     17
+      12: aload_0
+      13: getfield      #9                  // Field energyOnUse:I
+      16: istore_1
+      17: aload_0
+      18: getfield      #2                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      21: ldc           #12                 // String Chemical X
+      23: invokevirtual #13                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+      26: ifeq          44
+      29: iinc          1, 2
+      32: aload_0
+      33: getfield      #2                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      36: ldc           #12                 // String Chemical X
+      38: invokevirtual #14                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getRelic:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/relics/AbstractRelic;
+      41: invokevirtual #15                 // Method com/megacrit/cardcrawl/relics/AbstractRelic.flash:()V
+      44: iload_1
+      45: ifle          117
+      48: iconst_0
+      49: istore_2
+      50: iload_2
+      51: iload_1
+      52: if_icmpge     97
+      55: invokestatic  #16                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.returnTrulyRandomColorlessCardInCombat:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      58: invokevirtual #17                 // Method com/megacrit/cardcrawl/cards/AbstractCard.makeCopy:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      61: astore_3
+      62: aload_0
+      63: getfield      #3                  // Field upgraded:Z
+      66: ifeq          73
+      69: aload_3
+      70: invokevirtual #18                 // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+      73: aload_3
+      74: iconst_0
+      75: invokevirtual #19                 // Method com/megacrit/cardcrawl/cards/AbstractCard.setCostForTurn:(I)V
+      78: aload_0
+      79: new           #20                 // class com/megacrit/cardcrawl/actions/common/MakeTempCardInHandAction
+      82: dup
+      83: aload_3
+      84: iconst_1
+      85: invokespecial #21                 // Method com/megacrit/cardcrawl/actions/common/MakeTempCardInHandAction."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;I)V
+      88: invokevirtual #22                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      91: iinc          2, 1
+      94: goto          50
+      97: aload_0
+      98: getfield      #4                  // Field freeToPlayOnce:Z
+     101: ifne          117
+     104: aload_0
+     105: getfield      #2                  // Field p:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     108: getfield      #23                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.energy:Lcom/megacrit/cardcrawl/core/EnergyManager;
+     111: getstatic     #10                 // Field com/megacrit/cardcrawl/ui/panels/EnergyPanel.totalCount:I
+     114: invokevirtual #24                 // Method com/megacrit/cardcrawl/core/EnergyManager.use:(I)V
+     117: aload_0
+     118: iconst_1
+     119: putfield      #25                 // Field isDone:Z
+     122: return
+}

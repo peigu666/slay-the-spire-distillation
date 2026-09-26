@@ -1,0 +1,215 @@
+Compiled from "DeckAdd.java"
+public class basemod.devcommands.deck.DeckAdd extends basemod.devcommands.deck.DeckManipulator {
+  public basemod.devcommands.deck.DeckAdd();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method basemod/devcommands/deck/DeckManipulator."<init>":()V
+       4: aload_0
+       5: iconst_3
+       6: putfield      #2                  // Field maxExtraTokens:I
+       9: return
+
+  public void execute(java.lang.String[], int);
+    descriptor: ([Ljava/lang/String;I)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #3                  // Method countIndex:([Ljava/lang/String;)I
+       5: istore_3
+       6: aload_0
+       7: aload_1
+       8: iload_3
+       9: invokevirtual #4                  // Method getCardID:([Ljava/lang/String;I)Ljava/lang/String;
+      12: astore        4
+      14: aload         4
+      16: invokestatic  #5                  // Method com/megacrit/cardcrawl/helpers/CardLibrary.getCard:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/cards/AbstractCard;
+      19: astore        5
+      21: aload         5
+      23: ifnull        235
+      26: iconst_1
+      27: istore        6
+      29: aload_1
+      30: arraylength
+      31: iload_3
+      32: iconst_1
+      33: iadd
+      34: if_icmple     65
+      37: aload_1
+      38: iload_3
+      39: iconst_1
+      40: iadd
+      41: aaload
+      42: invokestatic  #6                  // Method basemod/helpers/ConvertHelper.tryParseInt:(Ljava/lang/String;)Ljava/lang/Integer;
+      45: ifnull        65
+      48: aload_1
+      49: iload_3
+      50: iconst_1
+      51: iadd
+      52: aaload
+      53: iconst_0
+      54: invokestatic  #7                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      57: invokestatic  #8                  // Method basemod/helpers/ConvertHelper.tryParseInt:(Ljava/lang/String;Ljava/lang/Integer;)Ljava/lang/Integer;
+      60: invokevirtual #9                  // Method java/lang/Integer.intValue:()I
+      63: istore        6
+      65: iconst_0
+      66: istore        7
+      68: aload_1
+      69: arraylength
+      70: iload_3
+      71: iconst_2
+      72: iadd
+      73: if_icmple     93
+      76: aload_1
+      77: iload_3
+      78: iconst_2
+      79: iadd
+      80: aaload
+      81: iconst_0
+      82: invokestatic  #7                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      85: invokestatic  #8                  // Method basemod/helpers/ConvertHelper.tryParseInt:(Ljava/lang/String;Ljava/lang/Integer;)Ljava/lang/Integer;
+      88: invokevirtual #9                  // Method java/lang/Integer.intValue:()I
+      91: istore        7
+      93: new           #10                 // class java/lang/StringBuilder
+      96: dup
+      97: invokespecial #11                 // Method java/lang/StringBuilder."<init>":()V
+     100: ldc           #12                 // String adding
+     102: invokevirtual #13                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     105: iload         6
+     107: invokevirtual #14                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     110: iload         6
+     112: iconst_1
+     113: if_icmpne     121
+     116: ldc           #15                 // String  copy of
+     118: goto          123
+     121: ldc           #16                 // String  copies of
+     123: invokevirtual #13                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     126: aload         4
+     128: invokevirtual #13                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     131: ldc           #17                 // String  with
+     133: invokevirtual #13                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     136: iload         7
+     138: invokevirtual #14                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     141: ldc           #18                 // String  upgrade(s)
+     143: invokevirtual #13                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     146: invokevirtual #19                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     149: invokestatic  #20                 // Method basemod/DevConsole.log:(Ljava/lang/String;)V
+     152: iconst_0
+     153: istore        8
+     155: iload         8
+     157: iload         6
+     159: if_icmpge     232
+     162: aload         5
+     164: invokevirtual #21                 // Method com/megacrit/cardcrawl/cards/AbstractCard.makeCopy:()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+     167: astore        9
+     169: iconst_0
+     170: istore        10
+     172: iload         10
+     174: iload         7
+     176: if_icmpge     190
+     179: aload         9
+     181: invokevirtual #22                 // Method com/megacrit/cardcrawl/cards/AbstractCard.upgrade:()V
+     184: iinc          10, 1
+     187: goto          172
+     190: aload         9
+     192: getfield      #23                 // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+     195: invokestatic  #24                 // Method com/megacrit/cardcrawl/unlock/UnlockTracker.markCardAsSeen:(Ljava/lang/String;)V
+     198: getstatic     #25                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+     201: new           #26                 // class com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndObtainEffect
+     204: dup
+     205: aload         9
+     207: getstatic     #27                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+     210: i2f
+     211: fconst_2
+     212: fdiv
+     213: getstatic     #28                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+     216: i2f
+     217: fconst_2
+     218: fdiv
+     219: invokespecial #29                 // Method com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndObtainEffect."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;FF)V
+     222: invokevirtual #30                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     225: pop
+     226: iinc          8, 1
+     229: goto          155
+     232: goto          258
+     235: new           #10                 // class java/lang/StringBuilder
+     238: dup
+     239: invokespecial #11                 // Method java/lang/StringBuilder."<init>":()V
+     242: ldc           #31                 // String could not find card
+     244: invokevirtual #13                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     247: aload         4
+     249: invokevirtual #13                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     252: invokevirtual #19                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     255: invokestatic  #20                 // Method basemod/DevConsole.log:(Ljava/lang/String;)V
+     258: return
+
+  public java.util.ArrayList<java.lang.String> extraOptions(java.lang.String[], int);
+    descriptor: ([Ljava/lang/String;I)Ljava/util/ArrayList;
+    Code:
+       0: invokestatic  #32                 // Method basemod/devcommands/ConsoleCommand.getCardOptions:()Ljava/util/ArrayList;
+       3: astore_3
+       4: aload_3
+       5: aload_1
+       6: iload_2
+       7: aaload
+       8: invokevirtual #33                 // Method java/util/ArrayList.contains:(Ljava/lang/Object;)Z
+      11: ifeq          95
+      14: aload_1
+      15: arraylength
+      16: iload_2
+      17: iconst_1
+      18: iadd
+      19: if_icmple     81
+      22: aload_1
+      23: iload_2
+      24: iconst_1
+      25: iadd
+      26: aaload
+      27: ldc           #34                 // String \\d*
+      29: invokevirtual #35                 // Method java/lang/String.matches:(Ljava/lang/String;)Z
+      32: ifeq          81
+      35: aload_1
+      36: arraylength
+      37: iload_2
+      38: iconst_2
+      39: iadd
+      40: if_icmple     77
+      43: aload_1
+      44: iload_2
+      45: iconst_2
+      46: iadd
+      47: aaload
+      48: ldc           #36                 // String \\d+
+      50: invokevirtual #35                 // Method java/lang/String.matches:(Ljava/lang/String;)Z
+      53: ifeq          63
+      56: iconst_1
+      57: putstatic     #37                 // Field basemod/devcommands/ConsoleCommand.complete:Z
+      60: goto          77
+      63: aload_1
+      64: iload_2
+      65: iconst_2
+      66: iadd
+      67: aaload
+      68: invokevirtual #38                 // Method java/lang/String.length:()I
+      71: ifle          77
+      74: invokestatic  #39                 // Method tooManyTokensError:()V
+      77: invokestatic  #40                 // Method basemod/devcommands/ConsoleCommand.smallNumbers:()Ljava/util/ArrayList;
+      80: areturn
+      81: aload_1
+      82: arraylength
+      83: iload_2
+      84: iconst_1
+      85: iadd
+      86: if_icmple     106
+      89: invokestatic  #39                 // Method tooManyTokensError:()V
+      92: goto          106
+      95: aload_1
+      96: arraylength
+      97: iload_2
+      98: iconst_1
+      99: iadd
+     100: if_icmple     106
+     103: invokestatic  #39                 // Method tooManyTokensError:()V
+     106: aload_3
+     107: areturn
+}

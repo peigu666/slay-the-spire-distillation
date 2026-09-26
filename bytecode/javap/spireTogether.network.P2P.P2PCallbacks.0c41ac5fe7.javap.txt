@@ -1,0 +1,2043 @@
+Compiled from "P2PCallbacks.java"
+public class spireTogether.network.P2P.P2PCallbacks {
+  public spireTogether.network.P2P.P2PCallbacks();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void OnPlayerRegistered(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+       3: instanceof    #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+       6: ifeq          13
+       9: iconst_1
+      10: putstatic     #4                  // Field spireTogether/screens/lobby/MPLobbyScreen.resetStartButton:Z
+      13: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      16: instanceof    #5                  // class spireTogether/screens/trading/PreTradingScreen
+      19: ifeq          31
+      22: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      25: checkcast     #5                  // class spireTogether/screens/trading/PreTradingScreen
+      28: invokevirtual #6                  // Method spireTogether/screens/trading/PreTradingScreen.ReloadPlayerBoxes:()V
+      31: aload_0
+      32: getfield      #7                  // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+      35: invokestatic  #8                  // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      38: getfield      #7                  // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+      41: invokevirtual #9                  // Method java/lang/Integer.equals:(Ljava/lang/Object;)Z
+      44: ifne          69
+      47: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      50: instanceof    #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+      53: ifeq          65
+      56: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      59: checkcast     #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+      62: invokevirtual #10                 // Method spireTogether/screens/lobby/MPLobbyScreen.ReInitPanels:()V
+      65: aload_0
+      66: invokestatic  #11                 // Method spireTogether/patches/ui/MapNodePatches.AddDot:(LspireTogether/network/P2P/P2PPlayer;)V
+      69: invokestatic  #12                 // Method spireTogether/util/SpireHelp$Gameplay.AreMonstersPresent:()Z
+      72: ifeq          232
+      75: invokestatic  #13                 // Method spireTogether/util/SpireHelp$Gameplay.GetMapLocation:()LspireTogether/network/objects/rooms/NetworkLocation;
+      78: invokestatic  #14                 // Method spireTogether/other/RoomDataManager.GetRoomCache:(LspireTogether/network/objects/rooms/NetworkLocation;)LspireTogether/network/objects/rooms/NetworkRoom;
+      81: astore_1
+      82: iconst_0
+      83: istore_2
+      84: iload_2
+      85: invokestatic  #15                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getMonsters:()Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      88: getfield      #16                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+      91: invokevirtual #17                 // Method java/util/ArrayList.size:()I
+      94: if_icmpge     232
+      97: invokestatic  #15                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getMonsters:()Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+     100: getfield      #16                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+     103: iload_2
+     104: invokevirtual #18                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     107: checkcast     #19                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     110: astore_3
+     111: aload_3
+     112: ifnull        226
+     115: aload_3
+     116: getfield      #20                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+     119: ifle          226
+     122: getstatic     #21                 // Field spireTogether/patches/monsters/MonsterFieldPatches$MonsterFieldPatcher.origMaxHP:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     125: aload_3
+     126: invokevirtual #22                 // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     129: checkcast     #23                 // class java/lang/Integer
+     132: invokestatic  #24                 // Method spireTogether/util/SpireHelp$Gameplay.GetScaledMonsterHP:(Ljava/lang/Integer;)Ljava/lang/Integer;
+     135: astore        4
+     137: aload         4
+     139: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+     142: aload_3
+     143: getfield      #26                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.maxHealth:I
+     146: isub
+     147: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     150: astore        5
+     152: aload_3
+     153: aload         4
+     155: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+     158: putfield      #26                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.maxHealth:I
+     161: aload_3
+     162: dup
+     163: getfield      #20                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+     166: aload         5
+     168: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+     171: iadd
+     172: putfield      #20                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+     175: aload_3
+     176: invokevirtual #28                 // Method com/megacrit/cardcrawl/monsters/AbstractMonster.healthBarUpdatedEvent:()V
+     179: aload_3
+     180: invokestatic  #29                 // Method spireTogether/util/SpireHelp$Gameplay.CreatureToUID:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)Ljava/lang/String;
+     183: astore        6
+     185: aload_1
+     186: ifnull        226
+     189: aload_1
+     190: aload         6
+     192: invokevirtual #30                 // Method spireTogether/network/objects/rooms/NetworkRoom.GetMonster:(Ljava/lang/String;)LspireTogether/network/objects/entities/NetworkMonster;
+     195: astore        7
+     197: aload         7
+     199: ifnull        226
+     202: aload         7
+     204: aload_3
+     205: getfield      #20                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+     208: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     211: putfield      #31                 // Field spireTogether/network/objects/entities/NetworkMonster.HP:Ljava/lang/Integer;
+     214: aload         7
+     216: aload_3
+     217: getfield      #26                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.maxHealth:I
+     220: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     223: putfield      #32                 // Field spireTogether/network/objects/entities/NetworkMonster.maxHP:Ljava/lang/Integer;
+     226: iinc          2, 1
+     229: goto          84
+     232: new           #33                 // class spireTogether/network/P2P/P2PCallbacks$1
+     235: dup
+     236: new           #34                 // class java/lang/StringBuilder
+     239: dup
+     240: invokespecial #35                 // Method java/lang/StringBuilder."<init>":()V
+     243: aload_0
+     244: invokevirtual #36                 // Method spireTogether/network/P2P/P2PPlayer.GetColoredUsername:()Ljava/lang/String;
+     247: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     250: ldc           #38                 // String  joined the game
+     252: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     255: invokevirtual #39                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     258: invokespecial #40                 // Method spireTogether/network/P2P/P2PCallbacks$1."<init>":(Ljava/lang/String;)V
+     261: invokestatic  #41                 // Method spireTogether/chat/ChatConsole.addToHistory:(LspireTogether/chat/ChatMessage;)V
+     264: return
+
+  public static void OnPlayerDisconnected(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: new           #42                 // class spireTogether/network/P2P/P2PCallbacks$2
+       3: dup
+       4: new           #34                 // class java/lang/StringBuilder
+       7: dup
+       8: invokespecial #35                 // Method java/lang/StringBuilder."<init>":()V
+      11: aload_0
+      12: invokevirtual #36                 // Method spireTogether/network/P2P/P2PPlayer.GetColoredUsername:()Ljava/lang/String;
+      15: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      18: ldc           #43                 // String  left the game
+      20: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      23: invokevirtual #39                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      26: invokespecial #44                 // Method spireTogether/network/P2P/P2PCallbacks$2."<init>":(Ljava/lang/String;)V
+      29: invokestatic  #41                 // Method spireTogether/chat/ChatConsole.addToHistory:(LspireTogether/chat/ChatMessage;)V
+      32: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      35: instanceof    #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+      38: ifeq          53
+      41: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      44: checkcast     #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+      47: invokevirtual #10                 // Method spireTogether/screens/lobby/MPLobbyScreen.ReInitPanels:()V
+      50: goto          89
+      53: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      56: instanceof    #45                 // class spireTogether/screens/trading/TradingScreen
+      59: ifeq          89
+      62: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      65: checkcast     #45                 // class spireTogether/screens/trading/TradingScreen
+      68: astore_1
+      69: getstatic     #46                 // Field spireTogether/screens/trading/TradingScreen.tradingPlayer:LspireTogether/network/P2P/P2PPlayer;
+      72: getfield      #7                  // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+      75: aload_0
+      76: getfield      #7                  // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+      79: invokevirtual #9                  // Method java/lang/Integer.equals:(Ljava/lang/Object;)Z
+      82: ifeq          89
+      85: aload_1
+      86: invokevirtual #47                 // Method spireTogether/screens/trading/TradingScreen.CloseScreen:()V
+      89: aload_0
+      90: aload_0
+      91: getfield      #48                 // Field spireTogether/network/P2P/P2PPlayer.location:LspireTogether/network/objects/rooms/NetworkLocation;
+      94: invokestatic  #49                 // Method spireTogether/patches/ui/MapNodePatches.RemoveDot:(LspireTogether/network/P2P/P2PPlayer;LspireTogether/network/objects/rooms/NetworkLocation;)V
+      97: invokestatic  #12                 // Method spireTogether/util/SpireHelp$Gameplay.AreMonstersPresent:()Z
+     100: ifeq          249
+     103: invokestatic  #13                 // Method spireTogether/util/SpireHelp$Gameplay.GetMapLocation:()LspireTogether/network/objects/rooms/NetworkLocation;
+     106: invokestatic  #14                 // Method spireTogether/other/RoomDataManager.GetRoomCache:(LspireTogether/network/objects/rooms/NetworkLocation;)LspireTogether/network/objects/rooms/NetworkRoom;
+     109: astore_1
+     110: iconst_0
+     111: istore_2
+     112: iload_2
+     113: invokestatic  #15                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getMonsters:()Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+     116: getfield      #16                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+     119: invokevirtual #17                 // Method java/util/ArrayList.size:()I
+     122: if_icmpge     239
+     125: invokestatic  #15                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getMonsters:()Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+     128: getfield      #16                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+     131: iload_2
+     132: invokevirtual #18                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     135: checkcast     #19                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+     138: astore_3
+     139: getstatic     #21                 // Field spireTogether/patches/monsters/MonsterFieldPatches$MonsterFieldPatcher.origMaxHP:Lcom/evacipated/cardcrawl/modthespire/lib/SpireField;
+     142: aload_3
+     143: invokevirtual #22                 // Method com/evacipated/cardcrawl/modthespire/lib/SpireField.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     146: checkcast     #23                 // class java/lang/Integer
+     149: invokestatic  #24                 // Method spireTogether/util/SpireHelp$Gameplay.GetScaledMonsterHP:(Ljava/lang/Integer;)Ljava/lang/Integer;
+     152: astore        4
+     154: aload_3
+     155: aload         4
+     157: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+     160: putfield      #26                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.maxHealth:I
+     163: aload_3
+     164: getfield      #20                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+     167: aload_3
+     168: getfield      #26                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.maxHealth:I
+     171: if_icmple     182
+     174: aload_3
+     175: aload_3
+     176: getfield      #26                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.maxHealth:I
+     179: putfield      #20                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+     182: aload_3
+     183: invokevirtual #28                 // Method com/megacrit/cardcrawl/monsters/AbstractMonster.healthBarUpdatedEvent:()V
+     186: aload_3
+     187: invokestatic  #29                 // Method spireTogether/util/SpireHelp$Gameplay.CreatureToUID:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)Ljava/lang/String;
+     190: astore        5
+     192: aload_1
+     193: ifnull        233
+     196: aload_1
+     197: aload         5
+     199: invokevirtual #30                 // Method spireTogether/network/objects/rooms/NetworkRoom.GetMonster:(Ljava/lang/String;)LspireTogether/network/objects/entities/NetworkMonster;
+     202: astore        6
+     204: aload         6
+     206: ifnull        233
+     209: aload         6
+     211: aload_3
+     212: getfield      #20                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+     215: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     218: putfield      #31                 // Field spireTogether/network/objects/entities/NetworkMonster.HP:Ljava/lang/Integer;
+     221: aload         6
+     223: aload_3
+     224: getfield      #26                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.maxHealth:I
+     227: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     230: putfield      #32                 // Field spireTogether/network/objects/entities/NetworkMonster.maxHP:Ljava/lang/Integer;
+     233: iinc          2, 1
+     236: goto          112
+     239: invokestatic  #50                 // Method spireTogether/network/P2P/P2PManager.AllPlayersEndedTurn:()Z
+     242: ifeq          249
+     245: iconst_1
+     246: putstatic     #51                 // Field spireTogether/patches/network/EndTurnPatches.AllowEndTurn:Z
+     249: invokestatic  #52                 // Method spireTogether/util/SpireHelp$Gameplay.IsInRun:()Z
+     252: ifeq          268
+     255: invokestatic  #53                 // Method spireTogether/network/P2P/P2PManager.AllPlayersDied:()Z
+     258: ifeq          268
+     261: iconst_0
+     262: putstatic     #51                 // Field spireTogether/patches/network/EndTurnPatches.AllowEndTurn:Z
+     265: invokestatic  #54                 // Method spireTogether/patches/DeathPatches.TrueDeath:()V
+     268: return
+
+  public static void OnPlayerChangedCharacter(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass, com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)V
+    Code:
+       0: return
+
+  public static void OnPlayerChangedData(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+       4: invokestatic  #55                 // Method spireTogether/network/P2P/P2PManager.GetPlayer:(Ljava/lang/Integer;)LspireTogether/network/P2P/P2PPlayer;
+       7: astore_1
+       8: aload_0
+       9: invokestatic  #56                 // Method spireTogether/network/P2P/P2PManager.SetPlayer:(LspireTogether/network/P2P/P2PPlayer;)V
+      12: aload_0
+      13: getfield      #57                 // Field spireTogether/network/P2P/P2PPlayer.startStatus:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      16: getstatic     #58                 // Field spireTogether/network/P2P/P2PPlayer$StartStatus.EMBARKED:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      19: if_acmpne     26
+      22: aload_0
+      23: invokevirtual #59                 // Method spireTogether/network/P2P/P2PPlayer.GenerateCharacter:()V
+      26: aload_0
+      27: invokevirtual #60                 // Method spireTogether/network/P2P/P2PPlayer.ReloadInfobox:()V
+      30: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      33: instanceof    #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+      36: ifeq          51
+      39: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      42: checkcast     #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+      45: astore_2
+      46: aload_2
+      47: aload_0
+      48: invokevirtual #61                 // Method spireTogether/screens/lobby/MPLobbyScreen.UpdatePanelData:(LspireTogether/network/P2P/P2PPlayer;)V
+      51: aload_1
+      52: ifnull        93
+      55: aload_1
+      56: getfield      #57                 // Field spireTogether/network/P2P/P2PPlayer.startStatus:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      59: aload_0
+      60: getfield      #57                 // Field spireTogether/network/P2P/P2PPlayer.startStatus:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      63: if_acmpeq     93
+      66: new           #62                 // class spireTogether/util/NetworkMessage
+      69: dup
+      70: getstatic     #63                 // Field spireTogether/network/P2P/P2PRequests.changedPlayerStartStatus:Ljava/lang/String;
+      73: aload_0
+      74: getfield      #57                 // Field spireTogether/network/P2P/P2PPlayer.startStatus:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      77: invokespecial #64                 // Method spireTogether/util/NetworkMessage."<init>":(Ljava/lang/String;Ljava/lang/Object;)V
+      80: astore_2
+      81: aload_2
+      82: aload_0
+      83: getfield      #7                  // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+      86: putfield      #65                 // Field spireTogether/util/NetworkMessage.senderID:Ljava/lang/Integer;
+      89: aload_2
+      90: invokestatic  #66                 // Method spireTogether/network/P2P/P2PMessageAnalyzer.AnalyzeMessage:(LspireTogether/util/NetworkMessage;)V
+      93: return
+
+  public static void OnPlayerChangedActionCount(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: return
+
+  public static void OnPlayerChangedHorizontalFlipState(spireTogether.network.P2P.P2PPlayer, boolean, boolean);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;ZZ)V
+    Code:
+       0: return
+
+  public static void OnPlayerChangedCards(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.cards.CardGroup$CardGroupType, java.util.ArrayList<com.megacrit.cardcrawl.cards.AbstractCard>, java.util.ArrayList<com.megacrit.cardcrawl.cards.AbstractCard>);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;Ljava/util/ArrayList;Ljava/util/ArrayList;)V
+    Code:
+       0: return
+
+  public static void OnAllyPlayedCard(com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.core.AbstractCreature, java.lang.Integer);
+    descriptor: (Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/Integer;)V
+    Code:
+       0: return
+
+  public static void OnPlayerChangedColor(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+       3: instanceof    #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+       6: ifeq          19
+       9: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      12: checkcast     #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+      15: aload_0
+      16: invokevirtual #61                 // Method spireTogether/screens/lobby/MPLobbyScreen.UpdatePanelData:(LspireTogether/network/P2P/P2PPlayer;)V
+      19: return
+
+  public static void OnPlayerChangedNameplate(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+       3: instanceof    #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+       6: ifeq          19
+       9: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      12: checkcast     #3                  // class spireTogether/screens/lobby/MPLobbyScreen
+      15: aload_0
+      16: invokevirtual #61                 // Method spireTogether/screens/lobby/MPLobbyScreen.UpdatePanelData:(LspireTogether/network/P2P/P2PPlayer;)V
+      19: return
+
+  public static void OnPlayerChangedReadyStatus(spireTogether.network.P2P.P2PPlayer, spireTogether.network.P2P.P2PPlayer$StartStatus, spireTogether.network.P2P.P2PPlayer$StartStatus);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/network/P2P/P2PPlayer$StartStatus;LspireTogether/network/P2P/P2PPlayer$StartStatus;)V
+    Code:
+       0: aload_1
+       1: getstatic     #58                 // Field spireTogether/network/P2P/P2PPlayer$StartStatus.EMBARKED:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+       4: if_acmpeq     18
+       7: aload_2
+       8: getstatic     #58                 // Field spireTogether/network/P2P/P2PPlayer$StartStatus.EMBARKED:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      11: if_acmpne     18
+      14: aload_0
+      15: invokevirtual #59                 // Method spireTogether/network/P2P/P2PPlayer.GenerateCharacter:()V
+      18: return
+
+  public static void OnPlayerLocationChange(spireTogether.network.P2P.P2PPlayer, spireTogether.network.objects.rooms.NetworkLocation, spireTogether.network.objects.rooms.NetworkLocation);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/network/objects/rooms/NetworkLocation;LspireTogether/network/objects/rooms/NetworkLocation;)V
+    Code:
+       0: return
+
+  public static void OnPlayerTradingStatusChange(spireTogether.network.P2P.P2PPlayer, spireTogether.network.P2P.P2PPlayer$TradingStatus);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/network/P2P/P2PPlayer$TradingStatus;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #67                 // Field spireTogether/network/P2P/P2PPlayer.tradingStatus:LspireTogether/network/P2P/P2PPlayer$TradingStatus;
+       5: aload_1
+       6: getstatic     #68                 // Field spireTogether/network/P2P/P2PPlayer$TradingStatus.REQUESTED:LspireTogether/network/P2P/P2PPlayer$TradingStatus;
+       9: if_acmpne     80
+      12: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      15: instanceof    #5                  // class spireTogether/screens/trading/PreTradingScreen
+      18: ifeq          33
+      21: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      24: checkcast     #5                  // class spireTogether/screens/trading/PreTradingScreen
+      27: invokevirtual #6                  // Method spireTogether/screens/trading/PreTradingScreen.ReloadPlayerBoxes:()V
+      30: goto          157
+      33: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      36: instanceof    #69                 // class spireTogether/screens/trading/TradingWaitingOnPlayerScreen
+      39: ifeq          157
+      42: getstatic     #70                 // Field spireTogether/screens/trading/PreTradingScreen.requestedTrader:Ljava/lang/Integer;
+      45: aload_0
+      46: getfield      #7                  // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+      49: invokevirtual #9                  // Method java/lang/Integer.equals:(Ljava/lang/Object;)Z
+      52: ifeq          157
+      55: iconst_m1
+      56: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      59: putstatic     #70                 // Field spireTogether/screens/trading/PreTradingScreen.requestedTrader:Ljava/lang/Integer;
+      62: getstatic     #71                 // Field spireTogether/network/P2P/P2PPlayer$TradingStatus.TRADING:LspireTogether/network/P2P/P2PPlayer$TradingStatus;
+      65: invokestatic  #72                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerTradeStatus:(LspireTogether/network/P2P/P2PPlayer$TradingStatus;)V
+      68: aload_0
+      69: putstatic     #46                 // Field spireTogether/screens/trading/TradingScreen.tradingPlayer:LspireTogether/network/P2P/P2PPlayer;
+      72: ldc           #45                 // class spireTogether/screens/trading/TradingScreen
+      74: invokestatic  #73                 // Method spireTogether/screens/ScreenManager.Open:(Ljava/lang/Class;)V
+      77: goto          157
+      80: aload_1
+      81: getstatic     #74                 // Field spireTogether/network/P2P/P2PPlayer$TradingStatus.IDLE:LspireTogether/network/P2P/P2PPlayer$TradingStatus;
+      84: if_acmpne     157
+      87: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      90: instanceof    #5                  // class spireTogether/screens/trading/PreTradingScreen
+      93: ifeq          108
+      96: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+      99: checkcast     #5                  // class spireTogether/screens/trading/PreTradingScreen
+     102: invokevirtual #6                  // Method spireTogether/screens/trading/PreTradingScreen.ReloadPlayerBoxes:()V
+     105: goto          157
+     108: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+     111: instanceof    #45                 // class spireTogether/screens/trading/TradingScreen
+     114: ifeq          157
+     117: getstatic     #46                 // Field spireTogether/screens/trading/TradingScreen.tradingPlayer:LspireTogether/network/P2P/P2PPlayer;
+     120: getfield      #7                  // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+     123: aload_0
+     124: getfield      #7                  // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+     127: invokestatic  #75                 // Method java/util/Objects.equals:(Ljava/lang/Object;Ljava/lang/Object;)Z
+     130: ifeq          157
+     133: invokestatic  #8                  // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     136: getstatic     #74                 // Field spireTogether/network/P2P/P2PPlayer$TradingStatus.IDLE:LspireTogether/network/P2P/P2PPlayer$TradingStatus;
+     139: putfield      #67                 // Field spireTogether/network/P2P/P2PPlayer.tradingStatus:LspireTogether/network/P2P/P2PPlayer$TradingStatus;
+     142: getstatic     #74                 // Field spireTogether/network/P2P/P2PPlayer$TradingStatus.IDLE:LspireTogether/network/P2P/P2PPlayer$TradingStatus;
+     145: invokestatic  #72                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerTradeStatus:(LspireTogether/network/P2P/P2PPlayer$TradingStatus;)V
+     148: getstatic     #2                  // Field spireTogether/screens/ScreenManager.screen:LspireTogether/screens/Screen;
+     151: checkcast     #45                 // class spireTogether/screens/trading/TradingScreen
+     154: invokevirtual #47                 // Method spireTogether/screens/trading/TradingScreen.CloseScreen:()V
+     157: return
+
+  public static void OnMapMarkerChange(spireTogether.network.objects.rooms.NetworkLocation, boolean);
+    descriptor: (LspireTogether/network/objects/rooms/NetworkLocation;Z)V
+    Code:
+       0: return
+
+  public static void OnPlayerChangedPotions(spireTogether.network.P2P.P2PPlayer, java.util.ArrayList<spireTogether.network.objects.items.NetworkPotion>);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/util/ArrayList;)V
+    Code:
+       0: return
+
+  public static void OnPlayerChangedRelics(spireTogether.network.P2P.P2PPlayer, java.util.ArrayList<spireTogether.network.objects.items.NetworkRelic>);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/util/ArrayList;)V
+    Code:
+       0: return
+
+  public static void OnPlayerChangedBlights(spireTogether.network.P2P.P2PPlayer, java.util.ArrayList<spireTogether.network.objects.items.NetworkBlight>, java.util.ArrayList<spireTogether.network.objects.items.NetworkBlight>, java.util.ArrayList<spireTogether.network.objects.items.NetworkBlight>, java.util.ArrayList<spireTogether.network.objects.items.NetworkBlight>);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V
+    Code:
+       0: return
+
+  public static void OnPlayerChangedSkin(spireTogether.network.P2P.P2PPlayer, skindex.skins.player.PlayerSkin, skindex.skins.player.PlayerSkin);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lskindex/skins/player/PlayerSkin;Lskindex/skins/player/PlayerSkin;)V
+    Code:
+       0: return
+
+  public static void OnPlayerMaxHPIncreased(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: aload_0
+       1: astore_2
+       2: aload_2
+       3: aload_2
+       4: getfield      #76                 // Field spireTogether/network/P2P/P2PPlayer.maxHP:Ljava/lang/Integer;
+       7: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      10: aload_1
+      11: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      14: iadd
+      15: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      18: dup_x1
+      19: putfield      #76                 // Field spireTogether/network/P2P/P2PPlayer.maxHP:Ljava/lang/Integer;
+      22: pop
+      23: aload_0
+      24: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+      27: astore_2
+      28: aload_2
+      29: ifnull        43
+      32: aload_2
+      33: aload_0
+      34: getfield      #76                 // Field spireTogether/network/P2P/P2PPlayer.maxHP:Ljava/lang/Integer;
+      37: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      40: putfield      #78                 // Field spireTogether/monsters/CharacterEntity.maxHealth:I
+      43: aload_0
+      44: invokevirtual #60                 // Method spireTogether/network/P2P/P2PPlayer.ReloadInfobox:()V
+      47: return
+
+  public static void OnPlayerMaxHPDecreased(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: aload_0
+       1: astore_2
+       2: aload_2
+       3: aload_2
+       4: getfield      #76                 // Field spireTogether/network/P2P/P2PPlayer.maxHP:Ljava/lang/Integer;
+       7: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      10: aload_1
+      11: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      14: isub
+      15: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      18: dup_x1
+      19: putfield      #76                 // Field spireTogether/network/P2P/P2PPlayer.maxHP:Ljava/lang/Integer;
+      22: pop
+      23: aload_0
+      24: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+      27: astore_2
+      28: aload_2
+      29: ifnull        43
+      32: aload_2
+      33: aload_0
+      34: getfield      #76                 // Field spireTogether/network/P2P/P2PPlayer.maxHP:Ljava/lang/Integer;
+      37: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      40: putfield      #78                 // Field spireTogether/monsters/CharacterEntity.maxHealth:I
+      43: aload_0
+      44: invokevirtual #60                 // Method spireTogether/network/P2P/P2PPlayer.ReloadInfobox:()V
+      47: return
+
+  public static void OnPlayerHPChanged(spireTogether.network.P2P.P2PPlayer, java.lang.Integer, java.lang.Integer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+    Code:
+       0: aload_0
+       1: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+       4: astore        4
+       6: aload         4
+       8: ifnull        20
+      11: aload         4
+      13: aload_2
+      14: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      17: putfield      #79                 // Field spireTogether/monsters/CharacterEntity.currentHealth:I
+      20: return
+
+  public static void OnPlayerBlockChanged(spireTogether.network.P2P.P2PPlayer, java.lang.Integer, java.lang.Integer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+    Code:
+       0: aload_0
+       1: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+       4: astore        4
+       6: aload         4
+       8: ifnull        20
+      11: aload         4
+      13: aload_2
+      14: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      17: putfield      #80                 // Field spireTogether/monsters/CharacterEntity.currentBlock:I
+      20: return
+
+  public static void OnPlayerGoldChanged(spireTogether.network.P2P.P2PPlayer, java.lang.Integer, java.lang.Integer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+    Code:
+       0: aload_0
+       1: invokevirtual #60                 // Method spireTogether/network/P2P/P2PPlayer.ReloadInfobox:()V
+       4: return
+
+  public static void OnPlayerPowersChanged(spireTogether.network.P2P.P2PPlayer, java.util.ArrayList<spireTogether.network.objects.entities.NetworkPower>, java.util.ArrayList<spireTogether.network.objects.entities.NetworkPower>, java.util.ArrayList<spireTogether.network.objects.entities.NetworkPower>, java.util.ArrayList<spireTogether.network.objects.entities.NetworkPower>);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V
+    Code:
+       0: aload_0
+       1: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+       4: astore        5
+       6: aload         5
+       8: ifnull        73
+      11: aload         5
+      13: getfield      #81                 // Field spireTogether/monsters/CharacterEntity.powers:Ljava/util/ArrayList;
+      16: invokevirtual #82                 // Method java/util/ArrayList.clear:()V
+      19: aload_2
+      20: invokevirtual #83                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      23: astore        6
+      25: aload         6
+      27: invokeinterface #84,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      32: ifeq          73
+      35: aload         6
+      37: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      42: checkcast     #86                 // class spireTogether/network/objects/entities/NetworkPower
+      45: astore        7
+      47: aload         7
+      49: invokevirtual #87                 // Method spireTogether/network/objects/entities/NetworkPower.ToStandard:()Lcom/megacrit/cardcrawl/powers/AbstractPower;
+      52: astore        8
+      54: aload         8
+      56: ifnull        70
+      59: aload         5
+      61: getfield      #81                 // Field spireTogether/monsters/CharacterEntity.powers:Ljava/util/ArrayList;
+      64: aload         8
+      66: invokevirtual #88                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      69: pop
+      70: goto          25
+      73: aload_0
+      74: invokevirtual #60                 // Method spireTogether/network/P2P/P2PPlayer.ReloadInfobox:()V
+      77: return
+
+  public static void OnPlayerMaxEnergyChanged(spireTogether.network.P2P.P2PPlayer, java.lang.Integer, java.lang.Integer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+    Code:
+       0: return
+
+  public static void OnPlayerEnergyChanged(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #89                 // Field spireTogether/network/P2P/P2PPlayer.energy:Ljava/lang/Integer;
+       5: aload_0
+       6: invokevirtual #60                 // Method spireTogether/network/P2P/P2PPlayer.ReloadInfobox:()V
+       9: return
+
+  public static void OnPlayerEndedTurn(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: return
+
+  public static void OnPlayerChangedStance(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.stances.AbstractStance, com.megacrit.cardcrawl.stances.AbstractStance);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/stances/AbstractStance;Lcom/megacrit/cardcrawl/stances/AbstractStance;)V
+    Code:
+       0: return
+
+  public static void OnPlayerManuallyDiscarded(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: return
+
+  public static void OnMonsterBlockIncreased(com.megacrit.cardcrawl.monsters.AbstractMonster, java.lang.Integer);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/Integer;)V
+    Code:
+       0: aload_1
+       1: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+       4: aload_0
+       5: getfield      #90                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentBlock:I
+       8: if_icmple     45
+      11: iconst_0
+      12: istore_2
+      13: aload_0
+      14: getfield      #90                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentBlock:I
+      17: ifne          22
+      20: iconst_1
+      21: istore_2
+      22: aload_0
+      23: aload_1
+      24: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      27: putfield      #90                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentBlock:I
+      30: iload_2
+      31: ifeq          45
+      34: ldc           #91                 // String gainBlockAnimation
+      36: aload_0
+      37: iconst_0
+      38: anewarray     #92                 // class java/lang/Object
+      41: invokestatic  #93                 // Method spireTogether/util/Reflection.InvokeMethod:(Ljava/lang/String;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+      44: pop
+      45: return
+
+  public static void OnMonsterBlockDecreased(com.megacrit.cardcrawl.monsters.AbstractMonster, java.lang.Integer, spireTogether.network.P2P.P2PPlayer);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/Integer;LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: return
+
+  public static void OnMonsterHealthIncreased(com.megacrit.cardcrawl.monsters.AbstractMonster, java.lang.Integer);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/Integer;)V
+    Code:
+       0: aload_0
+       1: getfield      #20                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+       4: aload_1
+       5: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+       8: if_icmpge     74
+      11: aload_1
+      12: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      15: aload_0
+      16: getfield      #20                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+      19: isub
+      20: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      23: astore_2
+      24: aload_0
+      25: aload_1
+      26: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      29: putfield      #20                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.currentHealth:I
+      32: aload_0
+      33: invokevirtual #28                 // Method com/megacrit/cardcrawl/monsters/AbstractMonster.healthBarUpdatedEvent:()V
+      36: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      39: new           #95                 // class com/megacrit/cardcrawl/actions/animations/VFXAction
+      42: dup
+      43: new           #96                 // class com/megacrit/cardcrawl/vfx/combat/HealEffect
+      46: dup
+      47: aload_0
+      48: getfield      #97                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      51: getfield      #98                 // Field com/megacrit/cardcrawl/helpers/Hitbox.x:F
+      54: aload_0
+      55: getfield      #97                 // Field com/megacrit/cardcrawl/monsters/AbstractMonster.hb:Lcom/megacrit/cardcrawl/helpers/Hitbox;
+      58: getfield      #99                 // Field com/megacrit/cardcrawl/helpers/Hitbox.y:F
+      61: aload_2
+      62: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      65: invokespecial #100                // Method com/megacrit/cardcrawl/vfx/combat/HealEffect."<init>":(FFI)V
+      68: invokespecial #101                // Method com/megacrit/cardcrawl/actions/animations/VFXAction."<init>":(Lcom/megacrit/cardcrawl/vfx/AbstractGameEffect;)V
+      71: invokevirtual #102                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      74: return
+
+  public static void OnMonsterHealthDecreased(com.megacrit.cardcrawl.monsters.AbstractMonster, java.lang.Integer, spireTogether.network.P2P.P2PPlayer);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/Integer;LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: return
+
+  public static void OnMonsterHealthSet(com.megacrit.cardcrawl.monsters.AbstractMonster, java.lang.Integer, spireTogether.network.P2P.P2PPlayer);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/Integer;LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: return
+
+  public static void OnMonsterDied(com.megacrit.cardcrawl.monsters.AbstractMonster, spireTogether.network.P2P.P2PPlayer);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: return
+
+  public static void OnMonsterPowerAdded(com.megacrit.cardcrawl.core.AbstractCreature, com.megacrit.cardcrawl.powers.AbstractPower, spireTogether.monsters.CharacterEntity);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;LspireTogether/monsters/CharacterEntity;)V
+    Code:
+       0: new           #103                // class spireTogether/actions/ApplyPowerWithoutModificationAction
+       3: dup
+       4: aload_0
+       5: aload_2
+       6: ifnull        13
+       9: aload_2
+      10: goto          14
+      13: aload_0
+      14: aload_1
+      15: invokespecial #104                // Method spireTogether/actions/ApplyPowerWithoutModificationAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;)V
+      18: invokevirtual #105                // Method spireTogether/actions/ApplyPowerWithoutModificationAction.update:()V
+      21: goto          96
+      24: astore_3
+      25: new           #34                 // class java/lang/StringBuilder
+      28: dup
+      29: invokespecial #35                 // Method java/lang/StringBuilder."<init>":()V
+      32: ldc           #107                // String Failed to apply monster power
+      34: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      37: aload_1
+      38: getfield      #108                // Field com/megacrit/cardcrawl/powers/AbstractPower.ID:Ljava/lang/String;
+      41: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      44: ldc           #109                // String  to monster
+      46: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      49: aload_0
+      50: getfield      #110                // Field com/megacrit/cardcrawl/core/AbstractCreature.name:Ljava/lang/String;
+      53: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      56: ldc           #111                // String  due to
+      58: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      61: aload_3
+      62: invokevirtual #112                // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+      65: invokevirtual #39                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      68: getstatic     #113                // Field spireTogether/util/SpireLogger$ErrorType.NON_FATAL:LspireTogether/util/SpireLogger$ErrorType;
+      71: invokestatic  #114                // Method spireTogether/util/SpireLogger.LogError:(Ljava/lang/Object;LspireTogether/util/SpireLogger$ErrorType;)V
+      74: goto          92
+      77: astore        4
+      79: ldc           #115                // String Failed to apply monster power as one of the parameters was null
+      81: getstatic     #113                // Field spireTogether/util/SpireLogger$ErrorType.NON_FATAL:LspireTogether/util/SpireLogger$ErrorType;
+      84: invokestatic  #114                // Method spireTogether/util/SpireLogger.LogError:(Ljava/lang/Object;LspireTogether/util/SpireLogger$ErrorType;)V
+      87: aload         4
+      89: invokevirtual #116                // Method java/lang/Exception.printStackTrace:()V
+      92: aload_3
+      93: invokevirtual #116                // Method java/lang/Exception.printStackTrace:()V
+      96: aload_2
+      97: ifnull        104
+     100: aload_2
+     101: invokevirtual #117                // Method spireTogether/monsters/CharacterEntity.useFastAttackAnimation:()V
+     104: return
+    Exception table:
+       from    to  target type
+           0    21    24   Class java/lang/Exception
+          25    74    77   Class java/lang/Exception
+
+  public static void OnMonsterPowerDecreased(com.megacrit.cardcrawl.core.AbstractCreature, com.megacrit.cardcrawl.powers.AbstractPower, spireTogether.monsters.CharacterEntity);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;LspireTogether/monsters/CharacterEntity;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getfield      #108                // Field com/megacrit/cardcrawl/powers/AbstractPower.ID:Ljava/lang/String;
+       5: invokevirtual #118                // Method com/megacrit/cardcrawl/core/AbstractCreature.getPower:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/powers/AbstractPower;
+       8: astore_3
+       9: aload_3
+      10: ifnull        71
+      13: aload_3
+      14: getfield      #119                // Field com/megacrit/cardcrawl/powers/AbstractPower.amount:I
+      17: aload_1
+      18: getfield      #119                // Field com/megacrit/cardcrawl/powers/AbstractPower.amount:I
+      21: if_icmpgt     43
+      24: aload_0
+      25: getfield      #120                // Field com/megacrit/cardcrawl/core/AbstractCreature.powers:Ljava/util/ArrayList;
+      28: aload_0
+      29: aload_1
+      30: getfield      #108                // Field com/megacrit/cardcrawl/powers/AbstractPower.ID:Ljava/lang/String;
+      33: invokevirtual #118                // Method com/megacrit/cardcrawl/core/AbstractCreature.getPower:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/powers/AbstractPower;
+      36: invokevirtual #121                // Method java/util/ArrayList.remove:(Ljava/lang/Object;)Z
+      39: pop
+      40: goto          60
+      43: aload_3
+      44: dup
+      45: getfield      #119                // Field com/megacrit/cardcrawl/powers/AbstractPower.amount:I
+      48: aload_1
+      49: getfield      #119                // Field com/megacrit/cardcrawl/powers/AbstractPower.amount:I
+      52: isub
+      53: putfield      #119                // Field com/megacrit/cardcrawl/powers/AbstractPower.amount:I
+      56: aload_3
+      57: invokevirtual #122                // Method com/megacrit/cardcrawl/powers/AbstractPower.updateDescription:()V
+      60: aload_2
+      61: ifnull        79
+      64: aload_2
+      65: invokevirtual #117                // Method spireTogether/monsters/CharacterEntity.useFastAttackAnimation:()V
+      68: goto          79
+      71: ldc           #123                // String Received OnMonsterPowerDecreased for an invalid power.
+      73: getstatic     #113                // Field spireTogether/util/SpireLogger$ErrorType.NON_FATAL:LspireTogether/util/SpireLogger$ErrorType;
+      76: invokestatic  #114                // Method spireTogether/util/SpireLogger.LogError:(Ljava/lang/Object;LspireTogether/util/SpireLogger$ErrorType;)V
+      79: return
+
+  public static void OnMonsterPowerLost(com.megacrit.cardcrawl.core.AbstractCreature, com.megacrit.cardcrawl.powers.AbstractPower, spireTogether.monsters.CharacterEntity);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;LspireTogether/monsters/CharacterEntity;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getfield      #108                // Field com/megacrit/cardcrawl/powers/AbstractPower.ID:Ljava/lang/String;
+       5: invokevirtual #118                // Method com/megacrit/cardcrawl/core/AbstractCreature.getPower:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/powers/AbstractPower;
+       8: astore_3
+       9: aload_3
+      10: ifnull        30
+      13: aload_0
+      14: getfield      #120                // Field com/megacrit/cardcrawl/core/AbstractCreature.powers:Ljava/util/ArrayList;
+      17: aload_3
+      18: invokevirtual #121                // Method java/util/ArrayList.remove:(Ljava/lang/Object;)Z
+      21: pop
+      22: aload_2
+      23: ifnull        30
+      26: aload_2
+      27: invokevirtual #117                // Method spireTogether/monsters/CharacterEntity.useFastAttackAnimation:()V
+      30: return
+
+  public static void OnMonsterPowerSet(com.megacrit.cardcrawl.core.AbstractCreature, com.megacrit.cardcrawl.powers.AbstractPower, spireTogether.monsters.CharacterEntity);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;LspireTogether/monsters/CharacterEntity;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getfield      #108                // Field com/megacrit/cardcrawl/powers/AbstractPower.ID:Ljava/lang/String;
+       5: invokevirtual #124                // Method com/megacrit/cardcrawl/core/AbstractCreature.hasPower:(Ljava/lang/String;)Z
+       8: ifne          27
+      11: new           #103                // class spireTogether/actions/ApplyPowerWithoutModificationAction
+      14: dup
+      15: aload_0
+      16: aload_2
+      17: aload_1
+      18: invokespecial #104                // Method spireTogether/actions/ApplyPowerWithoutModificationAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;)V
+      21: invokevirtual #105                // Method spireTogether/actions/ApplyPowerWithoutModificationAction.update:()V
+      24: goto          80
+      27: iconst_0
+      28: istore_3
+      29: iload_3
+      30: aload_0
+      31: getfield      #120                // Field com/megacrit/cardcrawl/core/AbstractCreature.powers:Ljava/util/ArrayList;
+      34: invokevirtual #17                 // Method java/util/ArrayList.size:()I
+      37: if_icmpge     80
+      40: aload_0
+      41: getfield      #120                // Field com/megacrit/cardcrawl/core/AbstractCreature.powers:Ljava/util/ArrayList;
+      44: iload_3
+      45: invokevirtual #18                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      48: checkcast     #125                // class com/megacrit/cardcrawl/powers/AbstractPower
+      51: getfield      #108                // Field com/megacrit/cardcrawl/powers/AbstractPower.ID:Ljava/lang/String;
+      54: aload_1
+      55: getfield      #108                // Field com/megacrit/cardcrawl/powers/AbstractPower.ID:Ljava/lang/String;
+      58: invokevirtual #126                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      61: ifeq          74
+      64: aload_0
+      65: getfield      #120                // Field com/megacrit/cardcrawl/core/AbstractCreature.powers:Ljava/util/ArrayList;
+      68: iload_3
+      69: aload_1
+      70: invokevirtual #127                // Method java/util/ArrayList.set:(ILjava/lang/Object;)Ljava/lang/Object;
+      73: pop
+      74: iinc          3, 1
+      77: goto          29
+      80: return
+
+  public static void OnMonsterIntentChanged(com.megacrit.cardcrawl.monsters.AbstractMonster, spireTogether.network.objects.entities.NetworkIntent);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;LspireTogether/network/objects/entities/NetworkIntent;)V
+    Code:
+       0: return
+
+  public static void OnMonsterStateChanged(com.megacrit.cardcrawl.monsters.AbstractMonster, java.lang.String);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #128                // Method spireTogether/util/SpireHelp$Gameplay.ChangeMonsterStateWithoutAction:(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;Ljava/lang/String;)V
+       5: return
+
+  public static void OnFFDamage(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.cards.DamageInfo);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/cards/DamageInfo;)V
+    Code:
+       0: return
+
+  public static void OnFFHeal(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: aload_1
+       4: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+       7: iconst_1
+       8: invokevirtual #130                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.heal:(IZ)V
+      11: aload_0
+      12: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+      15: astore_2
+      16: aload_2
+      17: ifnull        35
+      20: aload_0
+      21: invokevirtual #131                // Method spireTogether/network/P2P/P2PPlayer.IsPlayerInSameRoomAndAction:()Z
+      24: ifeq          35
+      27: aload_0
+      28: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+      31: fconst_1
+      32: invokevirtual #132                // Method spireTogether/monsters/CharacterEntity.useFastShakeAnimation:(F)V
+      35: return
+
+  public static void OnFFPowerApply(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.powers.AbstractPower);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/powers/AbstractPower;)V
+    Code:
+       0: aload_0
+       1: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+       4: astore_2
+       5: aload_2
+       6: ifnull        42
+       9: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      12: new           #133                // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+      15: dup
+      16: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      19: aload_2
+      20: aload_1
+      21: invokespecial #134                // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;)V
+      24: invokevirtual #102                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      27: aload_0
+      28: invokevirtual #131                // Method spireTogether/network/P2P/P2PPlayer.IsPlayerInSameRoomAndAction:()Z
+      31: ifeq          42
+      34: aload_0
+      35: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+      38: fconst_1
+      39: invokevirtual #132                // Method spireTogether/monsters/CharacterEntity.useFastShakeAnimation:(F)V
+      42: return
+
+  public static void OnFFPowerReduce(spireTogether.network.P2P.P2PPlayer, java.lang.String, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/String;Ljava/lang/Integer;)V
+    Code:
+       0: aload_0
+       1: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+       4: astore_3
+       5: aload_3
+       6: ifnull        46
+       9: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      12: new           #135                // class com/megacrit/cardcrawl/actions/common/ReducePowerAction
+      15: dup
+      16: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      19: aload_3
+      20: aload_1
+      21: aload_2
+      22: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      25: invokespecial #136                // Method com/megacrit/cardcrawl/actions/common/ReducePowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;I)V
+      28: invokevirtual #102                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      31: aload_0
+      32: invokevirtual #131                // Method spireTogether/network/P2P/P2PPlayer.IsPlayerInSameRoomAndAction:()Z
+      35: ifeq          46
+      38: aload_0
+      39: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+      42: fconst_1
+      43: invokevirtual #132                // Method spireTogether/monsters/CharacterEntity.useFastShakeAnimation:(F)V
+      46: return
+
+  public static void OnFFPowerRemove(spireTogether.network.P2P.P2PPlayer, java.lang.String);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+       4: astore_2
+       5: aload_2
+       6: ifnull        42
+       9: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      12: new           #137                // class com/megacrit/cardcrawl/actions/common/RemoveSpecificPowerAction
+      15: dup
+      16: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      19: aload_2
+      20: aload_1
+      21: invokespecial #138                // Method com/megacrit/cardcrawl/actions/common/RemoveSpecificPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;)V
+      24: invokevirtual #102                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      27: aload_0
+      28: invokevirtual #131                // Method spireTogether/network/P2P/P2PPlayer.IsPlayerInSameRoomAndAction:()Z
+      31: ifeq          42
+      34: aload_0
+      35: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+      38: fconst_1
+      39: invokevirtual #132                // Method spireTogether/monsters/CharacterEntity.useFastShakeAnimation:(F)V
+      42: return
+
+  public static void OnFFGoldGain(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: aload_1
+       4: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+       7: invokevirtual #139                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.gainGold:(I)V
+      10: return
+
+  public static void OnFFGoldLose(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: aload_1
+       4: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+       7: invokevirtual #140                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.loseGold:(I)V
+      10: return
+
+  public static void OnFFBlockGain(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       3: new           #141                // class com/megacrit/cardcrawl/actions/common/GainBlockAction
+       6: dup
+       7: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      10: aload_1
+      11: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      14: invokespecial #142                // Method com/megacrit/cardcrawl/actions/common/GainBlockAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+      17: invokevirtual #102                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      20: return
+
+  public static void OnFFBlockLose(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: aload_1
+       1: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+       4: iconst_m1
+       5: imul
+       6: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       9: astore_1
+      10: aload_1
+      11: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      14: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      17: getfield      #143                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentBlock:I
+      20: if_icmple     33
+      23: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      26: getfield      #143                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.currentBlock:I
+      29: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      32: astore_1
+      33: aload_0
+      34: invokevirtual #77                 // Method spireTogether/network/P2P/P2PPlayer.GetEntity:()LspireTogether/monsters/CharacterEntity;
+      37: astore_2
+      38: aload_2
+      39: ifnull        63
+      42: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      45: new           #144                // class com/megacrit/cardcrawl/actions/utility/LoseBlockAction
+      48: dup
+      49: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      52: aload_2
+      53: aload_1
+      54: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      57: invokespecial #145                // Method com/megacrit/cardcrawl/actions/utility/LoseBlockAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+      60: invokevirtual #102                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      63: return
+
+  public static void OnFFCardAdd(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.cards.CardGroup$CardGroupType);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;)V
+    Code:
+       0: aload_2
+       1: getstatic     #146                // Field com/megacrit/cardcrawl/cards/CardGroup$CardGroupType.DRAW_PILE:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+       4: if_acmpne     24
+       7: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      10: new           #147                // class com/megacrit/cardcrawl/actions/common/MakeTempCardInDrawPileAction
+      13: dup
+      14: aload_1
+      15: iconst_1
+      16: iconst_1
+      17: iconst_1
+      18: invokespecial #148                // Method com/megacrit/cardcrawl/actions/common/MakeTempCardInDrawPileAction."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;IZZ)V
+      21: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      24: aload_2
+      25: getstatic     #150                // Field com/megacrit/cardcrawl/cards/CardGroup$CardGroupType.MASTER_DECK:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+      28: if_acmpne     48
+      31: invokestatic  #151                // Method spireTogether/SpireTogetherMod.getModID:()Ljava/lang/String;
+      34: invokestatic  #152                // Method dLib/util/PersistentActionManager.get:(Ljava/lang/String;)LdLib/util/PersistentActionManager;
+      37: new           #153                // class com/megacrit/cardcrawl/actions/unique/AddCardToDeckAction
+      40: dup
+      41: aload_1
+      42: invokespecial #154                // Method com/megacrit/cardcrawl/actions/unique/AddCardToDeckAction."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      45: invokevirtual #155                // Method dLib/util/PersistentActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      48: aload_2
+      49: getstatic     #156                // Field com/megacrit/cardcrawl/cards/CardGroup$CardGroupType.HAND:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+      52: if_acmpne     73
+      55: invokestatic  #157                // Method spireTogether/util/SpireHelp$Gameplay.UnEndTurn:()V
+      58: getstatic     #158                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+      61: new           #159                // class com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndAddToHandEffect
+      64: dup
+      65: aload_1
+      66: invokespecial #160                // Method com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndAddToHandEffect."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      69: invokevirtual #88                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      72: pop
+      73: aload_2
+      74: getstatic     #161                // Field com/megacrit/cardcrawl/cards/CardGroup$CardGroupType.DISCARD_PILE:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+      77: if_acmpne     95
+      80: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      83: new           #162                // class com/megacrit/cardcrawl/actions/common/MakeTempCardInDiscardAction
+      86: dup
+      87: aload_1
+      88: iconst_1
+      89: invokespecial #163                // Method com/megacrit/cardcrawl/actions/common/MakeTempCardInDiscardAction."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;I)V
+      92: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      95: aload_2
+      96: getstatic     #164                // Field com/megacrit/cardcrawl/cards/CardGroup$CardGroupType.EXHAUST_PILE:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+      99: if_acmpne     133
+     102: new           #165                // class com/megacrit/cardcrawl/cards/CardGroup
+     105: dup
+     106: getstatic     #166                // Field com/megacrit/cardcrawl/cards/CardGroup$CardGroupType.UNSPECIFIED:Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;
+     109: invokespecial #167                // Method com/megacrit/cardcrawl/cards/CardGroup."<init>":(Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;)V
+     112: astore_3
+     113: aload_3
+     114: aload_1
+     115: invokevirtual #168                // Method com/megacrit/cardcrawl/cards/CardGroup.addToTop:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     118: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     121: new           #169                // class com/megacrit/cardcrawl/actions/common/ExhaustSpecificCardAction
+     124: dup
+     125: aload_1
+     126: aload_3
+     127: invokespecial #170                // Method com/megacrit/cardcrawl/actions/common/ExhaustSpecificCardAction."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/cards/CardGroup;)V
+     130: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     133: return
+
+  public static void OnFFCardMove(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.cards.CardGroup$CardGroupType, com.megacrit.cardcrawl.cards.CardGroup$CardGroupType);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;)V
+    Code:
+       0: return
+
+  public static void OnFFCardRemove(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.cards.CardGroup$CardGroupType);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/cards/CardGroup$CardGroupType;)V
+    Code:
+       0: return
+
+  public static void OnFFCardPlay(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.cards.AbstractCard, com.megacrit.cardcrawl.monsters.AbstractMonster);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+    Code:
+       0: aload_1
+       1: invokestatic  #171                // Method spireTogether/cards/TiSCardFields.setCardAsPlayedByAlly:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+       4: aload_1
+       5: iconst_1
+       6: putfield      #172                // Field com/megacrit/cardcrawl/cards/AbstractCard.purgeOnUse:Z
+       9: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      12: new           #173                // class com/megacrit/cardcrawl/cards/CardQueueItem
+      15: dup
+      16: aload_1
+      17: aload_2
+      18: aload_1
+      19: getfield      #174                // Field com/megacrit/cardcrawl/cards/AbstractCard.energyOnUse:I
+      22: iconst_1
+      23: iconst_1
+      24: invokespecial #175                // Method com/megacrit/cardcrawl/cards/CardQueueItem."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;Lcom/megacrit/cardcrawl/monsters/AbstractMonster;IZZ)V
+      27: iconst_1
+      28: invokevirtual #176                // Method com/megacrit/cardcrawl/actions/GameActionManager.addCardQueueItem:(Lcom/megacrit/cardcrawl/cards/CardQueueItem;Z)V
+      31: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      34: new           #177                // class com/megacrit/cardcrawl/actions/utility/ShowCardAndPoofAction
+      37: dup
+      38: aload_1
+      39: invokespecial #178                // Method com/megacrit/cardcrawl/actions/utility/ShowCardAndPoofAction."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      42: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      45: invokestatic  #157                // Method spireTogether/util/SpireHelp$Gameplay.UnEndTurn:()V
+      48: return
+
+  public static void OnFFRelicAdd(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.relics.AbstractRelic);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+    Code:
+       0: invokestatic  #52                 // Method spireTogether/util/SpireHelp$Gameplay.IsInRun:()Z
+       3: ifeq          28
+       6: invokestatic  #179                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+       9: getstatic     #180                // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      12: iconst_2
+      13: idiv
+      14: i2f
+      15: getstatic     #181                // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      18: iconst_2
+      19: idiv
+      20: i2f
+      21: aload_1
+      22: invokevirtual #182                // Method com/megacrit/cardcrawl/rooms/AbstractRoom.spawnRelicAndObtain:(FFLcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+      25: goto          45
+      28: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      31: ifnull        45
+      34: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      37: getfield      #183                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+      40: aload_1
+      41: invokevirtual #88                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      44: pop
+      45: return
+
+  public static void OnFFStanceChange(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.stances.AbstractStance);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/stances/AbstractStance;)V
+    Code:
+       0: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       3: new           #184                // class com/megacrit/cardcrawl/actions/watcher/ChangeStanceAction
+       6: dup
+       7: aload_1
+       8: invokespecial #185                // Method com/megacrit/cardcrawl/actions/watcher/ChangeStanceAction."<init>":(Lcom/megacrit/cardcrawl/stances/AbstractStance;)V
+      11: invokevirtual #102                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      14: return
+
+  public static void OnFFScry(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       3: new           #186                // class com/megacrit/cardcrawl/actions/utility/ScryAction
+       6: dup
+       7: aload_1
+       8: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      11: invokespecial #187                // Method com/megacrit/cardcrawl/actions/utility/ScryAction."<init>":(I)V
+      14: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      17: return
+
+  public static void OnFFDraw(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: invokestatic  #157                // Method spireTogether/util/SpireHelp$Gameplay.UnEndTurn:()V
+       3: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       6: new           #188                // class com/megacrit/cardcrawl/actions/common/DrawCardAction
+       9: dup
+      10: aload_1
+      11: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      14: invokespecial #189                // Method com/megacrit/cardcrawl/actions/common/DrawCardAction."<init>":(I)V
+      17: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      20: return
+
+  public static void OnFFDiscard(spireTogether.network.P2P.P2PPlayer, spireTogether.network.objects.entities.NetworkCardActionData);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/network/objects/entities/NetworkCardActionData;)V
+    Code:
+       0: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       3: new           #190                // class spireTogether/actions/FeedbackDiscardAction
+       6: dup
+       7: aload_1
+       8: aload_0
+       9: invokespecial #191                // Method spireTogether/actions/FeedbackDiscardAction."<init>":(LspireTogether/network/objects/entities/NetworkCardActionData;LspireTogether/network/P2P/P2PPlayer;)V
+      12: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      15: return
+
+  public static void OnFFExhaust(spireTogether.network.P2P.P2PPlayer, spireTogether.network.objects.entities.NetworkCardActionData);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/network/objects/entities/NetworkCardActionData;)V
+    Code:
+       0: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       3: new           #192                // class spireTogether/actions/FeedbackExhaustAction
+       6: dup
+       7: new           #193                // class com/megacrit/cardcrawl/actions/common/ExhaustAction
+      10: dup
+      11: aload_1
+      12: getfield      #194                // Field spireTogether/network/objects/entities/NetworkCardActionData.amount:Ljava/lang/Integer;
+      15: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      18: aload_1
+      19: getfield      #195                // Field spireTogether/network/objects/entities/NetworkCardActionData.random:Z
+      22: aload_1
+      23: getfield      #196                // Field spireTogether/network/objects/entities/NetworkCardActionData.anyCardNumber:Z
+      26: aload_1
+      27: getfield      #197                // Field spireTogether/network/objects/entities/NetworkCardActionData.canBeZero:Z
+      30: invokespecial #198                // Method com/megacrit/cardcrawl/actions/common/ExhaustAction."<init>":(IZZZ)V
+      33: aload_0
+      34: aload_1
+      35: getfield      #199                // Field spireTogether/network/objects/entities/NetworkCardActionData.requestID:Ljava/lang/String;
+      38: invokespecial #200                // Method spireTogether/actions/FeedbackExhaustAction."<init>":(Lcom/megacrit/cardcrawl/actions/common/ExhaustAction;LspireTogether/network/P2P/P2PPlayer;Ljava/lang/String;)V
+      41: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      44: return
+
+  public static void OnFFRequestTransfer(spireTogether.network.P2P.P2PPlayer, spireTogether.network.objects.entities.NetworkCardActionData);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/network/objects/entities/NetworkCardActionData;)V
+    Code:
+       0: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       3: new           #201                // class spireTogether/actions/FeedbackTransferAction
+       6: dup
+       7: aload_1
+       8: aload_0
+       9: invokespecial #202                // Method spireTogether/actions/FeedbackTransferAction."<init>":(LspireTogether/network/objects/entities/NetworkCardActionData;LspireTogether/network/P2P/P2PPlayer;)V
+      12: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      15: return
+
+  public static void OnFFEnergyGain(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: invokestatic  #157                // Method spireTogether/util/SpireHelp$Gameplay.UnEndTurn:()V
+       3: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       6: new           #203                // class com/megacrit/cardcrawl/actions/common/GainEnergyAction
+       9: dup
+      10: aload_1
+      11: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      14: invokespecial #204                // Method com/megacrit/cardcrawl/actions/common/GainEnergyAction."<init>":(I)V
+      17: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      20: return
+
+  public static void OnFFEnergyLose(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       3: new           #205                // class com/megacrit/cardcrawl/actions/unique/LoseEnergyAction
+       6: dup
+       7: aload_1
+       8: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      11: invokespecial #206                // Method com/megacrit/cardcrawl/actions/unique/LoseEnergyAction."<init>":(I)V
+      14: invokevirtual #149                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      17: return
+
+  public static void OnRequestFeedback(java.lang.String, java.lang.Object);
+    descriptor: (Ljava/lang/String;Ljava/lang/Object;)V
+    Code:
+       0: return
+
+  public static void OnFFOrbSlotGain(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: aload_1
+       4: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+       7: iconst_1
+       8: invokevirtual #207                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.increaseMaxOrbSlots:(IZ)V
+      11: return
+
+  public static void OnFFOrbSlotLose(spireTogether.network.P2P.P2PPlayer, java.lang.Integer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+    Code:
+       0: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: aload_1
+       4: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+       7: invokevirtual #208                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.decreaseMaxOrbSlots:(I)V
+      10: return
+
+  public static void OnFFOrbChannel(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.orbs.AbstractOrb, boolean);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/orbs/AbstractOrb;Z)V
+    Code:
+       0: iload_2
+       1: ifeq          21
+       4: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       7: getfield      #209                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxOrbs:I
+      10: ifgt          21
+      13: aload_0
+      14: iconst_1
+      15: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      18: invokestatic  #210                // Method OnFFOrbSlotGain:(LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;)V
+      21: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      24: new           #211                // class com/megacrit/cardcrawl/actions/defect/ChannelAction
+      27: dup
+      28: aload_1
+      29: invokespecial #212                // Method com/megacrit/cardcrawl/actions/defect/ChannelAction."<init>":(Lcom/megacrit/cardcrawl/orbs/AbstractOrb;)V
+      32: invokevirtual #102                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      35: return
+
+  public static void OnFFOrbEvoke(spireTogether.network.P2P.P2PPlayer, java.lang.Integer, java.lang.Integer, com.megacrit.cardcrawl.orbs.AbstractOrb, boolean, boolean);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/Integer;Ljava/lang/Integer;Lcom/megacrit/cardcrawl/orbs/AbstractOrb;ZZ)V
+    Code:
+       0: iconst_0
+       1: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       4: astore        6
+       6: iconst_0
+       7: istore        7
+       9: iload         7
+      11: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      14: getfield      #213                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.orbs:Ljava/util/ArrayList;
+      17: invokevirtual #17                 // Method java/util/ArrayList.size:()I
+      20: if_icmpge     189
+      23: iload         4
+      25: ifne          43
+      28: aload         6
+      30: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      33: aload_2
+      34: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+      37: if_icmpge     43
+      40: goto          189
+      43: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      46: getfield      #213                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.orbs:Ljava/util/ArrayList;
+      49: iload         7
+      51: invokevirtual #18                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      54: instanceof    #214                // class com/megacrit/cardcrawl/orbs/EmptyOrbSlot
+      57: ifne          183
+      60: aload_3
+      61: ifnull        91
+      64: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      67: getfield      #213                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.orbs:Ljava/util/ArrayList;
+      70: iload         7
+      72: invokevirtual #18                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      75: checkcast     #215                // class com/megacrit/cardcrawl/orbs/AbstractOrb
+      78: getfield      #216                // Field com/megacrit/cardcrawl/orbs/AbstractOrb.ID:Ljava/lang/String;
+      81: aload_3
+      82: getfield      #216                // Field com/megacrit/cardcrawl/orbs/AbstractOrb.ID:Ljava/lang/String;
+      85: invokevirtual #126                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      88: ifeq          183
+      91: iconst_0
+      92: istore        8
+      94: iload         8
+      96: aload_1
+      97: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+     100: if_icmpge     161
+     103: iload         5
+     105: ifeq          138
+     108: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     111: new           #217                // class com/evacipated/cardcrawl/mod/stslib/actions/defect/EvokeSpecificOrbAction
+     114: dup
+     115: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     118: getfield      #213                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.orbs:Ljava/util/ArrayList;
+     121: iload         7
+     123: invokevirtual #18                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     126: checkcast     #215                // class com/megacrit/cardcrawl/orbs/AbstractOrb
+     129: invokespecial #218                // Method com/evacipated/cardcrawl/mod/stslib/actions/defect/EvokeSpecificOrbAction."<init>":(Lcom/megacrit/cardcrawl/orbs/AbstractOrb;)V
+     132: invokevirtual #102                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     135: goto          155
+     138: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     141: getfield      #213                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.orbs:Ljava/util/ArrayList;
+     144: iload         7
+     146: invokevirtual #18                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     149: checkcast     #215                // class com/megacrit/cardcrawl/orbs/AbstractOrb
+     152: invokevirtual #219                // Method com/megacrit/cardcrawl/orbs/AbstractOrb.onEvoke:()V
+     155: iinc          8, 1
+     158: goto          94
+     161: aload         6
+     163: astore        8
+     165: aload         6
+     167: invokevirtual #25                 // Method java/lang/Integer.intValue:()I
+     170: iconst_1
+     171: iadd
+     172: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     175: dup
+     176: astore        6
+     178: astore        9
+     180: aload         8
+     182: pop
+     183: iinc          7, 1
+     186: goto          9
+     189: return
+
+  public static void OnFFPotionAdd(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.potions.AbstractPotion);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/potions/AbstractPotion;)V
+    Code:
+       0: getstatic     #94                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       3: new           #220                // class com/megacrit/cardcrawl/actions/common/ObtainPotionAction
+       6: dup
+       7: aload_1
+       8: invokespecial #221                // Method com/megacrit/cardcrawl/actions/common/ObtainPotionAction."<init>":(Lcom/megacrit/cardcrawl/potions/AbstractPotion;)V
+      11: invokevirtual #102                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      14: return
+
+  public static void OnFFPotionUse(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.potions.AbstractPotion, com.megacrit.cardcrawl.core.AbstractCreature);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/potions/AbstractPotion;Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+    Code:
+       0: aload_2
+       1: ifnull        12
+       4: aload_1
+       5: aload_2
+       6: invokevirtual #222                // Method com/megacrit/cardcrawl/potions/AbstractPotion.use:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+       9: goto          19
+      12: aload_1
+      13: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      16: invokevirtual #222                // Method com/megacrit/cardcrawl/potions/AbstractPotion.use:(Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+      19: return
+
+  public static void OnFFPotionLose(spireTogether.network.P2P.P2PPlayer, com.megacrit.cardcrawl.potions.AbstractPotion);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Lcom/megacrit/cardcrawl/potions/AbstractPotion;)V
+    Code:
+       0: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: aload_1
+       4: invokevirtual #223                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.removePotion:(Lcom/megacrit/cardcrawl/potions/AbstractPotion;)V
+       7: return
+
+  public static void OnFFTeleport(spireTogether.network.P2P.P2PPlayer, spireTogether.network.objects.rooms.NetworkLocation);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/network/objects/rooms/NetworkLocation;)V
+    Code:
+       0: return
+
+  public static void OnFFDie(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: return
+
+  public static void OnFFSpecialAction(spireTogether.network.P2P.P2PPlayer, java.lang.String, java.lang.Object[]);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/String;[Ljava/lang/Object;)V
+    Code:
+       0: return
+
+  public static void OnFFResurrected();
+    descriptor: ()V
+    Code:
+       0: return
+
+  public static void OnResurrectAlly(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: return
+
+  public static void OnRoomStatusChanged(spireTogether.network.objects.rooms.NetworkLocation, spireTogether.other.RoomDataManager$StorageFloor$StorageRoom$RoomStatus);
+    descriptor: (LspireTogether/network/objects/rooms/NetworkLocation;LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iconst_0
+       3: invokestatic  #224                // Method spireTogether/other/RoomDataManager.SetRoomStatus:(LspireTogether/network/objects/rooms/NetworkLocation;LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;Z)V
+       6: new           #34                 // class java/lang/StringBuilder
+       9: dup
+      10: invokespecial #35                 // Method java/lang/StringBuilder."<init>":()V
+      13: ldc           #225                // String The room status at
+      15: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      18: aload_0
+      19: invokevirtual #226                // Method spireTogether/network/objects/rooms/NetworkLocation.toString:()Ljava/lang/String;
+      22: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      25: ldc           #227                // String  is now
+      27: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      30: aload_1
+      31: invokevirtual #228                // Method spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.name:()Ljava/lang/String;
+      34: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      37: invokevirtual #39                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      40: invokestatic  #229                // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      43: aload_0
+      44: invokevirtual #230                // Method spireTogether/network/objects/rooms/NetworkLocation.IsSameAsCurrentRoom:()Z
+      47: ifeq          98
+      50: getstatic     #231                // Field spireTogether/patches/network/RoomEntryPatch.roomActionCounter:Ljava/lang/Integer;
+      53: aload_0
+      54: getfield      #232                // Field spireTogether/network/objects/rooms/NetworkLocation.action:Ljava/lang/Integer;
+      57: invokevirtual #9                  // Method java/lang/Integer.equals:(Ljava/lang/Object;)Z
+      60: ifeq          98
+      63: aload_1
+      64: getstatic     #233                // Field spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.COMBAT_CLEARED:LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+      67: if_acmpne     82
+      70: invokestatic  #12                 // Method spireTogether/util/SpireHelp$Gameplay.AreMonstersPresent:()Z
+      73: ifeq          98
+      76: invokestatic  #234                // Method spireTogether/util/SpireHelp$Gameplay.KillAllMonstersAndFinishCombat:()V
+      79: goto          98
+      82: aload_1
+      83: getstatic     #235                // Field spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.COMBAT_ESCAPED:LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+      86: if_acmpne     98
+      89: invokestatic  #12                 // Method spireTogether/util/SpireHelp$Gameplay.AreMonstersPresent:()Z
+      92: ifeq          98
+      95: invokestatic  #236                // Method spireTogether/util/SpireHelp$Gameplay.EscapeAllMonstersAndFinishCombat:()V
+      98: aload_0
+      99: invokevirtual #237                // Method spireTogether/network/objects/rooms/NetworkLocation.isBossRoom:()Z
+     102: ifeq          142
+     105: aload_0
+     106: invokevirtual #238                // Method spireTogether/network/objects/rooms/NetworkLocation.IsActSameAsCurrentAct:()Z
+     109: ifeq          142
+     112: aload_1
+     113: getstatic     #233                // Field spireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus.COMBAT_CLEARED:LspireTogether/other/RoomDataManager$StorageFloor$StorageRoom$RoomStatus;
+     116: if_acmpne     142
+     119: invokestatic  #239                // Method spireTogether/patches/DeathPatches.IsPlayerDead:()Z
+     122: ifeq          142
+     125: getstatic     #240                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+     128: getfield      #241                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+     131: getfield      #242                // Field spireTogether/network/objects/settings/GameSettings.resurrectOnBossKill:Z
+     134: ifeq          142
+     137: aload_0
+     138: iconst_0
+     139: invokestatic  #243                // Method spireTogether/util/SpireHelp$Gameplay.TeleportToBossRoom:(LspireTogether/network/objects/rooms/NetworkLocation;Z)V
+     142: return
+
+  public static void OnTradingCardsChange(java.util.ArrayList<spireTogether.network.objects.items.NetworkCard>);
+    descriptor: (Ljava/util/ArrayList;)V
+    Code:
+       0: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+       3: ifnull        36
+       6: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+       9: getfield      #245                // Field spireTogether/screens/trading/TradingScreen.teammate:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      12: aload_0
+      13: putfield      #246                // Field spireTogether/screens/trading/TradingScreen$TradingSide.cards:Ljava/util/ArrayList;
+      16: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      19: aload_0
+      20: invokestatic  #247                // Method spireTogether/network/objects/items/NetworkCard.ListToStandard:(Ljava/util/ArrayList;)Ljava/util/ArrayList;
+      23: putfield      #248                // Field spireTogether/screens/trading/TradingScreen.teammateCards:Ljava/util/ArrayList;
+      26: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      29: getfield      #249                // Field spireTogether/screens/trading/TradingScreen.player:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      32: iconst_0
+      33: putfield      #250                // Field spireTogether/screens/trading/TradingScreen$TradingSide.locked:Z
+      36: return
+
+  public static void OnTradingRelicsChange(java.util.ArrayList<spireTogether.network.objects.items.NetworkRelic>);
+    descriptor: (Ljava/util/ArrayList;)V
+    Code:
+       0: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+       3: ifnull        36
+       6: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+       9: getfield      #245                // Field spireTogether/screens/trading/TradingScreen.teammate:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      12: aload_0
+      13: putfield      #251                // Field spireTogether/screens/trading/TradingScreen$TradingSide.relics:Ljava/util/ArrayList;
+      16: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      19: aload_0
+      20: invokestatic  #252                // Method spireTogether/network/objects/items/NetworkRelic.ListToStandard:(Ljava/util/ArrayList;)Ljava/util/ArrayList;
+      23: putfield      #253                // Field spireTogether/screens/trading/TradingScreen.teammateRelics:Ljava/util/ArrayList;
+      26: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      29: getfield      #249                // Field spireTogether/screens/trading/TradingScreen.player:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      32: iconst_0
+      33: putfield      #250                // Field spireTogether/screens/trading/TradingScreen$TradingSide.locked:Z
+      36: return
+
+  public static void OnTradingPotionsChange(java.util.ArrayList<spireTogether.network.objects.items.NetworkPotion>);
+    descriptor: (Ljava/util/ArrayList;)V
+    Code:
+       0: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+       3: ifnull        36
+       6: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+       9: getfield      #245                // Field spireTogether/screens/trading/TradingScreen.teammate:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      12: aload_0
+      13: putfield      #254                // Field spireTogether/screens/trading/TradingScreen$TradingSide.potions:Ljava/util/ArrayList;
+      16: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      19: aload_0
+      20: invokestatic  #255                // Method spireTogether/network/objects/items/NetworkPotion.ListToStandard:(Ljava/util/ArrayList;)Ljava/util/ArrayList;
+      23: putfield      #256                // Field spireTogether/screens/trading/TradingScreen.teammatePotions:Ljava/util/ArrayList;
+      26: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      29: getfield      #249                // Field spireTogether/screens/trading/TradingScreen.player:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      32: iconst_0
+      33: putfield      #250                // Field spireTogether/screens/trading/TradingScreen$TradingSide.locked:Z
+      36: return
+
+  public static void OnTradingGoldChange(java.lang.Integer);
+    descriptor: (Ljava/lang/Integer;)V
+    Code:
+       0: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+       3: ifnull        26
+       6: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+       9: getfield      #245                // Field spireTogether/screens/trading/TradingScreen.teammate:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      12: aload_0
+      13: putfield      #257                // Field spireTogether/screens/trading/TradingScreen$TradingSide.gold:Ljava/lang/Integer;
+      16: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      19: getfield      #249                // Field spireTogether/screens/trading/TradingScreen.player:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      22: iconst_0
+      23: putfield      #250                // Field spireTogether/screens/trading/TradingScreen$TradingSide.locked:Z
+      26: return
+
+  public static void OnTradingStatusChange(boolean);
+    descriptor: (Z)V
+    Code:
+       0: new           #34                 // class java/lang/StringBuilder
+       3: dup
+       4: invokespecial #35                 // Method java/lang/StringBuilder."<init>":()V
+       7: ldc_w         #258                // String received trading status change
+      10: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      13: iload_0
+      14: invokevirtual #259                // Method java/lang/StringBuilder.append:(Z)Ljava/lang/StringBuilder;
+      17: invokevirtual #39                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      20: invokestatic  #260                // Method spireTogether/util/SpireLogger.Log:(Ljava/lang/Object;)V
+      23: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      26: ifnull        79
+      29: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      32: getfield      #245                // Field spireTogether/screens/trading/TradingScreen.teammate:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      35: ifnull        79
+      38: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      41: getfield      #249                // Field spireTogether/screens/trading/TradingScreen.player:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      44: ifnull        79
+      47: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      50: getfield      #245                // Field spireTogether/screens/trading/TradingScreen.teammate:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      53: iload_0
+      54: putfield      #250                // Field spireTogether/screens/trading/TradingScreen$TradingSide.locked:Z
+      57: iload_0
+      58: ifeq          79
+      61: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      64: getfield      #249                // Field spireTogether/screens/trading/TradingScreen.player:LspireTogether/screens/trading/TradingScreen$TradingSide;
+      67: getfield      #250                // Field spireTogether/screens/trading/TradingScreen$TradingSide.locked:Z
+      70: ifeq          79
+      73: getstatic     #244                // Field spireTogether/screens/trading/TradingScreen.tradingScreen:LspireTogether/screens/trading/TradingScreen;
+      76: invokevirtual #261                // Method spireTogether/screens/trading/TradingScreen.Trade:()V
+      79: return
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.cards.AbstractCard> OnTradeToModifyReceivingCards(spireTogether.network.P2P.P2PPlayer, spireTogether.screens.trading.PreTradingScreen$TradeType, java.util.ArrayList<com.megacrit.cardcrawl.cards.AbstractCard>);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+    Code:
+       0: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: getfield      #183                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+       6: invokevirtual #83                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       9: astore_3
+      10: aload_3
+      11: invokeinterface #84,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          53
+      19: aload_3
+      20: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #262                // class com/megacrit/cardcrawl/relics/AbstractRelic
+      28: astore        4
+      30: aload         4
+      32: instanceof    #263                // class spireTogether/relics/CustomMultiplayerRelic
+      35: ifeq          50
+      38: aload         4
+      40: checkcast     #263                // class spireTogether/relics/CustomMultiplayerRelic
+      43: aload_0
+      44: aload_1
+      45: aload_2
+      46: invokevirtual #264                // Method spireTogether/relics/CustomMultiplayerRelic.onTradeToModifyReceivingCards:(LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+      49: astore_2
+      50: goto          10
+      53: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      56: getfield      #265                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.powers:Ljava/util/ArrayList;
+      59: invokevirtual #83                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      62: astore_3
+      63: aload_3
+      64: invokeinterface #84,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      69: ifeq          106
+      72: aload_3
+      73: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      78: checkcast     #125                // class com/megacrit/cardcrawl/powers/AbstractPower
+      81: astore        4
+      83: aload         4
+      85: instanceof    #266                // class spireTogether/powers/CustomMultiplayerPower
+      88: ifeq          103
+      91: aload         4
+      93: checkcast     #266                // class spireTogether/powers/CustomMultiplayerPower
+      96: aload_0
+      97: aload_1
+      98: aload_2
+      99: invokevirtual #267                // Method spireTogether/powers/CustomMultiplayerPower.onTradeToModifyReceivingCards:(LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+     102: astore_2
+     103: goto          63
+     106: aload_2
+     107: areturn
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.relics.AbstractRelic> OnTradeToModifyReceivingRelics(spireTogether.network.P2P.P2PPlayer, spireTogether.screens.trading.PreTradingScreen$TradeType, java.util.ArrayList<com.megacrit.cardcrawl.relics.AbstractRelic>);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+    Code:
+       0: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: getfield      #183                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+       6: invokevirtual #83                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       9: astore_3
+      10: aload_3
+      11: invokeinterface #84,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          53
+      19: aload_3
+      20: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #262                // class com/megacrit/cardcrawl/relics/AbstractRelic
+      28: astore        4
+      30: aload         4
+      32: instanceof    #263                // class spireTogether/relics/CustomMultiplayerRelic
+      35: ifeq          50
+      38: aload         4
+      40: checkcast     #263                // class spireTogether/relics/CustomMultiplayerRelic
+      43: aload_0
+      44: aload_1
+      45: aload_2
+      46: invokevirtual #268                // Method spireTogether/relics/CustomMultiplayerRelic.onTradeToModifyReceivingRelics:(LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+      49: astore_2
+      50: goto          10
+      53: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      56: getfield      #265                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.powers:Ljava/util/ArrayList;
+      59: invokevirtual #83                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      62: astore_3
+      63: aload_3
+      64: invokeinterface #84,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      69: ifeq          106
+      72: aload_3
+      73: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      78: checkcast     #125                // class com/megacrit/cardcrawl/powers/AbstractPower
+      81: astore        4
+      83: aload         4
+      85: instanceof    #266                // class spireTogether/powers/CustomMultiplayerPower
+      88: ifeq          103
+      91: aload         4
+      93: checkcast     #266                // class spireTogether/powers/CustomMultiplayerPower
+      96: aload_0
+      97: aload_1
+      98: aload_2
+      99: invokevirtual #269                // Method spireTogether/powers/CustomMultiplayerPower.onTradeToModifyReceivingRelics:(LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+     102: astore_2
+     103: goto          63
+     106: aload_2
+     107: areturn
+
+  public static java.util.ArrayList<com.megacrit.cardcrawl.potions.AbstractPotion> OnTradeToModifyReceivingPotions(spireTogether.network.P2P.P2PPlayer, spireTogether.screens.trading.PreTradingScreen$TradeType, java.util.ArrayList<com.megacrit.cardcrawl.potions.AbstractPotion>);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+    Code:
+       0: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: getfield      #183                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+       6: invokevirtual #83                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       9: astore_3
+      10: aload_3
+      11: invokeinterface #84,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          53
+      19: aload_3
+      20: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #262                // class com/megacrit/cardcrawl/relics/AbstractRelic
+      28: astore        4
+      30: aload         4
+      32: instanceof    #263                // class spireTogether/relics/CustomMultiplayerRelic
+      35: ifeq          50
+      38: aload         4
+      40: checkcast     #263                // class spireTogether/relics/CustomMultiplayerRelic
+      43: aload_0
+      44: aload_1
+      45: aload_2
+      46: invokevirtual #270                // Method spireTogether/relics/CustomMultiplayerRelic.onTradeToModifyReceivingPotions:(LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+      49: astore_2
+      50: goto          10
+      53: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      56: getfield      #265                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.powers:Ljava/util/ArrayList;
+      59: invokevirtual #83                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      62: astore_3
+      63: aload_3
+      64: invokeinterface #84,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      69: ifeq          106
+      72: aload_3
+      73: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      78: checkcast     #125                // class com/megacrit/cardcrawl/powers/AbstractPower
+      81: astore        4
+      83: aload         4
+      85: instanceof    #266                // class spireTogether/powers/CustomMultiplayerPower
+      88: ifeq          103
+      91: aload         4
+      93: checkcast     #266                // class spireTogether/powers/CustomMultiplayerPower
+      96: aload_0
+      97: aload_1
+      98: aload_2
+      99: invokevirtual #271                // Method spireTogether/powers/CustomMultiplayerPower.onTradeToModifyReceivingPotions:(LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+     102: astore_2
+     103: goto          63
+     106: aload_2
+     107: areturn
+
+  public static int OnTradeToModifyReceivingGold(spireTogether.network.P2P.P2PPlayer, spireTogether.screens.trading.PreTradingScreen$TradeType, int);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;I)I
+    Code:
+       0: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: getfield      #183                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.relics:Ljava/util/ArrayList;
+       6: invokevirtual #83                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+       9: astore_3
+      10: aload_3
+      11: invokeinterface #84,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          53
+      19: aload_3
+      20: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #262                // class com/megacrit/cardcrawl/relics/AbstractRelic
+      28: astore        4
+      30: aload         4
+      32: instanceof    #263                // class spireTogether/relics/CustomMultiplayerRelic
+      35: ifeq          50
+      38: aload         4
+      40: checkcast     #263                // class spireTogether/relics/CustomMultiplayerRelic
+      43: aload_0
+      44: aload_1
+      45: iload_2
+      46: invokevirtual #272                // Method spireTogether/relics/CustomMultiplayerRelic.onTradeToModifyReceivingGold:(LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;I)I
+      49: istore_2
+      50: goto          10
+      53: getstatic     #129                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      56: getfield      #265                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.powers:Ljava/util/ArrayList;
+      59: invokevirtual #83                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      62: astore_3
+      63: aload_3
+      64: invokeinterface #84,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      69: ifeq          106
+      72: aload_3
+      73: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      78: checkcast     #125                // class com/megacrit/cardcrawl/powers/AbstractPower
+      81: astore        4
+      83: aload         4
+      85: instanceof    #266                // class spireTogether/powers/CustomMultiplayerPower
+      88: ifeq          103
+      91: aload         4
+      93: checkcast     #266                // class spireTogether/powers/CustomMultiplayerPower
+      96: aload_0
+      97: aload_1
+      98: iload_2
+      99: invokevirtual #273                // Method spireTogether/powers/CustomMultiplayerPower.onTradeToModifyReceivingGold:(LspireTogether/network/P2P/P2PPlayer;LspireTogether/screens/trading/PreTradingScreen$TradeType;I)I
+     102: istore_2
+     103: goto          63
+     106: iload_2
+     107: ireturn
+
+  public static void OnCollectedKey(com.megacrit.cardcrawl.vfx.ObtainKeyEffect$KeyColor);
+    descriptor: (Lcom/megacrit/cardcrawl/vfx/ObtainKeyEffect$KeyColor;)V
+    Code:
+       0: invokestatic  #52                 // Method spireTogether/util/SpireHelp$Gameplay.IsInRun:()Z
+       3: ifeq          217
+       6: getstatic     #274                // Field spireTogether/patches/network/CreatureSyncPatches.syncKeyCollect:Z
+       9: istore_1
+      10: iconst_0
+      11: putstatic     #274                // Field spireTogether/patches/network/CreatureSyncPatches.syncKeyCollect:Z
+      14: invokestatic  #151                // Method spireTogether/SpireTogetherMod.getModID:()Ljava/lang/String;
+      17: invokestatic  #152                // Method dLib/util/PersistentActionManager.get:(Ljava/lang/String;)LdLib/util/PersistentActionManager;
+      20: new           #275                // class com/megacrit/cardcrawl/vfx/ObtainKeyEffect
+      23: dup
+      24: aload_0
+      25: invokespecial #276                // Method com/megacrit/cardcrawl/vfx/ObtainKeyEffect."<init>":(Lcom/megacrit/cardcrawl/vfx/ObtainKeyEffect$KeyColor;)V
+      28: invokevirtual #277                // Method dLib/util/PersistentActionManager.add:(Lcom/megacrit/cardcrawl/vfx/AbstractGameEffect;)V
+      31: iload_1
+      32: putstatic     #274                // Field spireTogether/patches/network/CreatureSyncPatches.syncKeyCollect:Z
+      35: getstatic     #240                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+      38: ifnull        53
+      41: getstatic     #240                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+      44: getfield      #278                // Field spireTogether/network/P2P/P2PClientData.collectedKeys:[Z
+      47: aload_0
+      48: invokevirtual #279                // Method com/megacrit/cardcrawl/vfx/ObtainKeyEffect$KeyColor.ordinal:()I
+      51: iconst_1
+      52: bastore
+      53: getstatic     #280                // Field spireTogether/network/P2P/P2PCallbacks$4.$SwitchMap$com$megacrit$cardcrawl$vfx$ObtainKeyEffect$KeyColor:[I
+      56: aload_0
+      57: invokevirtual #279                // Method com/megacrit/cardcrawl/vfx/ObtainKeyEffect$KeyColor.ordinal:()I
+      60: iaload
+      61: tableswitch   { // 1 to 3
+
+                     1: 88
+
+                     2: 142
+
+                     3: 181
+               default: 217
+          }
+      88: invokestatic  #179                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      91: instanceof    #281                // class com/megacrit/cardcrawl/rooms/RestRoom
+      94: ifeq          217
+      97: invokestatic  #179                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+     100: checkcast     #281                // class com/megacrit/cardcrawl/rooms/RestRoom
+     103: astore_2
+     104: ldc_w         #282                // String buttons
+     107: aload_2
+     108: getfield      #283                // Field com/megacrit/cardcrawl/rooms/RestRoom.campfireUI:Lcom/megacrit/cardcrawl/rooms/CampfireUI;
+     111: invokestatic  #284                // Method spireTogether/util/Reflection.getFieldValue:(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;
+     114: checkcast     #285                // class java/util/ArrayList
+     117: astore_3
+     118: aload_3
+     119: invokedynamic #286,  0            // InvokeDynamic #0:test:()Ljava/util/function/Predicate;
+     124: invokevirtual #287                // Method java/util/ArrayList.removeIf:(Ljava/util/function/Predicate;)Z
+     127: pop
+     128: ldc_w         #282                // String buttons
+     131: aload_2
+     132: getfield      #283                // Field com/megacrit/cardcrawl/rooms/RestRoom.campfireUI:Lcom/megacrit/cardcrawl/rooms/CampfireUI;
+     135: aload_3
+     136: invokestatic  #288                // Method spireTogether/util/Reflection.setFieldValue:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+     139: goto          217
+     142: getstatic     #289                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.combatRewardScreen:Lcom/megacrit/cardcrawl/screens/CombatRewardScreen;
+     145: getfield      #290                // Field com/megacrit/cardcrawl/screens/CombatRewardScreen.rewards:Ljava/util/ArrayList;
+     148: ifnull        217
+     151: getstatic     #289                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.combatRewardScreen:Lcom/megacrit/cardcrawl/screens/CombatRewardScreen;
+     154: getfield      #290                // Field com/megacrit/cardcrawl/screens/CombatRewardScreen.rewards:Ljava/util/ArrayList;
+     157: invokevirtual #17                 // Method java/util/ArrayList.size:()I
+     160: ifle          217
+     163: getstatic     #289                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.combatRewardScreen:Lcom/megacrit/cardcrawl/screens/CombatRewardScreen;
+     166: getfield      #290                // Field com/megacrit/cardcrawl/screens/CombatRewardScreen.rewards:Ljava/util/ArrayList;
+     169: invokedynamic #291,  0            // InvokeDynamic #1:test:()Ljava/util/function/Predicate;
+     174: invokevirtual #287                // Method java/util/ArrayList.removeIf:(Ljava/util/function/Predicate;)Z
+     177: pop
+     178: goto          217
+     181: getstatic     #289                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.combatRewardScreen:Lcom/megacrit/cardcrawl/screens/CombatRewardScreen;
+     184: getfield      #290                // Field com/megacrit/cardcrawl/screens/CombatRewardScreen.rewards:Ljava/util/ArrayList;
+     187: ifnull        217
+     190: getstatic     #289                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.combatRewardScreen:Lcom/megacrit/cardcrawl/screens/CombatRewardScreen;
+     193: getfield      #290                // Field com/megacrit/cardcrawl/screens/CombatRewardScreen.rewards:Ljava/util/ArrayList;
+     196: invokevirtual #17                 // Method java/util/ArrayList.size:()I
+     199: ifle          217
+     202: getstatic     #289                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.combatRewardScreen:Lcom/megacrit/cardcrawl/screens/CombatRewardScreen;
+     205: getfield      #290                // Field com/megacrit/cardcrawl/screens/CombatRewardScreen.rewards:Ljava/util/ArrayList;
+     208: invokedynamic #292,  0            // InvokeDynamic #2:test:()Ljava/util/function/Predicate;
+     213: invokevirtual #287                // Method java/util/ArrayList.removeIf:(Ljava/util/function/Predicate;)Z
+     216: pop
+     217: return
+
+  public static void OnPlayerHPStatusChanged(spireTogether.network.P2P.P2PPlayer, spireTogether.network.P2P.P2PPlayer$HealthStatus, spireTogether.network.P2P.P2PPlayer$HealthStatus);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/network/P2P/P2PPlayer$HealthStatus;LspireTogether/network/P2P/P2PPlayer$HealthStatus;)V
+    Code:
+       0: return
+
+  public static void OnPlayerKilledPlayer(spireTogether.network.P2P.P2PPlayer, spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: aload_0
+       1: invokestatic  #8                  // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+       4: invokevirtual #293                // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       7: ifne          44
+      10: new           #34                 // class java/lang/StringBuilder
+      13: dup
+      14: invokespecial #35                 // Method java/lang/StringBuilder."<init>":()V
+      17: aload_0
+      18: invokevirtual #36                 // Method spireTogether/network/P2P/P2PPlayer.GetColoredUsername:()Ljava/lang/String;
+      21: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      24: ldc_w         #294                // String  #rkilled
+      27: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      30: aload_1
+      31: invokevirtual #36                 // Method spireTogether/network/P2P/P2PPlayer.GetColoredUsername:()Ljava/lang/String;
+      34: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      37: invokevirtual #39                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      40: astore_2
+      41: goto          137
+      44: new           #34                 // class java/lang/StringBuilder
+      47: dup
+      48: invokespecial #35                 // Method java/lang/StringBuilder."<init>":()V
+      51: ldc_w         #295                // String #rYou #rkilled
+      54: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      57: aload_1
+      58: invokevirtual #36                 // Method spireTogether/network/P2P/P2PPlayer.GetColoredUsername:()Ljava/lang/String;
+      61: invokevirtual #37                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      64: invokevirtual #39                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      67: astore_2
+      68: invokestatic  #296                // Method spireTogether/saves/objects/JSON/Unlocks.Get:()LspireTogether/saves/objects/JSON/Unlocks;
+      71: ldc_w         #297                // String playersKilled
+      74: invokevirtual #298                // Method spireTogether/saves/objects/JSON/Unlocks.getExtraDataAsInt:(Ljava/lang/String;)I
+      77: istore_3
+      78: iinc          3, 1
+      81: iload_3
+      82: iconst_3
+      83: if_icmpne     96
+      86: getstatic     #299                // Field spireTogether/util/UIElements$Nameplates.flamesofhell:LspireTogether/ui/elements/presets/Nameplate;
+      89: invokevirtual #300                // Method spireTogether/ui/elements/presets/Nameplate.Unlock:()Z
+      92: pop
+      93: goto          124
+      96: iload_3
+      97: iconst_3
+      98: if_icmpge     124
+     101: aload_1
+     102: getfield      #7                  // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+     105: sipush        5012
+     108: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     111: invokevirtual #9                  // Method java/lang/Integer.equals:(Ljava/lang/Object;)Z
+     114: ifeq          124
+     117: getstatic     #299                // Field spireTogether/util/UIElements$Nameplates.flamesofhell:LspireTogether/ui/elements/presets/Nameplate;
+     120: invokevirtual #300                // Method spireTogether/ui/elements/presets/Nameplate.Unlock:()Z
+     123: pop
+     124: invokestatic  #296                // Method spireTogether/saves/objects/JSON/Unlocks.Get:()LspireTogether/saves/objects/JSON/Unlocks;
+     127: ldc_w         #297                // String playersKilled
+     130: iload_3
+     131: invokestatic  #27                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     134: invokevirtual #301                // Method spireTogether/saves/objects/JSON/Unlocks.setExtraData:(Ljava/lang/String;Ljava/lang/Object;)V
+     137: new           #302                // class spireTogether/network/P2P/P2PCallbacks$3
+     140: dup
+     141: aload_2
+     142: invokespecial #303                // Method spireTogether/network/P2P/P2PCallbacks$3."<init>":(Ljava/lang/String;)V
+     145: astore_3
+     146: aload_3
+     147: invokestatic  #41                 // Method spireTogether/chat/ChatConsole.addToHistory:(LspireTogether/chat/ChatMessage;)V
+     150: return
+
+  public static void OnSentChatMessage(spireTogether.chat.ChatMessage);
+    descriptor: (LspireTogether/chat/ChatMessage;)V
+    Code:
+       0: return
+
+  public static void OnReceivedChatMessage(spireTogether.network.P2P.P2PPlayer, spireTogether.chat.ChatMessage);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;LspireTogether/chat/ChatMessage;)V
+    Code:
+       0: return
+
+  public static void OnReceivedNetworkPacket(spireTogether.util.NetworkMessage, java.lang.String, java.lang.Object, java.lang.Integer);
+    descriptor: (LspireTogether/util/NetworkMessage;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Integer;)V
+    Code:
+       0: return
+
+  public static void OnPlayerExtraDataChanged(spireTogether.network.P2P.P2PPlayer, java.lang.String, java.lang.Object, java.lang.Object);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+    Code:
+       0: return
+
+  private static boolean lambda$OnCollectedKey$2(com.megacrit.cardcrawl.rewards.RewardItem);
+    descriptor: (Lcom/megacrit/cardcrawl/rewards/RewardItem;)Z
+    Code:
+       0: aload_0
+       1: getfield      #304                // Field com/megacrit/cardcrawl/rewards/RewardItem.type:Lcom/megacrit/cardcrawl/rewards/RewardItem$RewardType;
+       4: getstatic     #305                // Field com/megacrit/cardcrawl/rewards/RewardItem$RewardType.SAPPHIRE_KEY:Lcom/megacrit/cardcrawl/rewards/RewardItem$RewardType;
+       7: if_acmpne     14
+      10: iconst_1
+      11: goto          15
+      14: iconst_0
+      15: ireturn
+
+  private static boolean lambda$OnCollectedKey$1(com.megacrit.cardcrawl.rewards.RewardItem);
+    descriptor: (Lcom/megacrit/cardcrawl/rewards/RewardItem;)Z
+    Code:
+       0: aload_0
+       1: getfield      #304                // Field com/megacrit/cardcrawl/rewards/RewardItem.type:Lcom/megacrit/cardcrawl/rewards/RewardItem$RewardType;
+       4: getstatic     #306                // Field com/megacrit/cardcrawl/rewards/RewardItem$RewardType.EMERALD_KEY:Lcom/megacrit/cardcrawl/rewards/RewardItem$RewardType;
+       7: if_acmpne     14
+      10: iconst_1
+      11: goto          15
+      14: iconst_0
+      15: ireturn
+
+  private static boolean lambda$OnCollectedKey$0(com.megacrit.cardcrawl.ui.campfire.AbstractCampfireOption);
+    descriptor: (Lcom/megacrit/cardcrawl/ui/campfire/AbstractCampfireOption;)Z
+    Code:
+       0: aload_0
+       1: instanceof    #307                // class com/megacrit/cardcrawl/ui/campfire/RecallOption
+       4: ireturn
+}

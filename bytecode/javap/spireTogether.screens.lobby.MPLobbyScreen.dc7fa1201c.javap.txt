@@ -1,0 +1,1485 @@
+Compiled from "MPLobbyScreen.java"
+public class spireTogether.screens.lobby.MPLobbyScreen extends spireTogether.screens.Screen {
+  public static spireTogether.monsters.CharacterEntity characterRender;
+    descriptor: LspireTogether/monsters/CharacterEntity;
+
+  public spireTogether.ui.elements.presets.PlayerPanelGeneral selfPanel;
+    descriptor: LspireTogether/ui/elements/presets/PlayerPanelGeneral;
+
+  public java.util.ArrayList<spireTogether.ui.elements.presets.PlayerPanelGeneral> otherPlayerPanels;
+    descriptor: Ljava/util/ArrayList;
+
+  public int viewingPlayerPage;
+    descriptor: I
+
+  public static spireTogether.ui.UIElementManager startButtonManager;
+    descriptor: LspireTogether/ui/UIElementManager;
+
+  public static boolean resetStartButton;
+    descriptor: Z
+
+  public static boolean loadPrefs;
+    descriptor: Z
+
+  public static boolean changedSomething;
+    descriptor: Z
+
+  private static int toggle;
+    descriptor: I
+
+  public spireTogether.screens.lobby.MPLobbyScreen();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #2                  // Method spireTogether/screens/Screen."<init>":()V
+       4: return
+
+  public void init();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: bipush        7
+       3: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       6: putfield      #4                  // Field baseIteratorCount:Ljava/lang/Integer;
+       9: getstatic     #5                  // Field loadPrefs:Z
+      12: ifne          19
+      15: iconst_1
+      16: goto          20
+      19: iconst_0
+      20: putstatic     #6                  // Field changedSomething:Z
+      23: getstatic     #7                  // Field com/megacrit/cardcrawl/core/CardCrawlGame.characterManager:Lcom/megacrit/cardcrawl/characters/CharacterManager;
+      26: getstatic     #8                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass.IRONCLAD:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      29: invokevirtual #9                  // Method com/megacrit/cardcrawl/characters/CharacterManager.getCharacter:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      32: putstatic     #10                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      35: getstatic     #5                  // Field loadPrefs:Z
+      38: ifeq          200
+      41: invokestatic  #11                 // Method spireTogether/saves/objects/JSON/PlayerPresetSave.Get:()LspireTogether/saves/objects/JSON/PlayerPresetSave;
+      44: astore_1
+      45: aload_1
+      46: ifnull        200
+      49: getstatic     #7                  // Field com/megacrit/cardcrawl/core/CardCrawlGame.characterManager:Lcom/megacrit/cardcrawl/characters/CharacterManager;
+      52: invokevirtual #12                 // Method com/megacrit/cardcrawl/characters/CharacterManager.getAllCharacters:()Ljava/util/ArrayList;
+      55: invokevirtual #13                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      58: astore_2
+      59: aload_2
+      60: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      65: ifeq          109
+      68: aload_2
+      69: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      74: checkcast     #16                 // class com/megacrit/cardcrawl/characters/AbstractPlayer
+      77: astore_3
+      78: aload_3
+      79: getfield      #17                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.chosenClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      82: invokevirtual #18                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass.name:()Ljava/lang/String;
+      85: aload_1
+      86: invokevirtual #19                 // Method spireTogether/saves/objects/JSON/PlayerPresetSave.GetDefaultCharacter:()Ljava/lang/String;
+      89: invokevirtual #20                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      92: ifeq          106
+      95: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      98: aload_3
+      99: getfield      #17                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.chosenClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     102: iconst_1
+     103: invokevirtual #22                 // Method spireTogether/network/P2P/P2PPlayer.UpdatePlayerClass:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Z)V
+     106: goto          59
+     109: aload_1
+     110: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     113: getfield      #23                 // Field spireTogether/network/P2P/P2PPlayer.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     116: invokevirtual #24                 // Method spireTogether/saves/objects/JSON/PlayerPresetSave.GetDefaultSkinForCharacter:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Lskindex/skins/player/PlayerSkin;
+     119: astore_2
+     120: aload_2
+     121: ifnull        139
+     124: aload_2
+     125: invokevirtual #25                 // Method skindex/skins/player/PlayerSkin.canUse:()Z
+     128: ifeq          139
+     131: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     134: aload_2
+     135: iconst_1
+     136: invokevirtual #26                 // Method spireTogether/network/P2P/P2PPlayer.UpdateSkin:(Lskindex/skins/player/PlayerSkin;Z)V
+     139: aload_1
+     140: invokevirtual #27                 // Method spireTogether/saves/objects/JSON/PlayerPresetSave.GetDefaultNameplate:()LspireTogether/ui/elements/presets/Nameplate;
+     143: astore_3
+     144: aload_3
+     145: ifnull        174
+     148: aload_3
+     149: invokevirtual #28                 // Method spireTogether/ui/elements/presets/Nameplate.CanUse:()Z
+     152: ifeq          174
+     155: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     158: aload_3
+     159: getfield      #29                 // Field spireTogether/ui/elements/presets/Nameplate.id:Ljava/lang/String;
+     162: putfield      #30                 // Field spireTogether/network/P2P/P2PPlayer.nameplate:Ljava/lang/String;
+     165: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     168: getfield      #30                 // Field spireTogether/network/P2P/P2PPlayer.nameplate:Ljava/lang/String;
+     171: invokestatic  #31                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerNameplate:(Ljava/lang/String;)V
+     174: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     177: new           #32                 // class spireTogether/network/objects/other/NetworkColor
+     180: dup
+     181: aload_1
+     182: invokevirtual #33                 // Method spireTogether/saves/objects/JSON/PlayerPresetSave.GetDefaultColor:()Lcom/badlogic/gdx/graphics/Color;
+     185: invokespecial #34                 // Method spireTogether/network/objects/other/NetworkColor."<init>":(Lcom/badlogic/gdx/graphics/Color;)V
+     188: putfield      #35                 // Field spireTogether/network/P2P/P2PPlayer.playerColor:LspireTogether/network/objects/other/NetworkColor;
+     191: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     194: getfield      #35                 // Field spireTogether/network/P2P/P2PPlayer.playerColor:LspireTogether/network/objects/other/NetworkColor;
+     197: invokestatic  #36                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerColor:(LspireTogether/network/objects/other/NetworkColor;)V
+     200: getstatic     #37                 // Field spireTogether/modcompat/ModManager.SayTheSpire_Running:Z
+     203: ifeq          294
+     206: ldc           #38                 // String no skin
+     208: astore_1
+     209: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     212: invokevirtual #39                 // Method spireTogether/network/P2P/P2PPlayer.GetSkin:()Lskindex/skins/player/PlayerSkin;
+     215: ifnull        246
+     218: new           #40                 // class java/lang/StringBuilder
+     221: dup
+     222: invokespecial #41                 // Method java/lang/StringBuilder."<init>":()V
+     225: ldc           #42                 // String the skin
+     227: invokevirtual #43                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     230: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     233: invokevirtual #39                 // Method spireTogether/network/P2P/P2PPlayer.GetSkin:()Lskindex/skins/player/PlayerSkin;
+     236: invokevirtual #44                 // Method skindex/skins/player/PlayerSkin.getId:()Ljava/lang/String;
+     239: invokevirtual #43                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     242: invokevirtual #45                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     245: astore_1
+     246: new           #40                 // class java/lang/StringBuilder
+     249: dup
+     250: invokespecial #41                 // Method java/lang/StringBuilder."<init>":()V
+     253: ldc           #46                 // String Entered lobby screen. Current character is
+     255: invokevirtual #43                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     258: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     261: getfield      #23                 // Field spireTogether/network/P2P/P2PPlayer.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     264: invokevirtual #18                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass.name:()Ljava/lang/String;
+     267: invokevirtual #43                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     270: ldc           #47                 // String  with
+     272: invokevirtual #43                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     275: aload_1
+     276: invokevirtual #43                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     279: ldc           #48                 // String .
+     281: invokevirtual #43                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     284: invokevirtual #45                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     287: iconst_1
+     288: invokestatic  #49                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     291: invokestatic  #50                 // Method sayTheSpire/Output.text:(Ljava/lang/String;Ljava/lang/Boolean;)V
+     294: iconst_1
+     295: putstatic     #5                  // Field loadPrefs:Z
+     298: aload_0
+     299: invokevirtual #51                 // Method RegisterGenericBG:()V
+     302: aload_0
+     303: new           #52                 // class spireTogether/ui/elements/presets/PlayerPanelGeneral
+     306: dup
+     307: bipush        84
+     309: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     312: sipush        875
+     315: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     318: invokespecial #53                 // Method spireTogether/ui/elements/presets/PlayerPanelGeneral."<init>":(Ljava/lang/Integer;Ljava/lang/Integer;)V
+     321: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     324: invokevirtual #54                 // Method spireTogether/ui/elements/presets/PlayerPanelGeneral.Set:(LspireTogether/network/P2P/P2PPlayer;)LspireTogether/ui/elements/presets/PlayerPanelGeneral;
+     327: putfield      #55                 // Field selfPanel:LspireTogether/ui/elements/presets/PlayerPanelGeneral;
+     330: aload_0
+     331: new           #56                 // class java/util/ArrayList
+     334: dup
+     335: invokespecial #57                 // Method java/util/ArrayList."<init>":()V
+     338: putfield      #58                 // Field otherPlayerPanels:Ljava/util/ArrayList;
+     341: iconst_0
+     342: putstatic     #59                 // Field resetStartButton:Z
+     345: new           #60                 // class spireTogether/ui/UIElementManager
+     348: dup
+     349: invokespecial #61                 // Method spireTogether/ui/UIElementManager."<init>":()V
+     352: putstatic     #62                 // Field startButtonManager:LspireTogether/ui/UIElementManager;
+     355: aload_0
+     356: iconst_0
+     357: putfield      #63                 // Field viewingPlayerPage:I
+     360: aload_0
+     361: getfield      #64                 // Field frontLayer:LspireTogether/ui/UIElementManager;
+     364: new           #65                 // class spireTogether/ui/elements/Renderable
+     367: dup
+     368: ldc           #66                 // String spireTogetherResources/images/ui/mplobby/MultiplayerBackgroundDividers.png
+     370: invokestatic  #67                 // Method spireTogether/util/TextureManager.getTexture:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Texture;
+     373: invokespecial #68                 // Method spireTogether/ui/elements/Renderable."<init>":(Lcom/badlogic/gdx/graphics/Texture;)V
+     376: invokevirtual #69                 // Method spireTogether/ui/UIElementManager.Add:(LspireTogether/ui/elements/UIElement;)V
+     379: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     382: getfield      #23                 // Field spireTogether/network/P2P/P2PPlayer.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     385: iconst_0
+     386: invokestatic  #70                 // Method spireTogether/monsters/CharacterEntity.Get:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Z)LspireTogether/monsters/CharacterEntity;
+     389: putstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+     392: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+     395: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+     398: getfield      #72                 // Field spireTogether/monsters/CharacterEntity.lobbyScale:F
+     401: invokevirtual #73                 // Method spireTogether/monsters/CharacterEntity.setRenderScale:(F)LspireTogether/monsters/CharacterEntity;
+     404: pop
+     405: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     408: invokevirtual #39                 // Method spireTogether/network/P2P/P2PPlayer.GetSkin:()Lskindex/skins/player/PlayerSkin;
+     411: ifnonnull     439
+     414: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     417: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+     420: getfield      #74                 // Field spireTogether/monsters/CharacterEntity.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     423: invokestatic  #75                 // Method skindex/registering/SkindexRegistry.getDefaultPlayerSkinByClass:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Lskindex/skins/player/PlayerSkin;
+     426: iconst_0
+     427: invokevirtual #26                 // Method spireTogether/network/P2P/P2PPlayer.UpdateSkin:(Lskindex/skins/player/PlayerSkin;Z)V
+     430: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     433: invokevirtual #39                 // Method spireTogether/network/P2P/P2PPlayer.GetSkin:()Lskindex/skins/player/PlayerSkin;
+     436: invokestatic  #76                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerSkin:(Lskindex/skins/player/PlayerSkin;)V
+     439: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     442: invokevirtual #39                 // Method spireTogether/network/P2P/P2PPlayer.GetSkin:()Lskindex/skins/player/PlayerSkin;
+     445: ifnull        461
+     448: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     451: invokevirtual #39                 // Method spireTogether/network/P2P/P2PPlayer.GetSkin:()Lskindex/skins/player/PlayerSkin;
+     454: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+     457: invokevirtual #77                 // Method skindex/skins/player/PlayerSkin.loadOnEntity:(Lskindex/entities/player/SkindexPlayerEntity;)Z
+     460: pop
+     461: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+     464: ldc           #78                 // float 1420.0f
+     466: getstatic     #79                 // Field spireTogether/util/SpireVariables.scale:Lcom/badlogic/gdx/math/Vector2;
+     469: getfield      #80                 // Field com/badlogic/gdx/math/Vector2.x:F
+     472: fmul
+     473: ldc           #81                 // float 400.0f
+     475: getstatic     #79                 // Field spireTogether/util/SpireVariables.scale:Lcom/badlogic/gdx/math/Vector2;
+     478: getfield      #82                 // Field com/badlogic/gdx/math/Vector2.y:F
+     481: fmul
+     482: invokevirtual #83                 // Method spireTogether/monsters/CharacterEntity.SetDrawPosition:(FF)V
+     485: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+     488: getfield      #74                 // Field spireTogether/monsters/CharacterEntity.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     491: invokestatic  #84                 // Method spireTogether/util/SpireHelp$Gameplay.GetPlayerFromClass:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     494: invokevirtual #85                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.doCharSelectScreenSelectEffect:()V
+     497: aload_0
+     498: invokevirtual #86                 // Method ReInitPanels:()V
+     501: new           #87                 // class spireTogether/screens/Screen$ElementGroup
+     504: dup
+     505: invokespecial #88                 // Method spireTogether/screens/Screen$ElementGroup."<init>":()V
+     508: astore_1
+     509: aload_1
+     510: new           #89                 // class spireTogether/screens/lobby/MPLobbyScreen$1
+     513: dup
+     514: aload_0
+     515: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+     518: getfield      #91                 // Field spireTogether/ui/elements/presets/ScreenUI.arrow_left:Lcom/badlogic/gdx/graphics/Texture;
+     521: sipush        990
+     524: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     527: sipush        370
+     530: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     533: bipush        80
+     535: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     538: bipush        80
+     540: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     543: invokespecial #92                 // Method spireTogether/screens/lobby/MPLobbyScreen$1."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     546: putfield      #93                 // Field spireTogether/screens/Screen$ElementGroup.left:LspireTogether/ui/elements/UIElement;
+     549: aload_1
+     550: new           #94                 // class spireTogether/screens/lobby/MPLobbyScreen$2
+     553: dup
+     554: aload_0
+     555: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+     558: getfield      #95                 // Field spireTogether/ui/elements/presets/ScreenUI.arrow_right:Lcom/badlogic/gdx/graphics/Texture;
+     561: sipush        1780
+     564: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     567: sipush        370
+     570: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     573: bipush        80
+     575: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     578: bipush        80
+     580: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     583: invokespecial #96                 // Method spireTogether/screens/lobby/MPLobbyScreen$2."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     586: putfield      #97                 // Field spireTogether/screens/Screen$ElementGroup.right:LspireTogether/ui/elements/UIElement;
+     589: new           #87                 // class spireTogether/screens/Screen$ElementGroup
+     592: dup
+     593: invokespecial #88                 // Method spireTogether/screens/Screen$ElementGroup."<init>":()V
+     596: astore_2
+     597: aload_2
+     598: new           #98                 // class spireTogether/screens/lobby/MPLobbyScreen$3
+     601: dup
+     602: aload_0
+     603: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+     606: getfield      #99                 // Field spireTogether/ui/elements/presets/ScreenUI.arrow_left_blue:Lcom/badlogic/gdx/graphics/Texture;
+     609: sipush        990
+     612: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     615: sipush        477
+     618: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     621: bipush        80
+     623: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     626: bipush        80
+     628: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     631: invokespecial #100                // Method spireTogether/screens/lobby/MPLobbyScreen$3."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     634: putfield      #93                 // Field spireTogether/screens/Screen$ElementGroup.left:LspireTogether/ui/elements/UIElement;
+     637: aload_2
+     638: new           #101                // class spireTogether/screens/lobby/MPLobbyScreen$4
+     641: dup
+     642: aload_0
+     643: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+     646: getfield      #102                // Field spireTogether/ui/elements/presets/ScreenUI.arrow_right_blue:Lcom/badlogic/gdx/graphics/Texture;
+     649: sipush        1780
+     652: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     655: sipush        477
+     658: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     661: bipush        80
+     663: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     666: bipush        80
+     668: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     671: invokespecial #103                // Method spireTogether/screens/lobby/MPLobbyScreen$4."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     674: putfield      #97                 // Field spireTogether/screens/Screen$ElementGroup.right:LspireTogether/ui/elements/UIElement;
+     677: aload_0
+     678: getfield      #104                // Field iterables:Ljava/util/ArrayList;
+     681: aload_2
+     682: invokevirtual #105                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     685: pop
+     686: aload_0
+     687: getfield      #104                // Field iterables:Ljava/util/ArrayList;
+     690: aload_1
+     691: invokevirtual #105                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     694: pop
+     695: new           #87                 // class spireTogether/screens/Screen$ElementGroup
+     698: dup
+     699: invokespecial #88                 // Method spireTogether/screens/Screen$ElementGroup."<init>":()V
+     702: astore_3
+     703: aload_3
+     704: new           #106                // class spireTogether/screens/lobby/MPLobbyScreen$5
+     707: dup
+     708: aload_0
+     709: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+     712: getfield      #91                 // Field spireTogether/ui/elements/presets/ScreenUI.arrow_left:Lcom/badlogic/gdx/graphics/Texture;
+     715: sipush        1093
+     718: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     721: sipush        231
+     724: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     727: bipush        80
+     729: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     732: bipush        80
+     734: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     737: invokespecial #107                // Method spireTogether/screens/lobby/MPLobbyScreen$5."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     740: putfield      #93                 // Field spireTogether/screens/Screen$ElementGroup.left:LspireTogether/ui/elements/UIElement;
+     743: aload_3
+     744: new           #108                // class spireTogether/screens/lobby/MPLobbyScreen$6
+     747: dup
+     748: aload_0
+     749: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+     752: getfield      #95                 // Field spireTogether/ui/elements/presets/ScreenUI.arrow_right:Lcom/badlogic/gdx/graphics/Texture;
+     755: sipush        1678
+     758: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     761: sipush        231
+     764: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     767: bipush        80
+     769: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     772: bipush        80
+     774: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     777: invokespecial #109                // Method spireTogether/screens/lobby/MPLobbyScreen$6."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     780: putfield      #97                 // Field spireTogether/screens/Screen$ElementGroup.right:LspireTogether/ui/elements/UIElement;
+     783: aload_0
+     784: new           #110                // class spireTogether/screens/lobby/MPLobbyScreen$7
+     787: dup
+     788: aload_0
+     789: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+     792: getfield      #111                // Field spireTogether/ui/elements/presets/ScreenUI.button_small_decline:Lcom/badlogic/gdx/graphics/Texture;
+     795: sipush        1752
+     798: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     801: sipush        876
+     804: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     807: sipush        150
+     810: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     813: sipush        150
+     816: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     819: invokespecial #112                // Method spireTogether/screens/lobby/MPLobbyScreen$7."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     822: invokevirtual #113                // Method AddIterable:(LspireTogether/ui/elements/UIElement;)V
+     825: aload_3
+     826: new           #114                // class spireTogether/screens/lobby/MPLobbyScreen$8
+     829: dup
+     830: aload_0
+     831: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+     834: getfield      #115                // Field spireTogether/ui/elements/presets/ScreenUI.button_large:Lcom/badlogic/gdx/graphics/Texture;
+     837: sipush        1211
+     840: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     843: sipush        232
+     846: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     849: sipush        422
+     852: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     855: bipush        82
+     857: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     860: invokespecial #116                // Method spireTogether/screens/lobby/MPLobbyScreen$8."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     863: putfield      #117                // Field spireTogether/screens/Screen$ElementGroup.middle:LspireTogether/ui/elements/UIElement;
+     866: aload_0
+     867: getfield      #104                // Field iterables:Ljava/util/ArrayList;
+     870: aload_3
+     871: invokevirtual #105                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     874: pop
+     875: aload_0
+     876: getfield      #64                 // Field frontLayer:LspireTogether/ui/UIElementManager;
+     879: new           #118                // class spireTogether/screens/lobby/MPLobbyScreen$9
+     882: dup
+     883: aload_0
+     884: getstatic     #119                // Field spireTogether/util/UIElements.whiteBackground:Lcom/badlogic/gdx/graphics/Texture;
+     887: sipush        1230
+     890: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     893: sipush        245
+     896: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     899: sipush        386
+     902: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     905: bipush        55
+     907: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     910: invokespecial #120                // Method spireTogether/screens/lobby/MPLobbyScreen$9."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     913: invokevirtual #69                 // Method spireTogether/ui/UIElementManager.Add:(LspireTogether/ui/elements/UIElement;)V
+     916: aload_0
+     917: new           #121                // class spireTogether/screens/lobby/MPLobbyScreen$10
+     920: dup
+     921: aload_0
+     922: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+     925: getfield      #122                // Field spireTogether/ui/elements/presets/ScreenUI.button_small_save:Lcom/badlogic/gdx/graphics/Texture;
+     928: sipush        930
+     931: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     934: sipush        884
+     937: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     940: sipush        140
+     943: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     946: sipush        140
+     949: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     952: invokespecial #123                // Method spireTogether/screens/lobby/MPLobbyScreen$10."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     955: invokevirtual #113                // Method AddIterable:(LspireTogether/ui/elements/UIElement;)V
+     958: aload_0
+     959: getfield      #64                 // Field frontLayer:LspireTogether/ui/UIElementManager;
+     962: new           #124                // class spireTogether/screens/lobby/MPLobbyScreen$11
+     965: dup
+     966: aload_0
+     967: ldc           #125                // String PLAYER COUNT:
+     969: sipush        293
+     972: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     975: sipush        131
+     978: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     981: sipush        417
+     984: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     987: bipush        76
+     989: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     992: invokespecial #126                // Method spireTogether/screens/lobby/MPLobbyScreen$11."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     995: invokevirtual #69                 // Method spireTogether/ui/UIElementManager.Add:(LspireTogether/ui/elements/UIElement;)V
+     998: aload_0
+     999: getfield      #64                 // Field frontLayer:LspireTogether/ui/UIElementManager;
+    1002: new           #127                // class spireTogether/screens/lobby/MPLobbyScreen$12
+    1005: dup
+    1006: aload_0
+    1007: ldc           #128                // String 0
+    1009: sipush        447
+    1012: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1015: bipush        70
+    1017: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1020: bipush        86
+    1022: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1025: bipush        86
+    1027: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1030: invokespecial #129                // Method spireTogether/screens/lobby/MPLobbyScreen$12."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+    1033: invokevirtual #69                 // Method spireTogether/ui/UIElementManager.Add:(LspireTogether/ui/elements/UIElement;)V
+    1036: aload_0
+    1037: new           #130                // class spireTogether/screens/lobby/MPLobbyScreen$13
+    1040: dup
+    1041: aload_0
+    1042: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+    1045: getfield      #91                 // Field spireTogether/ui/elements/presets/ScreenUI.arrow_left:Lcom/badlogic/gdx/graphics/Texture;
+    1048: bipush        49
+    1050: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1053: sipush        186
+    1056: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1059: invokespecial #131                // Method spireTogether/screens/lobby/MPLobbyScreen$13."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;)V
+    1062: invokevirtual #113                // Method AddIterable:(LspireTogether/ui/elements/UIElement;)V
+    1065: aload_0
+    1066: new           #132                // class spireTogether/screens/lobby/MPLobbyScreen$14
+    1069: dup
+    1070: aload_0
+    1071: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+    1074: getfield      #95                 // Field spireTogether/ui/elements/presets/ScreenUI.arrow_right:Lcom/badlogic/gdx/graphics/Texture;
+    1077: sipush        859
+    1080: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1083: sipush        186
+    1086: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1089: invokespecial #133                // Method spireTogether/screens/lobby/MPLobbyScreen$14."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;)V
+    1092: invokevirtual #113                // Method AddIterable:(LspireTogether/ui/elements/UIElement;)V
+    1095: aload_0
+    1096: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+    1099: getfield      #115                // Field spireTogether/ui/elements/presets/ScreenUI.button_large:Lcom/badlogic/gdx/graphics/Texture;
+    1102: getstatic     #90                 // Field ui:LspireTogether/ui/elements/presets/ScreenUI;
+    1105: invokevirtual #134                // Method spireTogether/ui/elements/presets/ScreenUI.getTextColor:()Lcom/badlogic/gdx/graphics/Color;
+    1108: invokevirtual #135                // Method RegisterStartButton:(Lcom/badlogic/gdx/graphics/Texture;Lcom/badlogic/gdx/graphics/Color;)V
+    1111: return
+
+  public void ReInitPanels();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #58                 // Field otherPlayerPanels:Ljava/util/ArrayList;
+       4: invokevirtual #136                // Method java/util/ArrayList.clear:()V
+       7: invokestatic  #137                // Method spireTogether/network/P2P/P2PManager.GetPlayerCountWithoutSelf:()Ljava/lang/Integer;
+      10: astore_1
+      11: fconst_1
+      12: invokestatic  #138                // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+      15: astore_2
+      16: aload_1
+      17: invokevirtual #139                // Method java/lang/Integer.intValue:()I
+      20: iconst_4
+      21: if_icmple     30
+      24: ldc           #140                // float 0.5f
+      26: invokestatic  #138                // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+      29: astore_2
+      30: iconst_0
+      31: istore_3
+      32: iload_3
+      33: aload_1
+      34: invokevirtual #139                // Method java/lang/Integer.intValue:()I
+      37: iconst_4
+      38: if_icmple     46
+      41: bipush        10
+      43: goto          47
+      46: iconst_4
+      47: if_icmpge     96
+      50: aload_0
+      51: getfield      #58                 // Field otherPlayerPanels:Ljava/util/ArrayList;
+      54: new           #52                 // class spireTogether/ui/elements/presets/PlayerPanelGeneral
+      57: dup
+      58: aload_0
+      59: iload_3
+      60: aload_1
+      61: invokevirtual #139                // Method java/lang/Integer.intValue:()I
+      64: iconst_4
+      65: if_icmple     72
+      68: iconst_1
+      69: goto          73
+      72: iconst_0
+      73: invokevirtual #141                // Method GetPlayerPanelPosition:(IZ)Lcom/badlogic/gdx/math/Vector2;
+      76: aload_2
+      77: invokevirtual #142                // Method java/lang/Float.floatValue:()F
+      80: invokespecial #143                // Method spireTogether/ui/elements/presets/PlayerPanelGeneral."<init>":(Lcom/badlogic/gdx/math/Vector2;F)V
+      83: invokevirtual #144                // Method spireTogether/ui/elements/presets/PlayerPanelGeneral.SetEmpty:()LspireTogether/ui/elements/presets/PlayerPanelGeneral;
+      86: invokevirtual #105                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      89: pop
+      90: iinc          3, 1
+      93: goto          32
+      96: aload_0
+      97: getfield      #63                 // Field viewingPlayerPage:I
+     100: iconst_1
+     101: iadd
+     102: bipush        10
+     104: imul
+     105: invokestatic  #137                // Method spireTogether/network/P2P/P2PManager.GetPlayerCountWithoutSelf:()Ljava/lang/Integer;
+     108: invokevirtual #139                // Method java/lang/Integer.intValue:()I
+     111: isub
+     112: bipush        10
+     114: if_icmplt     130
+     117: aload_0
+     118: dup
+     119: getfield      #63                 // Field viewingPlayerPage:I
+     122: iconst_1
+     123: isub
+     124: putfield      #63                 // Field viewingPlayerPage:I
+     127: goto          96
+     130: aload_0
+     131: getfield      #63                 // Field viewingPlayerPage:I
+     134: ifge          142
+     137: aload_0
+     138: iconst_0
+     139: putfield      #63                 // Field viewingPlayerPage:I
+     142: iconst_0
+     143: invokestatic  #145                // Method spireTogether/network/P2P/P2PManager.GetAllPlayers:(Z)Ljava/util/Iterator;
+     146: astore_3
+     147: iconst_0
+     148: istore        4
+     150: iload         4
+     152: aload_0
+     153: getfield      #63                 // Field viewingPlayerPage:I
+     156: bipush        10
+     158: imul
+     159: if_icmpge     184
+     162: aload_3
+     163: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     168: ifeq          184
+     171: aload_3
+     172: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     177: pop
+     178: iinc          4, 1
+     181: goto          150
+     184: iconst_0
+     185: istore        4
+     187: aload_3
+     188: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     193: ifeq          242
+     196: iload         4
+     198: aload_0
+     199: getfield      #58                 // Field otherPlayerPanels:Ljava/util/ArrayList;
+     202: invokevirtual #146                // Method java/util/ArrayList.size:()I
+     205: if_icmplt     211
+     208: goto          242
+     211: aload_0
+     212: getfield      #58                 // Field otherPlayerPanels:Ljava/util/ArrayList;
+     215: iload         4
+     217: invokevirtual #147                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+     220: checkcast     #52                 // class spireTogether/ui/elements/presets/PlayerPanelGeneral
+     223: aload_3
+     224: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     229: checkcast     #148                // class spireTogether/network/P2P/P2PPlayer
+     232: invokevirtual #54                 // Method spireTogether/ui/elements/presets/PlayerPanelGeneral.Set:(LspireTogether/network/P2P/P2PPlayer;)LspireTogether/ui/elements/presets/PlayerPanelGeneral;
+     235: pop
+     236: iinc          4, 1
+     239: goto          187
+     242: aconst_null
+     243: putstatic     #149                // Field spireTogether/screens/lobby/MPHostPresetsScreen.settings:LspireTogether/network/objects/settings/GameSettings;
+     246: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #150                // Method spireTogether/screens/Screen.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+       5: getstatic     #62                 // Field startButtonManager:LspireTogether/ui/UIElementManager;
+       8: aload_1
+       9: invokevirtual #151                // Method spireTogether/ui/UIElementManager.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      12: aload_0
+      13: getfield      #55                 // Field selfPanel:LspireTogether/ui/elements/presets/PlayerPanelGeneral;
+      16: aload_1
+      17: invokevirtual #152                // Method spireTogether/ui/elements/presets/PlayerPanelGeneral.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      20: aload_0
+      21: getfield      #58                 // Field otherPlayerPanels:Ljava/util/ArrayList;
+      24: invokevirtual #13                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      27: astore_2
+      28: aload_2
+      29: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      34: ifeq          55
+      37: aload_2
+      38: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      43: checkcast     #52                 // class spireTogether/ui/elements/presets/PlayerPanelGeneral
+      46: astore_3
+      47: aload_3
+      48: aload_1
+      49: invokevirtual #152                // Method spireTogether/ui/elements/presets/PlayerPanelGeneral.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      52: goto          28
+      55: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      58: aload_1
+      59: invokevirtual #153                // Method spireTogether/monsters/CharacterEntity.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      62: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #154                // Method spireTogether/screens/Screen.update:()V
+       4: getstatic     #59                 // Field resetStartButton:Z
+       7: ifeq          26
+      10: aload_0
+      11: getstatic     #155                // Field spireTogether/screens/Screen.ui:LspireTogether/ui/elements/presets/ScreenUI;
+      14: getfield      #115                // Field spireTogether/ui/elements/presets/ScreenUI.button_large:Lcom/badlogic/gdx/graphics/Texture;
+      17: getstatic     #155                // Field spireTogether/screens/Screen.ui:LspireTogether/ui/elements/presets/ScreenUI;
+      20: invokevirtual #134                // Method spireTogether/ui/elements/presets/ScreenUI.getTextColor:()Lcom/badlogic/gdx/graphics/Color;
+      23: invokevirtual #135                // Method RegisterStartButton:(Lcom/badlogic/gdx/graphics/Texture;Lcom/badlogic/gdx/graphics/Color;)V
+      26: getstatic     #62                 // Field startButtonManager:LspireTogether/ui/UIElementManager;
+      29: invokevirtual #156                // Method spireTogether/ui/UIElementManager.update:()V
+      32: aload_0
+      33: getfield      #55                 // Field selfPanel:LspireTogether/ui/elements/presets/PlayerPanelGeneral;
+      36: invokevirtual #157                // Method spireTogether/ui/elements/presets/PlayerPanelGeneral.update:()V
+      39: aload_0
+      40: getfield      #58                 // Field otherPlayerPanels:Ljava/util/ArrayList;
+      43: invokevirtual #13                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      46: astore_1
+      47: aload_1
+      48: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      53: ifeq          73
+      56: aload_1
+      57: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      62: checkcast     #52                 // class spireTogether/ui/elements/presets/PlayerPanelGeneral
+      65: astore_2
+      66: aload_2
+      67: invokevirtual #157                // Method spireTogether/ui/elements/presets/PlayerPanelGeneral.update:()V
+      70: goto          47
+      73: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      76: invokevirtual #158                // Method spireTogether/monsters/CharacterEntity.update:()V
+      79: getstatic     #159                // Field spireTogether/commands/DebugStressTest.stressTestOn:Z
+      82: ifeq          145
+      85: getstatic     #160                // Field toggle:I
+      88: iconst_1
+      89: isub
+      90: putstatic     #160                // Field toggle:I
+      93: getstatic     #160                // Field toggle:I
+      96: ifgt          145
+      99: iconst_0
+     100: putstatic     #160                // Field toggle:I
+     103: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     106: invokevirtual #39                 // Method spireTogether/network/P2P/P2PPlayer.GetSkin:()Lskindex/skins/player/PlayerSkin;
+     109: iconst_1
+     110: invokestatic  #161                // Method skindex/registering/SkindexRegistry.getNextSkin:(Lskindex/skins/player/PlayerSkin;Z)Lskindex/skins/player/PlayerSkin;
+     113: astore_1
+     114: aload_1
+     115: ifnull        145
+     118: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     121: aload_1
+     122: iconst_1
+     123: invokevirtual #26                 // Method spireTogether/network/P2P/P2PPlayer.UpdateSkin:(Lskindex/skins/player/PlayerSkin;Z)V
+     126: aload_1
+     127: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+     130: invokevirtual #77                 // Method skindex/skins/player/PlayerSkin.loadOnEntity:(Lskindex/entities/player/SkindexPlayerEntity;)Z
+     133: pop
+     134: aload_0
+     135: getfield      #55                 // Field selfPanel:LspireTogether/ui/elements/presets/PlayerPanelGeneral;
+     138: invokevirtual #162                // Method spireTogether/ui/elements/presets/PlayerPanelGeneral.UpdateData:()V
+     141: iconst_1
+     142: putstatic     #6                  // Field changedSomething:Z
+     145: return
+
+  public com.badlogic.gdx.math.Vector2 GetPlayerPanelPosition(int, boolean);
+    descriptor: (IZ)Lcom/badlogic/gdx/math/Vector2;
+    Code:
+       0: iload_2
+       1: ifeq          40
+       4: bipush        60
+       6: sipush        471
+       9: iload_1
+      10: iconst_2
+      11: irem
+      12: imul
+      13: iadd
+      14: istore_3
+      15: sipush        685
+      18: bipush        100
+      20: iload_1
+      21: iconst_2
+      22: idiv
+      23: imul
+      24: isub
+      25: istore        4
+      27: new           #163                // class com/badlogic/gdx/math/Vector2
+      30: dup
+      31: iload_3
+      32: i2f
+      33: iload         4
+      35: i2f
+      36: invokespecial #164                // Method com/badlogic/gdx/math/Vector2."<init>":(FF)V
+      39: areturn
+      40: bipush        84
+      42: istore_3
+      43: sipush        601
+      46: sipush        190
+      49: iload_1
+      50: imul
+      51: isub
+      52: istore        4
+      54: new           #163                // class com/badlogic/gdx/math/Vector2
+      57: dup
+      58: iload_3
+      59: i2f
+      60: iload         4
+      62: i2f
+      63: invokespecial #164                // Method com/badlogic/gdx/math/Vector2."<init>":(FF)V
+      66: areturn
+
+  void LoadCharacterModel(com.megacrit.cardcrawl.characters.AbstractPlayer);
+    descriptor: (Lcom/megacrit/cardcrawl/characters/AbstractPlayer;)V
+    Code:
+       0: new           #40                 // class java/lang/StringBuilder
+       3: dup
+       4: invokespecial #41                 // Method java/lang/StringBuilder."<init>":()V
+       7: ldc           #165                // String Selected MP char:
+       9: invokevirtual #43                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      12: aload_1
+      13: getfield      #17                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.chosenClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      16: invokevirtual #18                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass.name:()Ljava/lang/String;
+      19: invokevirtual #43                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      22: invokevirtual #45                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      25: invokestatic  #166                // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+      28: aload_1
+      29: iconst_0
+      30: invokestatic  #167                // Method spireTogether/monsters/CharacterEntity.Get:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer;Z)LspireTogether/monsters/CharacterEntity;
+      33: putstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      36: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      39: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      42: getfield      #72                 // Field spireTogether/monsters/CharacterEntity.lobbyScale:F
+      45: invokevirtual #73                 // Method spireTogether/monsters/CharacterEntity.setRenderScale:(F)LspireTogether/monsters/CharacterEntity;
+      48: pop
+      49: invokestatic  #11                 // Method spireTogether/saves/objects/JSON/PlayerPresetSave.Get:()LspireTogether/saves/objects/JSON/PlayerPresetSave;
+      52: aload_1
+      53: getfield      #17                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.chosenClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      56: invokevirtual #24                 // Method spireTogether/saves/objects/JSON/PlayerPresetSave.GetDefaultSkinForCharacter:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Lskindex/skins/player/PlayerSkin;
+      59: astore_2
+      60: aload_2
+      61: ifnull        79
+      64: aload_2
+      65: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      68: invokevirtual #77                 // Method skindex/skins/player/PlayerSkin.loadOnEntity:(Lskindex/entities/player/SkindexPlayerEntity;)Z
+      71: pop
+      72: aload_2
+      73: invokestatic  #76                 // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerSkin:(Lskindex/skins/player/PlayerSkin;)V
+      76: goto          101
+      79: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      82: getfield      #74                 // Field spireTogether/monsters/CharacterEntity.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      85: invokestatic  #75                 // Method skindex/registering/SkindexRegistry.getDefaultPlayerSkinByClass:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Lskindex/skins/player/PlayerSkin;
+      88: astore_2
+      89: aload_2
+      90: ifnull        101
+      93: aload_2
+      94: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      97: invokevirtual #77                 // Method skindex/skins/player/PlayerSkin.loadOnEntity:(Lskindex/entities/player/SkindexPlayerEntity;)Z
+     100: pop
+     101: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+     104: ldc           #78                 // float 1420.0f
+     106: getstatic     #79                 // Field spireTogether/util/SpireVariables.scale:Lcom/badlogic/gdx/math/Vector2;
+     109: getfield      #80                 // Field com/badlogic/gdx/math/Vector2.x:F
+     112: fmul
+     113: ldc           #81                 // float 400.0f
+     115: getstatic     #79                 // Field spireTogether/util/SpireVariables.scale:Lcom/badlogic/gdx/math/Vector2;
+     118: getfield      #82                 // Field com/badlogic/gdx/math/Vector2.y:F
+     121: fmul
+     122: invokevirtual #83                 // Method spireTogether/monsters/CharacterEntity.SetDrawPosition:(FF)V
+     125: aload_1
+     126: invokevirtual #85                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.doCharSelectScreenSelectEffect:()V
+     129: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     132: aload_1
+     133: getfield      #17                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.chosenClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     136: iconst_1
+     137: invokevirtual #22                 // Method spireTogether/network/P2P/P2PPlayer.UpdatePlayerClass:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Z)V
+     140: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     143: aload_2
+     144: iconst_1
+     145: invokevirtual #26                 // Method spireTogether/network/P2P/P2PPlayer.UpdateSkin:(Lskindex/skins/player/PlayerSkin;Z)V
+     148: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     151: aload_1
+     152: getfield      #168                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+     155: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     158: putfield      #169                // Field spireTogether/network/P2P/P2PPlayer.HP:Ljava/lang/Integer;
+     161: return
+
+  void SetRandomCharacter();
+    descriptor: ()V
+    Code:
+       0: ldc           #170                // String Selected MP char: random
+       2: invokestatic  #166                // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+       5: getstatic     #171                // Field spireTogether/patches/RandomCharacterPatches$Enums.MP_RANDOM:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+       8: iconst_0
+       9: invokestatic  #70                 // Method spireTogether/monsters/CharacterEntity.Get:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Z)LspireTogether/monsters/CharacterEntity;
+      12: putstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      15: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      18: getfield      #74                 // Field spireTogether/monsters/CharacterEntity.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      21: invokestatic  #75                 // Method skindex/registering/SkindexRegistry.getDefaultPlayerSkinByClass:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Lskindex/skins/player/PlayerSkin;
+      24: astore_1
+      25: aload_1
+      26: ifnull        37
+      29: aload_1
+      30: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      33: invokevirtual #77                 // Method skindex/skins/player/PlayerSkin.loadOnEntity:(Lskindex/entities/player/SkindexPlayerEntity;)Z
+      36: pop
+      37: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      40: ldc           #78                 // float 1420.0f
+      42: getstatic     #79                 // Field spireTogether/util/SpireVariables.scale:Lcom/badlogic/gdx/math/Vector2;
+      45: getfield      #80                 // Field com/badlogic/gdx/math/Vector2.x:F
+      48: fmul
+      49: ldc           #81                 // float 400.0f
+      51: getstatic     #79                 // Field spireTogether/util/SpireVariables.scale:Lcom/badlogic/gdx/math/Vector2;
+      54: getfield      #82                 // Field com/badlogic/gdx/math/Vector2.y:F
+      57: fmul
+      58: invokevirtual #83                 // Method spireTogether/monsters/CharacterEntity.SetDrawPosition:(FF)V
+      61: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      64: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      67: getfield      #74                 // Field spireTogether/monsters/CharacterEntity.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      70: iconst_1
+      71: invokevirtual #22                 // Method spireTogether/network/P2P/P2PPlayer.UpdatePlayerClass:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Z)V
+      74: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      77: getfield      #74                 // Field spireTogether/monsters/CharacterEntity.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      80: invokestatic  #172                // Method spireTogether/util/SpireLogger.Log:(Ljava/lang/Object;)V
+      83: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      86: bipush        100
+      88: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      91: putfield      #169                // Field spireTogether/network/P2P/P2PPlayer.HP:Ljava/lang/Integer;
+      94: return
+
+  void RegisterStartButton(com.badlogic.gdx.graphics.Texture, com.badlogic.gdx.graphics.Color);
+    descriptor: (Lcom/badlogic/gdx/graphics/Texture;Lcom/badlogic/gdx/graphics/Color;)V
+    Code:
+       0: getstatic     #62                 // Field startButtonManager:LspireTogether/ui/UIElementManager;
+       3: getfield      #173                // Field spireTogether/ui/UIElementManager.elements:Ljava/util/List;
+       6: invokeinterface #174,  1          // InterfaceMethod java/util/List.clear:()V
+      11: aload_0
+      12: invokevirtual #175                // Method ClearNonBaseIterables:()V
+      15: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+      18: getfield      #177                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+      21: getfield      #178                // Field spireTogether/network/objects/settings/GameSettings.startType:LspireTogether/network/objects/settings/GameSettings$StartType;
+      24: getstatic     #179                // Field spireTogether/network/objects/settings/GameSettings$StartType.FREE_FOR_ALL:LspireTogether/network/objects/settings/GameSettings$StartType;
+      27: if_acmpeq     37
+      30: aload_0
+      31: invokevirtual #180                // Method IsLobbyUnlocked:()Z
+      34: ifeq          114
+      37: aload_0
+      38: new           #181                // class spireTogether/screens/lobby/MPLobbyScreen$15
+      41: dup
+      42: aload_0
+      43: aload_1
+      44: sipush        1042
+      47: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      50: bipush        38
+      52: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      55: sipush        768
+      58: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      61: sipush        150
+      64: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      67: invokespecial #182                // Method spireTogether/screens/lobby/MPLobbyScreen$15."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+      70: invokevirtual #113                // Method AddIterable:(LspireTogether/ui/elements/UIElement;)V
+      73: getstatic     #62                 // Field startButtonManager:LspireTogether/ui/UIElementManager;
+      76: new           #183                // class spireTogether/ui/elements/mixed/BoxedLabel
+      79: dup
+      80: ldc           #184                // String EMBARK
+      82: sipush        1042
+      85: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      88: bipush        38
+      90: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      93: sipush        768
+      96: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      99: sipush        150
+     102: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     105: invokespecial #185                // Method spireTogether/ui/elements/mixed/BoxedLabel."<init>":(Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     108: invokevirtual #69                 // Method spireTogether/ui/UIElementManager.Add:(LspireTogether/ui/elements/UIElement;)V
+     111: goto          514
+     114: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+     117: getfield      #177                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+     120: getfield      #178                // Field spireTogether/network/objects/settings/GameSettings.startType:LspireTogether/network/objects/settings/GameSettings$StartType;
+     123: getstatic     #186                // Field spireTogether/network/objects/settings/GameSettings$StartType.ALL_READY:LspireTogether/network/objects/settings/GameSettings$StartType;
+     126: if_acmpne     295
+     129: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     132: getfield      #187                // Field spireTogether/network/P2P/P2PPlayer.startStatus:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+     135: getstatic     #188                // Field spireTogether/network/P2P/P2PPlayer$StartStatus.READY:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+     138: if_acmpeq     218
+     141: aload_0
+     142: new           #189                // class spireTogether/screens/lobby/MPLobbyScreen$16
+     145: dup
+     146: aload_0
+     147: aload_1
+     148: sipush        1042
+     151: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     154: bipush        38
+     156: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     159: sipush        768
+     162: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     165: sipush        150
+     168: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     171: invokespecial #190                // Method spireTogether/screens/lobby/MPLobbyScreen$16."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     174: invokevirtual #113                // Method AddIterable:(LspireTogether/ui/elements/UIElement;)V
+     177: getstatic     #62                 // Field startButtonManager:LspireTogether/ui/UIElementManager;
+     180: new           #183                // class spireTogether/ui/elements/mixed/BoxedLabel
+     183: dup
+     184: ldc           #191                // String READY
+     186: sipush        1042
+     189: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     192: bipush        38
+     194: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     197: sipush        768
+     200: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     203: sipush        150
+     206: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     209: invokespecial #185                // Method spireTogether/ui/elements/mixed/BoxedLabel."<init>":(Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     212: invokevirtual #69                 // Method spireTogether/ui/UIElementManager.Add:(LspireTogether/ui/elements/UIElement;)V
+     215: goto          514
+     218: aload_0
+     219: new           #192                // class spireTogether/screens/lobby/MPLobbyScreen$17
+     222: dup
+     223: aload_0
+     224: aload_1
+     225: sipush        1042
+     228: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     231: bipush        38
+     233: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     236: sipush        768
+     239: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     242: sipush        150
+     245: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     248: invokespecial #193                // Method spireTogether/screens/lobby/MPLobbyScreen$17."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     251: invokevirtual #113                // Method AddIterable:(LspireTogether/ui/elements/UIElement;)V
+     254: getstatic     #62                 // Field startButtonManager:LspireTogether/ui/UIElementManager;
+     257: new           #183                // class spireTogether/ui/elements/mixed/BoxedLabel
+     260: dup
+     261: ldc           #194                // String UNREADY
+     263: sipush        1042
+     266: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     269: bipush        38
+     271: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     274: sipush        768
+     277: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     280: sipush        150
+     283: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     286: invokespecial #185                // Method spireTogether/ui/elements/mixed/BoxedLabel."<init>":(Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     289: invokevirtual #69                 // Method spireTogether/ui/UIElementManager.Add:(LspireTogether/ui/elements/UIElement;)V
+     292: goto          514
+     295: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+     298: getfield      #177                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+     301: getfield      #178                // Field spireTogether/network/objects/settings/GameSettings.startType:LspireTogether/network/objects/settings/GameSettings$StartType;
+     304: getstatic     #195                // Field spireTogether/network/objects/settings/GameSettings$StartType.OWNER_UNLOCK:LspireTogether/network/objects/settings/GameSettings$StartType;
+     307: if_acmpne     514
+     310: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     313: invokevirtual #196                // Method spireTogether/network/P2P/P2PPlayer.IsLobbyOwner:()Z
+     316: ifne          325
+     319: getstatic     #197                // Field spireTogether/util/DevConfig.isDeveloper:Z
+     322: ifeq          409
+     325: aload_0
+     326: invokevirtual #180                // Method IsLobbyUnlocked:()Z
+     329: ifne          409
+     332: aload_0
+     333: new           #198                // class spireTogether/screens/lobby/MPLobbyScreen$18
+     336: dup
+     337: aload_0
+     338: aload_1
+     339: sipush        1042
+     342: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     345: bipush        38
+     347: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     350: sipush        768
+     353: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     356: sipush        150
+     359: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     362: invokespecial #199                // Method spireTogether/screens/lobby/MPLobbyScreen$18."<init>":(LspireTogether/screens/lobby/MPLobbyScreen;Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     365: invokevirtual #113                // Method AddIterable:(LspireTogether/ui/elements/UIElement;)V
+     368: getstatic     #62                 // Field startButtonManager:LspireTogether/ui/UIElementManager;
+     371: new           #183                // class spireTogether/ui/elements/mixed/BoxedLabel
+     374: dup
+     375: ldc           #200                // String UNLOCK
+     377: sipush        1042
+     380: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     383: bipush        38
+     385: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     388: sipush        768
+     391: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     394: sipush        150
+     397: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     400: invokespecial #185                // Method spireTogether/ui/elements/mixed/BoxedLabel."<init>":(Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     403: invokevirtual #69                 // Method spireTogether/ui/UIElementManager.Add:(LspireTogether/ui/elements/UIElement;)V
+     406: goto          514
+     409: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     412: invokevirtual #196                // Method spireTogether/network/P2P/P2PPlayer.IsLobbyOwner:()Z
+     415: ifne          514
+     418: getstatic     #62                 // Field startButtonManager:LspireTogether/ui/UIElementManager;
+     421: new           #65                 // class spireTogether/ui/elements/Renderable
+     424: dup
+     425: getstatic     #155                // Field spireTogether/screens/Screen.ui:LspireTogether/ui/elements/presets/ScreenUI;
+     428: getfield      #201                // Field spireTogether/ui/elements/presets/ScreenUI.button_large_outline_empty:Lcom/badlogic/gdx/graphics/Texture;
+     431: sipush        1042
+     434: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     437: bipush        38
+     439: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     442: sipush        768
+     445: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     448: sipush        150
+     451: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     454: invokespecial #202                // Method spireTogether/ui/elements/Renderable."<init>":(Lcom/badlogic/gdx/graphics/Texture;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+     457: invokevirtual #69                 // Method spireTogether/ui/UIElementManager.Add:(LspireTogether/ui/elements/UIElement;)V
+     460: getstatic     #62                 // Field startButtonManager:LspireTogether/ui/UIElementManager;
+     463: new           #183                // class spireTogether/ui/elements/mixed/BoxedLabel
+     466: dup
+     467: ldc           #203                // String WAITING FOR HOST
+     469: sipush        1042
+     472: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     475: bipush        38
+     477: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     480: sipush        768
+     483: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     486: sipush        150
+     489: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     492: ldc           #204                // float 0.07f
+     494: invokestatic  #138                // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+     497: ldc           #205                // float 0.3f
+     499: invokestatic  #138                // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+     502: iconst_1
+     503: iconst_1
+     504: invokespecial #206                // Method spireTogether/ui/elements/mixed/BoxedLabel."<init>":(Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Float;Ljava/lang/Float;ZZ)V
+     507: aload_2
+     508: invokevirtual #207                // Method spireTogether/ui/elements/mixed/BoxedLabel.SetColour:(Lcom/badlogic/gdx/graphics/Color;)LspireTogether/ui/elements/mixed/BoxedLabel;
+     511: invokevirtual #69                 // Method spireTogether/ui/UIElementManager.Add:(LspireTogether/ui/elements/UIElement;)V
+     514: iconst_0
+     515: putstatic     #59                 // Field resetStartButton:Z
+     518: return
+
+  boolean IsLobbyUnlocked();
+    descriptor: ()Z
+    Code:
+       0: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+       3: getfield      #177                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+       6: getfield      #178                // Field spireTogether/network/objects/settings/GameSettings.startType:LspireTogether/network/objects/settings/GameSettings$StartType;
+       9: getstatic     #195                // Field spireTogether/network/objects/settings/GameSettings$StartType.OWNER_UNLOCK:LspireTogether/network/objects/settings/GameSettings$StartType;
+      12: if_acmpne     49
+      15: invokestatic  #208                // Method spireTogether/network/P2P/P2PManager.GetLobbyOwner:()LspireTogether/network/P2P/P2PPlayer;
+      18: astore_1
+      19: aload_1
+      20: ifnull        49
+      23: aload_1
+      24: getfield      #187                // Field spireTogether/network/P2P/P2PPlayer.startStatus:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      27: getstatic     #188                // Field spireTogether/network/P2P/P2PPlayer$StartStatus.READY:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      30: if_acmpeq     43
+      33: aload_1
+      34: getfield      #187                // Field spireTogether/network/P2P/P2PPlayer.startStatus:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      37: getstatic     #209                // Field spireTogether/network/P2P/P2PPlayer$StartStatus.EMBARKED:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      40: if_acmpne     47
+      43: iconst_1
+      44: goto          48
+      47: iconst_0
+      48: ireturn
+      49: iconst_0
+      50: ireturn
+
+  public void EmbarkIfAllPlayersReady();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #210                // Method AreAllPlayersReady:()Z
+       3: ifeq          22
+       6: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+       9: getfield      #177                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+      12: getstatic     #179                // Field spireTogether/network/objects/settings/GameSettings$StartType.FREE_FOR_ALL:LspireTogether/network/objects/settings/GameSettings$StartType;
+      15: putfield      #178                // Field spireTogether/network/objects/settings/GameSettings.startType:LspireTogether/network/objects/settings/GameSettings$StartType;
+      18: aload_0
+      19: invokespecial #1                  // Method Embark:()V
+      22: return
+
+  public static boolean AreAllPlayersReady();
+    descriptor: ()Z
+    Code:
+       0: iconst_1
+       1: invokestatic  #145                // Method spireTogether/network/P2P/P2PManager.GetAllPlayers:(Z)Ljava/util/Iterator;
+       4: astore_0
+       5: aload_0
+       6: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      11: ifeq          49
+      14: aload_0
+      15: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      20: checkcast     #148                // class spireTogether/network/P2P/P2PPlayer
+      23: astore_1
+      24: aload_1
+      25: getfield      #187                // Field spireTogether/network/P2P/P2PPlayer.startStatus:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      28: getstatic     #188                // Field spireTogether/network/P2P/P2PPlayer$StartStatus.READY:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      31: if_acmpeq     46
+      34: aload_1
+      35: getfield      #187                // Field spireTogether/network/P2P/P2PPlayer.startStatus:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      38: getstatic     #209                // Field spireTogether/network/P2P/P2PPlayer$StartStatus.EMBARKED:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+      41: if_acmpeq     46
+      44: iconst_0
+      45: ireturn
+      46: goto          5
+      49: iconst_1
+      50: ireturn
+
+  private void Embark();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #211                // Method dLib/modcompat/ModManager$TogetherInSpireBoosterPackMod.isActive:()Z
+       3: ifeq          13
+       6: getstatic     #212                // Field spireTogether/util/UIElements$Cursors.boomerang:LspireTogether/ui/elements/presets/Cursor;
+       9: invokevirtual #213                // Method spireTogether/ui/elements/presets/Cursor.Unlock:()Z
+      12: pop
+      13: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      16: getfield      #74                 // Field spireTogether/monsters/CharacterEntity.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      19: getstatic     #171                // Field spireTogether/patches/RandomCharacterPatches$Enums.MP_RANDOM:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      22: invokevirtual #214                // Method com/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass.equals:(Ljava/lang/Object;)Z
+      25: ifeq          97
+      28: getstatic     #7                  // Field com/megacrit/cardcrawl/core/CardCrawlGame.characterManager:Lcom/megacrit/cardcrawl/characters/CharacterManager;
+      31: new           #215                // class com/megacrit/cardcrawl/random/Random
+      34: dup
+      35: invokespecial #216                // Method com/megacrit/cardcrawl/random/Random."<init>":()V
+      38: invokevirtual #217                // Method com/megacrit/cardcrawl/characters/CharacterManager.getRandomCharacter:(Lcom/megacrit/cardcrawl/random/Random;)Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      41: astore_1
+      42: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      45: aload_1
+      46: getfield      #17                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.chosenClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      49: iconst_1
+      50: invokevirtual #22                 // Method spireTogether/network/P2P/P2PPlayer.UpdatePlayerClass:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Z)V
+      53: aload_1
+      54: iconst_0
+      55: invokestatic  #167                // Method spireTogether/monsters/CharacterEntity.Get:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer;Z)LspireTogether/monsters/CharacterEntity;
+      58: putstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      61: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+      64: getfield      #74                 // Field spireTogether/monsters/CharacterEntity.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      67: iconst_1
+      68: invokestatic  #218                // Method skindex/registering/SkindexRegistry.getRandomSkin:(Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Z)Lskindex/skins/player/PlayerSkin;
+      71: astore_2
+      72: aload_2
+      73: ifnull        84
+      76: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      79: aload_2
+      80: iconst_1
+      81: invokevirtual #26                 // Method spireTogether/network/P2P/P2PPlayer.UpdateSkin:(Lskindex/skins/player/PlayerSkin;Z)V
+      84: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+      87: aload_1
+      88: getfield      #219                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.startingMaxHP:I
+      91: invokestatic  #3                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      94: putfield      #169                // Field spireTogether/network/P2P/P2PPlayer.HP:Ljava/lang/Integer;
+      97: aconst_null
+      98: putstatic     #10                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     101: ldc           #220                // String Embarking!
+     103: invokestatic  #166                // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+     106: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+     109: getfield      #177                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+     112: getfield      #221                // Field spireTogether/network/objects/settings/GameSettings.setSeed:Ljava/lang/String;
+     115: astore_1
+     116: aload_1
+     117: ldc           #222                // String
+     119: invokevirtual #20                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     122: ifne          170
+     125: aload_1
+     126: invokestatic  #223                // Method com/megacrit/cardcrawl/helpers/TrialHelper.isTrialSeed:(Ljava/lang/String;)Z
+     129: istore_2
+     130: iload_2
+     131: ifeq          163
+     134: aload_1
+     135: invokestatic  #224                // Method com/megacrit/cardcrawl/helpers/SeedHelper.getLong:(Ljava/lang/String;)J
+     138: invokestatic  #225                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     141: putstatic     #226                // Field com/megacrit/cardcrawl/core/Settings.specialSeed:Ljava/lang/Long;
+     144: iconst_1
+     145: putstatic     #227                // Field com/megacrit/cardcrawl/core/Settings.isTrial:Z
+     148: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+     151: getfield      #228                // Field spireTogether/network/P2P/P2PClientData.gameSeed:J
+     154: invokestatic  #225                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     157: putstatic     #229                // Field com/megacrit/cardcrawl/core/Settings.seed:Ljava/lang/Long;
+     160: goto          167
+     163: aload_1
+     164: invokestatic  #230                // Method com/megacrit/cardcrawl/helpers/SeedHelper.setSeed:(Ljava/lang/String;)V
+     167: goto          182
+     170: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+     173: getfield      #228                // Field spireTogether/network/P2P/P2PClientData.gameSeed:J
+     176: invokestatic  #225                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     179: putstatic     #229                // Field com/megacrit/cardcrawl/core/Settings.seed:Ljava/lang/Long;
+     182: getstatic     #71                 // Field characterRender:LspireTogether/monsters/CharacterEntity;
+     185: getfield      #74                 // Field spireTogether/monsters/CharacterEntity.playerClass:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     188: putstatic     #231                // Field com/megacrit/cardcrawl/core/CardCrawlGame.chosenCharacter:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+     191: getstatic     #232                // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+     194: iconst_1
+     195: putfield      #233                // Field com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.isFadingOut:Z
+     198: getstatic     #232                // Field com/megacrit/cardcrawl/core/CardCrawlGame.mainMenuScreen:Lcom/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen;
+     201: invokevirtual #234                // Method com/megacrit/cardcrawl/screens/mainMenu/MainMenuScreen.fadeOutMusic:()V
+     204: iconst_0
+     205: putstatic     #235                // Field com/megacrit/cardcrawl/core/Settings.isDailyRun:Z
+     208: iconst_0
+     209: putstatic     #236                // Field com/megacrit/cardcrawl/core/Settings.isEndless:Z
+     212: invokestatic  #21                 // Method spireTogether/network/P2P/P2PManager.GetSelf:()LspireTogether/network/P2P/P2PPlayer;
+     215: getstatic     #209                // Field spireTogether/network/P2P/P2PPlayer$StartStatus.EMBARKED:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+     218: putfield      #187                // Field spireTogether/network/P2P/P2PPlayer.startStatus:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+     221: getstatic     #209                // Field spireTogether/network/P2P/P2PPlayer$StartStatus.EMBARKED:LspireTogether/network/P2P/P2PPlayer$StartStatus;
+     224: invokestatic  #237                // Method spireTogether/network/P2P/P2PMessageSender.Send_ChangedPlayerStartStatus:(LspireTogether/network/P2P/P2PPlayer$StartStatus;)V
+     227: invokestatic  #238                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.generateSeeds:()V
+     230: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+     233: getfield      #239                // Field spireTogether/network/P2P/P2PClientData.privateSeed:J
+     236: lstore_2
+     237: new           #215                // class com/megacrit/cardcrawl/random/Random
+     240: dup
+     241: lload_2
+     242: invokestatic  #225                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     245: invokespecial #240                // Method com/megacrit/cardcrawl/random/Random."<init>":(Ljava/lang/Long;)V
+     248: putstatic     #241                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.merchantRng:Lcom/megacrit/cardcrawl/random/Random;
+     251: new           #215                // class com/megacrit/cardcrawl/random/Random
+     254: dup
+     255: lload_2
+     256: invokestatic  #225                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     259: invokespecial #240                // Method com/megacrit/cardcrawl/random/Random."<init>":(Ljava/lang/Long;)V
+     262: putstatic     #242                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.treasureRng:Lcom/megacrit/cardcrawl/random/Random;
+     265: new           #215                // class com/megacrit/cardcrawl/random/Random
+     268: dup
+     269: lload_2
+     270: invokestatic  #225                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     273: invokespecial #240                // Method com/megacrit/cardcrawl/random/Random."<init>":(Ljava/lang/Long;)V
+     276: putstatic     #243                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.relicRng:Lcom/megacrit/cardcrawl/random/Random;
+     279: new           #215                // class com/megacrit/cardcrawl/random/Random
+     282: dup
+     283: lload_2
+     284: invokestatic  #225                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     287: invokespecial #240                // Method com/megacrit/cardcrawl/random/Random."<init>":(Ljava/lang/Long;)V
+     290: putstatic     #244                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.potionRng:Lcom/megacrit/cardcrawl/random/Random;
+     293: new           #215                // class com/megacrit/cardcrawl/random/Random
+     296: dup
+     297: lload_2
+     298: invokestatic  #225                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     301: invokespecial #240                // Method com/megacrit/cardcrawl/random/Random."<init>":(Ljava/lang/Long;)V
+     304: putstatic     #245                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.shuffleRng:Lcom/megacrit/cardcrawl/random/Random;
+     307: new           #215                // class com/megacrit/cardcrawl/random/Random
+     310: dup
+     311: lload_2
+     312: invokestatic  #225                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     315: invokespecial #240                // Method com/megacrit/cardcrawl/random/Random."<init>":(Ljava/lang/Long;)V
+     318: putstatic     #246                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.cardRandomRng:Lcom/megacrit/cardcrawl/random/Random;
+     321: new           #215                // class com/megacrit/cardcrawl/random/Random
+     324: dup
+     325: lload_2
+     326: invokestatic  #225                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     329: invokespecial #240                // Method com/megacrit/cardcrawl/random/Random."<init>":(Ljava/lang/Long;)V
+     332: putstatic     #247                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.cardRng:Lcom/megacrit/cardcrawl/random/Random;
+     335: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+     338: getfield      #177                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+     341: getfield      #248                // Field spireTogether/network/objects/settings/GameSettings.ascensionLevel:Ljava/lang/Integer;
+     344: astore        4
+     346: aload         4
+     348: invokevirtual #139                // Method java/lang/Integer.intValue:()I
+     351: ifle          358
+     354: iconst_1
+     355: goto          359
+     358: iconst_0
+     359: putstatic     #249                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.isAscensionMode:Z
+     362: aload         4
+     364: invokevirtual #139                // Method java/lang/Integer.intValue:()I
+     367: putstatic     #250                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.ascensionLevel:I
+     370: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+     373: getfield      #177                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+     376: getfield      #251                // Field spireTogether/network/objects/settings/GameSettings.customMods:Ljava/util/ArrayList;
+     379: invokevirtual #146                // Method java/util/ArrayList.size:()I
+     382: ifle          530
+     385: iconst_1
+     386: putstatic     #227                // Field com/megacrit/cardcrawl/core/Settings.isTrial:Z
+     389: new           #252                // class com/megacrit/cardcrawl/trials/CustomTrial
+     392: dup
+     393: invokespecial #253                // Method com/megacrit/cardcrawl/trials/CustomTrial."<init>":()V
+     396: astore        5
+     398: getstatic     #176                // Field spireTogether/network/P2P/P2PManager.data:LspireTogether/network/P2P/P2PClientData;
+     401: getfield      #177                // Field spireTogether/network/P2P/P2PClientData.settings:LspireTogether/network/objects/settings/GameSettings;
+     404: getfield      #251                // Field spireTogether/network/objects/settings/GameSettings.customMods:Ljava/util/ArrayList;
+     407: invokestatic  #254                // Method spireTogether/network/objects/settings/NetworkCustomMod.Convert:(Ljava/util/ArrayList;)Ljava/util/ArrayList;
+     410: astore        6
+     412: aload         5
+     414: aload         6
+     416: invokestatic  #255                // Method GetActiveDailyModIds:(Ljava/util/ArrayList;)Ljava/util/ArrayList;
+     419: invokevirtual #256                // Method com/megacrit/cardcrawl/trials/CustomTrial.addDailyMods:(Ljava/util/List;)V
+     422: ldc_w         #257                // String addNonDailyMods
+     425: new           #258                // class com/megacrit/cardcrawl/screens/custom/CustomModeScreen
+     428: dup
+     429: invokespecial #259                // Method com/megacrit/cardcrawl/screens/custom/CustomModeScreen."<init>":()V
+     432: iconst_2
+     433: anewarray     #260                // class java/lang/Object
+     436: dup
+     437: iconst_0
+     438: aload         5
+     440: aastore
+     441: dup
+     442: iconst_1
+     443: aload         6
+     445: invokestatic  #261                // Method GetActiveNonDailyModIds:(Ljava/util/ArrayList;)Ljava/util/ArrayList;
+     448: aastore
+     449: invokestatic  #262                // Method spireTogether/util/Reflection.InvokeMethod:(Ljava/lang/String;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+     452: pop
+     453: aload         5
+     455: invokevirtual #263                // Method com/megacrit/cardcrawl/trials/CustomTrial.dailyModIDs:()Ljava/util/ArrayList;
+     458: ldc_w         #264                // String Endless
+     461: invokevirtual #265                // Method java/util/ArrayList.contains:(Ljava/lang/Object;)Z
+     464: putstatic     #236                // Field com/megacrit/cardcrawl/core/Settings.isEndless:Z
+     467: aload         5
+     469: putstatic     #266                // Field com/megacrit/cardcrawl/core/CardCrawlGame.trial:Lcom/megacrit/cardcrawl/trials/AbstractTrial;
+     472: getstatic     #266                // Field com/megacrit/cardcrawl/core/CardCrawlGame.trial:Lcom/megacrit/cardcrawl/trials/AbstractTrial;
+     475: invokevirtual #267                // Method com/megacrit/cardcrawl/trials/AbstractTrial.dailyModIDs:()Ljava/util/ArrayList;
+     478: putstatic     #268                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.customMods:Ljava/util/ArrayList;
+     481: ldc_w         #269                // String Running trial with following mods:
+     484: invokestatic  #166                // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+     487: aload         6
+     489: invokevirtual #13                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     492: astore        7
+     494: aload         7
+     496: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     501: ifeq          527
+     504: aload         7
+     506: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     511: checkcast     #270                // class com/megacrit/cardcrawl/screens/custom/CustomMod
+     514: astore        8
+     516: aload         8
+     518: getfield      #271                // Field com/megacrit/cardcrawl/screens/custom/CustomMod.ID:Ljava/lang/String;
+     521: invokestatic  #166                // Method spireTogether/util/SpireLogger.LogClient:(Ljava/lang/Object;)V
+     524: goto          494
+     527: goto          534
+     530: iconst_0
+     531: putstatic     #227                // Field com/megacrit/cardcrawl/core/Settings.isTrial:Z
+     534: invokestatic  #272                // Method spireTogether/screens/ScreenManager.Close:()V
+     537: fconst_0
+     538: invokestatic  #273                // Method com/megacrit/cardcrawl/core/CardCrawlGame.fadeToBlack:(F)V
+     541: return
+
+  private static java.util.ArrayList<java.lang.String> GetActiveDailyModIds(java.util.ArrayList<com.megacrit.cardcrawl.screens.custom.CustomMod>);
+    descriptor: (Ljava/util/ArrayList;)Ljava/util/ArrayList;
+    Code:
+       0: new           #56                 // class java/util/ArrayList
+       3: dup
+       4: invokespecial #57                 // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_0
+       9: invokevirtual #13                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      12: astore_2
+      13: aload_2
+      14: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      19: ifeq          58
+      22: aload_2
+      23: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      28: checkcast     #270                // class com/megacrit/cardcrawl/screens/custom/CustomMod
+      31: astore_3
+      32: aload_3
+      33: getfield      #274                // Field com/megacrit/cardcrawl/screens/custom/CustomMod.selected:Z
+      36: ifeq          55
+      39: aload_3
+      40: getfield      #275                // Field com/megacrit/cardcrawl/screens/custom/CustomMod.isDailyMod:Z
+      43: ifeq          55
+      46: aload_1
+      47: aload_3
+      48: getfield      #271                // Field com/megacrit/cardcrawl/screens/custom/CustomMod.ID:Ljava/lang/String;
+      51: invokevirtual #105                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      54: pop
+      55: goto          13
+      58: aload_1
+      59: areturn
+
+  private static java.util.ArrayList<java.lang.String> GetActiveNonDailyModIds(java.util.ArrayList<com.megacrit.cardcrawl.screens.custom.CustomMod>);
+    descriptor: (Ljava/util/ArrayList;)Ljava/util/ArrayList;
+    Code:
+       0: new           #56                 // class java/util/ArrayList
+       3: dup
+       4: invokespecial #57                 // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_0
+       9: invokevirtual #13                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      12: astore_2
+      13: aload_2
+      14: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      19: ifeq          58
+      22: aload_2
+      23: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      28: checkcast     #270                // class com/megacrit/cardcrawl/screens/custom/CustomMod
+      31: astore_3
+      32: aload_3
+      33: getfield      #274                // Field com/megacrit/cardcrawl/screens/custom/CustomMod.selected:Z
+      36: ifeq          55
+      39: aload_3
+      40: getfield      #275                // Field com/megacrit/cardcrawl/screens/custom/CustomMod.isDailyMod:Z
+      43: ifne          55
+      46: aload_1
+      47: aload_3
+      48: getfield      #271                // Field com/megacrit/cardcrawl/screens/custom/CustomMod.ID:Ljava/lang/String;
+      51: invokevirtual #105                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      54: pop
+      55: goto          13
+      58: aload_1
+      59: areturn
+
+  public void UpdatePanelData(spireTogether.network.P2P.P2PPlayer);
+    descriptor: (LspireTogether/network/P2P/P2PPlayer;)V
+    Code:
+       0: iconst_0
+       1: istore_2
+       2: iload_2
+       3: aload_0
+       4: getfield      #58                 // Field otherPlayerPanels:Ljava/util/ArrayList;
+       7: invokevirtual #146                // Method java/util/ArrayList.size:()I
+      10: if_icmpge     57
+      13: aload_0
+      14: getfield      #58                 // Field otherPlayerPanels:Ljava/util/ArrayList;
+      17: iload_2
+      18: invokevirtual #147                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      21: checkcast     #52                 // class spireTogether/ui/elements/presets/PlayerPanelGeneral
+      24: getfield      #276                // Field spireTogether/ui/elements/presets/PlayerPanelGeneral.playerID:Ljava/lang/Integer;
+      27: aload_1
+      28: getfield      #277                // Field spireTogether/network/P2P/P2PPlayer.id:Ljava/lang/Integer;
+      31: invokevirtual #278                // Method java/lang/Integer.equals:(Ljava/lang/Object;)Z
+      34: ifeq          51
+      37: aload_0
+      38: getfield      #58                 // Field otherPlayerPanels:Ljava/util/ArrayList;
+      41: iload_2
+      42: invokevirtual #147                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      45: checkcast     #52                 // class spireTogether/ui/elements/presets/PlayerPanelGeneral
+      48: invokevirtual #162                // Method spireTogether/ui/elements/presets/PlayerPanelGeneral.UpdateData:()V
+      51: iinc          2, 1
+      54: goto          2
+      57: return
+
+  static void access$000(spireTogether.screens.lobby.MPLobbyScreen);
+    descriptor: (LspireTogether/screens/lobby/MPLobbyScreen;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method Embark:()V
+       4: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: iconst_1
+       1: putstatic     #5                  // Field loadPrefs:Z
+       4: iconst_0
+       5: putstatic     #6                  // Field changedSomething:Z
+       8: iconst_0
+       9: putstatic     #160                // Field toggle:I
+      12: return
+}
