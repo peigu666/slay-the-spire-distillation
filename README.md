@@ -107,6 +107,19 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\verify-sts-pack.ps1 
   -JavaHome 'C:\Program Files\Java\jdk8'
 ```
 
+## 获取与使用
+
+这是给 AI 和 Mod 开发者使用的知识库，不是需要复制到 `mods` 目录的 Mod。直接下载或克隆仓库后，将整个目录作为 AI 的参考资料；如果只需要查询，可以运行 `tools/query-sts-api.ps1` 或打开 `sts_ai_knowledge_report.html`。
+
+克隆包含 Git LFS 大文件的完整版本需要先安装 Git LFS：
+
+```powershell
+git lfs install
+git clone https://github.com/peigu666/slay-the-spire-distillation.git
+```
+
+如果只浏览网页端 JSONL 索引，可以直接打开 GitHub 文件列表；如果要重新校验本机 JAR，则需要本机安装对应的 Slay the Spire、Java 8 和 Mod，并使用上面的校验命令。
+
 ## 可移植性与 Workshop 快照
 
 `environment/mod_catalog.json`、`environment/jar_inventory.jsonl` 和 `environment/workshop_manifest.json` 是生成机的安装快照，不代表每个使用者都安装了相同的 Mod。
