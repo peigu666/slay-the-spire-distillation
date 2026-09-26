@@ -38,15 +38,9 @@
 | 无效 Mod 元数据 | 1 个，保留 `metadata_raw_fallback` |
 | 生成时间 | 2026-09-26 17:43 UTC |
 
-生成时使用的环境路径为：
 
-```text
-游戏目录：E:\SteamLibrary\steamapps\common\SlayTheSpire
-本地 Mod 目录：E:\SteamLibrary\steamapps\common\SlayTheSpire\mods
-创意工坊 Mod 目录：E:\SteamLibrary\steamapps\workshop\content\646570
-```
 
-这些绝对路径只用于审计。使用知识库时应使用 `portable_path` 和 SHA-256，不要假设别人的 Steam 安装路径相同。
+这些绝对路径只用于审计。使用知识库时应使用 `portable_path` 和 SHA-256，不要假设别人的  安装路径相同。
 
 ## 目录说明
 
