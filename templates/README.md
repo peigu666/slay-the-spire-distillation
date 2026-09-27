@@ -8,4 +8,4 @@
   -JavaHome 'C:\Program Files\Java\jdk8'
 ```
 
-如果多个创意工坊版本同时存在，显式传 `-ModTheSpireJar`、`-BaseModJar`、`-StSLibJar`。运行时需要把生成的 JAR 和根目录 `ModTheSpire.json` 放进 ModTheSpire 扫描的模组目录；实际加载顺序和错误以当前启动日志为准。
+如果多个创意工坊版本同时存在，显式传 `-ModTheSpireJar`、`-BaseModJar`、`-StSLibJar`。构建脚本会把 `ModTheSpire.json` 放入生成的 JAR 根目录；运行时只需把该 JAR 放进 ModTheSpire 扫描的模组目录。实际加载顺序和错误以当前启动日志为准。

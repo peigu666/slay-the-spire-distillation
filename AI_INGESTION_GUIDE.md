@@ -33,6 +33,7 @@
 
 - `docs/MODDING_WORKFLOW.md`：从空项目到能加载的最小 Mod。
 - `docs/API_MAP.md`：卡牌、遗物、能力、药水、角色、怪物、战斗动作、事件和 UI 的类图入口。
+- `docs/MOD_VERSION_MATRIX.md`：GitHub 可直接阅读的逐 Mod 版本、Workshop ID、依赖和 JAR SHA-256 清单。
 - `docs/PATCHING_GUIDE.md`：ModTheSpire 注解、Locator、插入/前后缀/替换/字节码补丁。
 - `docs/RESOURCE_AND_LOCALIZATION.md`：资源、语言包和 `loadCustomStrings` 的路径规则。
 - `docs/TROUBLESHOOTING.md`：日志、依赖、Java 版本和常见加载失败的证据化排查顺序。
@@ -40,6 +41,13 @@
 - `environment/patch_targets.jsonl`、`bytecode/`：补丁注解目标、本体全量 JVM 指令、`javap -p -s -c` 快照和专项指令索引。
 - `sts_ai_knowledge_report.html`：无需服务器、双击即可使用的离线类/成员浏览器。
 - `templates/`：不依赖绝对路径的最小 Java 8 Mod 模板。
+
+## 其他玩家与不同 Mod 环境
+
+- 本包是生成时单台电脑的快照，不要求其他玩家拥有相同数量的 Mod。
+- 对方可直接使用 SHA-256 一致的本体、框架或单个 Mod 资料；缺少的 Mod 应忽略，多出的或哈希不同的 Mod 需要另行扫描。
+- 相同 JAR 但配置、启用状态、语言、存档或加载顺序不同，静态 API 仍可参考，实际运行行为必须结合对方的配置和当前启动日志判断。
+- `ModTheSpire.json` 中的版本文本只用于说明；确认文件是否完全一致时，SHA-256 优先于版本号。
 
 ## 边界
 

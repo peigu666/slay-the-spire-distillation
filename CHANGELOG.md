@@ -1,5 +1,14 @@
 # 更新日志
 
+## v1.4.1 — 2026-09-27
+
+- HTML 新增全部 Mod 版本清单和即时筛选，显示来源、名称、Mod ID、元数据版本、Workshop ID、依赖、SHA-256 与元数据状态。
+- 新增 `docs/MOD_VERSION_MATRIX.md`，便于在 GitHub 直接核对逐 Mod 版本与文件指纹。
+- README、AI 指南和 HTML 明确说明其他玩家 Mod 数量、配置、启用状态与加载顺序不同时的兼容规则。
+- 修正 v1.4.0 README 中沿用旧快照的补丁引用、指令快照和 `javap` 数量。
+- 修复补丁摘要中专项 `instruction_snapshots` 路径被本体全量字节码路径覆盖的问题。
+- 澄清最小模板已经把 `ModTheSpire.json` 打入 JAR，无需把它作为旁路文件单独部署。
+
 ## v1.4.0 — 2026-09-27
 
 刷新当前安装基线，并加入独立的可选 Mod API 档案。

@@ -26,7 +26,7 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
 
 SCHEMA = "1.1"
-PACK_VERSION = "1.4.0"
+PACK_VERSION = "1.4.1"
 AI_MANIFEST_SCHEMA = "1.0"
 ROLE_FILES = {
     "base_game": "base_game_api.types.jsonl",
@@ -1264,7 +1264,8 @@ def generate_bytecode_artifacts(
             "patch_targets": "environment/patch_targets.jsonl",
             "instruction_snapshots": "bytecode/instruction_snapshots.jsonl",
             "javap_snapshots": "bytecode/javap/",
-            **full_game_summary["full_game_files"],
+            "full_game_instruction_snapshots": full_game_summary["full_game_files"]["instruction_snapshots"],
+            "full_game_parse_errors": full_game_summary["full_game_files"]["parse_errors"],
         },
         "note": "For this Java game, instruction-level IL means JVM bytecode; the full snapshot covers parsed base-game classes, while targeted snapshots and javap text provide patch-focused evidence. No .NET CLR IL is present.",
     }
@@ -1343,6 +1344,7 @@ def generate_docs(
 
 - `docs/MODDING_WORKFLOW.md`：从空项目到能加载的最小 Mod。
 - `docs/API_MAP.md`：卡牌、遗物、能力、药水、角色、怪物、战斗动作、事件和 UI 的类图入口。
+- `docs/MOD_VERSION_MATRIX.md`：GitHub 可直接阅读的逐 Mod 版本、Workshop ID、依赖和 JAR SHA-256 清单。
 - `docs/PATCHING_GUIDE.md`：ModTheSpire 注解、Locator、插入/前后缀/替换/字节码补丁。
 - `docs/RESOURCE_AND_LOCALIZATION.md`：资源、语言包和 `loadCustomStrings` 的路径规则。
 - `docs/TROUBLESHOOTING.md`：日志、依赖、Java 版本和常见加载失败的证据化排查顺序。
@@ -1350,6 +1352,13 @@ def generate_docs(
 - `environment/patch_targets.jsonl`、`bytecode/`：补丁注解目标、本体全量 JVM 指令、`javap -p -s -c` 快照和专项指令索引。
 - `sts_ai_knowledge_report.html`：无需服务器、双击即可使用的离线类/成员浏览器。
 - `templates/`：不依赖绝对路径的最小 Java 8 Mod 模板。
+
+## 其他玩家与不同 Mod 环境
+
+- 本包是生成时单台电脑的快照，不要求其他玩家拥有相同数量的 Mod。
+- 对方可直接使用 SHA-256 一致的本体、框架或单个 Mod 资料；缺少的 Mod 应忽略，多出的或哈希不同的 Mod 需要另行扫描。
+- 相同 JAR 但配置、启用状态、语言、存档或加载顺序不同，静态 API 仍可参考，实际运行行为必须结合对方的配置和当前启动日志判断。
+- `ModTheSpire.json` 中的版本文本只用于说明；确认文件是否完全一致时，SHA-256 优先于版本号。
 
 ## 边界
 
@@ -1365,6 +1374,46 @@ def generate_docs(
 This build contains {len(optional_jars)} optional Mod JAR profile(s) in `api/optional_mods_api.types.jsonl`. They are kept separate from the current-installation baseline, so an AI can query Downfall or another uninstalled Mod without treating it as an installed dependency. The original Mod binaries are not included; `environment/optional_mod_manifest.json` records Workshop IDs, expected sizes and SHA-256 values, and `tools/fetch-optional-mods.ps1` can download and verify them through SteamCMD when regeneration is needed.
 """
     (root / "AI_INGESTION_GUIDE.md").write_text(doc, encoding="utf-8")
+
+    scope_labels = {
+        "framework": "核心框架",
+        "local_mod": "本地 Mod",
+        "workshop_mod": "Workshop Mod",
+        "optional_mod": "Optional Mod API",
+    }
+    version_rows = []
+    for item in jars:
+        if item.get("scope") == "base_game":
+            continue
+        metadata = item.get("metadata") or {}
+        dependencies = metadata.get("dependencies") or []
+        if isinstance(dependencies, str):
+            dependencies = [dependencies]
+        workshop_id = str(item.get("workshop_id") or "—")
+        workshop_cell = (
+            f"[{workshop_id}](https://steamcommunity.com/sharedfiles/filedetails/?id={workshop_id})"
+            if workshop_id != "—" else "—"
+        )
+        values = [
+            scope_labels.get(str(item.get("scope")), str(item.get("scope") or "—")),
+            str(metadata.get("name") or item.get("name") or "—"),
+            str(metadata.get("modid") or "—"),
+            str(metadata.get("version") or metadata.get("mts_version") or "未声明"),
+            workshop_cell,
+            ", ".join(str(value) for value in dependencies) or "—",
+            f"`{item.get('sha256', '')}`",
+        ]
+        version_rows.append("| " + " | ".join(value.replace("|", "\\|") for value in values) + " |")
+    version_matrix = """# Mod 版本与环境兼容矩阵
+
+本表对应本知识包生成时的单台电脑快照，不代表所有玩家的安装。版本优先读取 JAR 根目录的 `ModTheSpire.json`；显示“未声明”时不要根据文件名猜测版本。即使版本文本相同，也只有 SHA-256 一致时才能确认是同一个 JAR。
+
+其他玩家可以继续使用哈希一致的本体、框架和单个 Mod 资料；缺少的 Mod 应忽略，多出的 Mod 需要另行扫描。相同 JAR 但配置、启用状态或加载顺序不同，API 仍可参考，实际行为必须结合对方的配置和当前启动日志判断。
+
+| 来源 | 名称 | Mod ID | 元数据版本 | Workshop ID | 声明依赖 | JAR SHA-256 |
+|---|---|---|---|---|---|---|
+""" + "\n".join(version_rows) + "\n"
+    (root / "docs" / "MOD_VERSION_MATRIX.md").write_text(version_matrix, encoding="utf-8")
 
     (root / "docs" / "MODDING_WORKFLOW.md").write_text(r"""# Mod 制作工作流
 
@@ -2005,6 +2054,49 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
     coverage_html = "".join(coverage_rows)
     role_json = json.dumps(role_meta, ensure_ascii=False, separators=(",", ":"))
 
+    scope_labels = {
+        "framework": "核心框架",
+        "local_mod": "本地 Mod",
+        "workshop_mod": "Workshop Mod",
+        "optional_mod": "Optional Mod API",
+    }
+    mod_rows = []
+    for item in jar_inventory:
+        if item.get("scope") == "base_game":
+            continue
+        metadata = item.get("metadata") or {}
+        dependencies = metadata.get("dependencies") or []
+        if isinstance(dependencies, str):
+            dependencies = [dependencies]
+        name = str(metadata.get("name") or item.get("name") or "—")
+        modid = str(metadata.get("modid") or "—")
+        version = str(metadata.get("version") or metadata.get("mts_version") or "未声明")
+        workshop_id = str(item.get("workshop_id") or "")
+        workshop_html = (
+            f"<a href='https://steamcommunity.com/sharedfiles/filedetails/?id={html.escape(workshop_id, quote=True)}'>{html.escape(workshop_id)}</a>"
+            if workshop_id else "—"
+        )
+        dependencies_text = ", ".join(str(value) for value in dependencies) or "—"
+        search_value = " ".join([
+            str(item.get("scope") or ""), name, modid, version, workshop_id,
+            str(item.get("name") or ""), dependencies_text, str(item.get("sha256") or ""),
+        ]).lower()
+        metadata_status = str(item.get("metadata_status") or "unknown")
+        state_class = "ok" if metadata_status == "valid" else "missing"
+        mod_rows.append(
+            f"<tr data-mod-search='{html.escape(search_value, quote=True)}'>"
+            f"<td><span class='mini-badge orange'>{html.escape(scope_labels.get(str(item.get('scope')), str(item.get('scope') or '—')))}</span></td>"
+            f"<td><strong>{html.escape(name)}</strong><small>{html.escape(str(item.get('name') or ''))}</small></td>"
+            f"<td><code>{html.escape(modid)}</code></td>"
+            f"<td><strong>{html.escape(version)}</strong></td>"
+            f"<td>{workshop_html}</td>"
+            f"<td>{html.escape(dependencies_text)}</td>"
+            f"<td class='hash'><code>{html.escape(str(item.get('sha256') or ''))}</code></td>"
+            f"<td><span class='state {state_class}'>{html.escape(metadata_status)}</span></td>"
+            "</tr>"
+        )
+    mod_inventory_html = "".join(mod_rows)
+
     report = f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Slay the Spire · 完整 Mod API 知识报告</title>
 <style>
@@ -2022,15 +2114,17 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
 </style></head><body><div class="page">
 <header class="hero"><div class="eyebrow">PORTABLE SLAY THE SPIRE AI KNOWLEDGE PACK</div><h1>Slay the Spire {html.escape(game_version)} · 完整 Mod API 知识报告</h1><p>真实 Java/JAR 元数据、继承关系、重载签名、注解、字段和资源索引；JSON/JSONL 是事实来源，本页面用于浏览、检索和核对。</p><div class="badges">{badge_html}</div></header>
 <section class="stats">{stat_cards}</section>
-<div class="callout"><strong>分析边界：</strong>本报告按生成时本机的 `desktop-1.0.jar`、ModTheSpire、BaseMod、StSLib 与已安装 Mod 生成；当前 Steam Workshop API 分类的 {api_library_present}/{len(WORKSHOP_API_IDS)} 个项目也已纳入并在下方单独列出。API 记录保留私有成员、真实 JVM 描述符和方法代码哈希；本包不复制游戏二进制和图片，版本变化后应先用 SHA-256 校验并重新生成。</div>
+<div class="callout"><strong>环境与兼容边界：</strong>本报告是生成时单台电脑的 JAR 快照，不要求其他玩家拥有相同数量的 Mod。对方可以使用 SHA-256 一致的本体、框架或单个 Mod 资料；缺少的 Mod 应忽略，多出的或哈希不同的 Mod 需要另行扫描。相同 JAR 但配置、启用状态或加载顺序不同，API 仍可参考，实际行为必须结合对方的配置和当前启动日志判断。本包不复制游戏二进制和图片。</div>
 
 <section class="section"><h2 class="section-title">一、版本与文件指纹 <span>当前资料基线</span></h2><div class="panel"><table><thead><tr><th>角色</th><th>程序/文件</th><th>大小</th><th>SHA-256</th><th>元数据版本</th></tr></thead><tbody>{fingerprint_html}</tbody></table><div class="panel-pad" style="color:#778092;font-size:12px">JAR 快照共 {number(len(jar_inventory))} 个：本体 {base_jar_count}、框架 {framework_count}、本地 Mod {local_count}、Workshop Mod {workshop_count}。其中框架 JAR 来自 Workshop，但在报告中单独归类；完整清单见 <code>environment/jar_inventory.jsonl</code> 与 <code>environment/workshop_manifest.json</code>。</div></div></section>
 
 <section class="section" id="libraries"><h2 class="section-title">二、依赖库与框架清单 <span>{api_library_present}/{len(WORKSHOP_API_IDS)} 个 Workshop API 项目</span></h2><div class="panel"><table><thead><tr><th>分类</th><th>库/框架</th><th>实际 JAR</th><th>声明依赖</th><th>类型</th><th>状态</th></tr></thead><tbody>{api_library_html}</tbody></table><div class="panel-pad" style="color:#778092;font-size:12px">这里按 Steam Workshop 的 API 分类记录专用库、框架和可复用前置；其他普通内容 Mod 仍完整收录在 <code>api/installed_mods_api.types.jsonl</code> 与 <code>environment/mod_catalog.json</code>。同名 JAR 按 portable_path 区分。</div></div></section>
 
-<section class="section"><h2 class="section-title">三、API 覆盖统计 <span>{number(total_types)} 个可索引类型</span></h2><div class="panel"><table><thead><tr><th>资料角色</th><th>类型</th><th>方法</th><th>字段</th><th>占比</th></tr></thead><tbody>{coverage_html}</tbody></table></div></section>
+<section class="section" id="mods"><h2 class="section-title">三、全部 Mod 版本清单 <span>{number(len(mod_rows))} 个 JAR</span></h2><div class="panel"><div class="panel-pad"><input id="modQ" class="search-input" placeholder="筛选名称、Mod ID、版本、Workshop ID、依赖、JAR 或 SHA-256"></div><table><thead><tr><th>来源</th><th>名称/JAR</th><th>Mod ID</th><th>元数据版本</th><th>Workshop ID</th><th>声明依赖</th><th>SHA-256</th><th>元数据</th></tr></thead><tbody id="modRows">{mod_inventory_html}</tbody></table><div class="panel-pad" style="color:#778092;font-size:12px">版本来自每个 JAR 内的 <code>ModTheSpire.json</code>；“未声明”表示元数据没有可用版本，不能从文件名猜测。版本文本相同也不代表文件相同，最终以 SHA-256 为准。其他玩家可使用哈希匹配的单项资料，不要求 Mod 数量完全一致。</div></div></section>
 
-<section class="section" id="search"><h2 class="section-title">四、完整 API 搜索 <span>类名、包名、方法、字段、注解和 JAR</span></h2><div class="panel search-panel"><div class="search-top"><input id="q" class="search-input" placeholder="搜索 AbstractCard、BaseMod.addCard、SpirePatch、receive... 或来源 JAR"><span id="resultCount" class="result-count"></span></div><div id="filters" class="filters"></div><div class="search-grid"><div id="results" class="results"></div><div id="detail" class="detail"><div class="empty">点击左侧类型查看继承关系、成员索引和可复制的查询命令。</div></div></div></div></section>
+<section class="section"><h2 class="section-title">四、API 覆盖统计 <span>{number(total_types)} 个可索引类型</span></h2><div class="panel"><table><thead><tr><th>资料角色</th><th>类型</th><th>方法</th><th>字段</th><th>占比</th></tr></thead><tbody>{coverage_html}</tbody></table></div></section>
+
+<section class="section" id="search"><h2 class="section-title">五、完整 API 搜索 <span>类名、包名、方法、字段、注解和 JAR</span></h2><div class="panel search-panel"><div class="search-top"><input id="q" class="search-input" placeholder="搜索 AbstractCard、BaseMod.addCard、SpirePatch、receive... 或来源 JAR"><span id="resultCount" class="result-count"></span></div><div id="filters" class="filters"></div><div class="search-grid"><div id="results" class="results"></div><div id="detail" class="detail"><div class="empty">点击左侧类型查看继承关系、成员索引和可复制的查询命令。</div></div></div></div></section>
 
 <section class="section bottom-grid"><div class="panel info-card"><h3>给 AI 的推荐读取顺序</h3><ul><li>先读本报告和 <code>manifest.json</code>，确认 JAR 指纹。</li><li>本体查 <code>api/base_game_api.types.jsonl</code>；编译/补丁查 ModTheSpire、BaseMod、StSLib 分卷。</li><li>遇到资源、版本和加载问题，查 <code>environment/</code> 与 <code>resources/</code>。</li></ul></div><div class="panel info-card"><h3>配套工具</h3><ul><li><code>tools/query-sts-api.ps1</code>：脚本查询完整签名。</li><li><code>tools/verify-sts-pack.ps1</code>：校验本机 JAR 与整包文件。</li><li><code>tools/javap-type.ps1</code>：按需查看当前类的 Java/字节码输出。</li></ul></div></section>
 <div class="footer">离线报告 · 当前 JAR 快照 · {number(len(jar_inventory))} 个 JAR · {number(resource_count)} 个资源索引 · <a href="#search">回到 API 搜索</a></div>
@@ -2038,6 +2132,8 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
 <script>
 const DATA={payload};const ROLE_META={role_json};let activeRole='all';let selected=null;
 const q=document.getElementById('q'),results=document.getElementById('results'),detail=document.getElementById('detail'),filters=document.getElementById('filters'),resultCount=document.getElementById('resultCount');
+const modQ=document.getElementById('modQ'),modRows=Array.from(document.querySelectorAll('#modRows tr'));
+modQ.addEventListener('input',()=>{{const term=modQ.value.trim().toLowerCase();for(const row of modRows)row.hidden=!!term&&!row.dataset.modSearch.includes(term)}});
 const roleOrder=['all','base_game','modthespire','basemod','stslib','installed_mods','optional_mods','third_party'];
 function label(role){{return role==='all'?'全部':((ROLE_META[role]||{{}}).short||role)}}
 for(const role of roleOrder){{const b=document.createElement('button');b.className='filter'+(role==='all'?' active':'');b.textContent=label(role);b.dataset.role=role;b.onclick=()=>{{activeRole=role;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x.dataset.role===role));render()}};filters.appendChild(b)}}
@@ -2393,7 +2489,7 @@ Write-Host "Built $OutputJar"
   -JavaHome 'C:\\Program Files\\Java\\jdk8'
 ```
 
-如果多个创意工坊版本同时存在，显式传 `-ModTheSpireJar`、`-BaseModJar`、`-StSLibJar`。运行时需要把生成的 JAR 和根目录 `ModTheSpire.json` 放进 ModTheSpire 扫描的模组目录；实际加载顺序和错误以当前启动日志为准。
+如果多个创意工坊版本同时存在，显式传 `-ModTheSpireJar`、`-BaseModJar`、`-StSLibJar`。构建脚本会把 `ModTheSpire.json` 放入生成的 JAR 根目录；运行时只需把该 JAR 放进 ModTheSpire 扫描的模组目录。实际加载顺序和错误以当前启动日志为准。
 """, encoding="utf-8")
 
 

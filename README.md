@@ -20,7 +20,7 @@
 
 | 项目 | 当前值 |
 |---|---|
-| 知识库版本 | `1.4.0` |
+| 知识库版本 | `1.4.1` |
 | 游戏 | Slay the Spire 2.3.4 |
 | 本体 JAR | `desktop-1.0.jar` |
 | 本体 SHA-256 | `CFAD868AC8D65A88E71A0BF096FB09F78811E553EFFE0787C5309A655E081673` |
@@ -33,8 +33,8 @@
 | JAR 资源记录 | 19,038 项；可选 Mod 只保留资源路径/指纹，不复制文本正文 |
 | 文本资源记录 | 1,580 项 |
 | Workshop 外置文件清单 | 524 个文件，102,092,675 bytes；只保存路径/指纹，不保存文件本体 |
-| 补丁注解引用 | 2,943 条，664 个唯一目标类 |
-| JVM 指令快照 | 本体 2,306 个类 / 12,696 个方法 / 461,731 条指令；另有 7,668 个补丁目标方法和 574 个 `javap -p -s -c` 类快照 |
+| 补丁注解引用 | 3,332 条，718 个唯一目标类，其中 664 个目标类已解析 |
+| JVM 指令快照 | 本体 2,306 个类 / 12,696 个方法 / 461,731 条指令；另有 8,758 个补丁目标方法和 664 个 `javap -p -s -c` 类快照 |
 | 无效 Mod 元数据 | 1 个，保留 `metadata_raw_fallback` |
 | 生成时间 | 以 `manifest.json` / `ai_manifest.json` 的 `generated_at_utc` 为准 |
 
@@ -62,6 +62,7 @@
 | `bytecode/instruction_snapshots.jsonl` | 目标类方法的 JVM 指令级记录 | 查看偏移、操作码、常量池引用、分支目标和代码哈希 |
 | `bytecode/javap/` | 对应目标类的 `javap -p -s -c` 文本快照 | 人工核对当前方法体和补丁插入点 |
 | `resources/text_resources.jsonl` | JAR 内可读文本资源 | 查询 JSON、Atlas、语言包和少量源码文本 |
+| `docs/MOD_VERSION_MATRIX.md` | 逐 Mod 版本、Workshop ID、依赖和 SHA-256 | 在 GitHub 上核对每个 Mod 的具体基线 |
 | `docs/` | 工作流、API 入口、补丁、资源和排错说明 | 给 AI 或开发者的使用导航 |
 | `templates/` | Java 8 + ModTheSpire + BaseMod 最小模板 | 创建和构建新 Mod |
 | `tools/` | API 查询、JAR 校验、`javap` 辅助脚本和生成器 | 实际验证与再生成 |
@@ -80,6 +81,16 @@
 不要把所有大型 JSONL 一次性放进上下文；先按类型名和成员名查询。
 
 可选 Mod API 不代表本机已经安装该 Mod。查询 Downfall 等未安装 Mod 时使用 `-Role optional_mods`；只有需要从 Workshop 重新生成或验证时，才使用 `tools/fetch-optional-mods.ps1` 获取原始 JAR。
+
+## 其他玩家与不同 Mod 环境
+
+本知识包是生成时单台电脑的快照，不要求其他玩家安装完全相同数量的 Mod。完整逐 Mod 基线见 [`docs/MOD_VERSION_MATRIX.md`](docs/MOD_VERSION_MATRIX.md)，离线 HTML 报告也提供可筛选的版本清单。
+
+- 对方的本体、框架或某个 Mod JAR 的 SHA-256 一致时，可以直接使用对应资料。
+- 对方缺少的 Mod 应忽略；对方多出的或哈希不同的 Mod 需要另行扫描，不能从本包推断其 API。
+- 版本文本相同不保证 JAR 相同，判断文件身份时以 SHA-256 为准。
+- 相同 JAR 但配置、启用状态、语言、存档或加载顺序不同，静态 API 仍可参考，实际行为必须结合对方当前配置和启动日志。
+- `preferences`、Mod 配置和存档可能包含隐私信息，不应无条件收集或上传。
 
 ## 常用命令
 
