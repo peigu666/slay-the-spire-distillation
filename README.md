@@ -20,7 +20,7 @@
 
 | 项目 | 当前值 |
 |---|---|
-| 知识库版本 | `1.1.0` |
+| 知识库版本 | `1.3.0` |
 | 游戏 | Slay the Spire 2.3.4 |
 | 本体 JAR | `desktop-1.0.jar` |
 | 本体 SHA-256 | `CFAD868AC8D65A88E71A0BF096FB09F78811E553EFFE0787C5309A655E081673` |
@@ -34,9 +34,9 @@
 | 文本资源记录 | 1,580 项 |
 | Workshop 外置文件清单 | 524 个文件，102,092,675 bytes；只保存路径/指纹，不保存文件本体 |
 | 补丁注解引用 | 2,943 条，664 个唯一目标类 |
-| JVM 指令快照 | 7,668 个方法；574 个 `javap -p -s -c` 类快照 |
+| JVM 指令快照 | 本体 2,306 个类 / 12,696 个方法 / 461,731 条指令；另有 7,668 个补丁目标方法和 574 个 `javap -p -s -c` 类快照 |
 | 无效 Mod 元数据 | 1 个，保留 `metadata_raw_fallback` |
-| 生成时间 | 2026-09-26 17:43 UTC |
+| 生成时间 | 以 `manifest.json` / `ai_manifest.json` 的 `generated_at_utc` 为准 |
 
 生成时的绝对路径只用于审计；使用知识库时应使用 `portable_path` 和 SHA-256，不要假设其他人的安装路径相同。
 
@@ -51,8 +51,12 @@
 | `api/installed_mods_api.*` | 生成时已安装 Mod 的类索引 | 参考现有 Mod 的调用方式和命名 |
 | `api/third_party_api.*` | LibGDX、Spine、Javassist 等第三方类 | UI、图片、动画和底层依赖 |
 | `environment/` | JAR、类、资源、Workshop 和运行环境快照 | 版本审计、依赖定位和资源定位 |
+| `ai_manifest.json` | AI 默认摄取范围、优先级和按需数据策略 | 控制上下文大小并避免混用资料角色 |
+| `ai_file_index.jsonl` | 每个知识文件的哈希、角色、优先级和解析方式 | 完整性校验与 AI 文件路由 |
 | `environment/workshop_external_files.jsonl` | Workshop JAR 外的文件路径、大小和 SHA-256 | 定位图片/程序/配置等外置资源，不分发其本体 |
 | `environment/patch_targets.jsonl` | Mod 补丁注解到目标类/方法的映射 | 追踪 Locator、Prefix/Postfix/Insert/Raw 补丁目标 |
+| `bytecode/full_game_instruction_snapshots.jsonl` | 本体 `com.megacrit.cardcrawl.*` 全部方法的 JVM 指令记录 | 按类/方法按需分析完整本体行为和插入点 |
+| `bytecode/full_game_parse_errors.jsonl` | 本体字节码解析失败审计清单 | 确认全量快照是否存在解析缺口；本基线为空 |
 | `bytecode/instruction_snapshots.jsonl` | 目标类方法的 JVM 指令级记录 | 查看偏移、操作码、常量池引用、分支目标和代码哈希 |
 | `bytecode/javap/` | 对应目标类的 `javap -p -s -c` 文本快照 | 人工核对当前方法体和补丁插入点 |
 | `resources/text_resources.jsonl` | JAR 内可读文本资源 | 查询 JSON、Atlas、语言包和少量源码文本 |
@@ -63,12 +67,12 @@
 
 ## 给 AI 的推荐读取顺序
 
-1. 读取本文件和 `AI_INGESTION_GUIDE.md`。
+1. 读取本文件、`AI_INGESTION_GUIDE.md` 和 `ai_manifest.json`。
 2. 读取 `manifest.json`，确认本知识库对应的本体 JAR 哈希。
-3. 查本体类时使用 `api/base_game_api.types.jsonl`。
-4. 查 ModTheSpire、BaseMod、StSLib 或已安装 Mod 时，只读取对应角色的 JSONL。
-5. 遇到资源、依赖或 Workshop 版本问题时读取 `environment/`。
-6. 涉及补丁插入点、方法行为或字节码布局时，先读 `environment/patch_targets.jsonl`，再读 `bytecode/instruction_snapshots.jsonl` 和对应 `bytecode/javap/` 快照。
+3. 默认只加载核心 API、环境 JSON 摘要、docs、templates 和 tools；具体以 `ai_file_index.jsonl` 的 `include_by_default` 和 `priority` 为准。
+4. 查本体类时使用 `api/base_game_api.types.jsonl`；查 ModTheSpire、BaseMod、StSLib 时只读取对应角色的 JSONL。
+5. 查已安装 Mod、第三方库、资源、补丁指令或 Workshop 外置文件时，按目标类型/成员/路径读取对应的按需 JSONL。
+6. 涉及补丁插入点、方法行为或字节码布局时，先读 `environment/patch_targets.jsonl`；补丁目标优先读 `bytecode/instruction_snapshots.jsonl`，一般本体方法按需读 `bytecode/full_game_instruction_snapshots.jsonl`，再用对应 `bytecode/javap/` 快照核对。
 7. 遇到元数据解析失败时，读取同一条记录的 `metadata_raw_fallback`；不要把空的 `metadata` 当成“没有 Mod 元数据”。
 
 不要把所有大型 JSONL 一次性放进上下文；先按类型名和成员名查询。
@@ -102,7 +106,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\verify-sts-pack.ps1 
   -GameRoot 'E:\SteamLibrary\steamapps\common\SlayTheSpire' `
   -PackRoot $PWD `
   -VerifyPackFiles `
-  -VerifyWorkshopExternalFiles
+  -VerifyWorkshopExternalFiles `
+  -VerifyTemplate
 ```
 
 查询 `AbstractCard` 的补丁目标和指令快照：
@@ -112,6 +117,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\query-bytecode.ps1 `
   -PackRoot $PWD `
   -TargetClass 'com.megacrit.cardcrawl.cards.AbstractCard*' `
   -IncludeInstructions
+```
+
+查询本体完整指令快照中的指定方法：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\query-bytecode.ps1 `
+  -PackRoot $PWD `
+  -FullGame `
+  -TargetClass 'com.megacrit.cardcrawl.cards.AbstractCard' `
+  -TargetMethod 'use'
 ```
 
 使用最小模板：
@@ -144,7 +159,7 @@ git clone https://github.com/peigu666/slay-the-spire-distillation.git
 ## 重要边界
 
 - API 记录来自生成时的具体 JAR，不应泛化到所有 Slay the Spire、ModTheSpire、BaseMod 或 StSLib 版本。
-- 普通类记录包含私有成员、访问级别、描述符、注解以及方法代码长度/哈希；补丁目标额外提供局部 `javap -p -s -c` 和解析后的 JVM 指令，但不等同于 Java 源码。
+- 普通类记录包含私有成员、访问级别、描述符、注解以及方法代码长度/哈希；本体另有完整 JVM 指令快照，补丁目标额外提供局部 `javap -p -s -c` 和专项指令索引，但不等同于 Java 源码。
 - `installed_mods` 是生成时的 Mod 快照；Workshop 更新后必须重新生成或重新校验。
 - 一个 Workshop Mod 的 `ModTheSpire.json` 存在格式问题；`mod_catalog.json` 和 `jar_inventory.jsonl` 会在 `metadata_raw_fallback` 中保留原文，供回退分析。
 - Java 的“IL”在本项目中指 JVM bytecode 指令，不是 .NET CLR IL；当前 JAR 中不存在可直接提供的 CLR IL。

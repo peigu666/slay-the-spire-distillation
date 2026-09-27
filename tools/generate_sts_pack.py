@@ -26,7 +26,8 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
 
 SCHEMA = "1.1"
-PACK_VERSION = "1.1.0"
+PACK_VERSION = "1.3.0"
+AI_MANIFEST_SCHEMA = "1.0"
 ROLE_FILES = {
     "base_game": "base_game_api.types.jsonl",
     "modthespire": "modthespire_api.types.jsonl",
@@ -36,6 +37,8 @@ ROLE_FILES = {
     "third_party": "third_party_api.types.jsonl",
 }
 FRAMEWORK_JARS = {"ModTheSpire.jar", "BaseMod.jar", "StSLib.jar"}
+DEFAULT_API_ROLES = {"base_game", "modthespire", "basemod", "stslib"}
+INDEX_IGNORED_ROOTS = {".git", ".hg", ".svn", "__pycache__"}
 # Steam Workshop 的 API 分类快照（2026-09-27）；用于在报告中明确列出专用库/框架。
 WORKSHOP_API_IDS = {
     "1605060445", "1605833019", "1609158507", "2384072973", "1934902042",
@@ -983,6 +986,96 @@ def _choose_class_location(locations: Sequence[Dict[str, Any]]) -> Optional[Dict
     return sorted(locations, key=lambda item: (rank.get(item["spec"]["scope"], 9), item["spec"]["portable_path"]))[0]
 
 
+def generate_full_game_instruction_snapshots(
+    output: Path,
+    class_locations: Dict[str, List[Dict[str, Any]]],
+) -> Dict[str, Any]:
+    """Capture every parsed method in the current base-game API namespace."""
+    bytecode_root = output / "bytecode"
+    snapshot_path = bytecode_root / "full_game_instruction_snapshots.jsonl"
+    parse_error_path = bytecode_root / "full_game_parse_errors.jsonl"
+    base_locations: Dict[str, Dict[str, Any]] = {}
+    for class_name, locations in class_locations.items():
+        candidates = [
+            location for location in locations
+            if classify_role(location["spec"], class_name) == "base_game"
+        ]
+        chosen = _choose_class_location(candidates)
+        if chosen is not None:
+            base_locations[class_name] = chosen
+
+    by_jar: Dict[Path, List[Tuple[str, Dict[str, Any]]]] = defaultdict(list)
+    for class_name, location in base_locations.items():
+        by_jar[location["spec"]["path"]].append((class_name, location))
+
+    parsed_class_count = 0
+    method_count = 0
+    methods_with_code = 0
+    instruction_count = 0
+    parse_errors: List[Dict[str, Any]] = []
+    with snapshot_path.open("w", encoding="utf-8") as handle:
+        for jar_path in sorted(by_jar, key=lambda value: str(value).lower()):
+            with zipfile.ZipFile(jar_path) as zf:
+                for class_name, location in sorted(by_jar[jar_path], key=lambda item: item[0]):
+                    try:
+                        record = parse_class(zf.read(location["entry"]), include_code_bytes=True)
+                    except Exception as exc:
+                        parse_errors.append({
+                            "class": class_name,
+                            "source_jar": location["spec"]["path"].name,
+                            "source_jar_portable_path": location["spec"]["portable_path"],
+                            "entry": location["entry"],
+                            "error": str(exc),
+                        })
+                        continue
+                    parsed_class_count += 1
+                    for method in record.get("methods", []):
+                        key = (class_name, method["name"], method["descriptor"])
+                        code = method.get("code")
+                        code_metadata = None
+                        if code:
+                            code_metadata = {key: value for key, value in code.items() if key != "instructions"}
+                            methods_with_code += 1
+                            instruction_count += len(code.get("instructions", []))
+                        snapshot_id = "full-" + hashlib.sha256(
+                            "|".join(("base_game",) + key).encode("utf-8")
+                        ).hexdigest()[:20]
+                        item = {
+                            "schema_version": SCHEMA,
+                            "snapshot_id": snapshot_id,
+                            "coverage": "full_base_game",
+                            "target_class": class_name,
+                            "target_method": method["name"],
+                            "descriptor": method["descriptor"],
+                            "source_jar": location["spec"]["path"].name,
+                            "source_jar_portable_path": location["spec"]["portable_path"],
+                            "classfile": record.get("classfile"),
+                            "code": code_metadata,
+                            "javap_snapshot": None,
+                            "instruction_level": "JVM bytecode (Java IL equivalent; not .NET CLR IL)",
+                            "instructions": (code or {}).get("instructions", []) if code else [],
+                        }
+                        handle.write(json.dumps(item, ensure_ascii=False, separators=(",", ":")) + "\n")
+                        method_count += 1
+    parse_error_path.write_text(
+        "\n".join(json.dumps(item, ensure_ascii=False, separators=(",", ":")) for item in parse_errors)
+        + ("\n" if parse_errors else ""),
+        encoding="utf-8",
+    )
+    return {
+        "full_game_class_count": len(base_locations),
+        "full_game_parsed_class_count": parsed_class_count,
+        "full_game_parse_error_count": len(parse_errors),
+        "full_game_method_count": method_count,
+        "full_game_methods_with_code": methods_with_code,
+        "full_game_instruction_count": instruction_count,
+        "full_game_files": {
+            "instruction_snapshots": "bytecode/full_game_instruction_snapshots.jsonl",
+            "parse_errors": "bytecode/full_game_parse_errors.jsonl",
+        },
+    }
+
+
 def generate_bytecode_artifacts(
     output: Path,
     patch_references: Sequence[Dict[str, Any]],
@@ -1125,6 +1218,8 @@ def generate_bytecode_artifacts(
             snapshot_counts["with_instruction"] += bool(output_item.get("instruction_snapshot_ids"))
             handle.write(json.dumps(output_item, ensure_ascii=False, separators=(",", ":")) + "\n")
 
+    full_game_summary = generate_full_game_instruction_snapshots(output, class_locations)
+
     if javap_errors:
         (bytecode_root / "javap_errors.jsonl").write_text(
             "\n".join(json.dumps(item, ensure_ascii=False, separators=(",", ":")) for item in javap_errors) + "\n",
@@ -1143,12 +1238,14 @@ def generate_bytecode_artifacts(
         "javap_executable_at_generation": str(javap_executable) if javap_executable else None,
         "parse_errors": parse_errors,
         "javap_error_count": len(javap_errors),
+        **full_game_summary,
         "files": {
             "patch_targets": "environment/patch_targets.jsonl",
             "instruction_snapshots": "bytecode/instruction_snapshots.jsonl",
             "javap_snapshots": "bytecode/javap/",
+            **full_game_summary["full_game_files"],
         },
-        "note": "For this Java game, instruction-level IL means JVM bytecode; no .NET CLR IL is present.",
+        "note": "For this Java game, instruction-level IL means JVM bytecode; the full snapshot covers parsed base-game classes, while targeted snapshots and javap text provide patch-focused evidence. No .NET CLR IL is present.",
     }
     (output / "environment" / "patch_target_summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
@@ -1158,16 +1255,29 @@ def generate_bytecode_artifacts(
 
 `environment/patch_targets.jsonl` records which installed Mod patch annotations point to which target classes/methods.
 
-`instruction_snapshots.jsonl` contains parsed JVM instructions, offsets, operands, constant-pool references, branch targets, and method bytecode hashes. `javap/` contains the corresponding `javap -p -s -c` text snapshots when a JDK tool was available at generation time.
+`full_game_instruction_snapshots.jsonl` contains the parsed JVM instructions for every method in the current `base_game` API namespace (`com.megacrit.cardcrawl.*`). It is the complete base-game method-level bytecode snapshot for this JAR baseline and is intended for on-demand class/method queries.
 
-Slay the Spire is a Java game, so these are JVM bytecode instructions (Java IL equivalent), not .NET CLR IL. Missing classes or methods remain recorded with an explicit status instead of being guessed.
+`instruction_snapshots.jsonl` is the smaller patch-target-focused snapshot. It contains parsed JVM instructions, offsets, operands, constant-pool references, branch targets, and method bytecode hashes. `javap/` contains the corresponding `javap -p -s -c` text snapshots when a JDK tool was available at generation time.
+
+`full_game_parse_errors.jsonl` is an explicit audit list for any base-game class that could not be parsed; an empty file means no parse errors were observed.
+
+Slay the Spire is a Java game, so these are JVM bytecode instructions (Java IL equivalent), not .NET CLR IL. Missing patch classes or methods remain recorded with an explicit status instead of being guessed.
 """,
         encoding="utf-8",
     )
     return summary
 
 
-def generate_docs(root: Path, counts: Dict[str, Dict[str, int]], jars: List[Dict[str, Any]], catalog: List[Dict[str, Any]], java_info: Dict[str, Any], game_root: Path) -> None:
+def generate_docs(
+    root: Path,
+    counts: Dict[str, Dict[str, int]],
+    jars: List[Dict[str, Any]],
+    catalog: List[Dict[str, Any]],
+    java_info: Dict[str, Any],
+    game_root: Path,
+    generated_at_utc: str,
+    bytecode_summary: Dict[str, Any],
+) -> None:
     base = next((j for j in jars if j["name"] == "desktop-1.0.jar"), None)
     basemod = next((m for m in catalog if m.get("jar_name") == "BaseMod.jar"), None)
     mts = next((m for m in catalog if m.get("jar_name") == "ModTheSpire.jar"), None)
@@ -1184,20 +1294,24 @@ def generate_docs(root: Path, counts: Dict[str, Dict[str, int]], jars: List[Dict
 
 - 本体 JAR：`desktop-1.0.jar`，SHA-256：`{base['sha256'] if base else 'missing'}`
 - 生成时本体目录：`{game_root}`（仅审计信息；使用时以 `environment/jar_inventory.jsonl` 的 `portable_path` 为准）
+- 生成时间：`{generated_at_utc}`（以 `manifest.json` 和 `ai_manifest.json` 为准）
 - 本体 `com.megacrit.cardcrawl.*`：{base_count.get('types', 0)} 个类，{base_count.get('methods', 0)} 个方法，{base_count.get('fields', 0)} 个字段
 - ModTheSpire 元数据 `mts_version`：{metadata_version(mts)}（该 JAR 的元数据标记，不等同于发布版本号）
 - BaseMod：{metadata_version(basemod)}
 - StSLib：{metadata_version(stslib)}
 - 生成器 Java 运行时：`{java_info.get('version', 'unknown')}`
+- 本体 JVM 指令快照：{bytecode_summary.get('full_game_class_count', 0)} 个类、{bytecode_summary.get('full_game_method_count', 0)} 个方法、{bytecode_summary.get('full_game_instruction_count', 0)} 条指令；补丁目标专项快照 {bytecode_summary.get('instruction_snapshot_count', 0)} 个方法
 
 ## 给 AI 的读取顺序
 
-1. 先读本文件和 `manifest.json`，确认这是哪一套 JAR。
+1. 先读本文件、`ai_manifest.json` 和 `manifest.json`，确认默认摄取范围与 JAR 指纹。
 2. 需要查本体类时，查 `api/base_game_api.types.jsonl`；需要编译 API 时分别查 `api/modthespire_api.types.jsonl`、`api/basemod_api.types.jsonl`、`api/stslib_api.types.jsonl`。
 3. 需要理解本机已经装了什么 Mod 时，查 `environment/mod_catalog.json` 和 `api/installed_mods_api.types.jsonl`；Mod 的 `ModTheSpire.json` 元数据、注解和资源路径也被索引。
 4. 遇到版本、类路径、资源路径或依赖问题，先查 `environment/jar_inventory.jsonl`、`environment/resource_inventory.jsonl`、`environment/workshop_manifest.json` 和 `environment/workshop_external_files.jsonl`。
-5. 遇到补丁目标、Locator 或方法行为问题，查 `environment/patch_targets.jsonl`、`bytecode/instruction_snapshots.jsonl` 和对应的 `bytecode/javap/*.txt`。
-6. 需要快速定位类/成员时，用 `tools/query-sts-api.ps1`；需要查补丁目标字节码时，用 `tools/query-bytecode.ps1`；需要判断当前 JAR 是否仍与本包一致时，用 `tools/verify-sts-pack.ps1`。
+5. 遇到补丁目标、Locator 或方法行为问题，查 `environment/patch_targets.jsonl`、`bytecode/instruction_snapshots.jsonl` 和对应的 `bytecode/javap/*.txt`；需要一般本体方法的完整指令时，按需查 `bytecode/full_game_instruction_snapshots.jsonl`。
+6. 需要快速定位类/成员时，用 `tools/query-sts-api.ps1`；需要查补丁目标字节码时，用 `tools/query-bytecode.ps1`；需要判断当前 JAR 是否仍与本包一致时，用 `tools/verify-sts-pack.ps1 -VerifyPackFiles -VerifyTemplate`。
+
+默认摄取只包含核心 API、版本摘要、开发文档和工具；`installed_mods`、`third_party`、资源、补丁指令和 HTML 报告都应按任务按需读取，具体以 `ai_file_index.jsonl` 的 `include_by_default`、`role`、`priority` 和 `parse_as` 为准。
 
 ## 证据优先级
 
@@ -1211,14 +1325,14 @@ def generate_docs(root: Path, counts: Dict[str, Dict[str, int]], jars: List[Dict
 - `docs/RESOURCE_AND_LOCALIZATION.md`：资源、语言包和 `loadCustomStrings` 的路径规则。
 - `docs/TROUBLESHOOTING.md`：日志、依赖、Java 版本和常见加载失败的证据化排查顺序。
 - `environment/workshop_external_files.jsonl`：Workshop JAR 外部图片、音频、配置和其他文件的路径/大小/SHA-256 清单。
-- `environment/patch_targets.jsonl`、`bytecode/`：补丁注解目标、`javap -p -s -c` 快照和指令级 JVM bytecode。
+- `environment/patch_targets.jsonl`、`bytecode/`：补丁注解目标、本体全量 JVM 指令、`javap -p -s -c` 快照和专项指令索引。
 - `sts_ai_knowledge_report.html`：无需服务器、双击即可使用的离线类/成员浏览器。
 - `templates/`：不依赖绝对路径的最小 Java 8 Mod 模板。
 
 ## 边界
 
 - 本包没有复制游戏 JAR、Workshop 外置图片、音频或存档，只记录它们的哈希、类签名和资源索引；这样可以避免把资料包绑定到生成机的绝对路径，也避免把大体积二进制重复分发。
-- 类记录包含私有成员和方法代码长度/哈希；补丁目标另外提供局部 `javap -p -s -c` 文本和解析后的 JVM 指令，但仍不等同于可读的 Java 源码。
+- 类记录包含私有成员和方法代码长度/哈希；本体另有完整 JVM 指令快照，补丁目标另外提供局部 `javap -p -s -c` 文本和专项指令索引，但仍不等同于可读的 Java 源码。
 - Java Mod 的“IL”在本包中指 JVM bytecode 指令，不是 .NET CLR IL；目标类/方法不存在或无法解析时会保留明确的状态字段，不会假装生成快照。
 - 无效的 `ModTheSpire.json` 会在 `metadata_raw_fallback` 中保留 UTF-8 原文、路径和 SHA-256，供 AI 或人工回退判断。
 - `installed_mods` 是生成时本机目录中的快照；创意工坊更新后必须重新生成并重新校验。
@@ -1448,7 +1562,8 @@ param(
     [Parameter(Mandatory = $true)] [string]$GameRoot,
     [Parameter(Mandatory = $true)] [string]$PackRoot,
     [switch]$VerifyPackFiles,
-    [switch]$VerifyWorkshopExternalFiles
+    [switch]$VerifyWorkshopExternalFiles,
+    [switch]$VerifyTemplate
 )
 
 $ErrorActionPreference = 'Stop'
@@ -1456,6 +1571,31 @@ $gameRoot = [IO.Path]::GetFullPath($GameRoot)
 $packRoot = [IO.Path]::GetFullPath($PackRoot)
 $manifest = Get-Content -LiteralPath (Join-Path $packRoot 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $failures = New-Object System.Collections.Generic.List[string]
+$ignoredRoots = @('.git', '.hg', '.svn', '__pycache__')
+$packPrefix = $packRoot.TrimEnd([IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
+
+function Normalize-RelativePath([string]$Path) {
+    return $Path.Replace('\', '/')
+}
+
+function Test-IgnoredPackPath([string]$RelativePath) {
+    $normalized = Normalize-RelativePath $RelativePath
+    $parts = $normalized.Split('/')
+    return ($parts[0] -in $ignoredRoots) -or $normalized -like 'templates/build/*' -or $normalized -like '*.pyc'
+}
+
+function Resolve-PackPath([string]$RelativePath) {
+    $normalized = Normalize-RelativePath $RelativePath
+    if ([IO.Path]::IsPathRooted($normalized) -or $normalized -eq '..' -or $normalized -like '../*') {
+        throw "path is absolute or escapes pack root: $RelativePath"
+    }
+    $resolved = [IO.Path]::GetFullPath((Join-Path $packRoot ($normalized -replace '/', [IO.Path]::DirectorySeparatorChar)))
+    if (-not $resolved.StartsWith($packPrefix, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "path escapes pack root: $RelativePath"
+    }
+    return $resolved
+}
+
 $steamapps = Split-Path (Split-Path $gameRoot)
 $workshopRoot = Join-Path $steamapps 'workshop\content\646570'
 foreach ($jar in @($manifest.jars)) {
@@ -1481,7 +1621,7 @@ if ($VerifyWorkshopExternalFiles) {
     else {
         foreach ($line in Get-Content -LiteralPath $externalIndex -Encoding UTF8) {
             if ([string]::IsNullOrWhiteSpace($line)) { continue }
-            $entry = $line | ConvertFrom-Json
+            try { $entry = $line | ConvertFrom-Json } catch { $failures.Add("invalid external Workshop JSON: $($_.Exception.Message)"); continue }
             $portable = [string]$entry.portable_path
             if ($portable -notlike 'workshop/*') { $failures.Add("invalid external Workshop path: $portable"); continue }
             $relative = $portable.Substring(9) -replace '/', [IO.Path]::DirectorySeparatorChar
@@ -1495,15 +1635,67 @@ if ($VerifyWorkshopExternalFiles) {
 }
 if ($VerifyPackFiles) {
     $index = Join-Path $packRoot 'ai_file_index.jsonl'
+    if (-not (Test-Path -LiteralPath $index -PathType Leaf)) {
+        $failures.Add("missing pack file index: $index")
+    }
+    $seen = @{}
+    $checked = 0
+    if (Test-Path -LiteralPath $index -PathType Leaf) {
     foreach ($line in Get-Content -LiteralPath $index -Encoding UTF8) {
         if ([string]::IsNullOrWhiteSpace($line)) { continue }
-        $entry = $line | ConvertFrom-Json
-        $file = Join-Path $packRoot (($entry.path) -replace '/', [IO.Path]::DirectorySeparatorChar)
-        if (-not (Test-Path -LiteralPath $file -PathType Leaf)) { $failures.Add("missing pack file: $($entry.path)"); continue }
+        try { $entry = $line | ConvertFrom-Json } catch { $failures.Add("invalid pack index JSON: $($_.Exception.Message)"); continue }
+        $relative = [string]$entry.path
+        if ([string]::IsNullOrWhiteSpace($relative)) { $failures.Add('pack index entry has no path'); continue }
+        $normalized = Normalize-RelativePath $relative
+        if (Test-IgnoredPackPath $normalized) { $failures.Add("pack index contains excluded path: $normalized"); continue }
+        if ($seen.ContainsKey($normalized)) { $failures.Add("duplicate pack index path: $normalized"); continue }
+        $seen[$normalized] = $true
+        try { $file = Resolve-PackPath $normalized } catch { $failures.Add($_.Exception.Message); continue }
+        if (-not (Test-Path -LiteralPath $file -PathType Leaf)) { $failures.Add("missing pack file: $normalized"); continue }
         $hash = (Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToUpperInvariant()
         $size = (Get-Item -LiteralPath $file).Length
-        if ($size -ne [int64]$entry.size -or $hash -ne ([string]$entry.sha256).ToUpperInvariant()) { $failures.Add("pack file mismatch: $($entry.path)") }
+        if ($size -ne [int64]$entry.size -or $hash -ne ([string]$entry.sha256).ToUpperInvariant()) { $failures.Add("pack file mismatch: $normalized") }
+        else { $checked++ }
     }
+    foreach ($file in Get-ChildItem -LiteralPath $packRoot -File -Recurse -Force) {
+        $relative = Normalize-RelativePath ($file.FullName.Substring($packRoot.Length + 1))
+        if ($relative -eq 'ai_file_index.jsonl' -or (Test-IgnoredPackPath $relative)) { continue }
+        if (-not $seen.ContainsKey($relative)) { $failures.Add("unindexed pack file: $relative") }
+    }
+    Write-Host "Pack file verification checked $checked file(s)."
+    }
+}
+if ($VerifyTemplate) {
+    $templateFiles = @(
+        'templates/build.ps1',
+        'templates/ModTheSpire.json',
+        'templates/README.md',
+        'templates/src/main/java/example/MinimalMod.java'
+    )
+    foreach ($relative in $templateFiles) {
+        try { $file = Resolve-PackPath $relative } catch { $failures.Add($_.Exception.Message); continue }
+        if (-not (Test-Path -LiteralPath $file -PathType Leaf)) { $failures.Add("missing template file: $relative") }
+    }
+    $metadataPath = Join-Path $packRoot 'templates\ModTheSpire.json'
+    if (Test-Path -LiteralPath $metadataPath -PathType Leaf) {
+        try {
+            $metadata = Get-Content -LiteralPath $metadataPath -Raw -Encoding UTF8 | ConvertFrom-Json
+            foreach ($key in @('modid', 'name', 'author_list', 'description', 'version')) {
+                if ($null -eq $metadata.PSObject.Properties[$key]) { $failures.Add("template metadata missing key: $key") }
+            }
+        } catch { $failures.Add("invalid template ModTheSpire.json: $($_.Exception.Message)") }
+    }
+}
+$aiManifestPath = Join-Path $packRoot 'ai_manifest.json'
+if (-not (Test-Path -LiteralPath $aiManifestPath -PathType Leaf)) {
+    $failures.Add("missing AI manifest: $aiManifestPath")
+} else {
+    try {
+        $aiManifest = Get-Content -LiteralPath $aiManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+        foreach ($key in @('pack_id', 'pack_version', 'generated_at_utc', 'ingestion_order', 'default_files', 'on_demand_files')) {
+            if ($null -eq $aiManifest.PSObject.Properties[$key]) { $failures.Add("AI manifest missing key: $key") }
+        }
+    } catch { $failures.Add("invalid AI manifest: $($_.Exception.Message)") }
 }
 if ($failures.Count) { $failures | ForEach-Object { Write-Host "FAIL $_" -ForegroundColor Red }; exit 1 }
 Write-Host 'Verification passed.' -ForegroundColor Green
@@ -1537,6 +1729,7 @@ param(
     [string]$TargetClass,
     [string]$TargetMethod,
     [string]$PatchClass,
+    [switch]$FullGame,
     [switch]$IncludeInstructions
 )
 
@@ -1553,7 +1746,7 @@ foreach ($line in Get-Content -LiteralPath $targetFile -Encoding UTF8) {
     if ($PatchClass -and $item.patch_class -notlike $PatchClass) { continue }
     $targetMatches.Add($item)
 }
-if (-not $IncludeInstructions) { @($targetMatches.ToArray()) | ConvertTo-Json -Depth 100; exit 0 }
+if (-not $IncludeInstructions -and -not $FullGame) { @($targetMatches.ToArray()) | ConvertTo-Json -Depth 100; exit 0 }
 $snapshotFile = Join-Path $packRoot 'bytecode\instruction_snapshots.jsonl'
 $wanted = @{}
 foreach ($item in $targetMatches) { foreach ($id in @($item.instruction_snapshot_ids)) { $wanted[[string]$id] = $true } }
@@ -1565,7 +1758,22 @@ if (Test-Path -LiteralPath $snapshotFile -PathType Leaf) {
         if ($wanted.ContainsKey([string]$item.snapshot_id)) { $snapshots.Add($item) }
     }
 }
-[pscustomobject][ordered]@{ patch_targets=@($targetMatches.ToArray()); instruction_snapshots=@($snapshots.ToArray()) } | ConvertTo-Json -Depth 100
+$fullSnapshots = New-Object System.Collections.Generic.List[object]
+if ($FullGame) {
+    $fullFile = Join-Path $packRoot 'bytecode\full_game_instruction_snapshots.jsonl'
+    if (-not (Test-Path -LiteralPath $fullFile -PathType Leaf)) { throw "Full base-game bytecode index not found: $fullFile" }
+    foreach ($line in Get-Content -LiteralPath $fullFile -Encoding UTF8) {
+        if ([string]::IsNullOrWhiteSpace($line)) { continue }
+        $item = $line | ConvertFrom-Json
+        if ($TargetClass -and $item.target_class -notlike $TargetClass) { continue }
+        if ($TargetMethod -and $item.target_method -notlike $TargetMethod) { continue }
+        $fullSnapshots.Add($item)
+    }
+}
+$result = [ordered]@{ patch_targets=@($targetMatches.ToArray()) }
+if ($IncludeInstructions) { $result.instruction_snapshots = @($snapshots.ToArray()) }
+if ($FullGame) { $result.full_game_instruction_snapshots = @($fullSnapshots.ToArray()) }
+[pscustomobject]$result | ConvertTo-Json -Depth 100
 ''', encoding="utf-8")
 
 
@@ -1738,6 +1946,251 @@ q.addEventListener('input',render);render();
     (root / "sts_ai_knowledge_report.html").write_text(report, encoding="utf-8")
 
 
+def ignored_index_path(relative_path: str) -> bool:
+    path = relative_path.replace("\\", "/")
+    parts = path.split("/")
+    return (
+        not path
+        or path == "ai_file_index.jsonl"
+        or parts[0] in INDEX_IGNORED_ROOTS
+        or path.startswith("templates/build/")
+        or path.endswith(".pyc")
+    )
+
+
+def ai_file_metadata(relative_path: str) -> Dict[str, Any]:
+    """Return machine-readable ingestion policy for one generated pack file."""
+    path = relative_path.replace("\\", "/")
+    parse_as = "text"
+    role = "supporting_text"
+    include_by_default = False
+    priority = 3
+    notes = "按需读取；先确认对应版本和任务范围。"
+
+    if path in {"AI_INGESTION_GUIDE.md", "ai_manifest.json", "manifest.json", "README.md"}:
+        role = "ingestion_instructions"
+        include_by_default = True
+        priority = 1
+        notes = "默认入口和版本边界。"
+        parse_as = "json" if path.endswith(".json") else "text"
+    elif path == "CHANGELOG.md":
+        role = "release_history"
+        priority = 5
+        notes = "仅在需要追踪知识包变更时读取。"
+    elif path.startswith("api/"):
+        if path.endswith(".manifest.json"):
+            role = "api_provenance_manifest"
+            include_by_default = True
+            priority = 1
+            parse_as = "json"
+            notes = "API 来源 JAR、记录数和覆盖范围。"
+        elif path.endswith(".index.json"):
+            role = "api_lookup_index"
+            include_by_default = True
+            priority = 1
+            parse_as = "json"
+            notes = "用于按类型名快速定位 JSONL 记录。"
+        elif path.endswith(".types.jsonl"):
+            role_name = Path(path).name.removesuffix("_api.types.jsonl")
+            role = "canonical_api_signatures" if role_name in DEFAULT_API_ROLES else "optional_api_records"
+            include_by_default = role_name in DEFAULT_API_ROLES
+            priority = 1 if include_by_default else 3
+            parse_as = "jsonl"
+            notes = (
+                "当前游戏/框架 API；只在任务涉及该角色时读取。"
+                if include_by_default
+                else "大体量已安装 Mod 或第三方 API；只按目标类型/成员查询，不要整文件加载。"
+            )
+    elif path.startswith("environment/"):
+        role = "environment_fingerprint" if path.endswith(".json") else "environment_records"
+        include_by_default = path.endswith(".json")
+        priority = 2 if include_by_default else 3
+        parse_as = "json" if path.endswith(".json") else "jsonl"
+        notes = (
+            "版本、路径和摘要指纹；用于确认当前安装是否匹配。"
+            if include_by_default
+            else "逐条查询的环境记录；版本问题或资源/补丁定位时按需读取。"
+        )
+    elif path.startswith("docs/"):
+        role = "modding_instructions"
+        include_by_default = True
+        priority = 1
+        notes = "面向 Mod 开发、补丁、资源和排错的说明。"
+    elif path.startswith("templates/"):
+        role = "build_template"
+        include_by_default = True
+        priority = 2
+        parse_as = "source_text" if Path(path).suffix.lower() in {".java", ".ps1"} else "text"
+        notes = "创建和编译最小 Java 8 Mod 的模板文件。"
+    elif path.startswith("tools/"):
+        role = "verification_tool"
+        include_by_default = True
+        priority = 2
+        parse_as = "source_text"
+        notes = "按需执行的查询、验证和再生成工具。"
+    elif path.startswith("bytecode/"):
+        if path == "bytecode/README.md":
+            role = "bytecode_instructions"
+            include_by_default = True
+            priority = 2
+            notes = "解释补丁目标和 JVM 指令快照的使用边界。"
+        else:
+            role = "bytecode_records" if path.endswith(".jsonl") else "bytecode_reference"
+            priority = 3
+            parse_as = "jsonl" if path.endswith(".jsonl") else "text"
+            if path == "bytecode/full_game_instruction_snapshots.jsonl":
+                notes = "Complete parsed JVM instruction records for every base-game API method; query by class and method on demand."
+            elif path == "bytecode/full_game_parse_errors.jsonl":
+                notes = "Audit list of base-game class parse errors; an empty file means no parse errors were observed."
+            notes = "补丁目标行为核对资料；只读取命中的类/方法。"
+    elif path.startswith("resources/"):
+        role = "resource_records"
+        priority = 3
+        parse_as = "jsonl"
+        notes = "JAR 内文本资源和本地化索引；按资源路径查询。"
+    elif path.endswith(".html"):
+        role = "human_report"
+        priority = 5
+        notes = "供人工浏览；不作为 AI 默认事实来源。"
+
+    return {
+        "optional": not include_by_default,
+        "include_by_default": include_by_default,
+        "role": role,
+        "priority": priority,
+        "parse_as": parse_as,
+        "notes": notes,
+    }
+
+
+def write_ai_manifest(
+    root: Path,
+    generated_at_utc: str,
+    game_version: str,
+    jar_inventory: List[Dict[str, Any]],
+    counts: Dict[str, Dict[str, int]],
+    java_info: Dict[str, Any],
+    bytecode_summary: Dict[str, Any],
+    external_summary: Dict[str, Any],
+) -> None:
+    base = next((j for j in jar_inventory if j.get("name") == "desktop-1.0.jar"), {})
+    frameworks = {
+        item["name"]: {
+            "portable_path": item.get("portable_path"),
+            "sha256": item.get("sha256"),
+            "workshop_id": item.get("workshop_id"),
+        }
+        for item in jar_inventory
+        if item.get("scope") == "framework"
+    }
+    scope_counts = Counter(str(item.get("scope")) for item in jar_inventory)
+    payload = {
+        "schema_version": AI_MANIFEST_SCHEMA,
+        "pack_id": "slay-the-spire-ai-modding-knowledge-ai-ready",
+        "pack_version": PACK_VERSION,
+        "generated_at_utc": generated_at_utc,
+        "source_pack_id": "slay-the-spire-ai-modding-knowledge",
+        "source_pack_version": PACK_VERSION,
+        "game": {
+            "app_id": "646570",
+            "version": game_version,
+            "base_jar": base.get("name"),
+            "base_jar_sha256": base.get("sha256"),
+        },
+        "runtime": {
+            "java": java_info,
+            "javap_version": bytecode_summary.get("javap_version"),
+            "frameworks": frameworks,
+        },
+        "coverage": {
+            "jar_count": len(jar_inventory),
+            "jar_scope_counts": dict(sorted(scope_counts.items())),
+            "api_counts": {role: dict(sorted(data.items())) for role, data in sorted(counts.items())},
+            "workshop_external_files": {
+                "file_count": external_summary.get("file_count", 0),
+                "total_bytes": external_summary.get("total_bytes", 0),
+            },
+            "patch_targets": {
+                "patch_reference_count": bytecode_summary.get("patch_reference_count", 0),
+                "instruction_snapshot_count": bytecode_summary.get("instruction_snapshot_count", 0),
+                "javap_snapshot_count": bytecode_summary.get("javap_snapshot_count", 0),
+            },
+            "full_base_game_bytecode": {
+                "class_count": bytecode_summary.get("full_game_class_count", 0),
+                "parsed_class_count": bytecode_summary.get("full_game_parsed_class_count", 0),
+                "parse_error_count": bytecode_summary.get("full_game_parse_error_count", 0),
+                "method_count": bytecode_summary.get("full_game_method_count", 0),
+                "methods_with_code": bytecode_summary.get("full_game_methods_with_code", 0),
+                "instruction_count": bytecode_summary.get("full_game_instruction_count", 0),
+            },
+        },
+        "canonical_roots": ["api", "environment", "bytecode", "resources", "docs", "templates", "tools"],
+        "ingestion_order": [
+            "AI_INGESTION_GUIDE.md",
+            "ai_manifest.json",
+            "manifest.json",
+            "environment/*.json",
+            "api/*.manifest.json",
+            "api/*.index.json",
+            "api/base_game_api.types.jsonl",
+            "api/modthespire_api.types.jsonl",
+            "api/basemod_api.types.jsonl",
+            "api/stslib_api.types.jsonl",
+            "docs/*.md",
+            "bytecode/README.md",
+            "templates/*",
+            "tools/*",
+        ],
+        "precedence": {
+            "current_api": "api/*.types.jsonl and matching API manifest",
+            "version_truth": "environment/jar_inventory.jsonl plus tools/verify-sts-pack.ps1 output",
+            "runtime_truth": "current ModTheSpire/game logs and current build output at user-provided paths",
+            "behavior_evidence": "full base-game JVM instruction snapshot plus targeted javap/patch records; revalidate after JAR hash changes",
+            "archive": "installed_mods, third_party, resources, bytecode records and HTML report are on-demand",
+        },
+        "default_files": [
+            "AI_INGESTION_GUIDE.md",
+            "ai_manifest.json",
+            "manifest.json",
+            "README.md",
+            "api/*.manifest.json",
+            "api/*.index.json",
+            "api/base_game_api.types.jsonl",
+            "api/modthespire_api.types.jsonl",
+            "api/basemod_api.types.jsonl",
+            "api/stslib_api.types.jsonl",
+            "environment/*.json",
+            "docs/*.md",
+            "bytecode/README.md",
+            "templates/*",
+            "tools/*",
+        ],
+        "on_demand_files": [
+            "api/installed_mods_api.types.jsonl",
+            "api/third_party_api.types.jsonl",
+            "environment/*.jsonl",
+            "bytecode/*.jsonl",
+            "bytecode/javap/*",
+            "resources/text_resources.jsonl",
+            "sts_ai_knowledge_report.html",
+        ],
+        "not_default_ingestion": [
+            "ai_file_index.jsonl",
+            "templates/build/**",
+            "**/*.pyc",
+            ".git/**",
+        ],
+        "notes": [
+            "Default AI ingestion is intentionally curated; large JSONL datasets must be queried by role, type, member, or path.",
+            "The complete factual inventory remains present even when a file is marked on-demand.",
+            "The pack does not copy game/Mod binaries or Workshop external file bytes; it stores signatures, paths and hashes.",
+            "path_at_generation is audit-only; use portable_path and verify current JAR hashes before relying on signatures.",
+            "The complete base-game JVM instruction snapshot covers parsed com.megacrit.cardcrawl.* methods; third-party and installed-mod bytecode remains represented by API signatures and targeted patch evidence.",
+        ],
+    }
+    (root / "ai_manifest.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def write_template(root: Path) -> None:
     template = root / "templates"
     source = template / "src" / "main" / "java" / "example"
@@ -1823,6 +2276,7 @@ def build_pack(args: argparse.Namespace) -> None:
     if output.exists() and any(output.iterdir()) and not args.force:
         raise SystemExit(f"output is non-empty; use --force to rebuild: {output}")
     output.mkdir(parents=True, exist_ok=True)
+    generated_at_utc = datetime.now(timezone.utc).isoformat()
     for directory in [output / "api", output / "environment", output / "docs", output / "templates", output / "tools", output / "resources"]:
         directory.mkdir(parents=True, exist_ok=True)
 
@@ -1991,7 +2445,7 @@ def build_pack(args: argparse.Namespace) -> None:
         encoding="utf-8",
     )
     (output / "environment" / "mod_catalog.json").write_text(json.dumps({
-        "schema_version": SCHEMA, "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "schema_version": SCHEMA, "generated_at_utc": generated_at_utc,
         "mods": catalog,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     acf_path = workshop_root.parent.parent / "appworkshop_646570.acf"
@@ -2001,7 +2455,7 @@ def build_pack(args: argparse.Namespace) -> None:
         acf_file.update({"size": acf_path.stat().st_size, "sha256": sha256_file(acf_path)})
         acf_data = parse_vdf(acf_path.read_text(encoding="utf-8", errors="replace"))
     (output / "environment" / "workshop_manifest.json").write_text(json.dumps({
-        "schema_version": SCHEMA, "app_id": "646570", "acf_file": acf_file,
+        "schema_version": SCHEMA, "generated_at_utc": generated_at_utc, "app_id": "646570", "acf_file": acf_file,
         "installed_workshop_ids": sorted(set(j["workshop_id"] for j in jar_inventory if j.get("workshop_id"))),
         "acf": acf_data,
         "note": "The ACF is an audit snapshot; the local JAR path and SHA-256 remain authoritative when verifying a pack.",
@@ -2038,7 +2492,7 @@ def build_pack(args: argparse.Namespace) -> None:
 
     (output / "environment" / "environment_manifest.json").write_text(json.dumps({
         "schema_version": SCHEMA,
-        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "generated_at_utc": generated_at_utc,
         "os": platform.platform(),
         "python": sys.version,
         "game_root_at_generation": str(game_root),
@@ -2066,13 +2520,23 @@ def build_pack(args: argparse.Namespace) -> None:
         "patch_targets": bytecode_summary,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    generate_docs(output, api_counts, jar_inventory, catalog, java_info, game_root)
+    generate_docs(output, api_counts, jar_inventory, catalog, java_info, game_root, generated_at_utc, bytecode_summary)
     write_query_tool(output)
     write_verify_tool(output)
     write_javap_tool(output)
     write_bytecode_query_tool(output)
     write_html_report(output, api_counts, api_index, jar_inventory, game_version)
     write_template(output)
+    write_ai_manifest(
+        output,
+        generated_at_utc,
+        game_version,
+        jar_inventory,
+        api_counts,
+        java_info,
+        bytecode_summary,
+        external_summary,
+    )
     generator_copy = output / "tools" / "generate_sts_pack.py"
     if Path(__file__).resolve() != generator_copy.resolve():
         shutil.copy2(Path(__file__).resolve(), generator_copy)
@@ -2082,7 +2546,7 @@ def build_pack(args: argparse.Namespace) -> None:
         "pack_id": "slay-the-spire-ai-modding-knowledge",
         "pack_version": PACK_VERSION,
         "generated_by": f"generate_sts_pack.py/{PACK_VERSION}",
-        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "generated_at_utc": generated_at_utc,
         "purpose": "Portable Slay the Spire Java ModTheSpire/BaseMod/StSLib mod-development knowledge pack",
         "game_profile": {
             "app_id": "646570",
@@ -2102,18 +2566,27 @@ def build_pack(args: argparse.Namespace) -> None:
         "workshop_external_files": external_summary,
         "patch_target_artifacts": bytecode_summary,
         "files": [
-            "AI_INGESTION_GUIDE.md", "manifest.json", "ai_file_index.jsonl",
+            "AI_INGESTION_GUIDE.md", "ai_manifest.json", "manifest.json", "ai_file_index.jsonl",
             "environment/", "api/", "bytecode/", "docs/", "templates/", "tools/", "resources/",
         ],
+        "file_index_policy": {
+            "file": "ai_file_index.jsonl",
+            "excluded_paths": [".git/**", ".hg/**", ".svn/**", "__pycache__/**", "templates/build/**", "**/*.pyc"],
+            "note": "VCS metadata, Python caches and template build output are not knowledge-pack content.",
+        },
     }
     (output / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     # Index every generated file after all files have been created.
     index_path = output / "ai_file_index.jsonl"
     with index_path.open("w", encoding="utf-8") as index:
-        for file in sorted(p for p in output.rglob("*") if p.is_file() and p.name != "ai_file_index.jsonl"):
+        for file in sorted(p for p in output.rglob("*") if p.is_file()):
+            relative = file.relative_to(output).as_posix()
+            if ignored_index_path(relative):
+                continue
             index.write(json.dumps({
-                "path": file.relative_to(output).as_posix(),
+                "path": relative,
+                **ai_file_metadata(relative),
                 "size": file.stat().st_size,
                 "sha256": sha256_file(file),
             }, ensure_ascii=False, separators=(",", ":")) + "\n")

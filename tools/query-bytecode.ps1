@@ -4,6 +4,7 @@ param(
     [string]$TargetClass,
     [string]$TargetMethod,
     [string]$PatchClass,
+    [switch]$FullGame,
     [switch]$IncludeInstructions
 )
 
@@ -20,7 +21,7 @@ foreach ($line in Get-Content -LiteralPath $targetFile -Encoding UTF8) {
     if ($PatchClass -and $item.patch_class -notlike $PatchClass) { continue }
     $targetMatches.Add($item)
 }
-if (-not $IncludeInstructions) { @($targetMatches.ToArray()) | ConvertTo-Json -Depth 100; exit 0 }
+if (-not $IncludeInstructions -and -not $FullGame) { @($targetMatches.ToArray()) | ConvertTo-Json -Depth 100; exit 0 }
 $snapshotFile = Join-Path $packRoot 'bytecode\instruction_snapshots.jsonl'
 $wanted = @{}
 foreach ($item in $targetMatches) { foreach ($id in @($item.instruction_snapshot_ids)) { $wanted[[string]$id] = $true } }
@@ -32,4 +33,19 @@ if (Test-Path -LiteralPath $snapshotFile -PathType Leaf) {
         if ($wanted.ContainsKey([string]$item.snapshot_id)) { $snapshots.Add($item) }
     }
 }
-[pscustomobject][ordered]@{ patch_targets=@($targetMatches.ToArray()); instruction_snapshots=@($snapshots.ToArray()) } | ConvertTo-Json -Depth 100
+$fullSnapshots = New-Object System.Collections.Generic.List[object]
+if ($FullGame) {
+    $fullFile = Join-Path $packRoot 'bytecode\full_game_instruction_snapshots.jsonl'
+    if (-not (Test-Path -LiteralPath $fullFile -PathType Leaf)) { throw "Full base-game bytecode index not found: $fullFile" }
+    foreach ($line in Get-Content -LiteralPath $fullFile -Encoding UTF8) {
+        if ([string]::IsNullOrWhiteSpace($line)) { continue }
+        $item = $line | ConvertFrom-Json
+        if ($TargetClass -and $item.target_class -notlike $TargetClass) { continue }
+        if ($TargetMethod -and $item.target_method -notlike $TargetMethod) { continue }
+        $fullSnapshots.Add($item)
+    }
+}
+$result = [ordered]@{ patch_targets=@($targetMatches.ToArray()) }
+if ($IncludeInstructions) { $result.instruction_snapshots = @($snapshots.ToArray()) }
+if ($FullGame) { $result.full_game_instruction_snapshots = @($fullSnapshots.ToArray()) }
+[pscustomobject]$result | ConvertTo-Json -Depth 100
