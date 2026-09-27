@@ -6,13 +6,13 @@
 
 - 本体 JAR：`desktop-1.0.jar`，SHA-256：`CFAD868AC8D65A88E71A0BF096FB09F78811E553EFFE0787C5309A655E081673`
 - 生成时本体目录：`E:\SteamLibrary\steamapps\common\SlayTheSpire`（仅审计信息；使用时以 `environment/jar_inventory.jsonl` 的 `portable_path` 为准）
-- 生成时间：`2026-09-27T01:51:23.451312+00:00`（以 `manifest.json` 和 `ai_manifest.json` 为准）
+- 生成时间：`2026-09-27T03:37:22.980481+00:00`（以 `manifest.json` 和 `ai_manifest.json` 为准）
 - 本体 `com.megacrit.cardcrawl.*`：2306 个类，12696 个方法，13678 个字段
 - ModTheSpire 元数据 `mts_version`：999.999.999（该 JAR 的元数据标记，不等同于发布版本号）
 - BaseMod：5.56.0
 - StSLib：2.12.0
 - 生成器 Java 运行时：`java version "1.8.0_144"`
-- 本体 JVM 指令快照：2306 个类、12696 个方法、461731 条指令；补丁目标专项快照 7668 个方法
+- 本体 JVM 指令快照：2306 个类、12696 个方法、461731 条指令；补丁目标专项快照 8758 个方法
 
 ## 给 AI 的读取顺序
 
@@ -48,3 +48,7 @@
 - Java Mod 的“IL”在本包中指 JVM bytecode 指令，不是 .NET CLR IL；目标类/方法不存在或无法解析时会保留明确的状态字段，不会假装生成快照。
 - 无效的 `ModTheSpire.json` 会在 `metadata_raw_fallback` 中保留 UTF-8 原文、路径和 SHA-256，供 AI 或人工回退判断。
 - `installed_mods` 是生成时本机目录中的快照；创意工坊更新后必须重新生成并重新校验。
+
+## Optional Mod API profiles
+
+This build contains 1 optional Mod JAR profile(s) in `api/optional_mods_api.types.jsonl`. They are kept separate from the current-installation baseline, so an AI can query Downfall or another uninstalled Mod without treating it as an installed dependency. The original Mod binaries are not included; `environment/optional_mod_manifest.json` records Workshop IDs, expected sizes and SHA-256 values, and `tools/fetch-optional-mods.ps1` can download and verify them through SteamCMD when regeneration is needed.

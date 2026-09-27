@@ -1,5 +1,16 @@
 # 更新日志
 
+## v1.4.0 — 2026-09-27
+
+刷新当前安装基线，并加入独立的可选 Mod API 档案。
+
+- 当前基线更新为 `SpireOddities-0.5.1.jar`，整包重新生成并通过 JAR、Workshop 外置文件、模板和全文件索引校验。
+- 新增 `api/optional_mods_api.types.jsonl`：本版包含 Downfall 6.0.20 的 4,075 个类型、19,393 个方法和 16,383 个字段。
+- 新增 `environment/optional_mod_manifest.json`，记录 Downfall Workshop ID `1610056683`、大小和 SHA-256；不上传原始 482 MB Mod JAR。
+- 新增 `tools/fetch-optional-mods.ps1`，通过 SteamCMD 下载并校验可选 Mod，供需要重新生成资料的人使用。
+- `query-sts-api.ps1` 支持 `-Role optional_mods`；`verify-sts-pack.ps1` 支持显式的 `-VerifyOptionalMods -OptionalModsRoot`。
+- 可选 Mod 保留 class API、指纹和资源路径索引，但不把大型可选 Mod 文本资源复制进通用资源正文；完整包约 469 MiB，Release 提供压缩下载包。
+
 ## v1.3.0 — 2026-09-27
 
 补齐基础游戏全量 JVM 指令覆盖，并增强按需查询能力。

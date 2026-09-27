@@ -1,0 +1,125 @@
+Compiled from "WaveOfTheHandPower.java"
+public class com.megacrit.cardcrawl.powers.watcher.WaveOfTheHandPower extends com.megacrit.cardcrawl.powers.AbstractPower {
+  public static final java.lang.String POWER_ID;
+    descriptor: Ljava/lang/String;
+
+  private static final com.megacrit.cardcrawl.localization.PowerStrings powerStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/PowerStrings;
+
+  public com.megacrit.cardcrawl.powers.watcher.WaveOfTheHandPower(com.megacrit.cardcrawl.core.AbstractCreature, int);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/powers/AbstractPower."<init>":()V
+       4: aload_0
+       5: getstatic     #2                  // Field powerStrings:Lcom/megacrit/cardcrawl/localization/PowerStrings;
+       8: getfield      #3                  // Field com/megacrit/cardcrawl/localization/PowerStrings.NAME:Ljava/lang/String;
+      11: putfield      #4                  // Field name:Ljava/lang/String;
+      14: aload_0
+      15: ldc           #6                  // String WaveOfTheHandPower
+      17: putfield      #7                  // Field ID:Ljava/lang/String;
+      20: aload_0
+      21: aload_1
+      22: putfield      #8                  // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+      25: aload_0
+      26: iload_2
+      27: putfield      #9                  // Field amount:I
+      30: aload_0
+      31: invokevirtual #10                 // Method updateDescription:()V
+      34: aload_0
+      35: ldc           #11                 // String wave_of_the_hand
+      37: invokevirtual #12                 // Method loadRegion:(Ljava/lang/String;)V
+      40: return
+
+  public void onGainedBlock(float);
+    descriptor: (F)V
+    Code:
+       0: fload_1
+       1: fconst_0
+       2: fcmpl
+       3: ifle          86
+       6: aload_0
+       7: invokevirtual #13                 // Method flash:()V
+      10: getstatic     #14                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      13: astore_2
+      14: invokestatic  #15                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      17: getfield      #16                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      20: getfield      #17                 // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+      23: invokevirtual #18                 // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      26: astore_3
+      27: aload_3
+      28: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      33: ifeq          86
+      36: aload_3
+      37: invokeinterface #20,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      42: checkcast     #21                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+      45: astore        4
+      47: aload_0
+      48: new           #22                 // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+      51: dup
+      52: aload         4
+      54: aload_2
+      55: new           #23                 // class com/megacrit/cardcrawl/powers/WeakPower
+      58: dup
+      59: aload         4
+      61: aload_0
+      62: getfield      #9                  // Field amount:I
+      65: iconst_0
+      66: invokespecial #24                 // Method com/megacrit/cardcrawl/powers/WeakPower."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;IZ)V
+      69: aload_0
+      70: getfield      #9                  // Field amount:I
+      73: iconst_1
+      74: getstatic     #25                 // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.NONE:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      77: invokespecial #26                 // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;IZLcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;)V
+      80: invokevirtual #27                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      83: goto          27
+      86: return
+
+  public void atEndOfRound();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: new           #28                 // class com/megacrit/cardcrawl/actions/common/RemoveSpecificPowerAction
+       4: dup
+       5: aload_0
+       6: getfield      #8                  // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+       9: aload_0
+      10: getfield      #8                  // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+      13: ldc           #6                  // String WaveOfTheHandPower
+      15: invokespecial #29                 // Method com/megacrit/cardcrawl/actions/common/RemoveSpecificPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;)V
+      18: invokevirtual #27                 // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      21: return
+
+  public void updateDescription();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: new           #30                 // class java/lang/StringBuilder
+       4: dup
+       5: invokespecial #31                 // Method java/lang/StringBuilder."<init>":()V
+       8: getstatic     #2                  // Field powerStrings:Lcom/megacrit/cardcrawl/localization/PowerStrings;
+      11: getfield      #32                 // Field com/megacrit/cardcrawl/localization/PowerStrings.DESCRIPTIONS:[Ljava/lang/String;
+      14: iconst_0
+      15: aaload
+      16: invokevirtual #33                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      19: aload_0
+      20: getfield      #9                  // Field amount:I
+      23: invokevirtual #34                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      26: getstatic     #2                  // Field powerStrings:Lcom/megacrit/cardcrawl/localization/PowerStrings;
+      29: getfield      #32                 // Field com/megacrit/cardcrawl/localization/PowerStrings.DESCRIPTIONS:[Ljava/lang/String;
+      32: iconst_1
+      33: aaload
+      34: invokevirtual #33                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      37: invokevirtual #35                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      40: putfield      #36                 // Field description:Ljava/lang/String;
+      43: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #37                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #6                  // String WaveOfTheHandPower
+       5: invokevirtual #38                 // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getPowerStrings:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/PowerStrings;
+       8: putstatic     #2                  // Field powerStrings:Lcom/megacrit/cardcrawl/localization/PowerStrings;
+      11: return
+}

@@ -2,6 +2,8 @@
 param(
     [Parameter(Mandatory = $true)] [string]$GameRoot,
     [Parameter(Mandatory = $true)] [string]$PackRoot,
+    [string[]]$OptionalModsRoot,
+    [switch]$VerifyOptionalMods,
     [switch]$VerifyPackFiles,
     [switch]$VerifyWorkshopExternalFiles,
     [switch]$VerifyTemplate
@@ -55,6 +57,25 @@ foreach ($jar in @($manifest.jars)) {
     $hash = (Get-FileHash -LiteralPath $actual -Algorithm SHA256).Hash.ToUpperInvariant()
     if (($item.Length -ne [int64]$jar.size) -or ($hash -ne ([string]$jar.sha256).ToUpperInvariant())) { $failures.Add("mismatch $($jar.name) [$portable]: sizeOk=$($item.Length -eq [int64]$jar.size) hashOk=$($hash -eq ([string]$jar.sha256).ToUpperInvariant())") }
     else { Write-Host "OK   $($jar.name) $hash" -ForegroundColor Green }
+}
+if ($VerifyOptionalMods) {
+    if (-not @($manifest.optional_mods.jars).Count) { Write-Host 'No optional Mod JARs recorded.' -ForegroundColor Yellow }
+    elseif (-not $OptionalModsRoot) { $failures.Add('VerifyOptionalMods requires -OptionalModsRoot pointing to the downloaded optional Workshop roots') }
+    else {
+        foreach ($jar in @($manifest.optional_mods.jars)) {
+            $parts = ([string]$jar.portable_path).Split('/')
+            if ($parts.Count -lt 3 -or $parts[0] -ne 'optional' -or $parts[1] -notmatch '^\d+$') { $failures.Add("invalid optional Mod path: $($jar.portable_path)"); continue }
+            $rootIndex = [int]$parts[1]
+            if ($rootIndex -ge @($OptionalModsRoot).Count) { $failures.Add("missing optional Mod root index $rootIndex for $($jar.name)"); continue }
+            $relative = ($parts[2..($parts.Count - 1)] -join [IO.Path]::DirectorySeparatorChar)
+            $actual = Join-Path ([IO.Path]::GetFullPath($OptionalModsRoot[$rootIndex])) $relative
+            if (-not (Test-Path -LiteralPath $actual -PathType Leaf)) { $failures.Add("missing optional Mod $($jar.name) [$($jar.portable_path)]: $actual"); continue }
+            $item = Get-Item -LiteralPath $actual
+            $hash = (Get-FileHash -LiteralPath $actual -Algorithm SHA256).Hash.ToUpperInvariant()
+            if (($item.Length -ne [int64]$jar.size) -or ($hash -ne ([string]$jar.sha256).ToUpperInvariant())) { $failures.Add("optional Mod mismatch $($jar.name): sizeOk=$($item.Length -eq [int64]$jar.size) hashOk=$($hash -eq ([string]$jar.sha256).ToUpperInvariant())") }
+            else { Write-Host "OK   optional $($jar.name) $hash" -ForegroundColor Green }
+        }
+    }
 }
 if ($VerifyWorkshopExternalFiles) {
     $externalIndex = Join-Path $packRoot 'environment\workshop_external_files.jsonl'

@@ -1,0 +1,2037 @@
+Compiled from "GremlinCharacter.java"
+public class gremlin.characters.GremlinCharacter extends basemod.abstracts.CustomPlayer {
+  public static com.megacrit.cardcrawl.localization.CharacterStrings characterStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+
+  private static final int ENERGY_PER_TURN;
+    descriptor: I
+
+  private static final java.lang.String SHOULDER_2;
+    descriptor: Ljava/lang/String;
+
+  private static final java.lang.String SHOULDER_1;
+    descriptor: Ljava/lang/String;
+
+  private static final java.lang.String CORPSE;
+    descriptor: Ljava/lang/String;
+
+  private static final java.lang.String CHAR_FOLDER;
+    descriptor: Ljava/lang/String;
+
+  private static final java.lang.String SKELETON_ATLAS;
+    descriptor: Ljava/lang/String;
+
+  private static final java.lang.String SKELETON_JSON;
+    descriptor: Ljava/lang/String;
+
+  private static final java.lang.String[] orbTextures;
+    descriptor: [Ljava/lang/String;
+
+  public float xStartOffset;
+    descriptor: F
+
+  private static float xSpaceBetweenSlots;
+    descriptor: F
+
+  private static float xSpaceBetweenSlotsCramp;
+    descriptor: F
+
+  private static float yStartOffset;
+    descriptor: F
+
+  public float[] orbPositionsX;
+    descriptor: [F
+
+  public float[] orbPositionsXCramp;
+    descriptor: [F
+
+  public float[] orbPositionsY;
+    descriptor: [F
+
+  public java.lang.String currentGremlin;
+    descriptor: Ljava/lang/String;
+
+  public java.lang.String currentAnimation;
+    descriptor: Ljava/lang/String;
+
+  public gremlin.patches.GremlinMobState mobState;
+    descriptor: Lgremlin/patches/GremlinMobState;
+
+  public boolean nob;
+    descriptor: Z
+
+  private int trueGameHandSize;
+    descriptor: I
+
+  private boolean cowering;
+    descriptor: Z
+
+  private int enemyGremTalk;
+    descriptor: I
+
+  private static java.lang.String[] NOBUITEXT;
+    descriptor: [Ljava/lang/String;
+
+  private static java.lang.String[] GREMUITEXT;
+    descriptor: [Ljava/lang/String;
+
+  public gremlin.characters.GremlinCharacter(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getstatic     #1                  // Field gremlin/patches/GremlinEnum.GREMLIN:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+       5: getstatic     #7                  // Field orbTextures:[Ljava/lang/String;
+       8: ldc           #13                 // String gremlinResources/images/char/orb/vfx.png
+      10: aconst_null
+      11: checkcast     #15                 // class java/lang/String
+      14: aconst_null
+      15: invokespecial #17                 // Method basemod/abstracts/CustomPlayer."<init>":(Ljava/lang/String;Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+      18: aload_0
+      19: getstatic     #23                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      22: i2f
+      23: ldc           #29                 // float 0.25f
+      25: fmul
+      26: putfield      #30                 // Field xStartOffset:F
+      29: aload_0
+      30: bipush        10
+      32: newarray       float
+      34: dup
+      35: iconst_0
+      36: fconst_0
+      37: fastore
+      38: dup
+      39: iconst_1
+      40: fconst_0
+      41: fastore
+      42: dup
+      43: iconst_2
+      44: fconst_0
+      45: fastore
+      46: dup
+      47: iconst_3
+      48: fconst_0
+      49: fastore
+      50: dup
+      51: iconst_4
+      52: fconst_0
+      53: fastore
+      54: dup
+      55: iconst_5
+      56: fconst_0
+      57: fastore
+      58: dup
+      59: bipush        6
+      61: fconst_0
+      62: fastore
+      63: dup
+      64: bipush        7
+      66: fconst_0
+      67: fastore
+      68: dup
+      69: bipush        8
+      71: fconst_0
+      72: fastore
+      73: dup
+      74: bipush        9
+      76: fconst_0
+      77: fastore
+      78: putfield      #34                 // Field orbPositionsX:[F
+      81: aload_0
+      82: bipush        10
+      84: newarray       float
+      86: dup
+      87: iconst_0
+      88: fconst_0
+      89: fastore
+      90: dup
+      91: iconst_1
+      92: fconst_0
+      93: fastore
+      94: dup
+      95: iconst_2
+      96: fconst_0
+      97: fastore
+      98: dup
+      99: iconst_3
+     100: fconst_0
+     101: fastore
+     102: dup
+     103: iconst_4
+     104: fconst_0
+     105: fastore
+     106: dup
+     107: iconst_5
+     108: fconst_0
+     109: fastore
+     110: dup
+     111: bipush        6
+     113: fconst_0
+     114: fastore
+     115: dup
+     116: bipush        7
+     118: fconst_0
+     119: fastore
+     120: dup
+     121: bipush        8
+     123: fconst_0
+     124: fastore
+     125: dup
+     126: bipush        9
+     128: fconst_0
+     129: fastore
+     130: putfield      #38                 // Field orbPositionsXCramp:[F
+     133: aload_0
+     134: bipush        10
+     136: newarray       float
+     138: dup
+     139: iconst_0
+     140: fconst_0
+     141: fastore
+     142: dup
+     143: iconst_1
+     144: fconst_0
+     145: fastore
+     146: dup
+     147: iconst_2
+     148: fconst_0
+     149: fastore
+     150: dup
+     151: iconst_3
+     152: fconst_0
+     153: fastore
+     154: dup
+     155: iconst_4
+     156: fconst_0
+     157: fastore
+     158: dup
+     159: iconst_5
+     160: fconst_0
+     161: fastore
+     162: dup
+     163: bipush        6
+     165: fconst_0
+     166: fastore
+     167: dup
+     168: bipush        7
+     170: fconst_0
+     171: fastore
+     172: dup
+     173: bipush        8
+     175: fconst_0
+     176: fastore
+     177: dup
+     178: bipush        9
+     180: fconst_0
+     181: fastore
+     182: putfield      #41                 // Field orbPositionsY:[F
+     185: aload_0
+     186: iconst_0
+     187: putfield      #44                 // Field nob:Z
+     190: aload_0
+     191: iconst_0
+     192: putfield      #48                 // Field cowering:Z
+     195: aload_0
+     196: iconst_0
+     197: putfield      #51                 // Field enemyGremTalk:I
+     200: aload_0
+     201: dup
+     202: getfield      #54                 // Field drawX:F
+     205: ldc           #57                 // float 5.0f
+     207: getstatic     #58                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     210: fmul
+     211: fadd
+     212: putfield      #54                 // Field drawX:F
+     215: aload_0
+     216: dup
+     217: getfield      #61                 // Field drawY:F
+     220: ldc           #64                 // float 7.0f
+     222: getstatic     #58                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     225: fmul
+     226: fadd
+     227: putfield      #61                 // Field drawY:F
+     230: aload_0
+     231: aload_0
+     232: getfield      #54                 // Field drawX:F
+     235: fconst_0
+     236: getstatic     #58                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     239: fmul
+     240: fadd
+     241: putfield      #65                 // Field dialogX:F
+     244: aload_0
+     245: aload_0
+     246: getfield      #61                 // Field drawY:F
+     249: ldc           #68                 // float 170.0f
+     251: getstatic     #58                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     254: fmul
+     255: fadd
+     256: putfield      #69                 // Field dialogY:F
+     259: aload_0
+     260: aconst_null
+     261: ldc           #72                 // String char/shoulder2.png
+     263: invokestatic  #74                 // Method gremlin/GremlinMod.getResourcePath:(Ljava/lang/String;)Ljava/lang/String;
+     266: ldc           #80                 // String char/shoulder.png
+     268: invokestatic  #74                 // Method gremlin/GremlinMod.getResourcePath:(Ljava/lang/String;)Ljava/lang/String;
+     271: ldc           #82                 // String char/corpse.png
+     273: invokestatic  #74                 // Method gremlin/GremlinMod.getResourcePath:(Ljava/lang/String;)Ljava/lang/String;
+     276: aload_0
+     277: invokevirtual #84                 // Method getLoadout:()Lcom/megacrit/cardcrawl/screens/CharSelectInfo;
+     280: ldc           #88                 // float 20.0f
+     282: ldc           #89                 // float -10.0f
+     284: ldc           #90                 // float 180.0f
+     286: ldc           #91                 // float 110.0f
+     288: new           #92                 // class com/megacrit/cardcrawl/core/EnergyManager
+     291: dup
+     292: iconst_3
+     293: invokespecial #94                 // Method com/megacrit/cardcrawl/core/EnergyManager."<init>":(I)V
+     296: invokevirtual #97                 // Method initializeClass:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/megacrit/cardcrawl/screens/CharSelectInfo;FFFFLcom/megacrit/cardcrawl/core/EnergyManager;)V
+     299: aload_0
+     300: invokevirtual #101                // Method initializeSlotPositions:()V
+     303: aload_0
+     304: new           #105                // class gremlin/patches/GremlinMobState
+     307: dup
+     308: invokespecial #107                // Method gremlin/patches/GremlinMobState."<init>":()V
+     311: putfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+     314: aload_0
+     315: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+     318: bipush        16
+     320: invokevirtual #113                // Method gremlin/patches/GremlinMobState.initialRandom:(I)V
+     323: aload_0
+     324: aload_0
+     325: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+     328: invokevirtual #116                // Method gremlin/patches/GremlinMobState.getFrontGremlin:()Ljava/lang/String;
+     331: aload_0
+     332: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+     335: invokevirtual #120                // Method gremlin/patches/GremlinMobState.getFrontAnimation:()Ljava/lang/String;
+     338: invokevirtual #123                // Method swapBody:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     341: pop
+     342: return
+
+  public java.lang.String swapBody(java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    Code:
+       0: new           #127                // class java/lang/StringBuilder
+       3: dup
+       4: invokespecial #129                // Method java/lang/StringBuilder."<init>":()V
+       7: ldc           #130                // String char/
+       9: invokevirtual #132                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      12: aload_1
+      13: invokevirtual #132                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      16: ldc           #136                // String /skeleton.atlas
+      18: invokevirtual #132                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      21: invokevirtual #138                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      24: astore_3
+      25: new           #127                // class java/lang/StringBuilder
+      28: dup
+      29: invokespecial #129                // Method java/lang/StringBuilder."<init>":()V
+      32: ldc           #130                // String char/
+      34: invokevirtual #132                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      37: aload_1
+      38: invokevirtual #132                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      41: ldc           #141                // String /skeleton.json
+      43: invokevirtual #132                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      46: invokevirtual #138                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      49: astore        4
+      51: aload_0
+      52: aload_3
+      53: invokestatic  #74                 // Method gremlin/GremlinMod.getResourcePath:(Ljava/lang/String;)Ljava/lang/String;
+      56: aload         4
+      58: invokestatic  #74                 // Method gremlin/GremlinMod.getResourcePath:(Ljava/lang/String;)Ljava/lang/String;
+      61: fconst_1
+      62: invokevirtual #143                // Method loadAnimation:(Ljava/lang/String;Ljava/lang/String;F)V
+      65: aload_0
+      66: getfield      #147                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      69: iconst_0
+      70: aload_2
+      71: iconst_1
+      72: invokevirtual #151                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      75: astore        5
+      77: aload         5
+      79: aload         5
+      81: invokevirtual #157                // Method com/esotericsoftware/spine/AnimationState$TrackEntry.getEndTime:()F
+      84: invokestatic  #163                // Method com/badlogic/gdx/math/MathUtils.random:()F
+      87: fmul
+      88: invokevirtual #168                // Method com/esotericsoftware/spine/AnimationState$TrackEntry.setTime:(F)V
+      91: aload_0
+      92: getfield      #172                // Field currentGremlin:Ljava/lang/String;
+      95: astore        6
+      97: aload_0
+      98: aload_1
+      99: putfield      #172                // Field currentGremlin:Ljava/lang/String;
+     102: aload_0
+     103: aload_2
+     104: putfield      #176                // Field currentAnimation:Ljava/lang/String;
+     107: aload         6
+     109: areturn
+
+  public void becomeNob();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: iconst_1
+       2: putfield      #44                 // Field nob:Z
+       5: aload_0
+       6: dup
+       7: getfield      #65                 // Field dialogX:F
+      10: ldc           #179                // float 50.0f
+      12: fadd
+      13: putfield      #65                 // Field dialogX:F
+      16: aload_0
+      17: dup
+      18: getfield      #69                 // Field dialogY:F
+      21: ldc           #180                // float 60.0f
+      23: fadd
+      24: putfield      #69                 // Field dialogY:F
+      27: ldc           #181                // String char/nob/skeleton.atlas
+      29: astore_1
+      30: ldc           #183                // String char/nob/skeleton.json
+      32: astore_2
+      33: aload_0
+      34: aload_1
+      35: invokestatic  #74                 // Method gremlin/GremlinMod.getResourcePath:(Ljava/lang/String;)Ljava/lang/String;
+      38: aload_2
+      39: invokestatic  #74                 // Method gremlin/GremlinMod.getResourcePath:(Ljava/lang/String;)Ljava/lang/String;
+      42: fconst_1
+      43: invokevirtual #143                // Method loadAnimation:(Ljava/lang/String;Ljava/lang/String;F)V
+      46: aload_0
+      47: getfield      #147                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      50: iconst_0
+      51: ldc           #185                // String animation
+      53: iconst_1
+      54: invokevirtual #151                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      57: astore_3
+      58: aload_3
+      59: aload_3
+      60: invokevirtual #157                // Method com/esotericsoftware/spine/AnimationState$TrackEntry.getEndTime:()F
+      63: invokestatic  #163                // Method com/badlogic/gdx/math/MathUtils.random:()F
+      66: fmul
+      67: invokevirtual #168                // Method com/esotericsoftware/spine/AnimationState$TrackEntry.setTime:(F)V
+      70: return
+
+  public void revertNob();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: putfield      #44                 // Field nob:Z
+       5: aload_0
+       6: dup
+       7: getfield      #65                 // Field dialogX:F
+      10: ldc           #179                // float 50.0f
+      12: fsub
+      13: putfield      #65                 // Field dialogX:F
+      16: aload_0
+      17: dup
+      18: getfield      #69                 // Field dialogY:F
+      21: ldc           #180                // float 60.0f
+      23: fsub
+      24: putfield      #69                 // Field dialogY:F
+      27: aload_0
+      28: aload_0
+      29: getfield      #172                // Field currentGremlin:Ljava/lang/String;
+      32: aload_0
+      33: getfield      #176                // Field currentAnimation:Ljava/lang/String;
+      36: invokevirtual #123                // Method swapBody:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      39: pop
+      40: aload_0
+      41: getfield      #172                // Field currentGremlin:Ljava/lang/String;
+      44: invokestatic  #187                // Method gremlin/GremlinMod.getGremlinOrb:(Ljava/lang/String;)Lgremlin/orbs/GremlinStandby;
+      47: astore_1
+      48: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      51: new           #197                // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+      54: dup
+      55: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      58: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      61: aload_1
+      62: invokevirtual #203                // Method gremlin/orbs/GremlinStandby.getPower:()Lgremlin/powers/GremlinPower;
+      65: iconst_1
+      66: invokespecial #209                // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;I)V
+      69: invokevirtual #212                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      72: return
+
+  public java.lang.String getPortraitImageName();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: ldc           #218                // String charSelect/portrait.png
+       2: areturn
+
+  public java.util.ArrayList<java.lang.String> getStartingDeck();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #220                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #222                // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: ldc           #223                // String Gremlin:Strike
+      11: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      14: pop
+      15: aload_1
+      16: ldc           #223                // String Gremlin:Strike
+      18: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      21: pop
+      22: aload_1
+      23: ldc           #223                // String Gremlin:Strike
+      25: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      28: pop
+      29: aload_1
+      30: ldc           #223                // String Gremlin:Strike
+      32: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      35: pop
+      36: aload_1
+      37: ldc           #229                // String Gremlin:Defend
+      39: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      42: pop
+      43: aload_1
+      44: ldc           #229                // String Gremlin:Defend
+      46: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      49: pop
+      50: aload_1
+      51: ldc           #229                // String Gremlin:Defend
+      53: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      56: pop
+      57: aload_1
+      58: ldc           #229                // String Gremlin:Defend
+      60: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      63: pop
+      64: aload_1
+      65: ldc           #231                // String Gremlin:TagTeam
+      67: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      70: pop
+      71: aload_1
+      72: ldc           #233                // String Gremlin:GremlinDance
+      74: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      77: pop
+      78: aload_1
+      79: areturn
+
+  public java.util.ArrayList<java.lang.String> getStartingRelics();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #220                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #222                // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: ldc           #235                // String Gremlin:GremlinKnob
+      11: invokevirtual #225                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      14: pop
+      15: ldc           #235                // String Gremlin:GremlinKnob
+      17: invokestatic  #237                // Method com/megacrit/cardcrawl/unlock/UnlockTracker.markRelicAsSeen:(Ljava/lang/String;)V
+      20: aload_1
+      21: areturn
+
+  public com.megacrit.cardcrawl.screens.CharSelectInfo getLoadout();
+    descriptor: ()Lcom/megacrit/cardcrawl/screens/CharSelectInfo;
+    Code:
+       0: new           #243                // class com/megacrit/cardcrawl/screens/CharSelectInfo
+       3: dup
+       4: getstatic     #245                // Field characterStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       7: getfield      #249                // Field com/megacrit/cardcrawl/localization/CharacterStrings.NAMES:[Ljava/lang/String;
+      10: iconst_0
+      11: aaload
+      12: getstatic     #245                // Field characterStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+      15: getfield      #254                // Field com/megacrit/cardcrawl/localization/CharacterStrings.TEXT:[Ljava/lang/String;
+      18: iconst_0
+      19: aaload
+      20: bipush        16
+      22: bipush        16
+      24: iconst_4
+      25: bipush        99
+      27: iconst_5
+      28: aload_0
+      29: aload_0
+      30: invokevirtual #257                // Method getStartingRelics:()Ljava/util/ArrayList;
+      33: aload_0
+      34: invokevirtual #261                // Method getStartingDeck:()Ljava/util/ArrayList;
+      37: iconst_0
+      38: invokespecial #264                // Method com/megacrit/cardcrawl/screens/CharSelectInfo."<init>":(Ljava/lang/String;Ljava/lang/String;IIIIILcom/megacrit/cardcrawl/characters/AbstractPlayer;Ljava/util/ArrayList;Ljava/util/ArrayList;Z)V
+      41: areturn
+
+  public java.lang.String getTitle(com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass);
+    descriptor: (Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Ljava/lang/String;
+    Code:
+       0: getstatic     #245                // Field characterStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       3: getfield      #249                // Field com/megacrit/cardcrawl/localization/CharacterStrings.NAMES:[Ljava/lang/String;
+       6: iconst_0
+       7: aaload
+       8: areturn
+
+  public com.megacrit.cardcrawl.cards.AbstractCard$CardColor getCardColor();
+    descriptor: ()Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+    Code:
+       0: getstatic     #267                // Field gremlin/patches/AbstractCardEnum.GREMLIN:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+       3: areturn
+
+  public com.badlogic.gdx.graphics.Color getCardRenderColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #272                // Field com/badlogic/gdx/graphics/Color.RED:Lcom/badlogic/gdx/graphics/Color;
+       3: areturn
+
+  public com.megacrit.cardcrawl.cards.AbstractCard getStartCardForEvent();
+    descriptor: ()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+    Code:
+       0: new           #278                // class gremlin/cards/GremlinDance
+       3: dup
+       4: invokespecial #280                // Method gremlin/cards/GremlinDance."<init>":()V
+       7: areturn
+
+  public com.badlogic.gdx.graphics.Color getCardTrailColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #272                // Field com/badlogic/gdx/graphics/Color.RED:Lcom/badlogic/gdx/graphics/Color;
+       3: invokevirtual #281                // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+       6: areturn
+
+  public int getAscensionMaxHPLoss();
+    descriptor: ()I
+    Code:
+       0: iconst_5
+       1: ireturn
+
+  public com.badlogic.gdx.graphics.g2d.BitmapFont getEnergyNumFont();
+    descriptor: ()Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+    Code:
+       0: getstatic     #285                // Field com/megacrit/cardcrawl/helpers/FontHelper.energyNumFontRed:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+       3: areturn
+
+  public void doCharSelectScreenSelectEffect();
+    descriptor: ()V
+    Code:
+       0: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+       3: ldc_w         #297                // String VO_GREMLINANGRY_1A
+       6: ldc_w         #299                // float -0.2f
+       9: ldc_w         #300                // float 0.2f
+      12: invokestatic  #301                // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+      15: invokevirtual #304                // Method com/megacrit/cardcrawl/audio/SoundMaster.playA:(Ljava/lang/String;F)J
+      18: pop2
+      19: getstatic     #310                // Field com/megacrit/cardcrawl/core/CardCrawlGame.screenShake:Lcom/megacrit/cardcrawl/helpers/ScreenShake;
+      22: getstatic     #314                // Field com/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity.MED:Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity;
+      25: getstatic     #320                // Field com/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur.SHORT:Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur;
+      28: iconst_0
+      29: invokevirtual #326                // Method com/megacrit/cardcrawl/helpers/ScreenShake.shake:(Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity;Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur;Z)V
+      32: return
+
+  public java.lang.String getCustomModeCharacterButtonSoundKey();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: ldc_w         #297                // String VO_GREMLINANGRY_1A
+       3: areturn
+
+  public java.lang.String getLocalizedCharacterName();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #245                // Field characterStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       3: getfield      #249                // Field com/megacrit/cardcrawl/localization/CharacterStrings.NAMES:[Ljava/lang/String;
+       6: iconst_0
+       7: aaload
+       8: areturn
+
+  public com.megacrit.cardcrawl.characters.AbstractPlayer newInstance();
+    descriptor: ()Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+    Code:
+       0: new           #8                  // class gremlin/characters/GremlinCharacter
+       3: dup
+       4: aload_0
+       5: getfield      #332                // Field name:Ljava/lang/String;
+       8: invokespecial #335                // Method "<init>":(Ljava/lang/String;)V
+      11: areturn
+
+  public java.lang.String getSpireHeartText();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #245                // Field characterStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       3: getfield      #254                // Field com/megacrit/cardcrawl/localization/CharacterStrings.TEXT:[Ljava/lang/String;
+       6: iconst_1
+       7: aaload
+       8: areturn
+
+  public com.badlogic.gdx.graphics.Color getSlashAttackColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #272                // Field com/badlogic/gdx/graphics/Color.RED:Lcom/badlogic/gdx/graphics/Color;
+       3: areturn
+
+  public com.megacrit.cardcrawl.actions.AbstractGameAction$AttackEffect[] getSpireHeartSlashEffect();
+    descriptor: ()[Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+    Code:
+       0: bipush        6
+       2: anewarray     #337                // class com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect
+       5: dup
+       6: iconst_0
+       7: getstatic     #339                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.BLUNT_HEAVY:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      10: aastore
+      11: dup
+      12: iconst_1
+      13: getstatic     #343                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.SMASH:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      16: aastore
+      17: dup
+      18: iconst_2
+      19: getstatic     #339                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.BLUNT_HEAVY:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      22: aastore
+      23: dup
+      24: iconst_3
+      25: getstatic     #346                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.SLASH_HEAVY:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      28: aastore
+      29: dup
+      30: iconst_4
+      31: getstatic     #349                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.FIRE:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      34: aastore
+      35: dup
+      36: iconst_5
+      37: getstatic     #339                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.BLUNT_HEAVY:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      40: aastore
+      41: areturn
+
+  public java.lang.String getVampireText();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #352                // Field com/megacrit/cardcrawl/events/city/Vampires.DESCRIPTIONS:[Ljava/lang/String;
+       3: iconst_5
+       4: aaload
+       5: areturn
+
+  public void initializeSlotPositions();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #34                 // Field orbPositionsX:[F
+       4: iconst_0
+       5: aload_0
+       6: getfield      #30                 // Field xStartOffset:F
+       9: getstatic     #357                // Field xSpaceBetweenSlots:F
+      12: ldc_w         #360                // float -1.0f
+      15: fmul
+      16: fadd
+      17: aload_0
+      18: getfield      #54                 // Field drawX:F
+      21: fsub
+      22: fastore
+      23: aload_0
+      24: getfield      #34                 // Field orbPositionsX:[F
+      27: iconst_1
+      28: aload_0
+      29: getfield      #30                 // Field xStartOffset:F
+      32: getstatic     #357                // Field xSpaceBetweenSlots:F
+      35: ldc_w         #361                // float -2.0f
+      38: fmul
+      39: fadd
+      40: aload_0
+      41: getfield      #54                 // Field drawX:F
+      44: fsub
+      45: fastore
+      46: aload_0
+      47: getfield      #34                 // Field orbPositionsX:[F
+      50: iconst_2
+      51: aload_0
+      52: getfield      #30                 // Field xStartOffset:F
+      55: getstatic     #357                // Field xSpaceBetweenSlots:F
+      58: ldc_w         #362                // float -3.0f
+      61: fmul
+      62: fadd
+      63: aload_0
+      64: getfield      #54                 // Field drawX:F
+      67: fsub
+      68: fastore
+      69: aload_0
+      70: getfield      #34                 // Field orbPositionsX:[F
+      73: iconst_3
+      74: aload_0
+      75: getfield      #30                 // Field xStartOffset:F
+      78: getstatic     #357                // Field xSpaceBetweenSlots:F
+      81: ldc_w         #363                // float -4.0f
+      84: fmul
+      85: fadd
+      86: aload_0
+      87: getfield      #54                 // Field drawX:F
+      90: fsub
+      91: fastore
+      92: aload_0
+      93: getfield      #34                 // Field orbPositionsX:[F
+      96: iconst_4
+      97: aload_0
+      98: getfield      #30                 // Field xStartOffset:F
+     101: getstatic     #357                // Field xSpaceBetweenSlots:F
+     104: ldc_w         #364                // float -5.0f
+     107: fmul
+     108: fadd
+     109: aload_0
+     110: getfield      #54                 // Field drawX:F
+     113: fsub
+     114: fastore
+     115: aload_0
+     116: getfield      #34                 // Field orbPositionsX:[F
+     119: iconst_5
+     120: aload_0
+     121: getfield      #30                 // Field xStartOffset:F
+     124: getstatic     #357                // Field xSpaceBetweenSlots:F
+     127: ldc_w         #365                // float -6.0f
+     130: fmul
+     131: fadd
+     132: aload_0
+     133: getfield      #54                 // Field drawX:F
+     136: fsub
+     137: fastore
+     138: aload_0
+     139: getfield      #34                 // Field orbPositionsX:[F
+     142: bipush        6
+     144: aload_0
+     145: getfield      #30                 // Field xStartOffset:F
+     148: getstatic     #357                // Field xSpaceBetweenSlots:F
+     151: ldc_w         #366                // float -7.0f
+     154: fmul
+     155: fadd
+     156: aload_0
+     157: getfield      #54                 // Field drawX:F
+     160: fsub
+     161: fastore
+     162: aload_0
+     163: getfield      #34                 // Field orbPositionsX:[F
+     166: bipush        7
+     168: aload_0
+     169: getfield      #30                 // Field xStartOffset:F
+     172: getstatic     #357                // Field xSpaceBetweenSlots:F
+     175: ldc_w         #367                // float -8.0f
+     178: fmul
+     179: fadd
+     180: aload_0
+     181: getfield      #54                 // Field drawX:F
+     184: fsub
+     185: fastore
+     186: aload_0
+     187: getfield      #34                 // Field orbPositionsX:[F
+     190: bipush        8
+     192: aload_0
+     193: getfield      #30                 // Field xStartOffset:F
+     196: getstatic     #357                // Field xSpaceBetweenSlots:F
+     199: ldc_w         #368                // float -9.0f
+     202: fmul
+     203: fadd
+     204: aload_0
+     205: getfield      #54                 // Field drawX:F
+     208: fsub
+     209: fastore
+     210: aload_0
+     211: getfield      #34                 // Field orbPositionsX:[F
+     214: bipush        9
+     216: aload_0
+     217: getfield      #30                 // Field xStartOffset:F
+     220: getstatic     #357                // Field xSpaceBetweenSlots:F
+     223: ldc           #89                 // float -10.0f
+     225: fmul
+     226: fadd
+     227: aload_0
+     228: getfield      #54                 // Field drawX:F
+     231: fsub
+     232: fastore
+     233: aload_0
+     234: getfield      #38                 // Field orbPositionsXCramp:[F
+     237: iconst_0
+     238: aload_0
+     239: getfield      #30                 // Field xStartOffset:F
+     242: getstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     245: ldc_w         #360                // float -1.0f
+     248: fmul
+     249: fadd
+     250: aload_0
+     251: getfield      #54                 // Field drawX:F
+     254: fsub
+     255: fastore
+     256: aload_0
+     257: getfield      #38                 // Field orbPositionsXCramp:[F
+     260: iconst_1
+     261: aload_0
+     262: getfield      #30                 // Field xStartOffset:F
+     265: getstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     268: ldc_w         #361                // float -2.0f
+     271: fmul
+     272: fadd
+     273: aload_0
+     274: getfield      #54                 // Field drawX:F
+     277: fsub
+     278: fastore
+     279: aload_0
+     280: getfield      #38                 // Field orbPositionsXCramp:[F
+     283: iconst_2
+     284: aload_0
+     285: getfield      #30                 // Field xStartOffset:F
+     288: getstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     291: ldc_w         #362                // float -3.0f
+     294: fmul
+     295: fadd
+     296: aload_0
+     297: getfield      #54                 // Field drawX:F
+     300: fsub
+     301: fastore
+     302: aload_0
+     303: getfield      #38                 // Field orbPositionsXCramp:[F
+     306: iconst_3
+     307: aload_0
+     308: getfield      #30                 // Field xStartOffset:F
+     311: getstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     314: ldc_w         #363                // float -4.0f
+     317: fmul
+     318: fadd
+     319: aload_0
+     320: getfield      #54                 // Field drawX:F
+     323: fsub
+     324: fastore
+     325: aload_0
+     326: getfield      #38                 // Field orbPositionsXCramp:[F
+     329: iconst_4
+     330: aload_0
+     331: getfield      #30                 // Field xStartOffset:F
+     334: getstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     337: ldc_w         #364                // float -5.0f
+     340: fmul
+     341: fadd
+     342: aload_0
+     343: getfield      #54                 // Field drawX:F
+     346: fsub
+     347: fastore
+     348: aload_0
+     349: getfield      #38                 // Field orbPositionsXCramp:[F
+     352: iconst_5
+     353: aload_0
+     354: getfield      #30                 // Field xStartOffset:F
+     357: getstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     360: ldc_w         #365                // float -6.0f
+     363: fmul
+     364: fadd
+     365: aload_0
+     366: getfield      #54                 // Field drawX:F
+     369: fsub
+     370: fastore
+     371: aload_0
+     372: getfield      #38                 // Field orbPositionsXCramp:[F
+     375: bipush        6
+     377: aload_0
+     378: getfield      #30                 // Field xStartOffset:F
+     381: getstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     384: ldc_w         #366                // float -7.0f
+     387: fmul
+     388: fadd
+     389: aload_0
+     390: getfield      #54                 // Field drawX:F
+     393: fsub
+     394: fastore
+     395: aload_0
+     396: getfield      #38                 // Field orbPositionsXCramp:[F
+     399: bipush        7
+     401: aload_0
+     402: getfield      #30                 // Field xStartOffset:F
+     405: getstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     408: ldc_w         #367                // float -8.0f
+     411: fmul
+     412: fadd
+     413: aload_0
+     414: getfield      #54                 // Field drawX:F
+     417: fsub
+     418: fastore
+     419: aload_0
+     420: getfield      #38                 // Field orbPositionsXCramp:[F
+     423: bipush        8
+     425: aload_0
+     426: getfield      #30                 // Field xStartOffset:F
+     429: getstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     432: ldc_w         #368                // float -9.0f
+     435: fmul
+     436: fadd
+     437: aload_0
+     438: getfield      #54                 // Field drawX:F
+     441: fsub
+     442: fastore
+     443: aload_0
+     444: getfield      #38                 // Field orbPositionsXCramp:[F
+     447: bipush        9
+     449: aload_0
+     450: getfield      #30                 // Field xStartOffset:F
+     453: getstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     456: ldc           #89                 // float -10.0f
+     458: fmul
+     459: fadd
+     460: aload_0
+     461: getfield      #54                 // Field drawX:F
+     464: fsub
+     465: fastore
+     466: aload_0
+     467: getfield      #41                 // Field orbPositionsY:[F
+     470: iconst_0
+     471: getstatic     #372                // Field yStartOffset:F
+     474: fastore
+     475: aload_0
+     476: getfield      #41                 // Field orbPositionsY:[F
+     479: iconst_1
+     480: getstatic     #372                // Field yStartOffset:F
+     483: fastore
+     484: aload_0
+     485: getfield      #41                 // Field orbPositionsY:[F
+     488: iconst_2
+     489: getstatic     #372                // Field yStartOffset:F
+     492: fastore
+     493: aload_0
+     494: getfield      #41                 // Field orbPositionsY:[F
+     497: iconst_3
+     498: getstatic     #372                // Field yStartOffset:F
+     501: fastore
+     502: aload_0
+     503: getfield      #41                 // Field orbPositionsY:[F
+     506: iconst_4
+     507: getstatic     #372                // Field yStartOffset:F
+     510: fastore
+     511: aload_0
+     512: getfield      #41                 // Field orbPositionsY:[F
+     515: iconst_5
+     516: getstatic     #372                // Field yStartOffset:F
+     519: fastore
+     520: aload_0
+     521: getfield      #41                 // Field orbPositionsY:[F
+     524: bipush        6
+     526: getstatic     #372                // Field yStartOffset:F
+     529: fastore
+     530: aload_0
+     531: getfield      #41                 // Field orbPositionsY:[F
+     534: bipush        7
+     536: getstatic     #372                // Field yStartOffset:F
+     539: fastore
+     540: aload_0
+     541: getfield      #41                 // Field orbPositionsY:[F
+     544: bipush        8
+     546: getstatic     #372                // Field yStartOffset:F
+     549: fastore
+     550: aload_0
+     551: getfield      #41                 // Field orbPositionsY:[F
+     554: bipush        9
+     556: getstatic     #372                // Field yStartOffset:F
+     559: fastore
+     560: return
+
+  public void startOfBattle();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: putfield      #51                 // Field enemyGremTalk:I
+       5: aload_0
+       6: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+       9: aload_0
+      10: invokevirtual #375                // Method gremlin/patches/GremlinMobState.startOfBattle:(Lgremlin/characters/GremlinCharacter;)V
+      13: aload_0
+      14: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+      17: invokevirtual #116                // Method gremlin/patches/GremlinMobState.getFrontGremlin:()Ljava/lang/String;
+      20: invokestatic  #187                // Method gremlin/GremlinMod.getGremlinOrb:(Ljava/lang/String;)Lgremlin/orbs/GremlinStandby;
+      23: invokevirtual #203                // Method gremlin/orbs/GremlinStandby.getPower:()Lgremlin/powers/GremlinPower;
+      26: astore_1
+      27: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      30: new           #197                // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+      33: dup
+      34: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      37: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      40: aload_1
+      41: iconst_1
+      42: invokespecial #209                // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;I)V
+      45: invokevirtual #212                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToTop:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      48: invokestatic  #379                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      51: instanceof    #383                // class com/megacrit/cardcrawl/rooms/MonsterRoom
+      54: ifeq          73
+      57: getstatic     #385                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.lastCombatMetricKey:Ljava/lang/String;
+      60: ldc_w         #390                // String Gremlin Nob
+      63: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      66: ifeq          73
+      69: aload_0
+      70: invokespecial #395                // Method beforeNobFight:()V
+      73: invokestatic  #379                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      76: instanceof    #383                // class com/megacrit/cardcrawl/rooms/MonsterRoom
+      79: ifeq          98
+      82: getstatic     #385                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.lastCombatMetricKey:Ljava/lang/String;
+      85: ldc_w         #398                // String Gremlin Leader
+      88: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      91: ifeq          98
+      94: aload_0
+      95: invokespecial #400                // Method beforeLeaderFight:()V
+      98: return
+
+  public void updateMobState();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #44                 // Field nob:Z
+       4: ifeq          11
+       7: aload_0
+       8: invokevirtual #403                // Method revertNob:()V
+      11: aload_0
+      12: getfield      #48                 // Field cowering:Z
+      15: ifeq          23
+      18: aload_0
+      19: iconst_0
+      20: invokevirtual #406                // Method removeCower:(Z)V
+      23: aload_0
+      24: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+      27: aload_0
+      28: invokevirtual #410                // Method gremlin/patches/GremlinMobState.updateMobState:(Lgremlin/characters/GremlinCharacter;)V
+      31: return
+
+  public void enslave(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+       4: aload_1
+       5: invokevirtual #413                // Method gremlin/patches/GremlinMobState.enslave:(Ljava/lang/String;)V
+       8: return
+
+  public void enslave(java.lang.String, boolean);
+    descriptor: (Ljava/lang/String;Z)V
+    Code:
+       0: aload_0
+       1: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+       4: aload_1
+       5: iload_2
+       6: invokevirtual #416                // Method gremlin/patches/GremlinMobState.enslave:(Ljava/lang/String;Z)V
+       9: return
+
+  public void resurrect();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+       4: aload_0
+       5: getfield      #419                // Field maxHealth:I
+       8: invokevirtual #422                // Method gremlin/patches/GremlinMobState.resurrect:(I)V
+      11: return
+
+  public void resurrect(double);
+    descriptor: (D)V
+    Code:
+       0: aload_0
+       1: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+       4: aload_0
+       5: getfield      #419                // Field maxHealth:I
+       8: i2d
+       9: ldc2_w        #425                // double 0.5d
+      12: dmul
+      13: d2i
+      14: invokevirtual #422                // Method gremlin/patches/GremlinMobState.resurrect:(I)V
+      17: return
+
+  public boolean canRez();
+    descriptor: ()Z
+    Code:
+       0: aload_0
+       1: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+       4: invokevirtual #427                // Method gremlin/patches/GremlinMobState.canRez:()Z
+       7: ireturn
+
+  public void increaseMaxHp(int, boolean);
+    descriptor: (IZ)V
+    Code:
+       0: iload_1
+       1: iconst_4
+       2: iadd
+       3: iconst_5
+       4: idiv
+       5: istore_3
+       6: aload_0
+       7: iload_3
+       8: iload_2
+       9: invokespecial #431                // Method basemod/abstracts/CustomPlayer.increaseMaxHp:(IZ)V
+      12: aload_0
+      13: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+      16: iload_3
+      17: aload_0
+      18: getfield      #419                // Field maxHealth:I
+      21: invokevirtual #435                // Method gremlin/patches/GremlinMobState.campfireHeal:(II)V
+      24: return
+
+  public void decreaseMaxHealth(int);
+    descriptor: (I)V
+    Code:
+       0: iload_1
+       1: iconst_4
+       2: iadd
+       3: iconst_5
+       4: idiv
+       5: istore_2
+       6: aload_0
+       7: iload_2
+       8: invokespecial #439                // Method basemod/abstracts/CustomPlayer.decreaseMaxHealth:(I)V
+      11: aload_0
+      12: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+      15: iconst_0
+      16: aload_0
+      17: getfield      #419                // Field maxHealth:I
+      20: invokevirtual #435                // Method gremlin/patches/GremlinMobState.campfireHeal:(II)V
+      23: return
+
+  public void channelOrb(com.megacrit.cardcrawl.orbs.AbstractOrb);
+    descriptor: (Lcom/megacrit/cardcrawl/orbs/AbstractOrb;)V
+    Code:
+       0: aload_1
+       1: instanceof    #204                // class gremlin/orbs/GremlinStandby
+       4: ifeq          71
+       7: aload_1
+       8: checkcast     #204                // class gremlin/orbs/GremlinStandby
+      11: astore_2
+      12: iconst_0
+      13: istore_3
+      14: iload_3
+      15: aload_0
+      16: getfield      #442                // Field maxOrbs:I
+      19: if_icmpge     71
+      22: aload_0
+      23: getfield      #445                // Field orbs:Ljava/util/ArrayList;
+      26: iload_3
+      27: invokevirtual #449                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      30: instanceof    #204                // class gremlin/orbs/GremlinStandby
+      33: ifeq          65
+      36: aload_0
+      37: getfield      #445                // Field orbs:Ljava/util/ArrayList;
+      40: iload_3
+      41: invokevirtual #449                // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      44: checkcast     #204                // class gremlin/orbs/GremlinStandby
+      47: astore        4
+      49: aload         4
+      51: getfield      #453                // Field gremlin/orbs/GremlinStandby.assetFolder:Ljava/lang/String;
+      54: aload_2
+      55: getfield      #453                // Field gremlin/orbs/GremlinStandby.assetFolder:Ljava/lang/String;
+      58: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      61: ifeq          65
+      64: return
+      65: iinc          3, 1
+      68: goto          14
+      71: aload_0
+      72: aload_1
+      73: invokespecial #456                // Method basemod/abstracts/CustomPlayer.channelOrb:(Lcom/megacrit/cardcrawl/orbs/AbstractOrb;)V
+      76: return
+
+  public void gremlinDeathSFX();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: aload_0
+       2: getfield      #172                // Field currentGremlin:Ljava/lang/String;
+       5: invokevirtual #460                // Method gremlinDeathSFX:(Ljava/lang/String;)V
+       8: return
+
+  public void gremlinDeathSFX(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: aload_1
+       1: astore_3
+       2: iconst_m1
+       3: istore        4
+       5: aload_3
+       6: invokevirtual #463                // Method java/lang/String.hashCode:()I
+       9: lookupswitch  { // 5
+
+            -903340183: 92
+
+            -787397269: 124
+
+                101145: 76
+
+              92961185: 60
+
+             109582100: 108
+               default: 137
+          }
+      60: aload_3
+      61: ldc_w         #467                // String angry
+      64: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      67: ifeq          137
+      70: iconst_0
+      71: istore        4
+      73: goto          137
+      76: aload_3
+      77: ldc_w         #469                // String fat
+      80: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      83: ifeq          137
+      86: iconst_1
+      87: istore        4
+      89: goto          137
+      92: aload_3
+      93: ldc_w         #471                // String shield
+      96: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      99: ifeq          137
+     102: iconst_2
+     103: istore        4
+     105: goto          137
+     108: aload_3
+     109: ldc_w         #473                // String sneak
+     112: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     115: ifeq          137
+     118: iconst_3
+     119: istore        4
+     121: goto          137
+     124: aload_3
+     125: ldc_w         #475                // String wizard
+     128: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     131: ifeq          137
+     134: iconst_4
+     135: istore        4
+     137: iload         4
+     139: tableswitch   { // 0 to 4
+
+                     0: 172
+
+                     1: 207
+
+                     2: 260
+
+                     3: 295
+
+                     4: 348
+               default: 401
+          }
+     172: iconst_1
+     173: invokestatic  #477                // Method com/badlogic/gdx/math/MathUtils.random:(I)I
+     176: istore_2
+     177: iload_2
+     178: ifne          194
+     181: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     184: ldc_w         #480                // String VO_GREMLINANGRY_2A
+     187: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     190: pop2
+     191: goto          401
+     194: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     197: ldc_w         #486                // String VO_GREMLINANGRY_2B
+     200: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     203: pop2
+     204: goto          401
+     207: iconst_2
+     208: invokestatic  #477                // Method com/badlogic/gdx/math/MathUtils.random:(I)I
+     211: istore_2
+     212: iload_2
+     213: ifne          229
+     216: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     219: ldc_w         #488                // String VO_GREMLINFAT_2A
+     222: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     225: pop2
+     226: goto          401
+     229: iload_2
+     230: iconst_1
+     231: if_icmpne     247
+     234: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     237: ldc_w         #490                // String VO_GREMLINFAT_2B
+     240: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     243: pop2
+     244: goto          401
+     247: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     250: ldc_w         #492                // String VO_GREMLINFAT_2C
+     253: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     256: pop2
+     257: goto          401
+     260: iconst_1
+     261: invokestatic  #477                // Method com/badlogic/gdx/math/MathUtils.random:(I)I
+     264: istore_2
+     265: iload_2
+     266: ifne          282
+     269: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     272: ldc_w         #494                // String VO_GREMLINCALM_2A
+     275: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     278: pop2
+     279: goto          401
+     282: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     285: ldc_w         #496                // String VO_GREMLINCALM_2B
+     288: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     291: pop2
+     292: goto          401
+     295: iconst_2
+     296: invokestatic  #477                // Method com/badlogic/gdx/math/MathUtils.random:(I)I
+     299: istore_2
+     300: iload_2
+     301: ifne          317
+     304: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     307: ldc_w         #498                // String VO_GREMLINSPAZZY_2A
+     310: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     313: pop2
+     314: goto          401
+     317: iload_2
+     318: iconst_1
+     319: if_icmpne     335
+     322: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     325: ldc_w         #500                // String VO_GREMLINSPAZZY_2B
+     328: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     331: pop2
+     332: goto          401
+     335: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     338: ldc_w         #502                // String VO_GREMLINSPAZZY_2C
+     341: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     344: pop2
+     345: goto          401
+     348: iconst_2
+     349: invokestatic  #477                // Method com/badlogic/gdx/math/MathUtils.random:(I)I
+     352: istore_2
+     353: iload_2
+     354: ifne          370
+     357: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     360: ldc_w         #504                // String VO_GREMLINDOPEY_2A
+     363: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     366: pop2
+     367: goto          401
+     370: iload_2
+     371: iconst_1
+     372: if_icmpne     388
+     375: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     378: ldc_w         #506                // String VO_GREMLINDOPEY_2B
+     381: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     384: pop2
+     385: goto          401
+     388: getstatic     #291                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     391: ldc_w         #508                // String VO_GREMLINDOPEY_2C
+     394: invokevirtual #482                // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     397: pop2
+     398: goto          401
+     401: return
+
+  private void beforeNobFight();
+    descriptor: ()V
+    Code:
+       0: aconst_null
+       1: astore_1
+       2: getstatic     #510                // Field gremlin/GremlinMod.logger:Lorg/apache/logging/log4j/Logger;
+       5: ldc_w         #514                // String HERE!
+       8: invokeinterface #516,  2          // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;)V
+      13: invokestatic  #379                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      16: getfield      #521                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      19: getfield      #527                // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+      22: invokevirtual #531                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      25: astore_2
+      26: aload_2
+      27: invokeinterface #535,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      32: ifeq          60
+      35: aload_2
+      36: invokeinterface #540,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      41: checkcast     #544                // class com/megacrit/cardcrawl/monsters/AbstractMonster
+      44: astore_3
+      45: aload_3
+      46: instanceof    #546                // class com/megacrit/cardcrawl/monsters/exordium/GremlinNob
+      49: ifeq          57
+      52: aload_3
+      53: astore_1
+      54: goto          60
+      57: goto          26
+      60: aload_1
+      61: ifnull        153
+      64: getstatic     #510                // Field gremlin/GremlinMod.logger:Lorg/apache/logging/log4j/Logger;
+      67: ldc_w         #548                // String THERE!
+      70: invokeinterface #516,  2          // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;)V
+      75: aload_0
+      76: invokespecial #550                // Method cower:()V
+      79: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      82: new           #553                // class com/megacrit/cardcrawl/actions/animations/TalkAction
+      85: dup
+      86: aload_1
+      87: getstatic     #555                // Field NOBUITEXT:[Ljava/lang/String;
+      90: iconst_0
+      91: aaload
+      92: invokespecial #558                // Method com/megacrit/cardcrawl/actions/animations/TalkAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;)V
+      95: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      98: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     101: new           #564                // class com/megacrit/cardcrawl/actions/common/MakeTempCardInHandAction
+     104: dup
+     105: new           #566                // class gremlin/cards/pseudocards/NobChoice
+     108: dup
+     109: invokespecial #568                // Method gremlin/cards/pseudocards/NobChoice."<init>":()V
+     112: invokespecial #569                // Method com/megacrit/cardcrawl/actions/common/MakeTempCardInHandAction."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     115: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     118: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     121: new           #572                // class com/megacrit/cardcrawl/actions/utility/WaitAction
+     124: dup
+     125: fconst_2
+     126: invokespecial #574                // Method com/megacrit/cardcrawl/actions/utility/WaitAction."<init>":(F)V
+     129: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     132: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     135: new           #576                // class gremlin/actions/ThinkAction
+     138: dup
+     139: getstatic     #555                // Field NOBUITEXT:[Ljava/lang/String;
+     142: bipush        7
+     144: aaload
+     145: fconst_2
+     146: fconst_2
+     147: invokespecial #578                // Method gremlin/actions/ThinkAction."<init>":(Ljava/lang/String;FF)V
+     150: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     153: return
+
+  private void beforeLeaderFight();
+    descriptor: ()V
+    Code:
+       0: aconst_null
+       1: astore_1
+       2: invokestatic  #379                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+       5: getfield      #521                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+       8: getfield      #527                // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+      11: invokevirtual #531                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      14: astore_2
+      15: aload_2
+      16: invokeinterface #535,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      21: ifeq          49
+      24: aload_2
+      25: invokeinterface #540,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      30: checkcast     #544                // class com/megacrit/cardcrawl/monsters/AbstractMonster
+      33: astore_3
+      34: aload_3
+      35: instanceof    #581                // class com/megacrit/cardcrawl/monsters/city/GremlinLeader
+      38: ifeq          46
+      41: aload_3
+      42: astore_1
+      43: goto          49
+      46: goto          15
+      49: aload_1
+      50: ifnull        371
+      53: iconst_m1
+      54: istore_2
+      55: aload_0
+      56: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+      59: invokevirtual #583                // Method gremlin/patches/GremlinMobState.getRearLivingGremlin:()Ljava/lang/String;
+      62: astore_3
+      63: aload_3
+      64: astore        4
+      66: iconst_m1
+      67: istore        5
+      69: aload         4
+      71: invokevirtual #463                // Method java/lang/String.hashCode:()I
+      74: lookupswitch  { // 5
+
+            -903340183: 158
+
+            -787397269: 192
+
+                101145: 141
+
+              92961185: 124
+
+             109582100: 175
+               default: 206
+          }
+     124: aload         4
+     126: ldc_w         #467                // String angry
+     129: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     132: ifeq          206
+     135: iconst_0
+     136: istore        5
+     138: goto          206
+     141: aload         4
+     143: ldc_w         #469                // String fat
+     146: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     149: ifeq          206
+     152: iconst_1
+     153: istore        5
+     155: goto          206
+     158: aload         4
+     160: ldc_w         #471                // String shield
+     163: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     166: ifeq          206
+     169: iconst_2
+     170: istore        5
+     172: goto          206
+     175: aload         4
+     177: ldc_w         #473                // String sneak
+     180: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     183: ifeq          206
+     186: iconst_3
+     187: istore        5
+     189: goto          206
+     192: aload         4
+     194: ldc_w         #475                // String wizard
+     197: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     200: ifeq          206
+     203: iconst_4
+     204: istore        5
+     206: iload         5
+     208: tableswitch   { // 0 to 4
+
+                     0: 244
+
+                     1: 249
+
+                     2: 254
+
+                     3: 259
+
+                     4: 264
+               default: 266
+          }
+     244: iconst_1
+     245: istore_2
+     246: goto          266
+     249: iconst_2
+     250: istore_2
+     251: goto          266
+     254: iconst_3
+     255: istore_2
+     256: goto          266
+     259: iconst_4
+     260: istore_2
+     261: goto          266
+     264: iconst_5
+     265: istore_2
+     266: iload_2
+     267: ifle          351
+     270: aload_0
+     271: invokespecial #550                // Method cower:()V
+     274: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     277: new           #553                // class com/megacrit/cardcrawl/actions/animations/TalkAction
+     280: dup
+     281: aload_1
+     282: getstatic     #555                // Field NOBUITEXT:[Ljava/lang/String;
+     285: iload_2
+     286: aaload
+     287: invokespecial #558                // Method com/megacrit/cardcrawl/actions/animations/TalkAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;)V
+     290: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     293: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     296: new           #564                // class com/megacrit/cardcrawl/actions/common/MakeTempCardInHandAction
+     299: dup
+     300: new           #586                // class gremlin/cards/pseudocards/LeaderChoice
+     303: dup
+     304: invokespecial #588                // Method gremlin/cards/pseudocards/LeaderChoice."<init>":()V
+     307: invokespecial #569                // Method com/megacrit/cardcrawl/actions/common/MakeTempCardInHandAction."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     310: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     313: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     316: new           #572                // class com/megacrit/cardcrawl/actions/utility/WaitAction
+     319: dup
+     320: fconst_2
+     321: invokespecial #574                // Method com/megacrit/cardcrawl/actions/utility/WaitAction."<init>":(F)V
+     324: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     327: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     330: new           #576                // class gremlin/actions/ThinkAction
+     333: dup
+     334: getstatic     #555                // Field NOBUITEXT:[Ljava/lang/String;
+     337: bipush        7
+     339: aaload
+     340: fconst_2
+     341: fconst_2
+     342: invokespecial #578                // Method gremlin/actions/ThinkAction."<init>":(Ljava/lang/String;FF)V
+     345: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     348: goto          371
+     351: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+     354: new           #553                // class com/megacrit/cardcrawl/actions/animations/TalkAction
+     357: dup
+     358: aload_1
+     359: getstatic     #555                // Field NOBUITEXT:[Ljava/lang/String;
+     362: bipush        6
+     364: aaload
+     365: invokespecial #558                // Method com/megacrit/cardcrawl/actions/animations/TalkAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;)V
+     368: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     371: return
+
+  public boolean isCowering();
+    descriptor: ()Z
+    Code:
+       0: aload_0
+       1: getfield      #48                 // Field cowering:Z
+       4: ireturn
+
+  private void cower();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: aload_0
+       2: getfield      #589                // Field gameHandSize:I
+       5: putfield      #592                // Field trueGameHandSize:I
+       8: aload_0
+       9: iconst_0
+      10: putfield      #589                // Field gameHandSize:I
+      13: aload_0
+      14: iconst_1
+      15: putfield      #48                 // Field cowering:Z
+      18: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      21: new           #595                // class gremlin/actions/DisableEndTurnButtonAction
+      24: dup
+      25: invokespecial #597                // Method gremlin/actions/DisableEndTurnButtonAction."<init>":()V
+      28: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      31: return
+
+  public void removeCower(boolean);
+    descriptor: (Z)V
+    Code:
+       0: aload_0
+       1: getfield      #48                 // Field cowering:Z
+       4: ifeq          108
+       7: aload_0
+       8: iconst_0
+       9: putfield      #48                 // Field cowering:Z
+      12: aload_0
+      13: aload_0
+      14: getfield      #592                // Field trueGameHandSize:I
+      17: putfield      #589                // Field gameHandSize:I
+      20: iload_1
+      21: ifeq          108
+      24: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      27: new           #598                // class com/megacrit/cardcrawl/actions/common/DrawCardAction
+      30: dup
+      31: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      34: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      37: getfield      #600                // Field com/megacrit/cardcrawl/characters/AbstractPlayer.gameHandSize:I
+      40: invokespecial #603                // Method com/megacrit/cardcrawl/actions/common/DrawCardAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+      43: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      46: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      49: new           #606                // class com/megacrit/cardcrawl/actions/common/EnableEndTurnButtonAction
+      52: dup
+      53: invokespecial #608                // Method com/megacrit/cardcrawl/actions/common/EnableEndTurnButtonAction."<init>":()V
+      56: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      59: getstatic     #609                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.overlayMenu:Lcom/megacrit/cardcrawl/core/OverlayMenu;
+      62: invokevirtual #613                // Method com/megacrit/cardcrawl/core/OverlayMenu.showCombatPanels:()V
+      65: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      68: invokevirtual #618                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.applyStartOfCombatLogic:()V
+      71: invokestatic  #379                // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      74: iconst_0
+      75: putfield      #621                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.skipMonsterTurn:Z
+      78: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      81: invokevirtual #624                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.applyStartOfTurnRelics:()V
+      84: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      87: invokevirtual #627                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.applyStartOfTurnPostDrawRelics:()V
+      90: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      93: invokevirtual #630                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.applyStartOfTurnCards:()V
+      96: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      99: invokevirtual #633                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.applyStartOfTurnPowers:()V
+     102: getstatic     #199                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     105: invokevirtual #636                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.applyStartOfTurnOrbs:()V
+     108: return
+
+  public void applyStartOfCombatLogic();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #48                 // Field cowering:Z
+       4: ifne          11
+       7: aload_0
+       8: invokespecial #639                // Method basemod/abstracts/CustomPlayer.applyStartOfCombatLogic:()V
+      11: return
+
+  public void applyStartOfTurnRelics();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #48                 // Field cowering:Z
+       4: ifne          11
+       7: aload_0
+       8: invokespecial #640                // Method basemod/abstracts/CustomPlayer.applyStartOfTurnRelics:()V
+      11: return
+
+  public void applyStartOfTurnPostDrawRelics();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #48                 // Field cowering:Z
+       4: ifne          11
+       7: aload_0
+       8: invokespecial #641                // Method basemod/abstracts/CustomPlayer.applyStartOfTurnPostDrawRelics:()V
+      11: return
+
+  public void applyStartOfTurnCards();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #48                 // Field cowering:Z
+       4: ifne          11
+       7: aload_0
+       8: invokespecial #642                // Method basemod/abstracts/CustomPlayer.applyStartOfTurnCards:()V
+      11: return
+
+  public void applyStartOfTurnPowers();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #48                 // Field cowering:Z
+       4: ifne          11
+       7: aload_0
+       8: invokespecial #643                // Method basemod/abstracts/CustomPlayer.applyStartOfTurnPowers:()V
+      11: return
+
+  public void applyStartOfTurnOrbs();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #48                 // Field cowering:Z
+       4: ifne          11
+       7: aload_0
+       8: invokespecial #644                // Method basemod/abstracts/CustomPlayer.applyStartOfTurnOrbs:()V
+      11: return
+
+  public void gremlinTalk(com.megacrit.cardcrawl.core.AbstractCreature);
+    descriptor: (Lcom/megacrit/cardcrawl/core/AbstractCreature;)V
+    Code:
+       0: aload_0
+       1: getfield      #51                 // Field enemyGremTalk:I
+       4: getstatic     #645                // Field GREMUITEXT:[Ljava/lang/String;
+       7: arraylength
+       8: if_icmpge     80
+      11: getstatic     #385                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.lastCombatMetricKey:Ljava/lang/String;
+      14: ifnull        80
+      17: getstatic     #385                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.lastCombatMetricKey:Ljava/lang/String;
+      20: ldc_w         #398                // String Gremlin Leader
+      23: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      26: ifne          80
+      29: getstatic     #385                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.lastCombatMetricKey:Ljava/lang/String;
+      32: ldc_w         #648                // String Gremlin Mirror
+      35: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      38: ifne          80
+      41: getstatic     #650                // Field com/megacrit/cardcrawl/actions/GameActionManager.turn:I
+      44: iconst_1
+      45: if_icmpgt     80
+      48: getstatic     #191                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+      51: new           #553                // class com/megacrit/cardcrawl/actions/animations/TalkAction
+      54: dup
+      55: aload_1
+      56: getstatic     #645                // Field GREMUITEXT:[Ljava/lang/String;
+      59: aload_0
+      60: getfield      #51                 // Field enemyGremTalk:I
+      63: aaload
+      64: invokespecial #558                // Method com/megacrit/cardcrawl/actions/animations/TalkAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;)V
+      67: invokevirtual #561                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      70: aload_0
+      71: dup
+      72: getfield      #51                 // Field enemyGremTalk:I
+      75: iconst_1
+      76: iadd
+      77: putfield      #51                 // Field enemyGremTalk:I
+      80: return
+
+  public void damageGremlins(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+       4: iload_1
+       5: invokevirtual #653                // Method gremlin/patches/GremlinMobState.damageAll:(I)V
+       8: return
+
+  public void damageAllGremlins(int, boolean);
+    descriptor: (IZ)V
+    Code:
+       0: iload_1
+       1: istore_3
+       2: iload_2
+       3: ifeq          12
+       6: iload_1
+       7: iconst_4
+       8: iadd
+       9: iconst_5
+      10: idiv
+      11: istore_3
+      12: aload_0
+      13: iload_3
+      14: invokevirtual #656                // Method damageGremlins:(I)V
+      17: aload_0
+      18: new           #659                // class com/megacrit/cardcrawl/cards/DamageInfo
+      21: dup
+      22: aconst_null
+      23: checkcast     #661                // class com/megacrit/cardcrawl/core/AbstractCreature
+      26: iload_3
+      27: getstatic     #663                // Field com/megacrit/cardcrawl/cards/DamageInfo$DamageType.HP_LOSS:Lcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;
+      30: invokespecial #669                // Method com/megacrit/cardcrawl/cards/DamageInfo."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;ILcom/megacrit/cardcrawl/cards/DamageInfo$DamageType;)V
+      33: invokevirtual #672                // Method damage:(Lcom/megacrit/cardcrawl/cards/DamageInfo;)V
+      36: return
+
+  public void healGremlins(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+       4: iload_1
+       5: aload_0
+       6: getfield      #419                // Field maxHealth:I
+       9: invokevirtual #435                // Method gremlin/patches/GremlinMobState.campfireHeal:(II)V
+      12: return
+
+  public java.util.Map<java.lang.String, java.lang.Integer> getAllGremlinHPs();
+    descriptor: ()Ljava/util/Map;
+    Code:
+       0: new           #676                // class java/util/TreeMap
+       3: dup
+       4: invokespecial #678                // Method java/util/TreeMap."<init>":()V
+       7: astore_1
+       8: aload_0
+       9: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+      12: getfield      #679                // Field gremlin/patches/GremlinMobState.inCombat:Z
+      15: ifne          60
+      18: iconst_0
+      19: istore_2
+      20: iload_2
+      21: iconst_5
+      22: if_icmpge     57
+      25: aload_1
+      26: aload_0
+      27: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+      30: iload_2
+      31: invokevirtual #682                // Method gremlin/patches/GremlinMobState.getGremlinName:(I)Ljava/lang/String;
+      34: aload_0
+      35: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+      38: iload_2
+      39: invokevirtual #686                // Method gremlin/patches/GremlinMobState.getGremlinHP:(I)I
+      42: invokestatic  #689                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      45: invokeinterface #695,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      50: pop
+      51: iinc          2, 1
+      54: goto          20
+      57: goto          268
+      60: invokestatic  #701                // Method gremlin/GremlinMod.getGremlinStrings:()Ljava/util/ArrayList;
+      63: invokevirtual #531                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      66: astore_2
+      67: aload_2
+      68: invokeinterface #535,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      73: ifeq          268
+      76: aload_2
+      77: invokeinterface #540,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      82: checkcast     #15                 // class java/lang/String
+      85: astore_3
+      86: aload_3
+      87: aload_0
+      88: getfield      #172                // Field currentGremlin:Ljava/lang/String;
+      91: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      94: ifeq          121
+      97: aload_1
+      98: aload_3
+      99: invokestatic  #187                // Method gremlin/GremlinMod.getGremlinOrb:(Ljava/lang/String;)Lgremlin/orbs/GremlinStandby;
+     102: getfield      #704                // Field gremlin/orbs/GremlinStandby.name:Ljava/lang/String;
+     105: aload_0
+     106: getfield      #705                // Field currentHealth:I
+     109: invokestatic  #689                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     112: invokeinterface #695,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     117: pop
+     118: goto          265
+     121: iconst_0
+     122: istore        4
+     124: aload_0
+     125: getfield      #445                // Field orbs:Ljava/util/ArrayList;
+     128: invokevirtual #531                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     131: astore        5
+     133: aload         5
+     135: invokeinterface #535,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     140: ifeq          210
+     143: aload         5
+     145: invokeinterface #540,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     150: checkcast     #708                // class com/megacrit/cardcrawl/orbs/AbstractOrb
+     153: astore        6
+     155: aload         6
+     157: instanceof    #204                // class gremlin/orbs/GremlinStandby
+     160: ifeq          207
+     163: aload         6
+     165: checkcast     #204                // class gremlin/orbs/GremlinStandby
+     168: getfield      #453                // Field gremlin/orbs/GremlinStandby.assetFolder:Ljava/lang/String;
+     171: aload_3
+     172: invokevirtual #392                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     175: ifeq          207
+     178: aload_1
+     179: aload         6
+     181: getfield      #710                // Field com/megacrit/cardcrawl/orbs/AbstractOrb.name:Ljava/lang/String;
+     184: aload         6
+     186: checkcast     #204                // class gremlin/orbs/GremlinStandby
+     189: getfield      #711                // Field gremlin/orbs/GremlinStandby.hp:I
+     192: invokestatic  #689                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     195: invokeinterface #695,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     200: pop
+     201: iconst_1
+     202: istore        4
+     204: goto          210
+     207: goto          133
+     210: iload         4
+     212: ifne          265
+     215: aload_0
+     216: getfield      #109                // Field mobState:Lgremlin/patches/GremlinMobState;
+     219: aload_3
+     220: invokevirtual #714                // Method gremlin/patches/GremlinMobState.isEnslaved:(Ljava/lang/String;)Z
+     223: ifne          247
+     226: aload_1
+     227: aload_3
+     228: invokestatic  #187                // Method gremlin/GremlinMod.getGremlinOrb:(Ljava/lang/String;)Lgremlin/orbs/GremlinStandby;
+     231: getfield      #704                // Field gremlin/orbs/GremlinStandby.name:Ljava/lang/String;
+     234: iconst_0
+     235: invokestatic  #689                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     238: invokeinterface #695,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     243: pop
+     244: goto          265
+     247: aload_1
+     248: aload_3
+     249: invokestatic  #187                // Method gremlin/GremlinMod.getGremlinOrb:(Ljava/lang/String;)Lgremlin/orbs/GremlinStandby;
+     252: getfield      #704                // Field gremlin/orbs/GremlinStandby.name:Ljava/lang/String;
+     255: iconst_m1
+     256: invokestatic  #689                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     259: invokeinterface #695,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     264: pop
+     265: goto          67
+     268: aload_1
+     269: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #718                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc_w         #722                // String Gremlin
+       6: invokevirtual #724                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getCharacterString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       9: putstatic     #245                // Field characterStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+      12: bipush        11
+      14: anewarray     #15                 // class java/lang/String
+      17: dup
+      18: iconst_0
+      19: ldc_w         #730                // String gremlinResources/images/char/orb/layer1.png
+      22: aastore
+      23: dup
+      24: iconst_1
+      25: ldc_w         #732                // String gremlinResources/images/char/orb/layer2.png
+      28: aastore
+      29: dup
+      30: iconst_2
+      31: ldc_w         #734                // String gremlinResources/images/char/orb/layer3.png
+      34: aastore
+      35: dup
+      36: iconst_3
+      37: ldc_w         #736                // String gremlinResources/images/char/orb/layer4.png
+      40: aastore
+      41: dup
+      42: iconst_4
+      43: ldc_w         #738                // String gremlinResources/images/char/orb/layer5.png
+      46: aastore
+      47: dup
+      48: iconst_5
+      49: ldc_w         #740                // String gremlinResources/images/char/orb/layer6.png
+      52: aastore
+      53: dup
+      54: bipush        6
+      56: ldc_w         #742                // String gremlinResources/images/char/orb/layer1d.png
+      59: aastore
+      60: dup
+      61: bipush        7
+      63: ldc_w         #744                // String gremlinResources/images/char/orb/layer2d.png
+      66: aastore
+      67: dup
+      68: bipush        8
+      70: ldc_w         #746                // String gremlinResources/images/char/orb/layer3d.png
+      73: aastore
+      74: dup
+      75: bipush        9
+      77: ldc_w         #748                // String gremlinResources/images/char/orb/layer4d.png
+      80: aastore
+      81: dup
+      82: bipush        10
+      84: ldc_w         #750                // String gremlinResources/images/char/orb/layer5d.png
+      87: aastore
+      88: putstatic     #7                  // Field orbTextures:[Ljava/lang/String;
+      91: ldc_w         #752                // float 90.0f
+      94: getstatic     #58                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      97: fmul
+      98: putstatic     #357                // Field xSpaceBetweenSlots:F
+     101: ldc_w         #753                // float 85.0f
+     104: getstatic     #58                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     107: fmul
+     108: putstatic     #369                // Field xSpaceBetweenSlotsCramp:F
+     111: getstatic     #754                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.floorY:F
+     114: ldc_w         #757                // float 30.0f
+     117: getstatic     #58                 // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     120: fmul
+     121: fadd
+     122: putstatic     #372                // Field yStartOffset:F
+     125: getstatic     #718                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+     128: ldc_w         #758                // String Gremlin:NobFight
+     131: invokevirtual #760                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getUIString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/UIStrings;
+     134: getfield      #764                // Field com/megacrit/cardcrawl/localization/UIStrings.TEXT:[Ljava/lang/String;
+     137: putstatic     #555                // Field NOBUITEXT:[Ljava/lang/String;
+     140: getstatic     #718                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+     143: ldc_w         #767                // String Gremlin:GremFight
+     146: invokevirtual #760                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getUIString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/UIStrings;
+     149: getfield      #764                // Field com/megacrit/cardcrawl/localization/UIStrings.TEXT:[Ljava/lang/String;
+     152: putstatic     #645                // Field GREMUITEXT:[Ljava/lang/String;
+     155: return
+}

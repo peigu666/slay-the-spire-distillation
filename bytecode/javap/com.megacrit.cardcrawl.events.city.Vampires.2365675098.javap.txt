@@ -1,0 +1,357 @@
+Compiled from "Vampires.java"
+public class com.megacrit.cardcrawl.events.city.Vampires extends com.megacrit.cardcrawl.events.AbstractImageEvent {
+  public static final java.lang.String ID;
+    descriptor: Ljava/lang/String;
+
+  private static final com.megacrit.cardcrawl.localization.EventStrings eventStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/EventStrings;
+
+  public static final java.lang.String NAME;
+    descriptor: Ljava/lang/String;
+
+  public static final java.lang.String[] DESCRIPTIONS;
+    descriptor: [Ljava/lang/String;
+
+  public static final java.lang.String[] OPTIONS;
+    descriptor: [Ljava/lang/String;
+
+  private static final java.lang.String ACCEPT_BODY;
+    descriptor: Ljava/lang/String;
+
+  private static final java.lang.String EXIT_BODY;
+    descriptor: Ljava/lang/String;
+
+  private static final java.lang.String GIVE_VIAL;
+    descriptor: Ljava/lang/String;
+
+  private static final float HP_DRAIN;
+    descriptor: F
+
+  private int maxHpLoss;
+    descriptor: I
+
+  private int screenNum;
+    descriptor: I
+
+  private boolean hasVial;
+    descriptor: Z
+
+  private java.util.List<java.lang.String> bites;
+    descriptor: Ljava/util/List;
+
+  public com.megacrit.cardcrawl.events.city.Vampires();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getstatic     #1                  // Field NAME:Ljava/lang/String;
+       4: ldc           #2                  // String test
+       6: ldc           #3                  // String images/events/vampires.jpg
+       8: invokespecial #4                  // Method com/megacrit/cardcrawl/events/AbstractImageEvent."<init>":(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+      11: aload_0
+      12: iconst_0
+      13: putfield      #5                  // Field screenNum:I
+      16: aload_0
+      17: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      20: invokevirtual #7                  // Method com/megacrit/cardcrawl/characters/AbstractPlayer.getVampireText:()Ljava/lang/String;
+      23: putfield      #8                  // Field body:Ljava/lang/String;
+      26: aload_0
+      27: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      30: getfield      #9                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+      33: i2f
+      34: ldc           #11                 // float 0.3f
+      36: fmul
+      37: invokestatic  #12                 // Method com/badlogic/gdx/math/MathUtils.ceil:(F)I
+      40: putfield      #13                 // Field maxHpLoss:I
+      43: aload_0
+      44: getfield      #13                 // Field maxHpLoss:I
+      47: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      50: getfield      #9                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+      53: if_icmplt     68
+      56: aload_0
+      57: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      60: getfield      #9                  // Field com/megacrit/cardcrawl/characters/AbstractPlayer.maxHealth:I
+      63: iconst_1
+      64: isub
+      65: putfield      #13                 // Field maxHpLoss:I
+      68: aload_0
+      69: new           #14                 // class java/util/ArrayList
+      72: dup
+      73: invokespecial #15                 // Method java/util/ArrayList."<init>":()V
+      76: putfield      #16                 // Field bites:Ljava/util/List;
+      79: aload_0
+      80: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      83: ldc           #18                 // String Blood Vial
+      85: invokevirtual #19                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+      88: putfield      #20                 // Field hasVial:Z
+      91: aload_0
+      92: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+      95: new           #22                 // class java/lang/StringBuilder
+      98: dup
+      99: invokespecial #23                 // Method java/lang/StringBuilder."<init>":()V
+     102: getstatic     #24                 // Field OPTIONS:[Ljava/lang/String;
+     105: iconst_0
+     106: aaload
+     107: invokevirtual #25                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     110: aload_0
+     111: getfield      #13                 // Field maxHpLoss:I
+     114: invokevirtual #26                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     117: getstatic     #24                 // Field OPTIONS:[Ljava/lang/String;
+     120: iconst_1
+     121: aaload
+     122: invokevirtual #25                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     125: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     128: new           #28                 // class com/megacrit/cardcrawl/cards/colorless/Bite
+     131: dup
+     132: invokespecial #29                 // Method com/megacrit/cardcrawl/cards/colorless/Bite."<init>":()V
+     135: invokevirtual #30                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.setDialogOption:(Ljava/lang/String;Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     138: aload_0
+     139: getfield      #20                 // Field hasVial:Z
+     142: ifeq          200
+     145: new           #17                 // class com/megacrit/cardcrawl/relics/BloodVial
+     148: dup
+     149: invokespecial #31                 // Method com/megacrit/cardcrawl/relics/BloodVial."<init>":()V
+     152: getfield      #32                 // Field com/megacrit/cardcrawl/relics/BloodVial.name:Ljava/lang/String;
+     155: astore_1
+     156: aload_0
+     157: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+     160: new           #22                 // class java/lang/StringBuilder
+     163: dup
+     164: invokespecial #23                 // Method java/lang/StringBuilder."<init>":()V
+     167: getstatic     #24                 // Field OPTIONS:[Ljava/lang/String;
+     170: iconst_3
+     171: aaload
+     172: invokevirtual #25                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     175: aload_1
+     176: invokevirtual #25                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     179: getstatic     #24                 // Field OPTIONS:[Ljava/lang/String;
+     182: iconst_4
+     183: aaload
+     184: invokevirtual #25                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     187: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     190: new           #28                 // class com/megacrit/cardcrawl/cards/colorless/Bite
+     193: dup
+     194: invokespecial #29                 // Method com/megacrit/cardcrawl/cards/colorless/Bite."<init>":()V
+     197: invokevirtual #30                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.setDialogOption:(Ljava/lang/String;Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+     200: aload_0
+     201: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+     204: getstatic     #24                 // Field OPTIONS:[Ljava/lang/String;
+     207: iconst_2
+     208: aaload
+     209: invokevirtual #33                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.setDialogOption:(Ljava/lang/String;)V
+     212: return
+
+  protected void buttonEffect(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: getfield      #5                  // Field screenNum:I
+       4: lookupswitch  { // 2
+
+                     0: 32
+
+                     1: 264
+               default: 271
+          }
+      32: iload_1
+      33: lookupswitch  { // 2
+
+                     0: 60
+
+                     1: 136
+               default: 221
+          }
+      60: getstatic     #34                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+      63: ldc           #35                 // String EVENT_VAMP_BITE
+      65: invokevirtual #36                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+      68: pop2
+      69: aload_0
+      70: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+      73: getstatic     #37                 // Field ACCEPT_BODY:Ljava/lang/String;
+      76: invokevirtual #38                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.updateBodyText:(Ljava/lang/String;)V
+      79: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      82: aload_0
+      83: getfield      #13                 // Field maxHpLoss:I
+      86: invokevirtual #39                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.decreaseMaxHealth:(I)V
+      89: aload_0
+      90: invokespecial #40                 // Method replaceAttacks:()V
+      93: ldc           #41                 // String Vampires
+      95: ldc           #42                 // String Became a vampire
+      97: aload_0
+      98: getfield      #16                 // Field bites:Ljava/util/List;
+     101: aload_0
+     102: getfield      #13                 // Field maxHpLoss:I
+     105: invokestatic  #43                 // Method logMetricObtainCardsLoseMapHP:(Ljava/lang/String;Ljava/lang/String;Ljava/util/List;I)V
+     108: aload_0
+     109: iconst_1
+     110: putfield      #5                  // Field screenNum:I
+     113: aload_0
+     114: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+     117: iconst_0
+     118: getstatic     #24                 // Field OPTIONS:[Ljava/lang/String;
+     121: iconst_5
+     122: aaload
+     123: invokevirtual #44                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.updateDialogOption:(ILjava/lang/String;)V
+     126: aload_0
+     127: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+     130: invokevirtual #45                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.clearRemainingOptions:()V
+     133: goto          275
+     136: aload_0
+     137: getfield      #20                 // Field hasVial:Z
+     140: ifeq          221
+     143: getstatic     #34                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     146: ldc           #35                 // String EVENT_VAMP_BITE
+     148: invokevirtual #36                 // Method com/megacrit/cardcrawl/audio/SoundMaster.play:(Ljava/lang/String;)J
+     151: pop2
+     152: aload_0
+     153: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+     156: getstatic     #46                 // Field GIVE_VIAL:Ljava/lang/String;
+     159: invokevirtual #38                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.updateBodyText:(Ljava/lang/String;)V
+     162: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     165: ldc           #18                 // String Blood Vial
+     167: invokevirtual #47                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.loseRelic:(Ljava/lang/String;)Z
+     170: pop
+     171: aload_0
+     172: invokespecial #40                 // Method replaceAttacks:()V
+     175: ldc           #41                 // String Vampires
+     177: ldc           #48                 // String Became a vampire (Vial)
+     179: aload_0
+     180: getfield      #16                 // Field bites:Ljava/util/List;
+     183: new           #17                 // class com/megacrit/cardcrawl/relics/BloodVial
+     186: dup
+     187: invokespecial #31                 // Method com/megacrit/cardcrawl/relics/BloodVial."<init>":()V
+     190: invokestatic  #49                 // Method logMetricObtainCardsLoseRelic:(Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lcom/megacrit/cardcrawl/relics/AbstractRelic;)V
+     193: aload_0
+     194: iconst_1
+     195: putfield      #5                  // Field screenNum:I
+     198: aload_0
+     199: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+     202: iconst_0
+     203: getstatic     #24                 // Field OPTIONS:[Ljava/lang/String;
+     206: iconst_5
+     207: aaload
+     208: invokevirtual #44                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.updateDialogOption:(ILjava/lang/String;)V
+     211: aload_0
+     212: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+     215: invokevirtual #45                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.clearRemainingOptions:()V
+     218: goto          275
+     221: ldc           #41                 // String Vampires
+     223: invokestatic  #50                 // Method logMetricIgnored:(Ljava/lang/String;)V
+     226: aload_0
+     227: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+     230: getstatic     #51                 // Field EXIT_BODY:Ljava/lang/String;
+     233: invokevirtual #38                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.updateBodyText:(Ljava/lang/String;)V
+     236: aload_0
+     237: iconst_2
+     238: putfield      #5                  // Field screenNum:I
+     241: aload_0
+     242: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+     245: iconst_0
+     246: getstatic     #24                 // Field OPTIONS:[Ljava/lang/String;
+     249: iconst_5
+     250: aaload
+     251: invokevirtual #44                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.updateDialogOption:(ILjava/lang/String;)V
+     254: aload_0
+     255: getfield      #21                 // Field imageEventText:Lcom/megacrit/cardcrawl/events/GenericEventDialog;
+     258: invokevirtual #45                 // Method com/megacrit/cardcrawl/events/GenericEventDialog.clearRemainingOptions:()V
+     261: goto          275
+     264: aload_0
+     265: invokevirtual #52                 // Method openMap:()V
+     268: goto          275
+     271: aload_0
+     272: invokevirtual #52                 // Method openMap:()V
+     275: return
+
+  private void replaceAttacks();
+    descriptor: ()V
+    Code:
+       0: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: getfield      #53                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+       6: getfield      #54                 // Field com/megacrit/cardcrawl/cards/CardGroup.group:Ljava/util/ArrayList;
+       9: astore_1
+      10: aload_1
+      11: invokevirtual #55                 // Method java/util/ArrayList.size:()I
+      14: iconst_1
+      15: isub
+      16: istore_2
+      17: iload_2
+      18: iflt          59
+      21: aload_1
+      22: iload_2
+      23: invokevirtual #56                 // Method java/util/ArrayList.get:(I)Ljava/lang/Object;
+      26: checkcast     #57                 // class com/megacrit/cardcrawl/cards/AbstractCard
+      29: astore_3
+      30: aload_3
+      31: getfield      #58                 // Field com/megacrit/cardcrawl/cards/AbstractCard.tags:Ljava/util/ArrayList;
+      34: getstatic     #59                 // Field com/megacrit/cardcrawl/cards/AbstractCard$CardTags.STARTER_STRIKE:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardTags;
+      37: invokevirtual #60                 // Method java/util/ArrayList.contains:(Ljava/lang/Object;)Z
+      40: ifeq          53
+      43: getstatic     #6                  // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      46: getfield      #53                 // Field com/megacrit/cardcrawl/characters/AbstractPlayer.masterDeck:Lcom/megacrit/cardcrawl/cards/CardGroup;
+      49: aload_3
+      50: invokevirtual #61                 // Method com/megacrit/cardcrawl/cards/CardGroup.removeCard:(Lcom/megacrit/cardcrawl/cards/AbstractCard;)V
+      53: iinc          2, -1
+      56: goto          17
+      59: iconst_0
+      60: istore_2
+      61: iload_2
+      62: iconst_5
+      63: if_icmpge     121
+      66: new           #28                 // class com/megacrit/cardcrawl/cards/colorless/Bite
+      69: dup
+      70: invokespecial #29                 // Method com/megacrit/cardcrawl/cards/colorless/Bite."<init>":()V
+      73: astore_3
+      74: getstatic     #62                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectList:Ljava/util/ArrayList;
+      77: new           #63                 // class com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndObtainEffect
+      80: dup
+      81: aload_3
+      82: getstatic     #64                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      85: i2f
+      86: fconst_2
+      87: fdiv
+      88: getstatic     #65                 // Field com/megacrit/cardcrawl/core/Settings.HEIGHT:I
+      91: i2f
+      92: fconst_2
+      93: fdiv
+      94: invokespecial #66                 // Method com/megacrit/cardcrawl/vfx/cardManip/ShowCardAndObtainEffect."<init>":(Lcom/megacrit/cardcrawl/cards/AbstractCard;FF)V
+      97: invokevirtual #67                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     100: pop
+     101: aload_0
+     102: getfield      #16                 // Field bites:Ljava/util/List;
+     105: aload_3
+     106: getfield      #68                 // Field com/megacrit/cardcrawl/cards/AbstractCard.cardID:Ljava/lang/String;
+     109: invokeinterface #69,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     114: pop
+     115: iinc          2, 1
+     118: goto          61
+     121: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #70                 // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc           #41                 // String Vampires
+       5: invokevirtual #71                 // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getEventString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/EventStrings;
+       8: putstatic     #72                 // Field eventStrings:Lcom/megacrit/cardcrawl/localization/EventStrings;
+      11: getstatic     #72                 // Field eventStrings:Lcom/megacrit/cardcrawl/localization/EventStrings;
+      14: getfield      #73                 // Field com/megacrit/cardcrawl/localization/EventStrings.NAME:Ljava/lang/String;
+      17: putstatic     #1                  // Field NAME:Ljava/lang/String;
+      20: getstatic     #72                 // Field eventStrings:Lcom/megacrit/cardcrawl/localization/EventStrings;
+      23: getfield      #74                 // Field com/megacrit/cardcrawl/localization/EventStrings.DESCRIPTIONS:[Ljava/lang/String;
+      26: putstatic     #75                 // Field DESCRIPTIONS:[Ljava/lang/String;
+      29: getstatic     #72                 // Field eventStrings:Lcom/megacrit/cardcrawl/localization/EventStrings;
+      32: getfield      #76                 // Field com/megacrit/cardcrawl/localization/EventStrings.OPTIONS:[Ljava/lang/String;
+      35: putstatic     #24                 // Field OPTIONS:[Ljava/lang/String;
+      38: getstatic     #75                 // Field DESCRIPTIONS:[Ljava/lang/String;
+      41: iconst_2
+      42: aaload
+      43: putstatic     #37                 // Field ACCEPT_BODY:Ljava/lang/String;
+      46: getstatic     #75                 // Field DESCRIPTIONS:[Ljava/lang/String;
+      49: iconst_3
+      50: aaload
+      51: putstatic     #51                 // Field EXIT_BODY:Ljava/lang/String;
+      54: getstatic     #75                 // Field DESCRIPTIONS:[Ljava/lang/String;
+      57: iconst_4
+      58: aaload
+      59: putstatic     #46                 // Field GIVE_VIAL:Ljava/lang/String;
+      62: return
+}

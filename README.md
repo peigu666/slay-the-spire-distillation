@@ -20,7 +20,7 @@
 
 | 项目 | 当前值 |
 |---|---|
-| 知识库版本 | `1.3.0` |
+| 知识库版本 | `1.4.0` |
 | 游戏 | Slay the Spire 2.3.4 |
 | 本体 JAR | `desktop-1.0.jar` |
 | 本体 SHA-256 | `CFAD868AC8D65A88E71A0BF096FB09F78811E553EFFE0787C5309A655E081673` |
@@ -28,9 +28,9 @@
 | BaseMod | 5.56.0 |
 | StSLib | 2.12.0 |
 | Java | `1.8.0_144` |
-| JAR 快照 | 66 个：本体 1、框架 3、本地 Mod 2、Workshop 60 |
-| API 类型记录 | 31,088 个类 |
-| JAR 资源记录 | 10,931 项 |
+| JAR 快照 | 67 个：本体 1、框架 3、本地 Mod 2、Workshop 60、可选 Mod 1 |
+| API 类型记录 | 35,163 个类（其中可选 Mod API 4,075 个） |
+| JAR 资源记录 | 19,038 项；可选 Mod 只保留资源路径/指纹，不复制文本正文 |
 | 文本资源记录 | 1,580 项 |
 | Workshop 外置文件清单 | 524 个文件，102,092,675 bytes；只保存路径/指纹，不保存文件本体 |
 | 补丁注解引用 | 2,943 条，664 个唯一目标类 |
@@ -49,11 +49,13 @@
 | `api/basemod_api.*` | BaseMod API | 注册卡牌、遗物、药水、角色和生命周期订阅 |
 | `api/stslib_api.*` | StSLib API | 查询额外机制、接口和通用动作 |
 | `api/installed_mods_api.*` | 生成时已安装 Mod 的类索引 | 参考现有 Mod 的调用方式和命名 |
+| `api/optional_mods_api.*` | 未纳入当前安装基线的可选 Mod API（本版含 Downfall） | AI 查询未安装 Mod 的真实类、方法、字段和注解 |
 | `api/third_party_api.*` | LibGDX、Spine、Javassist 等第三方类 | UI、图片、动画和底层依赖 |
 | `environment/` | JAR、类、资源、Workshop 和运行环境快照 | 版本审计、依赖定位和资源定位 |
 | `ai_manifest.json` | AI 默认摄取范围、优先级和按需数据策略 | 控制上下文大小并避免混用资料角色 |
 | `ai_file_index.jsonl` | 每个知识文件的哈希、角色、优先级和解析方式 | 完整性校验与 AI 文件路由 |
 | `environment/workshop_external_files.jsonl` | Workshop JAR 外的文件路径、大小和 SHA-256 | 定位图片/程序/配置等外置资源，不分发其本体 |
+| `environment/optional_mod_manifest.json` | 可选 Mod 的 Workshop ID、版本、大小和 SHA-256 | 没有对应 Mod 时仍可使用 API；需要重生成时按指纹下载校验 |
 | `environment/patch_targets.jsonl` | Mod 补丁注解到目标类/方法的映射 | 追踪 Locator、Prefix/Postfix/Insert/Raw 补丁目标 |
 | `bytecode/full_game_instruction_snapshots.jsonl` | 本体 `com.megacrit.cardcrawl.*` 全部方法的 JVM 指令记录 | 按类/方法按需分析完整本体行为和插入点 |
 | `bytecode/full_game_parse_errors.jsonl` | 本体字节码解析失败审计清单 | 确认全量快照是否存在解析缺口；本基线为空 |
@@ -76,6 +78,8 @@
 7. 遇到元数据解析失败时，读取同一条记录的 `metadata_raw_fallback`；不要把空的 `metadata` 当成“没有 Mod 元数据”。
 
 不要把所有大型 JSONL 一次性放进上下文；先按类型名和成员名查询。
+
+可选 Mod API 不代表本机已经安装该 Mod。查询 Downfall 等未安装 Mod 时使用 `-Role optional_mods`；只有需要从 Workshop 重新生成或验证时，才使用 `tools/fetch-optional-mods.ps1` 获取原始 JAR。
 
 ## 常用命令
 
@@ -141,6 +145,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\query-bytecode.ps1 `
 
 这是给 AI 和 Mod 开发者使用的知识库，不是需要复制到 `mods` 目录的 Mod。直接下载或克隆仓库后，将整个目录作为 AI 的参考资料；如果只需要查询，可以运行 `tools/query-sts-api.ps1` 或打开 `sts_ai_knowledge_report.html`。
 
+优先下载 GitHub Release 的压缩包，不必克隆约 469 MiB 的 Git LFS 完整仓库。Release 包含完整 API 资料；原始游戏和 Mod 二进制不随仓库发布。
+
 克隆包含 Git LFS 大文件的完整版本需要先安装 Git LFS：
 
 ```powershell
@@ -150,17 +156,28 @@ git clone https://github.com/peigu666/slay-the-spire-distillation.git
 
 如果只浏览网页端 JSONL 索引，可以直接打开 GitHub 文件列表；如果要重新校验本机 JAR，则需要本机安装对应的 Slay the Spire、Java 8 和 Mod，并使用上面的校验命令。
 
+查询 Downfall API（不需要本机安装 Downfall）：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\query-sts-api.ps1 `
+  -PackRoot $PWD -Role optional_mods `
+  -TypeName downfall.actions.AbstractXAction -Member initialize
+```
+
+需要重新生成可选 Mod API 时，先下载并核验 Workshop JAR，再把对应的 Workshop content 根目录传给生成器的 `-OptionalMods`；不要把下载的 JAR 提交到仓库。
+
 ## 可移植性与 Workshop 快照
 
 `environment/mod_catalog.json`、`environment/jar_inventory.jsonl`、`environment/workshop_manifest.json` 和 `environment/workshop_external_files.jsonl` 是生成机的安装快照，不代表每个使用者都安装了相同的 Mod 或外置资源。
 
-本仓库不上传游戏 JAR、Mod JAR、图片、音频、存档或完整 Workshop 资源。JAR 内资源只保留路径、大小、CRC/哈希和可读文本索引；JAR 外文件清单只保留路径、大小和 SHA-256。其他用户缺少对应 Workshop 项目是正常情况。需要实际运行或验证某个 Mod 时，用户应自行通过 Steam Workshop 安装，并重新运行校验脚本。
+本仓库不上传游戏 JAR、Mod JAR、图片、音频、存档或完整 Workshop 资源。JAR 内资源只保留路径、大小、CRC/哈希和必要的可读文本索引；可选 Mod 只进入独立 API 角色和资源路径索引，不复制 Downfall 等大型文本资源。其他用户缺少对应 Workshop 项目是正常情况：AI 查询不需要这些二进制，只有实际运行、重新生成或验证某个 Mod 时，用户才需要自行通过 Steam Workshop 获取它，并重新运行校验脚本。
 
 ## 重要边界
 
 - API 记录来自生成时的具体 JAR，不应泛化到所有 Slay the Spire、ModTheSpire、BaseMod 或 StSLib 版本。
 - 普通类记录包含私有成员、访问级别、描述符、注解以及方法代码长度/哈希；本体另有完整 JVM 指令快照，补丁目标额外提供局部 `javap -p -s -c` 和专项指令索引，但不等同于 Java 源码。
 - `installed_mods` 是生成时的 Mod 快照；Workshop 更新后必须重新生成或重新校验。
+- `optional_mods` 是独立的未安装 Mod API 档案；本版 Downfall 来自 Workshop `1610056683`，只记录其 API、资源路径和 SHA-256，不分发 482 MB 原始 JAR。
 - 一个 Workshop Mod 的 `ModTheSpire.json` 存在格式问题；`mod_catalog.json` 和 `jar_inventory.jsonl` 会在 `metadata_raw_fallback` 中保留原文，供回退分析。
 - Java 的“IL”在本项目中指 JVM bytecode 指令，不是 .NET CLR IL；当前 JAR 中不存在可直接提供的 CLR IL。
 - 这个仓库只提供知识索引和工具，不替代游戏、ModTheSpire、BaseMod、StSLib 或具体 Mod 的安装包。

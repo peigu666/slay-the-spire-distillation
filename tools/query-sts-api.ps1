@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)] [string]$PackRoot,
-    [ValidateSet('base_game','modthespire','basemod','stslib','installed_mods','third_party')]
+    [ValidateSet('base_game','modthespire','basemod','stslib','installed_mods','optional_mods','third_party')]
     [string]$Role = 'base_game',
     [Parameter(Mandatory = $true)] [string]$TypeName,
     [string]$Member,
@@ -15,6 +15,7 @@ $files = @{
     basemod = 'basemod_api.types.jsonl'
     stslib = 'stslib_api.types.jsonl'
     installed_mods = 'installed_mods_api.types.jsonl'
+    optional_mods = 'optional_mods_api.types.jsonl'
     third_party = 'third_party_api.types.jsonl'
 }
 $jsonl = Join-Path ([IO.Path]::GetFullPath($PackRoot)) ('api\' + $files[$Role])

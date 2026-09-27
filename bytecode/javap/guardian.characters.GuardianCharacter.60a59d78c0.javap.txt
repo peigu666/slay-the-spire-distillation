@@ -1,0 +1,864 @@
+Compiled from "GuardianCharacter.java"
+public class guardian.characters.GuardianCharacter extends basemod.abstracts.CustomPlayer {
+  public static final java.lang.String ID;
+    descriptor: Ljava/lang/String;
+
+  public static final com.megacrit.cardcrawl.localization.CharacterStrings charStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+
+  public static final java.lang.String NAME;
+    descriptor: Ljava/lang/String;
+
+  public static final java.lang.String DESCRIPTION;
+    descriptor: Ljava/lang/String;
+
+  public static final java.lang.String[] orbTextures;
+    descriptor: [Ljava/lang/String;
+
+  public static float orbScaleFinal;
+    descriptor: F
+
+  public static com.badlogic.gdx.graphics.Color cardRenderColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  public float renderscale;
+    descriptor: F
+
+  public float renderscale2;
+    descriptor: F
+
+  private java.lang.String atlasURL;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String jsonURL;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String jsonURLPuddle;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String atlasURL2;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String jsonURL2;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String currentJson;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String currentJson2;
+    descriptor: Ljava/lang/String;
+
+  public boolean inDefensive;
+    descriptor: Z
+
+  private boolean inShattered;
+    descriptor: Z
+
+  public guardian.characters.GuardianCharacter(java.lang.String, com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: new           #1                  // class guardian/modules/EnergyOrbGuardian
+       6: dup
+       7: getstatic     #3                  // Field orbTextures:[Ljava/lang/String;
+      10: ldc           #9                  // String guardianResources/GuardianImages/char/orb/vfx.png
+      12: invokespecial #11                 // Method guardian/modules/EnergyOrbGuardian."<init>":([Ljava/lang/String;Ljava/lang/String;)V
+      15: aconst_null
+      16: checkcast     #15                 // class java/lang/String
+      19: aconst_null
+      20: checkcast     #15                 // class java/lang/String
+      23: invokespecial #17                 // Method basemod/abstracts/CustomPlayer."<init>":(Ljava/lang/String;Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;Lcom/megacrit/cardcrawl/ui/panels/energyorb/EnergyOrbInterface;Ljava/lang/String;Ljava/lang/String;)V
+      26: aload_0
+      27: ldc           #22                 // float 2.5f
+      29: putfield      #23                 // Field renderscale:F
+      32: aload_0
+      33: ldc           #27                 // float 3.0f
+      35: putfield      #28                 // Field renderscale2:F
+      38: aload_0
+      39: ldc           #31                 // String guardianResources/GuardianImages/char/skeleton.atlas
+      41: putfield      #33                 // Field atlasURL:Ljava/lang/String;
+      44: aload_0
+      45: ldc           #37                 // String guardianResources/GuardianImages/char/skeleton.json
+      47: putfield      #39                 // Field jsonURL:Ljava/lang/String;
+      50: aload_0
+      51: ldc           #42                 // String guardianResources/GuardianImages/char/skeletonPuddle.json
+      53: putfield      #44                 // Field jsonURLPuddle:Ljava/lang/String;
+      56: aload_0
+      57: ldc           #47                 // String reskinContent/img/GuardianMod/GuardianChan/animation/Guardian.atlas
+      59: putfield      #49                 // Field atlasURL2:Ljava/lang/String;
+      62: aload_0
+      63: ldc           #52                 // String reskinContent/img/GuardianMod/GuardianChan/animation/Guardian.json
+      65: putfield      #54                 // Field jsonURL2:Ljava/lang/String;
+      68: aload_0
+      69: aload_0
+      70: getfield      #39                 // Field jsonURL:Ljava/lang/String;
+      73: putfield      #57                 // Field currentJson:Ljava/lang/String;
+      76: aload_0
+      77: aload_0
+      78: getfield      #54                 // Field jsonURL2:Ljava/lang/String;
+      81: putfield      #60                 // Field currentJson2:Ljava/lang/String;
+      84: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      87: iconst_0
+      88: aaload
+      89: getfield      #69                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+      92: iconst_1
+      93: if_icmpne     183
+      96: aload_0
+      97: aconst_null
+      98: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     101: iconst_0
+     102: aaload
+     103: getfield      #75                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     106: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     109: iconst_0
+     110: aaload
+     111: getfield      #69                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     114: aaload
+     115: getfield      #79                 // Field reskinContent/skinCharacter/AbstractSkin.SHOULDER1:Ljava/lang/String;
+     118: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     121: iconst_0
+     122: aaload
+     123: getfield      #75                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     126: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     129: iconst_0
+     130: aaload
+     131: getfield      #69                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     134: aaload
+     135: getfield      #84                 // Field reskinContent/skinCharacter/AbstractSkin.SHOULDER2:Ljava/lang/String;
+     138: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     141: iconst_0
+     142: aaload
+     143: getfield      #75                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     146: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     149: iconst_0
+     150: aaload
+     151: getfield      #69                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     154: aaload
+     155: getfield      #87                 // Field reskinContent/skinCharacter/AbstractSkin.CORPSE:Ljava/lang/String;
+     158: aload_0
+     159: invokevirtual #90                 // Method getLoadout:()Lcom/megacrit/cardcrawl/screens/CharSelectInfo;
+     162: fconst_0
+     163: ldc           #94                 // float -10.0f
+     165: ldc           #95                 // float 400.0f
+     167: ldc           #96                 // float 350.0f
+     169: new           #97                 // class com/megacrit/cardcrawl/core/EnergyManager
+     172: dup
+     173: iconst_3
+     174: invokespecial #99                 // Method com/megacrit/cardcrawl/core/EnergyManager."<init>":(I)V
+     177: invokevirtual #102                // Method initializeClass:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/megacrit/cardcrawl/screens/CharSelectInfo;FFFFLcom/megacrit/cardcrawl/core/EnergyManager;)V
+     180: goto          267
+     183: aload_0
+     184: aconst_null
+     185: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     188: iconst_0
+     189: aaload
+     190: getfield      #75                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     193: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     196: iconst_0
+     197: aaload
+     198: getfield      #69                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     201: aaload
+     202: getfield      #79                 // Field reskinContent/skinCharacter/AbstractSkin.SHOULDER1:Ljava/lang/String;
+     205: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     208: iconst_0
+     209: aaload
+     210: getfield      #75                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     213: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     216: iconst_0
+     217: aaload
+     218: getfield      #69                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     221: aaload
+     222: getfield      #84                 // Field reskinContent/skinCharacter/AbstractSkin.SHOULDER2:Ljava/lang/String;
+     225: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     228: iconst_0
+     229: aaload
+     230: getfield      #75                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     233: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     236: iconst_0
+     237: aaload
+     238: getfield      #69                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     241: aaload
+     242: getfield      #87                 // Field reskinContent/skinCharacter/AbstractSkin.CORPSE:Ljava/lang/String;
+     245: aload_0
+     246: invokevirtual #90                 // Method getLoadout:()Lcom/megacrit/cardcrawl/screens/CharSelectInfo;
+     249: fconst_0
+     250: ldc           #94                 // float -10.0f
+     252: ldc           #106                // float 310.0f
+     254: ldc           #107                // float 260.0f
+     256: new           #97                 // class com/megacrit/cardcrawl/core/EnergyManager
+     259: dup
+     260: iconst_3
+     261: invokespecial #99                 // Method com/megacrit/cardcrawl/core/EnergyManager."<init>":(I)V
+     264: invokevirtual #102                // Method initializeClass:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/megacrit/cardcrawl/screens/CharSelectInfo;FFFFLcom/megacrit/cardcrawl/core/EnergyManager;)V
+     267: aload_0
+     268: invokevirtual #108                // Method reloadAnimation:()V
+     271: return
+
+  public com.megacrit.cardcrawl.screens.CharSelectInfo getInfo();
+    descriptor: ()Lcom/megacrit/cardcrawl/screens/CharSelectInfo;
+    Code:
+       0: aload_0
+       1: invokevirtual #90                 // Method getLoadout:()Lcom/megacrit/cardcrawl/screens/CharSelectInfo;
+       4: areturn
+
+  public com.badlogic.gdx.graphics.Texture getCutsceneBg();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Texture;
+    Code:
+       0: ldc           #112                // String images/scenes/greenBg.jpg
+       2: invokestatic  #114                // Method downfall/util/TextureLoader.getTexture:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Texture;
+       5: areturn
+
+  public java.util.List<com.megacrit.cardcrawl.cutscenes.CutscenePanel> getCutscenePanels();
+    descriptor: ()Ljava/util/List;
+    Code:
+       0: new           #120                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #122                // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: new           #124                // class com/megacrit/cardcrawl/cutscenes/CutscenePanel
+      12: dup
+      13: ldc           #126                // String guardianResources/GuardianImages/scenes/guardian1.png
+      15: ldc           #128                // String MONSTER_GUARDIAN_DESTROY
+      17: invokespecial #130                // Method com/megacrit/cardcrawl/cutscenes/CutscenePanel."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+      20: invokeinterface #133,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      25: pop
+      26: aload_1
+      27: new           #124                // class com/megacrit/cardcrawl/cutscenes/CutscenePanel
+      30: dup
+      31: ldc           #139                // String guardianResources/GuardianImages/scenes/guardian2.png
+      33: ldc           #141                // String GUARDIAN_ROLL_UP
+      35: invokespecial #130                // Method com/megacrit/cardcrawl/cutscenes/CutscenePanel."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+      38: invokeinterface #133,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      43: pop
+      44: aload_1
+      45: new           #124                // class com/megacrit/cardcrawl/cutscenes/CutscenePanel
+      48: dup
+      49: ldc           #143                // String guardianResources/GuardianImages/scenes/guardian3.png
+      51: invokespecial #145                // Method com/megacrit/cardcrawl/cutscenes/CutscenePanel."<init>":(Ljava/lang/String;)V
+      54: invokeinterface #133,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      59: pop
+      60: aload_1
+      61: areturn
+
+  public void reloadAnimation();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+       4: iconst_0
+       5: aaload
+       6: getfield      #75                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+       9: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      12: iconst_0
+      13: aaload
+      14: getfield      #69                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+      17: aaload
+      18: getfield      #148                // Field reskinContent/skinCharacter/AbstractSkin.atlasURL:Ljava/lang/String;
+      21: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      24: iconst_0
+      25: aaload
+      26: getfield      #75                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+      29: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      32: iconst_0
+      33: aaload
+      34: getfield      #69                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+      37: aaload
+      38: getfield      #149                // Field reskinContent/skinCharacter/AbstractSkin.jsonURL:Ljava/lang/String;
+      41: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      44: iconst_0
+      45: aaload
+      46: getfield      #75                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+      49: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      52: iconst_0
+      53: aaload
+      54: getfield      #69                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+      57: aaload
+      58: getfield      #150                // Field reskinContent/skinCharacter/AbstractSkin.renderscale:F
+      61: invokevirtual #151                // Method loadAnimation:(Ljava/lang/String;Ljava/lang/String;F)V
+      64: aload_0
+      65: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      68: iconst_0
+      69: ldc           #159                // String idle
+      71: iconst_1
+      72: invokevirtual #161                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      75: pop
+      76: return
+
+  public void switchToDefensiveMode();
+    descriptor: ()V
+    Code:
+       0: ldc           #167                // float 0.7f
+       2: putstatic     #168                // Field orbScaleFinal:F
+       5: aload_0
+       6: getfield      #171                // Field inShattered:Z
+       9: ifne          117
+      12: aload_0
+      13: getfield      #175                // Field inDefensive:Z
+      16: ifne          117
+      19: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      22: iconst_0
+      23: aaload
+      24: invokevirtual #178                // Method reskinContent/skinCharacter/AbstractSkinCharacter.isOriginal:()Ljava/lang/Boolean;
+      27: invokevirtual #182                // Method java/lang/Boolean.booleanValue:()Z
+      30: ifeq          75
+      33: aload_0
+      34: getfield      #188                // Field stateData:Lcom/esotericsoftware/spine/AnimationStateData;
+      37: ldc           #159                // String idle
+      39: ldc           #192                // String defensive
+      41: ldc           #194                // float 0.2f
+      43: invokevirtual #195                // Method com/esotericsoftware/spine/AnimationStateData.setMix:(Ljava/lang/String;Ljava/lang/String;F)V
+      46: aload_0
+      47: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      50: ldc           #200                // float 0.75f
+      52: invokevirtual #201                // Method com/esotericsoftware/spine/AnimationState.setTimeScale:(F)V
+      55: aload_0
+      56: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      59: iconst_0
+      60: ldc           #192                // String defensive
+      62: iconst_1
+      63: invokevirtual #161                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      66: pop
+      67: aload_0
+      68: iconst_1
+      69: putfield      #175                // Field inDefensive:Z
+      72: goto          117
+      75: aload_0
+      76: invokevirtual #108                // Method reloadAnimation:()V
+      79: aload_0
+      80: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      83: fconst_2
+      84: invokevirtual #201                // Method com/esotericsoftware/spine/AnimationState.setTimeScale:(F)V
+      87: aload_0
+      88: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      91: iconst_0
+      92: ldc           #205                // String transition
+      94: iconst_0
+      95: invokevirtual #161                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      98: pop
+      99: aload_0
+     100: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     103: iconst_0
+     104: ldc           #192                // String defensive
+     106: iconst_1
+     107: fconst_0
+     108: invokevirtual #207                // Method com/esotericsoftware/spine/AnimationState.addAnimation:(ILjava/lang/String;ZF)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     111: pop
+     112: aload_0
+     113: iconst_1
+     114: putfield      #175                // Field inDefensive:Z
+     117: return
+
+  public void preBattlePrep();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #211                // Method basemod/abstracts/CustomPlayer.preBattlePrep:()V
+       4: getstatic     #214                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actionManager:Lcom/megacrit/cardcrawl/actions/GameActionManager;
+       7: new           #220                // class com/megacrit/cardcrawl/actions/common/ApplyPowerAction
+      10: dup
+      11: getstatic     #222                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      14: getstatic     #222                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      17: new           #226                // class guardian/powers/ModeShiftPower
+      20: dup
+      21: getstatic     #222                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      24: getstatic     #222                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      27: bipush        20
+      29: invokespecial #228                // Method guardian/powers/ModeShiftPower."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+      32: bipush        20
+      34: invokespecial #231                // Method com/megacrit/cardcrawl/actions/common/ApplyPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;I)V
+      37: invokevirtual #234                // Method com/megacrit/cardcrawl/actions/GameActionManager.addToBottom:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      40: return
+
+  public void switchToOffensiveMode();
+    descriptor: ()V
+    Code:
+       0: fconst_1
+       1: putstatic     #168                // Field orbScaleFinal:F
+       4: aload_0
+       5: getfield      #171                // Field inShattered:Z
+       8: ifne          151
+      11: aload_0
+      12: getfield      #175                // Field inDefensive:Z
+      15: ifeq          190
+      18: getstatic     #63                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      21: iconst_0
+      22: aaload
+      23: invokevirtual #178                // Method reskinContent/skinCharacter/AbstractSkinCharacter.isOriginal:()Ljava/lang/Boolean;
+      26: invokevirtual #182                // Method java/lang/Boolean.booleanValue:()Z
+      29: ifeq          85
+      32: getstatic     #240                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+      35: ldc           #141                // String GUARDIAN_ROLL_UP
+      37: ldc           #246                // float 0.25f
+      39: invokevirtual #247                // Method com/megacrit/cardcrawl/audio/SoundMaster.playA:(Ljava/lang/String;F)J
+      42: pop2
+      43: aload_0
+      44: getfield      #188                // Field stateData:Lcom/esotericsoftware/spine/AnimationStateData;
+      47: ldc           #192                // String defensive
+      49: ldc           #159                // String idle
+      51: ldc           #194                // float 0.2f
+      53: invokevirtual #195                // Method com/esotericsoftware/spine/AnimationStateData.setMix:(Ljava/lang/String;Ljava/lang/String;F)V
+      56: aload_0
+      57: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      60: ldc           #200                // float 0.75f
+      62: invokevirtual #201                // Method com/esotericsoftware/spine/AnimationState.setTimeScale:(F)V
+      65: aload_0
+      66: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      69: iconst_0
+      70: ldc           #159                // String idle
+      72: iconst_1
+      73: invokevirtual #161                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      76: pop
+      77: aload_0
+      78: iconst_0
+      79: putfield      #175                // Field inDefensive:Z
+      82: goto          190
+      85: getstatic     #240                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+      88: ldc           #141                // String GUARDIAN_ROLL_UP
+      90: ldc           #246                // float 0.25f
+      92: invokevirtual #247                // Method com/megacrit/cardcrawl/audio/SoundMaster.playA:(Ljava/lang/String;F)J
+      95: pop2
+      96: aload_0
+      97: getfield      #188                // Field stateData:Lcom/esotericsoftware/spine/AnimationStateData;
+     100: ldc           #192                // String defensive
+     102: ldc           #253                // String offensive
+     104: ldc           #255                // float 0.1f
+     106: invokevirtual #195                // Method com/esotericsoftware/spine/AnimationStateData.setMix:(Ljava/lang/String;Ljava/lang/String;F)V
+     109: aload_0
+     110: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     113: ldc           #200                // float 0.75f
+     115: invokevirtual #201                // Method com/esotericsoftware/spine/AnimationState.setTimeScale:(F)V
+     118: aload_0
+     119: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     122: iconst_0
+     123: ldc           #253                // String offensive
+     125: iconst_0
+     126: invokevirtual #161                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     129: pop
+     130: aload_0
+     131: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     134: iconst_0
+     135: ldc           #159                // String idle
+     137: iconst_1
+     138: fconst_0
+     139: invokevirtual #207                // Method com/esotericsoftware/spine/AnimationState.addAnimation:(ILjava/lang/String;ZF)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     142: pop
+     143: aload_0
+     144: iconst_0
+     145: putfield      #175                // Field inDefensive:Z
+     148: goto          190
+     151: aload_0
+     152: getfield      #188                // Field stateData:Lcom/esotericsoftware/spine/AnimationStateData;
+     155: ldc           #205                // String transition
+     157: ldc           #159                // String idle
+     159: ldc           #194                // float 0.2f
+     161: invokevirtual #195                // Method com/esotericsoftware/spine/AnimationStateData.setMix:(Ljava/lang/String;Ljava/lang/String;F)V
+     164: aload_0
+     165: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     168: ldc           #200                // float 0.75f
+     170: invokevirtual #201                // Method com/esotericsoftware/spine/AnimationState.setTimeScale:(F)V
+     173: aload_0
+     174: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+     177: iconst_0
+     178: ldc           #159                // String idle
+     180: iconst_1
+     181: invokevirtual #161                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+     184: pop
+     185: aload_0
+     186: iconst_0
+     187: putfield      #171                // Field inShattered:Z
+     190: return
+
+  public void switchToShatteredMode();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #171                // Field inShattered:Z
+       4: ifne          95
+       7: aload_0
+       8: getfield      #175                // Field inDefensive:Z
+      11: ifeq          56
+      14: aload_0
+      15: getfield      #188                // Field stateData:Lcom/esotericsoftware/spine/AnimationStateData;
+      18: ldc           #192                // String defensive
+      20: ldc           #205                // String transition
+      22: ldc           #194                // float 0.2f
+      24: invokevirtual #195                // Method com/esotericsoftware/spine/AnimationStateData.setMix:(Ljava/lang/String;Ljava/lang/String;F)V
+      27: aload_0
+      28: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      31: ldc           #200                // float 0.75f
+      33: invokevirtual #201                // Method com/esotericsoftware/spine/AnimationState.setTimeScale:(F)V
+      36: aload_0
+      37: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      40: iconst_0
+      41: ldc           #205                // String transition
+      43: iconst_1
+      44: invokevirtual #161                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      47: pop
+      48: aload_0
+      49: iconst_1
+      50: putfield      #171                // Field inShattered:Z
+      53: goto          95
+      56: aload_0
+      57: getfield      #188                // Field stateData:Lcom/esotericsoftware/spine/AnimationStateData;
+      60: ldc           #159                // String idle
+      62: ldc           #205                // String transition
+      64: ldc           #194                // float 0.2f
+      66: invokevirtual #195                // Method com/esotericsoftware/spine/AnimationStateData.setMix:(Ljava/lang/String;Ljava/lang/String;F)V
+      69: aload_0
+      70: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      73: ldc           #200                // float 0.75f
+      75: invokevirtual #201                // Method com/esotericsoftware/spine/AnimationState.setTimeScale:(F)V
+      78: aload_0
+      79: getfield      #155                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      82: iconst_0
+      83: ldc           #205                // String transition
+      85: iconst_1
+      86: invokevirtual #161                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      89: pop
+      90: aload_0
+      91: iconst_1
+      92: putfield      #171                // Field inShattered:Z
+      95: return
+
+  public java.util.ArrayList<java.lang.String> getStartingDeck();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #120                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #122                // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: getstatic     #256                // Field guardian/cards/Strike_Guardian.ID:Ljava/lang/String;
+      12: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      15: pop
+      16: aload_1
+      17: getstatic     #256                // Field guardian/cards/Strike_Guardian.ID:Ljava/lang/String;
+      20: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      23: pop
+      24: aload_1
+      25: getstatic     #256                // Field guardian/cards/Strike_Guardian.ID:Ljava/lang/String;
+      28: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      31: pop
+      32: aload_1
+      33: getstatic     #256                // Field guardian/cards/Strike_Guardian.ID:Ljava/lang/String;
+      36: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      39: pop
+      40: aload_1
+      41: getstatic     #262                // Field guardian/cards/Defend_Guardian.ID:Ljava/lang/String;
+      44: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      47: pop
+      48: aload_1
+      49: getstatic     #262                // Field guardian/cards/Defend_Guardian.ID:Ljava/lang/String;
+      52: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      55: pop
+      56: aload_1
+      57: getstatic     #262                // Field guardian/cards/Defend_Guardian.ID:Ljava/lang/String;
+      60: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      63: pop
+      64: aload_1
+      65: getstatic     #262                // Field guardian/cards/Defend_Guardian.ID:Ljava/lang/String;
+      68: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      71: pop
+      72: aload_1
+      73: getstatic     #265                // Field guardian/cards/CurlUp.ID:Ljava/lang/String;
+      76: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      79: pop
+      80: aload_1
+      81: getstatic     #268                // Field guardian/cards/TwinSlam.ID:Ljava/lang/String;
+      84: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      87: pop
+      88: aload_1
+      89: areturn
+
+  public java.util.ArrayList<java.lang.String> getStartingRelics();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #120                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #122                // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: ldc_w         #273                // String Guardian:ModeShifter
+      12: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      15: pop
+      16: ldc_w         #273                // String Guardian:ModeShifter
+      19: invokestatic  #275                // Method com/megacrit/cardcrawl/unlock/UnlockTracker.markRelicAsSeen:(Ljava/lang/String;)V
+      22: aload_1
+      23: areturn
+
+  public com.megacrit.cardcrawl.screens.CharSelectInfo getLoadout();
+    descriptor: ()Lcom/megacrit/cardcrawl/screens/CharSelectInfo;
+    Code:
+       0: new           #280                // class com/megacrit/cardcrawl/screens/CharSelectInfo
+       3: dup
+       4: getstatic     #282                // Field NAME:Ljava/lang/String;
+       7: getstatic     #285                // Field DESCRIPTION:Ljava/lang/String;
+      10: bipush        80
+      12: bipush        80
+      14: iconst_3
+      15: bipush        99
+      17: iconst_5
+      18: aload_0
+      19: aload_0
+      20: invokevirtual #288                // Method getStartingRelics:()Ljava/util/ArrayList;
+      23: aload_0
+      24: invokevirtual #292                // Method getStartingDeck:()Ljava/util/ArrayList;
+      27: iconst_0
+      28: invokespecial #295                // Method com/megacrit/cardcrawl/screens/CharSelectInfo."<init>":(Ljava/lang/String;Ljava/lang/String;IIIIILcom/megacrit/cardcrawl/characters/AbstractPlayer;Ljava/util/ArrayList;Ljava/util/ArrayList;Z)V
+      31: areturn
+
+  public java.lang.String getTitle(com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass);
+    descriptor: (Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Ljava/lang/String;
+    Code:
+       0: getstatic     #282                // Field NAME:Ljava/lang/String;
+       3: areturn
+
+  public com.megacrit.cardcrawl.cards.AbstractCard$CardColor getCardColor();
+    descriptor: ()Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+    Code:
+       0: getstatic     #298                // Field guardian/patches/AbstractCardEnum.GUARDIAN:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+       3: areturn
+
+  public com.badlogic.gdx.graphics.Color getCardRenderColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #304                // Field cardRenderColor:Lcom/badlogic/gdx/graphics/Color;
+       3: areturn
+
+  public com.megacrit.cardcrawl.cards.AbstractCard getStartCardForEvent();
+    descriptor: ()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+    Code:
+       0: new           #269                // class guardian/cards/TwinSlam
+       3: dup
+       4: invokespecial #308                // Method guardian/cards/TwinSlam."<init>":()V
+       7: areturn
+
+  public com.badlogic.gdx.graphics.Color getCardTrailColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #304                // Field cardRenderColor:Lcom/badlogic/gdx/graphics/Color;
+       3: invokevirtual #309                // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+       6: areturn
+
+  public int getAscensionMaxHPLoss();
+    descriptor: ()I
+    Code:
+       0: iconst_5
+       1: ireturn
+
+  public com.badlogic.gdx.graphics.g2d.BitmapFont getEnergyNumFont();
+    descriptor: ()Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+    Code:
+       0: getstatic     #315                // Field com/megacrit/cardcrawl/helpers/FontHelper.energyNumFontGreen:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+       3: areturn
+
+  public void doCharSelectScreenSelectEffect();
+    descriptor: ()V
+    Code:
+       0: getstatic     #240                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+       3: ldc           #128                // String MONSTER_GUARDIAN_DESTROY
+       5: ldc_w         #321                // float -0.1f
+       8: ldc           #255                // float 0.1f
+      10: invokestatic  #322                // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+      13: invokevirtual #247                // Method com/megacrit/cardcrawl/audio/SoundMaster.playA:(Ljava/lang/String;F)J
+      16: pop2
+      17: getstatic     #328                // Field com/megacrit/cardcrawl/core/CardCrawlGame.screenShake:Lcom/megacrit/cardcrawl/helpers/ScreenShake;
+      20: getstatic     #332                // Field com/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity.MED:Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity;
+      23: getstatic     #338                // Field com/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur.SHORT:Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur;
+      26: iconst_1
+      27: invokevirtual #344                // Method com/megacrit/cardcrawl/helpers/ScreenShake.shake:(Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity;Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur;Z)V
+      30: return
+
+  public java.lang.String getCustomModeCharacterButtonSoundKey();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: ldc           #128                // String MONSTER_GUARDIAN_DESTROY
+       2: areturn
+
+  public java.lang.String getLocalizedCharacterName();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #282                // Field NAME:Ljava/lang/String;
+       3: areturn
+
+  public com.megacrit.cardcrawl.characters.AbstractPlayer newInstance();
+    descriptor: ()Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+    Code:
+       0: new           #4                  // class guardian/characters/GuardianCharacter
+       3: dup
+       4: getstatic     #282                // Field NAME:Ljava/lang/String;
+       7: getstatic     #350                // Field guardian/patches/GuardianEnum.GUARDIAN:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      10: invokespecial #355                // Method "<init>":(Ljava/lang/String;Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)V
+      13: areturn
+
+  public java.lang.String getSpireHeartText();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #358                // Field charStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       3: getfield      #362                // Field com/megacrit/cardcrawl/localization/CharacterStrings.TEXT:[Ljava/lang/String;
+       6: iconst_1
+       7: aaload
+       8: areturn
+
+  public com.badlogic.gdx.graphics.Color getSlashAttackColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #367                // Field com/badlogic/gdx/graphics/Color.FIREBRICK:Lcom/badlogic/gdx/graphics/Color;
+       3: areturn
+
+  public com.megacrit.cardcrawl.actions.AbstractGameAction$AttackEffect[] getSpireHeartSlashEffect();
+    descriptor: ()[Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+    Code:
+       0: bipush        6
+       2: anewarray     #370                // class com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect
+       5: dup
+       6: iconst_0
+       7: getstatic     #372                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.SLASH_HORIZONTAL:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      10: aastore
+      11: dup
+      12: iconst_1
+      13: getstatic     #376                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.SLASH_VERTICAL:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      16: aastore
+      17: dup
+      18: iconst_2
+      19: getstatic     #379                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.SLASH_DIAGONAL:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      22: aastore
+      23: dup
+      24: iconst_3
+      25: getstatic     #372                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.SLASH_HORIZONTAL:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      28: aastore
+      29: dup
+      30: iconst_4
+      31: getstatic     #376                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.SLASH_VERTICAL:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      34: aastore
+      35: dup
+      36: iconst_5
+      37: getstatic     #382                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.SLASH_HEAVY:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      40: aastore
+      41: areturn
+
+  public java.lang.String getVampireText();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #358                // Field charStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       3: getfield      #362                // Field com/megacrit/cardcrawl/localization/CharacterStrings.TEXT:[Ljava/lang/String;
+       6: iconst_3
+       7: aaload
+       8: areturn
+
+  public void updateVictoryVfx(java.util.ArrayList<com.megacrit.cardcrawl.vfx.AbstractGameEffect>);
+    descriptor: (Ljava/util/ArrayList;)V
+    Code:
+       0: aload_1
+       1: invokevirtual #385                // Method java/util/ArrayList.stream:()Ljava/util/stream/Stream;
+       4: invokedynamic #389,  0            // InvokeDynamic #0:test:()Ljava/util/function/Predicate;
+       9: invokeinterface #393,  2          // InterfaceMethod java/util/stream/Stream.filter:(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;
+      14: invokeinterface #399,  1          // InterfaceMethod java/util/stream/Stream.count:()J
+      19: ldc2_w        #403                // long 8l
+      22: lcmp
+      23: ifge          38
+      26: aload_1
+      27: new           #405                // class com/megacrit/cardcrawl/vfx/scene/DefectVictoryNumberEffect
+      30: dup
+      31: invokespecial #407                // Method com/megacrit/cardcrawl/vfx/scene/DefectVictoryNumberEffect."<init>":()V
+      34: invokevirtual #261                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      37: pop
+      38: return
+
+  public void onVictory();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #408                // Method basemod/abstracts/CustomPlayer.onVictory:()V
+       4: aload_0
+       5: invokevirtual #411                // Method switchToOffensiveMode:()V
+       8: return
+
+  private static boolean lambda$updateVictoryVfx$0(com.megacrit.cardcrawl.vfx.AbstractGameEffect);
+    descriptor: (Lcom/megacrit/cardcrawl/vfx/AbstractGameEffect;)Z
+    Code:
+       0: aload_0
+       1: instanceof    #405                // class com/megacrit/cardcrawl/vfx/scene/DefectVictoryNumberEffect
+       4: ireturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #414                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc_w         #418                // String Guardian
+       6: invokevirtual #420                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getCharacterString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       9: putstatic     #358                // Field charStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+      12: getstatic     #358                // Field charStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+      15: getfield      #426                // Field com/megacrit/cardcrawl/localization/CharacterStrings.NAMES:[Ljava/lang/String;
+      18: iconst_0
+      19: aaload
+      20: putstatic     #282                // Field NAME:Ljava/lang/String;
+      23: getstatic     #358                // Field charStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+      26: getfield      #362                // Field com/megacrit/cardcrawl/localization/CharacterStrings.TEXT:[Ljava/lang/String;
+      29: iconst_0
+      30: aaload
+      31: putstatic     #285                // Field DESCRIPTION:Ljava/lang/String;
+      34: bipush        13
+      36: anewarray     #15                 // class java/lang/String
+      39: dup
+      40: iconst_0
+      41: ldc_w         #429                // String guardianResources/GuardianImages/char/orb/1.png
+      44: aastore
+      45: dup
+      46: iconst_1
+      47: ldc_w         #431                // String guardianResources/GuardianImages/char/orb/2.png
+      50: aastore
+      51: dup
+      52: iconst_2
+      53: ldc_w         #433                // String guardianResources/GuardianImages/char/orb/3.png
+      56: aastore
+      57: dup
+      58: iconst_3
+      59: ldc_w         #435                // String guardianResources/GuardianImages/char/orb/4.png
+      62: aastore
+      63: dup
+      64: iconst_4
+      65: ldc_w         #437                // String guardianResources/GuardianImages/char/orb/5.png
+      68: aastore
+      69: dup
+      70: iconst_5
+      71: ldc_w         #439                // String guardianResources/GuardianImages/char/orb/6.png
+      74: aastore
+      75: dup
+      76: bipush        6
+      78: ldc_w         #441                // String guardianResources/GuardianImages/char/orb/7.png
+      81: aastore
+      82: dup
+      83: bipush        7
+      85: ldc_w         #443                // String guardianResources/GuardianImages/char/orb/1d.png
+      88: aastore
+      89: dup
+      90: bipush        8
+      92: ldc_w         #445                // String guardianResources/GuardianImages/char/orb/2d.png
+      95: aastore
+      96: dup
+      97: bipush        9
+      99: ldc_w         #447                // String guardianResources/GuardianImages/char/orb/3d.png
+     102: aastore
+     103: dup
+     104: bipush        10
+     106: ldc_w         #449                // String guardianResources/GuardianImages/char/orb/4d.png
+     109: aastore
+     110: dup
+     111: bipush        11
+     113: ldc_w         #451                // String guardianResources/GuardianImages/char/orb/5d.png
+     116: aastore
+     117: dup
+     118: bipush        12
+     120: ldc_w         #453                // String guardianResources/GuardianImages/char/orb/6d.png
+     123: aastore
+     124: putstatic     #3                  // Field orbTextures:[Ljava/lang/String;
+     127: fconst_1
+     128: putstatic     #168                // Field orbScaleFinal:F
+     131: getstatic     #455                // Field guardian/GuardianMod.mainGuardianColor:Lcom/badlogic/gdx/graphics/Color;
+     134: putstatic     #304                // Field cardRenderColor:Lcom/badlogic/gdx/graphics/Color;
+     137: return
+}

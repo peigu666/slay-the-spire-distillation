@@ -1,0 +1,204 @@
+Compiled from "HeartShopRoom.java"
+public class downfall.rooms.HeartShopRoom extends com.megacrit.cardcrawl.rooms.ShopRoom {
+  public downfall.util.HeartMerchant heartMerchant;
+    descriptor: Ldownfall/util/HeartMerchant;
+
+  public boolean heartMerchantShown;
+    descriptor: Z
+
+  public boolean startedCombat;
+    descriptor: Z
+
+  public boolean yesFight;
+    descriptor: Z
+
+  public downfall.rooms.HeartShopRoom();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/rooms/ShopRoom."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #7                  // Field startedCombat:Z
+       9: aload_0
+      10: iconst_1
+      11: putfield      #13                 // Field yesFight:Z
+      14: return
+
+  public downfall.rooms.HeartShopRoom(boolean);
+    descriptor: (Z)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/rooms/ShopRoom."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #7                  // Field startedCombat:Z
+       9: aload_0
+      10: iconst_1
+      11: putfield      #13                 // Field yesFight:Z
+      14: aload_0
+      15: iload_1
+      16: putfield      #13                 // Field yesFight:Z
+      19: return
+
+  public void setMerchant(com.megacrit.cardcrawl.shop.Merchant);
+    descriptor: (Lcom/megacrit/cardcrawl/shop/Merchant;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #16                 // Method com/megacrit/cardcrawl/rooms/ShopRoom.setMerchant:(Lcom/megacrit/cardcrawl/shop/Merchant;)V
+       5: return
+
+  public void onPlayerEntry();
+    descriptor: ()V
+    Code:
+       0: getstatic     #20                 // Field downfall/patches/EvilModeCharacterSelect.evilMode:Z
+       3: ifeq          41
+       6: getstatic     #25                 // Field downfall/monsters/FleeingMerchant.DEAD:Z
+       9: ifne          37
+      12: aload_0
+      13: getfield      #13                 // Field yesFight:Z
+      16: ifeq          37
+      19: getstatic     #30                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.actNum:I
+      22: iconst_4
+      23: if_icmpeq     37
+      26: invokestatic  #36                 // Method startCombat:()V
+      29: aload_0
+      30: iconst_1
+      31: putfield      #7                  // Field startedCombat:Z
+      34: goto          41
+      37: aload_0
+      38: invokevirtual #39                 // Method showHeartMerchant:()V
+      41: getstatic     #42                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.id:Ljava/lang/String;
+      44: ldc           #46                 // String TheEnding
+      46: invokevirtual #48                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      49: ifne          65
+      52: aload_0
+      53: getfield      #13                 // Field yesFight:Z
+      56: ifne          65
+      59: aload_0
+      60: ldc           #54                 // String SHOP
+      62: invokevirtual #56                 // Method playBGM:(Ljava/lang/String;)V
+      65: getstatic     #60                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.overlayMenu:Lcom/megacrit/cardcrawl/core/OverlayMenu;
+      68: getfield      #64                 // Field com/megacrit/cardcrawl/core/OverlayMenu.proceedButton:Lcom/megacrit/cardcrawl/ui/buttons/ProceedButton;
+      71: getstatic     #70                 // Field TEXT:[Ljava/lang/String;
+      74: iconst_0
+      75: aaload
+      76: invokevirtual #74                 // Method com/megacrit/cardcrawl/ui/buttons/ProceedButton.setLabel:(Ljava/lang/String;)V
+      79: return
+
+  private static void startCombat();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #79                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.closeCurrentScreen:()V
+       3: invokestatic  #82                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+       6: getstatic     #86                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMBAT:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+       9: putfield      #92                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+      12: getstatic     #97                 // Field downfall/monsters/FleeingMerchant.ID:Ljava/lang/String;
+      15: putstatic     #100                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.lastCombatMetricKey:Ljava/lang/String;
+      18: invokestatic  #82                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      21: new           #103                // class com/megacrit/cardcrawl/monsters/MonsterGroup
+      24: dup
+      25: new           #26                 // class downfall/monsters/FleeingMerchant
+      28: dup
+      29: invokespecial #105                // Method downfall/monsters/FleeingMerchant."<init>":()V
+      32: invokespecial #106                // Method com/megacrit/cardcrawl/monsters/MonsterGroup."<init>":(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)V
+      35: putfield      #109                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      38: invokestatic  #82                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      41: getfield      #109                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      44: invokevirtual #113                // Method com/megacrit/cardcrawl/monsters/MonsterGroup.init:()V
+      47: invokestatic  #82                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+      50: getfield      #109                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.monsters:Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      53: getfield      #116                // Field com/megacrit/cardcrawl/monsters/MonsterGroup.monsters:Ljava/util/ArrayList;
+      56: invokevirtual #119                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      59: astore_0
+      60: aload_0
+      61: invokeinterface #125,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      66: ifeq          90
+      69: aload_0
+      70: invokeinterface #131,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      75: checkcast     #135                // class com/megacrit/cardcrawl/monsters/AbstractMonster
+      78: astore_1
+      79: aload_1
+      80: invokevirtual #137                // Method com/megacrit/cardcrawl/monsters/AbstractMonster.usePreBattleAction:()V
+      83: aload_1
+      84: invokevirtual #140                // Method com/megacrit/cardcrawl/monsters/AbstractMonster.useUniversalPreBattleAction:()V
+      87: goto          60
+      90: ldc           #143                // float 0.1f
+      92: putstatic     #144                // Field com/megacrit/cardcrawl/rooms/AbstractRoom.waitTimer:F
+      95: getstatic     #148                // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      98: invokevirtual #152                // Method com/megacrit/cardcrawl/characters/AbstractPlayer.preBattlePrep:()V
+     101: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: aload_0
+       1: getfield      #157                // Field heartMerchant:Ldownfall/util/HeartMerchant;
+       4: ifnull        22
+       7: aload_0
+       8: getfield      #161                // Field heartMerchantShown:Z
+      11: ifeq          22
+      14: aload_0
+      15: getfield      #157                // Field heartMerchant:Ldownfall/util/HeartMerchant;
+      18: aload_1
+      19: invokevirtual #164                // Method downfall/util/HeartMerchant.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      22: aload_0
+      23: aload_1
+      24: invokespecial #170                // Method com/megacrit/cardcrawl/rooms/ShopRoom.render:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      27: aload_0
+      28: aload_1
+      29: invokevirtual #171                // Method renderTips:(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+      32: return
+
+  public void dispose();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #174                // Method com/megacrit/cardcrawl/rooms/ShopRoom.dispose:()V
+       4: aload_0
+       5: getfield      #157                // Field heartMerchant:Ldownfall/util/HeartMerchant;
+       8: ifnull        23
+      11: aload_0
+      12: getfield      #157                // Field heartMerchant:Ldownfall/util/HeartMerchant;
+      15: invokevirtual #177                // Method downfall/util/HeartMerchant.dispose:()V
+      18: aload_0
+      19: aconst_null
+      20: putfield      #157                // Field heartMerchant:Ldownfall/util/HeartMerchant;
+      23: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #178                // Method com/megacrit/cardcrawl/rooms/ShopRoom.update:()V
+       4: aload_0
+       5: getfield      #157                // Field heartMerchant:Ldownfall/util/HeartMerchant;
+       8: ifnull        25
+      11: aload_0
+      12: getfield      #161                // Field heartMerchantShown:Z
+      15: ifeq          25
+      18: aload_0
+      19: getfield      #157                // Field heartMerchant:Ldownfall/util/HeartMerchant;
+      22: invokevirtual #181                // Method downfall/util/HeartMerchant.update:()V
+      25: return
+
+  public void showHeartMerchant();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #157                // Field heartMerchant:Ldownfall/util/HeartMerchant;
+       4: ifnonnull     18
+       7: aload_0
+       8: new           #165                // class downfall/util/HeartMerchant
+      11: dup
+      12: invokespecial #182                // Method downfall/util/HeartMerchant."<init>":()V
+      15: putfield      #157                // Field heartMerchant:Ldownfall/util/HeartMerchant;
+      18: aload_0
+      19: iconst_1
+      20: putfield      #161                // Field heartMerchantShown:Z
+      23: aload_0
+      24: getfield      #157                // Field heartMerchant:Ldownfall/util/HeartMerchant;
+      27: invokevirtual #183                // Method downfall/util/HeartMerchant.spawnHitbox:()V
+      30: return
+}

@@ -1,0 +1,129 @@
+Compiled from "RainingGoldEffect.java"
+public class com.megacrit.cardcrawl.vfx.RainingGoldEffect extends com.megacrit.cardcrawl.vfx.AbstractGameEffect {
+  private int amount;
+    descriptor: I
+
+  private int min;
+    descriptor: I
+
+  private int max;
+    descriptor: I
+
+  private float staggerTimer;
+    descriptor: F
+
+  private boolean playerCentered;
+    descriptor: Z
+
+  public com.megacrit.cardcrawl.vfx.RainingGoldEffect(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/megacrit/cardcrawl/vfx/AbstractGameEffect."<init>":()V
+       4: aload_0
+       5: fconst_0
+       6: putfield      #2                  // Field staggerTimer:F
+       9: aload_0
+      10: iload_1
+      11: putfield      #3                  // Field amount:I
+      14: aload_0
+      15: iconst_0
+      16: putfield      #4                  // Field playerCentered:Z
+      19: iload_1
+      20: bipush        100
+      22: if_icmpge     39
+      25: aload_0
+      26: iconst_1
+      27: putfield      #5                  // Field min:I
+      30: aload_0
+      31: bipush        7
+      33: putfield      #6                  // Field max:I
+      36: goto          50
+      39: aload_0
+      40: iconst_3
+      41: putfield      #5                  // Field min:I
+      44: aload_0
+      45: bipush        18
+      47: putfield      #6                  // Field max:I
+      50: return
+
+  public com.megacrit.cardcrawl.vfx.RainingGoldEffect(int, boolean);
+    descriptor: (IZ)V
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokespecial #7                  // Method "<init>":(I)V
+       5: aload_0
+       6: iload_2
+       7: putfield      #4                  // Field playerCentered:Z
+      10: return
+
+  public void update();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #2                  // Field staggerTimer:F
+       5: getstatic     #8                  // Field com/badlogic/gdx/Gdx.graphics:Lcom/badlogic/gdx/Graphics;
+       8: invokeinterface #9,  1            // InterfaceMethod com/badlogic/gdx/Graphics.getDeltaTime:()F
+      13: fsub
+      14: putfield      #2                  // Field staggerTimer:F
+      17: aload_0
+      18: getfield      #2                  // Field staggerTimer:F
+      21: fconst_0
+      22: fcmpg
+      23: ifge          109
+      26: aload_0
+      27: getfield      #5                  // Field min:I
+      30: aload_0
+      31: getfield      #6                  // Field max:I
+      34: invokestatic  #10                 // Method com/badlogic/gdx/math/MathUtils.random:(II)I
+      37: istore_1
+      38: iload_1
+      39: aload_0
+      40: getfield      #3                  // Field amount:I
+      43: if_icmpgt     59
+      46: aload_0
+      47: dup
+      48: getfield      #3                  // Field amount:I
+      51: iload_1
+      52: isub
+      53: putfield      #3                  // Field amount:I
+      56: goto          69
+      59: aload_0
+      60: getfield      #3                  // Field amount:I
+      63: istore_1
+      64: aload_0
+      65: iconst_1
+      66: putfield      #11                 // Field isDone:Z
+      69: iconst_0
+      70: istore_2
+      71: iload_2
+      72: iload_1
+      73: if_icmpge     100
+      76: getstatic     #12                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.effectsQueue:Ljava/util/ArrayList;
+      79: new           #13                 // class com/megacrit/cardcrawl/vfx/TouchPickupGold
+      82: dup
+      83: aload_0
+      84: getfield      #4                  // Field playerCentered:Z
+      87: invokespecial #14                 // Method com/megacrit/cardcrawl/vfx/TouchPickupGold."<init>":(Z)V
+      90: invokevirtual #15                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      93: pop
+      94: iinc          2, 1
+      97: goto          71
+     100: aload_0
+     101: ldc           #16                 // float 0.3f
+     103: invokestatic  #17                 // Method com/badlogic/gdx/math/MathUtils.random:(F)F
+     106: putfield      #2                  // Field staggerTimer:F
+     109: return
+
+  public void render(com.badlogic.gdx.graphics.g2d.SpriteBatch);
+    descriptor: (Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V
+    Code:
+       0: return
+
+  public void dispose();
+    descriptor: ()V
+    Code:
+       0: return
+}

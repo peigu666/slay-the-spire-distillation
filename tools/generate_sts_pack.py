@@ -26,7 +26,7 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
 
 SCHEMA = "1.1"
-PACK_VERSION = "1.3.0"
+PACK_VERSION = "1.4.0"
 AI_MANIFEST_SCHEMA = "1.0"
 ROLE_FILES = {
     "base_game": "base_game_api.types.jsonl",
@@ -34,6 +34,7 @@ ROLE_FILES = {
     "basemod": "basemod_api.types.jsonl",
     "stslib": "stslib_api.types.jsonl",
     "installed_mods": "installed_mods_api.types.jsonl",
+    "optional_mods": "optional_mods_api.types.jsonl",
     "third_party": "third_party_api.types.jsonl",
 }
 FRAMEWORK_JARS = {"ModTheSpire.jar", "BaseMod.jar", "StSLib.jar"}
@@ -719,16 +720,24 @@ def workshop_id_for(path: Path) -> Optional[str]:
     return None
 
 
-def discover_jars(game_root: Path, local_mods: Path, workshop_root: Path) -> List[Dict[str, Any]]:
+def discover_jars(
+    game_root: Path,
+    local_mods: Path,
+    workshop_root: Path,
+    optional_mod_roots: Sequence[Path] = (),
+) -> List[Dict[str, Any]]:
     paths: List[Path] = []
     base = game_root / "desktop-1.0.jar"
     if base.is_file():
         paths.append(base)
     paths.extend(sorted(local_mods.glob("*.jar")))
     paths.extend(sorted(workshop_root.rglob("*.jar")))
+    for root in optional_mod_roots:
+        paths.extend(sorted(root.rglob("*.jar")))
     seen = set()
     specs = []
     roots = [("game", game_root), ("local_mods", local_mods), ("workshop", workshop_root)]
+    roots.extend((f"optional/{index}", root) for index, root in enumerate(optional_mod_roots))
     for path in paths:
         key = str(path.resolve()).lower()
         if key in seen:
@@ -740,6 +749,8 @@ def discover_jars(game_root: Path, local_mods: Path, workshop_root: Path) -> Lis
             scope = "base_game"
         elif path.name in FRAMEWORK_JARS:
             scope = "framework"
+        elif any(_is_relative_to(path, root) for root in optional_mod_roots):
+            scope = "optional_mod"
         elif path.parent == local_mods:
             scope = "local_mod"
         else:
@@ -751,6 +762,14 @@ def discover_jars(game_root: Path, local_mods: Path, workshop_root: Path) -> Lis
             "portable_path": portable_path(path, roots),
         })
     return specs
+
+
+def _is_relative_to(path: Path, root: Path) -> bool:
+    try:
+        path.relative_to(root)
+        return True
+    except ValueError:
+        return False
 
 
 def read_mod_metadata(zf: zipfile.ZipFile) -> Tuple[Optional[str], Dict[str, Any], List[str], str, Optional[Dict[str, Any]]]:
@@ -797,6 +816,8 @@ def classify_role(spec: Dict[str, Any], full_name: str) -> str:
         return "basemod"
     if jar_name == "StSLib.jar" and full_name.startswith("com.evacipated.cardcrawl.mod.stslib"):
         return "stslib"
+    if spec["scope"] == "optional_mod":
+        return "optional_mods"
     if spec["scope"] in {"local_mod", "workshop_mod"}:
         return "installed_mods"
     return "third_party"
@@ -1286,6 +1307,7 @@ def generate_docs(
         metadata = (item or {}).get("metadata", {})
         return str(metadata.get("version") or metadata.get("mts_version") or "未从元数据读取")
     base_count = counts.get("base_game", {})
+    optional_jars = [item for item in jars if item.get("scope") == "optional_mod"]
     doc = f"""# Slay the Spire Mod AI 知识包
 
 这是从本机 Slay the Spire Java 安装和已安装 Mod JAR 生成的、面向 Mod 开发与排错的可查询资料包。它对应生成时的具体文件指纹，不宣称覆盖所有版本。
@@ -1336,6 +1358,11 @@ def generate_docs(
 - Java Mod 的“IL”在本包中指 JVM bytecode 指令，不是 .NET CLR IL；目标类/方法不存在或无法解析时会保留明确的状态字段，不会假装生成快照。
 - 无效的 `ModTheSpire.json` 会在 `metadata_raw_fallback` 中保留 UTF-8 原文、路径和 SHA-256，供 AI 或人工回退判断。
 - `installed_mods` 是生成时本机目录中的快照；创意工坊更新后必须重新生成并重新校验。
+"""
+    doc += f"""
+## Optional Mod API profiles
+
+This build contains {len(optional_jars)} optional Mod JAR profile(s) in `api/optional_mods_api.types.jsonl`. They are kept separate from the current-installation baseline, so an AI can query Downfall or another uninstalled Mod without treating it as an installed dependency. The original Mod binaries are not included; `environment/optional_mod_manifest.json` records Workshop IDs, expected sizes and SHA-256 values, and `tools/fetch-optional-mods.ps1` can download and verify them through SteamCMD when regeneration is needed.
 """
     (root / "AI_INGESTION_GUIDE.md").write_text(doc, encoding="utf-8")
 
@@ -1504,7 +1531,7 @@ def write_query_tool(root: Path) -> None:
     (root / "tools" / "query-sts-api.ps1").write_text(r'''[CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)] [string]$PackRoot,
-    [ValidateSet('base_game','modthespire','basemod','stslib','installed_mods','third_party')]
+    [ValidateSet('base_game','modthespire','basemod','stslib','installed_mods','optional_mods','third_party')]
     [string]$Role = 'base_game',
     [Parameter(Mandatory = $true)] [string]$TypeName,
     [string]$Member,
@@ -1518,6 +1545,7 @@ $files = @{
     basemod = 'basemod_api.types.jsonl'
     stslib = 'stslib_api.types.jsonl'
     installed_mods = 'installed_mods_api.types.jsonl'
+    optional_mods = 'optional_mods_api.types.jsonl'
     third_party = 'third_party_api.types.jsonl'
 }
 $jsonl = Join-Path ([IO.Path]::GetFullPath($PackRoot)) ('api\' + $files[$Role])
@@ -1561,6 +1589,8 @@ def write_verify_tool(root: Path) -> None:
 param(
     [Parameter(Mandatory = $true)] [string]$GameRoot,
     [Parameter(Mandatory = $true)] [string]$PackRoot,
+    [string[]]$OptionalModsRoot,
+    [switch]$VerifyOptionalMods,
     [switch]$VerifyPackFiles,
     [switch]$VerifyWorkshopExternalFiles,
     [switch]$VerifyTemplate
@@ -1614,6 +1644,25 @@ foreach ($jar in @($manifest.jars)) {
     $hash = (Get-FileHash -LiteralPath $actual -Algorithm SHA256).Hash.ToUpperInvariant()
     if (($item.Length -ne [int64]$jar.size) -or ($hash -ne ([string]$jar.sha256).ToUpperInvariant())) { $failures.Add("mismatch $($jar.name) [$portable]: sizeOk=$($item.Length -eq [int64]$jar.size) hashOk=$($hash -eq ([string]$jar.sha256).ToUpperInvariant())") }
     else { Write-Host "OK   $($jar.name) $hash" -ForegroundColor Green }
+}
+if ($VerifyOptionalMods) {
+    if (-not @($manifest.optional_mods.jars).Count) { Write-Host 'No optional Mod JARs recorded.' -ForegroundColor Yellow }
+    elseif (-not $OptionalModsRoot) { $failures.Add('VerifyOptionalMods requires -OptionalModsRoot pointing to the downloaded optional Workshop roots') }
+    else {
+        foreach ($jar in @($manifest.optional_mods.jars)) {
+            $parts = ([string]$jar.portable_path).Split('/')
+            if ($parts.Count -lt 3 -or $parts[0] -ne 'optional' -or $parts[1] -notmatch '^\d+$') { $failures.Add("invalid optional Mod path: $($jar.portable_path)"); continue }
+            $rootIndex = [int]$parts[1]
+            if ($rootIndex -ge @($OptionalModsRoot).Count) { $failures.Add("missing optional Mod root index $rootIndex for $($jar.name)"); continue }
+            $relative = ($parts[2..($parts.Count - 1)] -join [IO.Path]::DirectorySeparatorChar)
+            $actual = Join-Path ([IO.Path]::GetFullPath($OptionalModsRoot[$rootIndex])) $relative
+            if (-not (Test-Path -LiteralPath $actual -PathType Leaf)) { $failures.Add("missing optional Mod $($jar.name) [$($jar.portable_path)]: $actual"); continue }
+            $item = Get-Item -LiteralPath $actual
+            $hash = (Get-FileHash -LiteralPath $actual -Algorithm SHA256).Hash.ToUpperInvariant()
+            if (($item.Length -ne [int64]$jar.size) -or ($hash -ne ([string]$jar.sha256).ToUpperInvariant())) { $failures.Add("optional Mod mismatch $($jar.name): sizeOk=$($item.Length -eq [int64]$jar.size) hashOk=$($hash -eq ([string]$jar.sha256).ToUpperInvariant())") }
+            else { Write-Host "OK   optional $($jar.name) $hash" -ForegroundColor Green }
+        }
+    }
 }
 if ($VerifyWorkshopExternalFiles) {
     $externalIndex = Join-Path $packRoot 'environment\workshop_external_files.jsonl'
@@ -1702,6 +1751,50 @@ Write-Host 'Verification passed.' -ForegroundColor Green
 ''', encoding="utf-8")
 
 
+def write_optional_fetch_tool(root: Path) -> None:
+    (root / "tools" / "fetch-optional-mods.ps1").write_text(r'''[CmdletBinding()]
+param(
+    [Parameter(Mandatory = $true)] [string]$SteamCmd,
+    [string]$DownloadRoot = (Join-Path ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))) 'work\optional-mods')
+)
+
+$ErrorActionPreference = 'Stop'
+$steamCmdPath = [IO.Path]::GetFullPath($SteamCmd)
+$downloadRoot = [IO.Path]::GetFullPath($DownloadRoot)
+$manifestPath = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\environment\optional_mod_manifest.json'))
+if (-not (Test-Path -LiteralPath $steamCmdPath -PathType Leaf)) { throw "SteamCMD not found: $steamCmdPath" }
+if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) { throw "Optional Mod manifest not found: $manifestPath" }
+$manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+if (-not $manifest.app_id) { throw "Optional Mod manifest has no Steam app_id." }
+New-Item -ItemType Directory -Force -Path $downloadRoot | Out-Null
+
+foreach ($mod in @($manifest.mods)) {
+    $workshopId = [string]$mod.workshop_id
+    if ([string]::IsNullOrWhiteSpace($workshopId)) { throw "Optional Mod entry has no Workshop ID: $($mod.name)" }
+    $steamArgs = @(
+        '+force_install_dir', $downloadRoot,
+        '+login', 'anonymous',
+        '+workshop_download_item', [string]$manifest.app_id, $workshopId,
+        'validate', '+quit'
+    )
+    Write-Host "Downloading Workshop $workshopId ($($mod.name))..." -ForegroundColor Cyan
+    & $steamCmdPath @steamArgs
+    if ($LASTEXITCODE -ne 0) { throw "SteamCMD failed for Workshop $workshopId with exit code $LASTEXITCODE" }
+
+    $fileName = [IO.Path]::GetFileName([string]$mod.file_name)
+    $actual = Join-Path $downloadRoot ("steamapps\workshop\content\{0}\{1}\{2}" -f $manifest.app_id, $workshopId, $fileName)
+    if (-not (Test-Path -LiteralPath $actual -PathType Leaf)) { throw "Downloaded file not found: $actual" }
+    $item = Get-Item -LiteralPath $actual
+    $hash = (Get-FileHash -LiteralPath $actual -Algorithm SHA256).Hash.ToUpperInvariant()
+    if ($item.Length -ne [int64]$mod.size -or $hash -ne ([string]$mod.sha256).ToUpperInvariant()) {
+        throw "Optional Mod verification failed for $($mod.name): sizeOk=$($item.Length -eq [int64]$mod.size) hashOk=$($hash -eq ([string]$mod.sha256).ToUpperInvariant())"
+    }
+    Write-Host "OK   $($mod.name) $hash" -ForegroundColor Green
+}
+Write-Host 'Optional Mod download and verification passed.' -ForegroundColor Green
+''', encoding="utf-8")
+
+
 def write_javap_tool(root: Path) -> None:
     (root / "tools" / "javap-type.ps1").write_text(r'''[CmdletBinding()]
 param(
@@ -1781,6 +1874,7 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
     entries = [item for role in sorted(api_index) for item in api_index[role]]
     payload = json.dumps(entries, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     role_meta = {
+        "optional_mods": {"label": "Optional Mod API", "short": "Optional Mod", "class": "purple"},
         "base_game": {"label": "本体 API", "short": "本体", "class": "blue"},
         "modthespire": {"label": "ModTheSpire", "short": "MTS", "class": "purple"},
         "basemod": {"label": "BaseMod", "short": "BaseMod", "class": "green"},
@@ -1797,6 +1891,11 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
         return str(metadata.get("version") or metadata.get("mts_version") or "未读取")
 
     core_workshop_ids = {"1605060445", "1605833019", "1609158507"}
+    optional_workshop_ids = {
+        str(item.get("workshop_id")) for item in jar_inventory
+        if item.get("scope") == "optional_mod" and item.get("workshop_id")
+    }
+    library_workshop_ids = set(WORKSHOP_API_IDS) | optional_workshop_ids
     api_library_groups: Dict[str, Dict[str, Any]] = {}
     for item in jar_inventory:
         workshop_id = str(item.get("workshop_id") or "")
@@ -1815,7 +1914,7 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
             group["dependencies"].add(str(dependency))
 
     api_library_rows = []
-    for workshop_id in sorted(WORKSHOP_API_IDS, key=lambda value: (value not in api_library_groups, value)):
+    for workshop_id in sorted(library_workshop_ids, key=lambda value: (value not in api_library_groups, value)):
         group = api_library_groups.get(workshop_id)
         name = str((group or {}).get("name") or f"Workshop item {workshop_id}")
         category = "核心框架" if workshop_id in core_workshop_ids else "API 专用库/框架"
@@ -1823,6 +1922,8 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
         dependencies = ", ".join(sorted((group or {}).get("dependencies", set()))) or "—"
         state = "已扫描" if group else "未发现"
         state_class = "ok" if group else "missing"
+        if workshop_id in optional_workshop_ids:
+            category = "Optional Mod API"
         api_library_rows.append(
             "<tr>"
             f"<td><span class='mini-badge {'green' if workshop_id in core_workshop_ids else 'purple'}'>{category}</span></td>"
@@ -1845,6 +1946,7 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
     framework_count = sum(1 for item in jar_inventory if item.get("scope") == "framework")
     base_jar_count = sum(1 for item in jar_inventory if item.get("scope") == "base_game")
     local_count = sum(1 for item in jar_inventory if item.get("scope") == "local_mod")
+    optional_count = sum(1 for item in jar_inventory if item.get("scope") == "optional_mod")
     total_types = sum(int(data.get("types", 0)) for data in api_counts.values())
     base = jar_by_name("desktop-1.0.jar") or {}
     mts = jar_by_name("ModTheSpire.jar") or {}
@@ -1852,6 +1954,7 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
     stslib = jar_by_name("StSLib.jar") or {}
 
     badge_html = "".join([
+        f"<span class='badge badge-purple'>Optional Mod API {number(optional_count)} JAR</span>",
         f"<span class='badge badge-blue'>desktop-1.0.jar · {html.escape(str(base.get('sha256', ''))[:12])}</span>",
         f"<span class='badge badge-purple'>ModTheSpire · {html.escape(metadata_version(mts))}</span>",
         f"<span class='badge badge-green'>BaseMod · {html.escape(metadata_version(basemod))}</span>",
@@ -1890,7 +1993,7 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
     fingerprint_html = "".join(fingerprint_rows)
 
     coverage_rows = []
-    role_order = ["base_game", "modthespire", "basemod", "stslib", "installed_mods", "third_party"]
+    role_order = ["base_game", "modthespire", "basemod", "stslib", "installed_mods", "optional_mods", "third_party"]
     for role in role_order:
         data = api_counts.get(role, {})
         meta = role_meta[role]
@@ -1935,7 +2038,7 @@ def write_html_report(root: Path, api_counts: Dict[str, Dict[str, int]], api_ind
 <script>
 const DATA={payload};const ROLE_META={role_json};let activeRole='all';let selected=null;
 const q=document.getElementById('q'),results=document.getElementById('results'),detail=document.getElementById('detail'),filters=document.getElementById('filters'),resultCount=document.getElementById('resultCount');
-const roleOrder=['all','base_game','modthespire','basemod','stslib','installed_mods','third_party'];
+const roleOrder=['all','base_game','modthespire','basemod','stslib','installed_mods','optional_mods','third_party'];
 function label(role){{return role==='all'?'全部':((ROLE_META[role]||{{}}).short||role)}}
 for(const role of roleOrder){{const b=document.createElement('button');b.className='filter'+(role==='all'?' active':'');b.textContent=label(role);b.dataset.role=role;b.onclick=()=>{{activeRole=role;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x.dataset.role===role));render()}};filters.appendChild(b)}}
 function searchable(x){{return [x.full_name,x.package,x.role,x.source_jar,x.super_type,...(x.method_names||[]),...(x.field_names||[]),...(x.annotation_types||[])].join(' ').toLowerCase()}}
@@ -1999,7 +2102,11 @@ def ai_file_metadata(relative_path: str) -> Dict[str, Any]:
             notes = (
                 "当前游戏/框架 API；只在任务涉及该角色时读取。"
                 if include_by_default
-                else "大体量已安装 Mod 或第三方 API；只按目标类型/成员查询，不要整文件加载。"
+                else (
+                    "可选、未纳入当前安装基线的 Mod API；先核对 optional_mods 的 JAR 指纹，再按目标类型/成员查询。"
+                    if role_name == "optional_mods"
+                    else "大体量已安装 Mod 或第三方 API；只按目标类型/成员查询，不要整文件加载。"
+                )
             )
     elif path.startswith("environment/"):
         role = "environment_fingerprint" if path.endswith(".json") else "environment_records"
@@ -2072,6 +2179,7 @@ def write_ai_manifest(
     java_info: Dict[str, Any],
     bytecode_summary: Dict[str, Any],
     external_summary: Dict[str, Any],
+    optional_jars: List[Dict[str, Any]],
 ) -> None:
     base = next((j for j in jar_inventory if j.get("name") == "desktop-1.0.jar"), {})
     frameworks = {
@@ -2083,7 +2191,8 @@ def write_ai_manifest(
         for item in jar_inventory
         if item.get("scope") == "framework"
     }
-    scope_counts = Counter(str(item.get("scope")) for item in jar_inventory)
+    current_jars = [item for item in jar_inventory if item.get("scope") != "optional_mod"]
+    scope_counts = Counter(str(item.get("scope")) for item in current_jars)
     payload = {
         "schema_version": AI_MANIFEST_SCHEMA,
         "pack_id": "slay-the-spire-ai-modding-knowledge-ai-ready",
@@ -2103,9 +2212,26 @@ def write_ai_manifest(
             "frameworks": frameworks,
         },
         "coverage": {
-            "jar_count": len(jar_inventory),
+            "jar_count": len(current_jars),
             "jar_scope_counts": dict(sorted(scope_counts.items())),
             "api_counts": {role: dict(sorted(data.items())) for role, data in sorted(counts.items())},
+            "optional_mods": {
+                "jar_count": len(optional_jars),
+                "jars": [
+                    {
+                        "name": item.get("name"),
+                        "portable_path": item.get("portable_path"),
+                        "workshop_id": item.get("workshop_id"),
+                        "sha256": item.get("sha256"),
+                        "size": item.get("size"),
+                        "version": (item.get("metadata") or {}).get("version"),
+                        "modid": (item.get("metadata") or {}).get("modid"),
+                    }
+                    for item in optional_jars
+                ],
+                "api_role": "optional_mods",
+                "note": "可选 Mod API 不属于当前安装基线；使用前先核对 JAR SHA-256。",
+            },
             "workshop_external_files": {
                 "file_count": external_summary.get("file_count", 0),
                 "total_bytes": external_summary.get("total_bytes", 0),
@@ -2136,6 +2262,7 @@ def write_ai_manifest(
             "api/modthespire_api.types.jsonl",
             "api/basemod_api.types.jsonl",
             "api/stslib_api.types.jsonl",
+            "api/optional_mods_api.types.jsonl",
             "docs/*.md",
             "bytecode/README.md",
             "templates/*",
@@ -2167,6 +2294,7 @@ def write_ai_manifest(
         ],
         "on_demand_files": [
             "api/installed_mods_api.types.jsonl",
+            "api/optional_mods_api.types.jsonl",
             "api/third_party_api.types.jsonl",
             "environment/*.jsonl",
             "bytecode/*.jsonl",
@@ -2184,6 +2312,7 @@ def write_ai_manifest(
             "Default AI ingestion is intentionally curated; large JSONL datasets must be queried by role, type, member, or path.",
             "The complete factual inventory remains present even when a file is marked on-demand.",
             "The pack does not copy game/Mod binaries or Workshop external file bytes; it stores signatures, paths and hashes.",
+            "Optional Mod API is kept separate from the current-installation baseline; verify it with -VerifyOptionalMods and an explicit optional-mod root.",
             "path_at_generation is audit-only; use portable_path and verify current JAR hashes before relying on signatures.",
             "The complete base-game JVM instruction snapshot covers parsed com.megacrit.cardcrawl.* methods; third-party and installed-mod bytecode remains represented by API signatures and targeted patch evidence.",
         ],
@@ -2272,6 +2401,7 @@ def build_pack(args: argparse.Namespace) -> None:
     game_root = Path(args.game_root).expanduser().resolve()
     local_mods = Path(args.local_mods or game_root / "mods").expanduser().resolve()
     workshop_root = Path(args.workshop_root or game_root.parent.parent / "workshop" / "content" / "646570").expanduser().resolve()
+    optional_mod_roots = [Path(item).expanduser().resolve() for item in (args.optional_mods or [])]
     output = Path(args.output).expanduser().resolve()
     if output.exists() and any(output.iterdir()) and not args.force:
         raise SystemExit(f"output is non-empty; use --force to rebuild: {output}")
@@ -2280,11 +2410,12 @@ def build_pack(args: argparse.Namespace) -> None:
     for directory in [output / "api", output / "environment", output / "docs", output / "templates", output / "tools", output / "resources"]:
         directory.mkdir(parents=True, exist_ok=True)
 
-    specs = discover_jars(game_root, local_mods, workshop_root)
+    specs = discover_jars(game_root, local_mods, workshop_root, optional_mod_roots)
     if not specs or not (game_root / "desktop-1.0.jar").is_file():
         raise SystemExit(f"desktop-1.0.jar not found under {game_root}")
     game_version = detect_game_version(game_root / "desktop-1.0.jar") or "unknown"
     roots = [("game", game_root), ("local_mods", local_mods), ("workshop", workshop_root)]
+    roots.extend((f"optional/{index}", root) for index, root in enumerate(optional_mod_roots))
 
     api_handles: Dict[str, Any] = {}
     api_counts: Dict[str, Dict[str, int]] = defaultdict(lambda: {"types": 0, "methods": 0, "fields": 0, "bytes": 0})
@@ -2333,7 +2464,7 @@ def build_pack(args: argparse.Namespace) -> None:
                         "extension": Path(info.filename).suffix.lower(),
                     }
                     resource_entries.append(entry)
-                    if Path(info.filename).suffix.lower() in TEXT_SUFFIXES:
+                    if spec["scope"] != "optional_mod" and Path(info.filename).suffix.lower() in TEXT_SUFFIXES:
                         raw = zf.read(info.filename)
                         preview = text_preview(raw)
                         if preview is not None:
@@ -2456,7 +2587,9 @@ def build_pack(args: argparse.Namespace) -> None:
         acf_data = parse_vdf(acf_path.read_text(encoding="utf-8", errors="replace"))
     (output / "environment" / "workshop_manifest.json").write_text(json.dumps({
         "schema_version": SCHEMA, "generated_at_utc": generated_at_utc, "app_id": "646570", "acf_file": acf_file,
-        "installed_workshop_ids": sorted(set(j["workshop_id"] for j in jar_inventory if j.get("workshop_id"))),
+        "installed_workshop_ids": sorted(set(j["workshop_id"] for j in jar_inventory if j.get("workshop_id") and j.get("scope") != "optional_mod")),
+        "optional_workshop_ids": sorted(set(j["workshop_id"] for j in jar_inventory if j.get("workshop_id") and j.get("scope") == "optional_mod")),
+        "optional_mod_roots_at_generation": [str(root) for root in optional_mod_roots],
         "acf": acf_data,
         "note": "The ACF is an audit snapshot; the local JAR path and SHA-256 remain authoritative when verifying a pack.",
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -2474,6 +2607,30 @@ def build_pack(args: argparse.Namespace) -> None:
         output, patch_references, class_locations, specs,
         Path(args.javap_home).expanduser().resolve() if args.javap_home else None,
     )
+
+    current_jars = [item for item in jar_inventory if item.get("scope") != "optional_mod"]
+    optional_jars = [item for item in jar_inventory if item.get("scope") == "optional_mod"]
+    (output / "environment" / "optional_mod_manifest.json").write_text(json.dumps({
+        "schema_version": SCHEMA,
+        "generated_at_utc": generated_at_utc,
+        "app_id": "646570",
+        "mods": [
+            {
+                "name": item.get("name"),
+                "modid": (item.get("metadata") or {}).get("modid"),
+                "version": (item.get("metadata") or {}).get("version"),
+                "workshop_id": item.get("workshop_id"),
+                "workshop_url": f"https://steamcommunity.com/sharedfiles/filedetails/?id={item.get('workshop_id')}",
+                "portable_path": item.get("portable_path"),
+                "file_name": str(item.get("portable_path") or "").rsplit("/", 1)[-1],
+                "size": item.get("size"),
+                "sha256": item.get("sha256"),
+                "api_file": "api/optional_mods_api.types.jsonl",
+            }
+            for item in optional_jars
+        ],
+        "note": "Optional Mod binaries are not redistributed. Use the Workshop URL or tools/fetch-optional-mods.ps1 to obtain and verify a source JAR before regenerating.",
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     for role, filename in ROLE_FILES.items():
         entries = api_index.get(role, [])
@@ -2502,6 +2659,11 @@ def build_pack(args: argparse.Namespace) -> None:
         "java": java_info,
         "javap_home_at_generation": str(Path(args.javap_home).expanduser().resolve()) if args.javap_home else None,
         "framework_jars": sorted(FRAMEWORK_JARS),
+        "optional_mods": {
+            "manifest": "environment/optional_mod_manifest.json",
+            "jar_count": len(optional_jars),
+            "api_file": "api/optional_mods_api.types.jsonl",
+        },
         "api_parser": "generate_sts_pack.py / JVM class-file parser",
         "notes": [
             "Portable consumers should use portable_path and role; path_at_generation is audit-only.",
@@ -2523,6 +2685,7 @@ def build_pack(args: argparse.Namespace) -> None:
     generate_docs(output, api_counts, jar_inventory, catalog, java_info, game_root, generated_at_utc, bytecode_summary)
     write_query_tool(output)
     write_verify_tool(output)
+    write_optional_fetch_tool(output)
     write_javap_tool(output)
     write_bytecode_query_tool(output)
     write_html_report(output, api_counts, api_index, jar_inventory, game_version)
@@ -2536,6 +2699,7 @@ def build_pack(args: argparse.Namespace) -> None:
         java_info,
         bytecode_summary,
         external_summary,
+        [item for item in jar_inventory if item.get("scope") == "optional_mod"],
     )
     generator_copy = output / "tools" / "generate_sts_pack.py"
     if Path(__file__).resolve() != generator_copy.resolve():
@@ -2562,7 +2726,13 @@ def build_pack(args: argparse.Namespace) -> None:
             "Keep base_game, ModTheSpire, BaseMod, StSLib, installed_mods, and third_party API files separate.",
             "Do not infer method overloads from names; use descriptor and parameter_types.",
         ],
-        "jars": jar_inventory,
+        "jars": current_jars,
+        "optional_mods": {
+            "jar_count": len(optional_jars),
+            "jars": optional_jars,
+            "roots_at_generation": [str(root) for root in optional_mod_roots],
+            "note": "Optional Mod JARs are indexed separately and are not part of the current-installation verification baseline.",
+        },
         "workshop_external_files": external_summary,
         "patch_target_artifacts": bytecode_summary,
         "files": [
@@ -2604,6 +2774,11 @@ def main() -> None:
     parser.add_argument("--game-root", required=True)
     parser.add_argument("--local-mods")
     parser.add_argument("--workshop-root")
+    parser.add_argument(
+        "--optional-mods",
+        action="append",
+        help="Optional Mod root(s) to index separately from the current-installation baseline; may be repeated.",
+    )
     parser.add_argument("--javap-home", help="Optional JDK home used to capture javap -p -s -c snapshots")
     parser.add_argument("--output", required=True)
     parser.add_argument("--force", action="store_true")

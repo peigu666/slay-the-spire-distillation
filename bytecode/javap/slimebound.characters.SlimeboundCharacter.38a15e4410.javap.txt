@@ -1,0 +1,753 @@
+Compiled from "SlimeboundCharacter.java"
+public class slimebound.characters.SlimeboundCharacter extends basemod.abstracts.CustomPlayer {
+  public static final java.lang.String ID;
+    descriptor: Ljava/lang/String;
+
+  private static final com.megacrit.cardcrawl.localization.CharacterStrings charStrings;
+    descriptor: Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+
+  public static final java.lang.String NAME;
+    descriptor: Ljava/lang/String;
+
+  public static final java.lang.String DESCRIPTION;
+    descriptor: Ljava/lang/String;
+
+  public static final java.lang.String[] orbTextures;
+    descriptor: [Ljava/lang/String;
+
+  public static com.badlogic.gdx.graphics.Color cardRenderColor;
+    descriptor: Lcom/badlogic/gdx/graphics/Color;
+
+  private static float mainRenderYOffset;
+    descriptor: F
+
+  public float renderscale;
+    descriptor: F
+
+  public float hatX;
+    descriptor: F
+
+  public float hatY;
+    descriptor: F
+
+  public boolean moved;
+    descriptor: Z
+
+  public boolean foughtSlimeBoss;
+    descriptor: Z
+
+  public float leftScale;
+    descriptor: F
+
+  public float xJumpCharOffset;
+    descriptor: F
+
+  public float x;
+    descriptor: F
+
+  public boolean puddleForm;
+    descriptor: Z
+
+  private java.lang.String atlasURL;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String jsonURL;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String jsonURLPuddle;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String atlasURL2;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String atlasURLPuddle2;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String jsonURL2;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String jsonURLPuddle2;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String currentJson;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String currentAtlas2;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.String currentJson2;
+    descriptor: Ljava/lang/String;
+
+  public slimebound.characters.SlimeboundCharacter(java.lang.String, com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass);
+    descriptor: (Ljava/lang/String;Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: getstatic     #1                  // Field orbTextures:[Ljava/lang/String;
+       6: ldc           #7                  // String slimeboundResources/SlimeboundImages/char/orb/vfx.png
+       8: aconst_null
+       9: checkcast     #9                  // class java/lang/String
+      12: aconst_null
+      13: checkcast     #9                  // class java/lang/String
+      16: invokespecial #11                 // Method basemod/abstracts/CustomPlayer."<init>":(Ljava/lang/String;Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+      19: aload_0
+      20: ldc           #17                 // float 1.2f
+      22: putfield      #18                 // Field renderscale:F
+      25: aload_0
+      26: iconst_0
+      27: putfield      #22                 // Field moved:Z
+      30: aload_0
+      31: ldc           #26                 // float 0.2f
+      33: putfield      #27                 // Field leftScale:F
+      36: aload_0
+      37: getstatic     #30                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      40: i2f
+      41: ldc           #36                 // float 0.21f
+      43: fmul
+      44: putfield      #37                 // Field xJumpCharOffset:F
+      47: aload_0
+      48: getstatic     #30                 // Field com/megacrit/cardcrawl/core/Settings.WIDTH:I
+      51: i2f
+      52: ldc           #40                 // float 0.1f
+      54: fmul
+      55: putfield      #41                 // Field x:F
+      58: aload_0
+      59: ldc           #44                 // String slimeboundResources/SlimeboundImages/char/skeleton.atlas
+      61: putfield      #46                 // Field atlasURL:Ljava/lang/String;
+      64: aload_0
+      65: ldc           #50                 // String slimeboundResources/SlimeboundImages/char/skeleton.json
+      67: putfield      #52                 // Field jsonURL:Ljava/lang/String;
+      70: aload_0
+      71: ldc           #55                 // String slimeboundResources/SlimeboundImages/char/skeletonPuddle.json
+      73: putfield      #57                 // Field jsonURLPuddle:Ljava/lang/String;
+      76: aload_0
+      77: ldc           #60                 // String reskinContent/img/Slimebound/Slaifu/animation/TheSlimeBossWaifuDownFall.atlas
+      79: putfield      #62                 // Field atlasURL2:Ljava/lang/String;
+      82: aload_0
+      83: ldc           #65                 // String reskinContent/img/Slimebound/Slaifu/animation/Slime_acid_char_puddle.atlas
+      85: putfield      #67                 // Field atlasURLPuddle2:Ljava/lang/String;
+      88: aload_0
+      89: ldc           #70                 // String reskinContent/img/Slimebound/Slaifu/animation/TheSlimeBossWaifuDownFall.json
+      91: putfield      #72                 // Field jsonURL2:Ljava/lang/String;
+      94: aload_0
+      95: ldc           #75                 // String reskinContent/img/Slimebound/Slaifu/animation/Slime_acid_char_puddle.json
+      97: putfield      #77                 // Field jsonURLPuddle2:Ljava/lang/String;
+     100: aload_0
+     101: aload_0
+     102: getfield      #52                 // Field jsonURL:Ljava/lang/String;
+     105: putfield      #80                 // Field currentJson:Ljava/lang/String;
+     108: aload_0
+     109: aload_0
+     110: getfield      #62                 // Field atlasURL2:Ljava/lang/String;
+     113: putfield      #83                 // Field currentAtlas2:Ljava/lang/String;
+     116: aload_0
+     117: aload_0
+     118: getfield      #72                 // Field jsonURL2:Ljava/lang/String;
+     121: putfield      #86                 // Field currentJson2:Ljava/lang/String;
+     124: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     127: iconst_0
+     128: aaload
+     129: getfield      #95                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     132: iconst_1
+     133: if_icmpne     222
+     136: aload_0
+     137: aconst_null
+     138: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     141: iconst_1
+     142: aaload
+     143: getfield      #100                // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     146: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     149: iconst_1
+     150: aaload
+     151: getfield      #95                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     154: aaload
+     155: getfield      #104                // Field reskinContent/skinCharacter/AbstractSkin.SHOULDER1:Ljava/lang/String;
+     158: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     161: iconst_1
+     162: aaload
+     163: getfield      #100                // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     166: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     169: iconst_1
+     170: aaload
+     171: getfield      #95                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     174: aaload
+     175: getfield      #109                // Field reskinContent/skinCharacter/AbstractSkin.SHOULDER2:Ljava/lang/String;
+     178: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     181: iconst_1
+     182: aaload
+     183: getfield      #100                // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     186: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     189: iconst_1
+     190: aaload
+     191: getfield      #95                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     194: aaload
+     195: getfield      #112                // Field reskinContent/skinCharacter/AbstractSkin.CORPSE:Ljava/lang/String;
+     198: aload_0
+     199: invokevirtual #115                // Method getLoadout:()Lcom/megacrit/cardcrawl/screens/CharSelectInfo;
+     202: fconst_0
+     203: fconst_0
+     204: ldc           #119                // float 300.0f
+     206: ldc           #120                // float 180.0f
+     208: new           #121                // class com/megacrit/cardcrawl/core/EnergyManager
+     211: dup
+     212: iconst_3
+     213: invokespecial #123                // Method com/megacrit/cardcrawl/core/EnergyManager."<init>":(I)V
+     216: invokevirtual #126                // Method initializeClass:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/megacrit/cardcrawl/screens/CharSelectInfo;FFFFLcom/megacrit/cardcrawl/core/EnergyManager;)V
+     219: goto          305
+     222: aload_0
+     223: aconst_null
+     224: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     227: iconst_1
+     228: aaload
+     229: getfield      #100                // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     232: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     235: iconst_1
+     236: aaload
+     237: getfield      #95                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     240: aaload
+     241: getfield      #104                // Field reskinContent/skinCharacter/AbstractSkin.SHOULDER1:Ljava/lang/String;
+     244: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     247: iconst_1
+     248: aaload
+     249: getfield      #100                // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     252: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     255: iconst_1
+     256: aaload
+     257: getfield      #95                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     260: aaload
+     261: getfield      #109                // Field reskinContent/skinCharacter/AbstractSkin.SHOULDER2:Ljava/lang/String;
+     264: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     267: iconst_1
+     268: aaload
+     269: getfield      #100                // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+     272: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+     275: iconst_1
+     276: aaload
+     277: getfield      #95                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+     280: aaload
+     281: getfield      #112                // Field reskinContent/skinCharacter/AbstractSkin.CORPSE:Ljava/lang/String;
+     284: aload_0
+     285: invokevirtual #115                // Method getLoadout:()Lcom/megacrit/cardcrawl/screens/CharSelectInfo;
+     288: fconst_0
+     289: fconst_0
+     290: ldc           #130                // float 320.0f
+     292: ldc           #131                // float 200.0f
+     294: new           #121                // class com/megacrit/cardcrawl/core/EnergyManager
+     297: dup
+     298: iconst_3
+     299: invokespecial #123                // Method com/megacrit/cardcrawl/core/EnergyManager."<init>":(I)V
+     302: invokevirtual #126                // Method initializeClass:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/megacrit/cardcrawl/screens/CharSelectInfo;FFFFLcom/megacrit/cardcrawl/core/EnergyManager;)V
+     305: aload_0
+     306: invokevirtual #132                // Method reloadAnimation:()V
+     309: return
+
+  public void puddleForm();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: aload_0
+       2: getfield      #57                 // Field jsonURLPuddle:Ljava/lang/String;
+       5: putfield      #80                 // Field currentJson:Ljava/lang/String;
+       8: aload_0
+       9: aload_0
+      10: getfield      #67                 // Field atlasURLPuddle2:Ljava/lang/String;
+      13: putfield      #83                 // Field currentAtlas2:Ljava/lang/String;
+      16: aload_0
+      17: aload_0
+      18: getfield      #77                 // Field jsonURLPuddle2:Ljava/lang/String;
+      21: putfield      #86                 // Field currentJson2:Ljava/lang/String;
+      24: aload_0
+      25: invokevirtual #132                // Method reloadAnimation:()V
+      28: aload_0
+      29: iconst_1
+      30: putfield      #136                // Field puddleForm:Z
+      33: return
+
+  public void removePuddleForm();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #136                // Field puddleForm:Z
+       4: ifeq          40
+       7: aload_0
+       8: aload_0
+       9: getfield      #52                 // Field jsonURL:Ljava/lang/String;
+      12: putfield      #80                 // Field currentJson:Ljava/lang/String;
+      15: aload_0
+      16: aload_0
+      17: getfield      #62                 // Field atlasURL2:Ljava/lang/String;
+      20: putfield      #83                 // Field currentAtlas2:Ljava/lang/String;
+      23: aload_0
+      24: aload_0
+      25: getfield      #72                 // Field jsonURL2:Ljava/lang/String;
+      28: putfield      #86                 // Field currentJson2:Ljava/lang/String;
+      31: aload_0
+      32: invokevirtual #132                // Method reloadAnimation:()V
+      35: aload_0
+      36: iconst_0
+      37: putfield      #136                // Field puddleForm:Z
+      40: return
+
+  public void setRenderscale(float);
+    descriptor: (F)V
+    Code:
+       0: aload_0
+       1: fload_1
+       2: putfield      #18                 // Field renderscale:F
+       5: aload_0
+       6: invokevirtual #132                // Method reloadAnimation:()V
+       9: return
+
+  public void onVictory();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #139                // Method basemod/abstracts/CustomPlayer.onVictory:()V
+       4: aload_0
+       5: getfield      #136                // Field puddleForm:Z
+       8: ifeq          15
+      11: aload_0
+      12: invokevirtual #142                // Method removePuddleForm:()V
+      15: return
+
+  public com.badlogic.gdx.graphics.Texture getCutsceneBg();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Texture;
+    Code:
+       0: ldc           #145                // String images/scenes/greenBg.jpg
+       2: invokestatic  #147                // Method downfall/util/TextureLoader.getTexture:(Ljava/lang/String;)Lcom/badlogic/gdx/graphics/Texture;
+       5: areturn
+
+  public java.util.List<com.megacrit.cardcrawl.cutscenes.CutscenePanel> getCutscenePanels();
+    descriptor: ()Ljava/util/List;
+    Code:
+       0: new           #153                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #155                // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: new           #157                // class com/megacrit/cardcrawl/cutscenes/CutscenePanel
+      12: dup
+      13: ldc           #159                // String slimeboundResources/SlimeboundImages/scenes/slimebound1.png
+      15: ldc           #161                // String VO_SLIMEBOSS_1A
+      17: invokespecial #163                // Method com/megacrit/cardcrawl/cutscenes/CutscenePanel."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+      20: invokeinterface #166,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      25: pop
+      26: aload_1
+      27: new           #157                // class com/megacrit/cardcrawl/cutscenes/CutscenePanel
+      30: dup
+      31: ldc           #172                // String slimeboundResources/SlimeboundImages/scenes/slimebound2.png
+      33: invokespecial #174                // Method com/megacrit/cardcrawl/cutscenes/CutscenePanel."<init>":(Ljava/lang/String;)V
+      36: invokeinterface #166,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      41: pop
+      42: aload_1
+      43: new           #157                // class com/megacrit/cardcrawl/cutscenes/CutscenePanel
+      46: dup
+      47: ldc           #177                // String slimeboundResources/SlimeboundImages/scenes/slimebound3.png
+      49: invokespecial #174                // Method com/megacrit/cardcrawl/cutscenes/CutscenePanel."<init>":(Ljava/lang/String;)V
+      52: invokeinterface #166,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      57: pop
+      58: aload_1
+      59: areturn
+
+  public void reloadAnimation();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+       4: iconst_1
+       5: aaload
+       6: getfield      #100                // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+       9: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      12: iconst_1
+      13: aaload
+      14: getfield      #95                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+      17: aaload
+      18: getfield      #179                // Field reskinContent/skinCharacter/AbstractSkin.atlasURL:Ljava/lang/String;
+      21: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      24: iconst_1
+      25: aaload
+      26: getfield      #100                // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+      29: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      32: iconst_1
+      33: aaload
+      34: getfield      #95                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+      37: aaload
+      38: getfield      #180                // Field reskinContent/skinCharacter/AbstractSkin.jsonURL:Ljava/lang/String;
+      41: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      44: iconst_1
+      45: aaload
+      46: getfield      #100                // Field reskinContent/skinCharacter/AbstractSkinCharacter.skins:[LreskinContent/skinCharacter/AbstractSkin;
+      49: getstatic     #89                 // Field reskinContent/patches/CharacterSelectScreenPatches.characters:[LreskinContent/skinCharacter/AbstractSkinCharacter;
+      52: iconst_1
+      53: aaload
+      54: getfield      #95                 // Field reskinContent/skinCharacter/AbstractSkinCharacter.reskinCount:I
+      57: aaload
+      58: getfield      #181                // Field reskinContent/skinCharacter/AbstractSkin.renderscale:F
+      61: invokevirtual #182                // Method loadAnimation:(Ljava/lang/String;Ljava/lang/String;F)V
+      64: aload_0
+      65: getfield      #186                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      68: iconst_0
+      69: ldc           #190                // String idle
+      71: iconst_1
+      72: invokevirtual #192                // Method com/esotericsoftware/spine/AnimationState.setAnimation:(ILjava/lang/String;Z)Lcom/esotericsoftware/spine/AnimationState$TrackEntry;
+      75: astore_1
+      76: aload_1
+      77: aload_1
+      78: invokevirtual #198                // Method com/esotericsoftware/spine/AnimationState$TrackEntry.getEndTime:()F
+      81: invokestatic  #204                // Method com/badlogic/gdx/math/MathUtils.random:()F
+      84: fmul
+      85: invokevirtual #209                // Method com/esotericsoftware/spine/AnimationState$TrackEntry.setTime:(F)V
+      88: aload_0
+      89: getfield      #186                // Field state:Lcom/esotericsoftware/spine/AnimationState;
+      92: new           #213                // class com/megacrit/cardcrawl/helpers/SlimeAnimListener
+      95: dup
+      96: invokespecial #215                // Method com/megacrit/cardcrawl/helpers/SlimeAnimListener."<init>":()V
+      99: invokevirtual #216                // Method com/esotericsoftware/spine/AnimationState.addListener:(Lcom/esotericsoftware/spine/AnimationState$AnimationStateListener;)V
+     102: return
+
+  public void movePosition(float, float);
+    descriptor: (FF)V
+    Code:
+       0: aload_0
+       1: fload_1
+       2: fload_2
+       3: invokespecial #220                // Method basemod/abstracts/CustomPlayer.movePosition:(FF)V
+       6: aload_0
+       7: aload_0
+       8: getfield      #224                // Field drawY:F
+      11: getstatic     #227                // Field mainRenderYOffset:F
+      14: fadd
+      15: putfield      #224                // Field drawY:F
+      18: aload_0
+      19: aload_0
+      20: getfield      #224                // Field drawY:F
+      23: ldc           #230                // float 30.0f
+      25: getstatic     #231                // Field com/megacrit/cardcrawl/core/Settings.scale:F
+      28: fmul
+      29: fadd
+      30: putfield      #234                // Field dialogY:F
+      33: aload_0
+      34: invokevirtual #237                // Method refreshHitboxLocation:()V
+      37: return
+
+  public java.util.ArrayList<java.lang.String> getStartingDeck();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #153                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #155                // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: ldc           #242                // String Slimebound:Strike_Slimebound
+      11: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      14: pop
+      15: aload_1
+      16: ldc           #242                // String Slimebound:Strike_Slimebound
+      18: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      21: pop
+      22: aload_1
+      23: ldc           #242                // String Slimebound:Strike_Slimebound
+      25: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      28: pop
+      29: aload_1
+      30: ldc           #247                // String Slimebound:Tackle
+      32: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      35: pop
+      36: aload_1
+      37: ldc           #251                // String Slimebound:Defend_Slimebound
+      39: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      42: pop
+      43: aload_1
+      44: ldc           #251                // String Slimebound:Defend_Slimebound
+      46: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      49: pop
+      50: aload_1
+      51: ldc           #251                // String Slimebound:Defend_Slimebound
+      53: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      56: pop
+      57: aload_1
+      58: ldc           #251                // String Slimebound:Defend_Slimebound
+      60: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      63: pop
+      64: aload_1
+      65: ldc           #255                // String Slimebound:Split
+      67: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      70: pop
+      71: aload_1
+      72: ldc_w         #259                // String Slimebound:CorrosiveSpit
+      75: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      78: pop
+      79: aload_1
+      80: areturn
+
+  public java.util.ArrayList<java.lang.String> getStartingRelics();
+    descriptor: ()Ljava/util/ArrayList;
+    Code:
+       0: new           #153                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #155                // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: ldc_w         #263                // String Slimebound:AbsorbEndCombat
+      12: invokevirtual #244                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      15: pop
+      16: ldc_w         #263                // String Slimebound:AbsorbEndCombat
+      19: invokestatic  #265                // Method com/megacrit/cardcrawl/unlock/UnlockTracker.markRelicAsSeen:(Ljava/lang/String;)V
+      22: aload_1
+      23: areturn
+
+  public com.megacrit.cardcrawl.screens.CharSelectInfo getLoadout();
+    descriptor: ()Lcom/megacrit/cardcrawl/screens/CharSelectInfo;
+    Code:
+       0: new           #270                // class com/megacrit/cardcrawl/screens/CharSelectInfo
+       3: dup
+       4: getstatic     #272                // Field NAME:Ljava/lang/String;
+       7: getstatic     #275                // Field DESCRIPTION:Ljava/lang/String;
+      10: bipush        65
+      12: bipush        65
+      14: iconst_3
+      15: bipush        99
+      17: iconst_5
+      18: aload_0
+      19: aload_0
+      20: invokevirtual #278                // Method getStartingRelics:()Ljava/util/ArrayList;
+      23: aload_0
+      24: invokevirtual #282                // Method getStartingDeck:()Ljava/util/ArrayList;
+      27: iconst_0
+      28: invokespecial #285                // Method com/megacrit/cardcrawl/screens/CharSelectInfo."<init>":(Ljava/lang/String;Ljava/lang/String;IIIIILcom/megacrit/cardcrawl/characters/AbstractPlayer;Ljava/util/ArrayList;Ljava/util/ArrayList;Z)V
+      31: areturn
+
+  public java.lang.String getTitle(com.megacrit.cardcrawl.characters.AbstractPlayer$PlayerClass);
+    descriptor: (Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)Ljava/lang/String;
+    Code:
+       0: getstatic     #272                // Field NAME:Ljava/lang/String;
+       3: areturn
+
+  public com.megacrit.cardcrawl.cards.AbstractCard$CardColor getCardColor();
+    descriptor: ()Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+    Code:
+       0: getstatic     #288                // Field slimebound/patches/AbstractCardEnum.SLIMEBOUND:Lcom/megacrit/cardcrawl/cards/AbstractCard$CardColor;
+       3: areturn
+
+  public com.badlogic.gdx.graphics.Color getCardRenderColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #294                // Field cardRenderColor:Lcom/badlogic/gdx/graphics/Color;
+       3: areturn
+
+  public com.megacrit.cardcrawl.cards.AbstractCard getStartCardForEvent();
+    descriptor: ()Lcom/megacrit/cardcrawl/cards/AbstractCard;
+    Code:
+       0: new           #253                // class slimebound/cards/Split
+       3: dup
+       4: invokespecial #298                // Method slimebound/cards/Split."<init>":()V
+       7: areturn
+
+  public com.badlogic.gdx.graphics.Color getCardTrailColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #294                // Field cardRenderColor:Lcom/badlogic/gdx/graphics/Color;
+       3: invokevirtual #299                // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+       6: areturn
+
+  public int getAscensionMaxHPLoss();
+    descriptor: ()I
+    Code:
+       0: iconst_4
+       1: ireturn
+
+  public com.badlogic.gdx.graphics.g2d.BitmapFont getEnergyNumFont();
+    descriptor: ()Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+    Code:
+       0: getstatic     #305                // Field com/megacrit/cardcrawl/helpers/FontHelper.energyNumFontGreen:Lcom/badlogic/gdx/graphics/g2d/BitmapFont;
+       3: areturn
+
+  public void doCharSelectScreenSelectEffect();
+    descriptor: ()V
+    Code:
+       0: getstatic     #311                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+       3: ldc_w         #317                // String SLIME_SPLIT
+       6: ldc_w         #319                // float -0.2f
+       9: ldc           #26                 // float 0.2f
+      11: invokestatic  #320                // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+      14: invokevirtual #323                // Method com/megacrit/cardcrawl/audio/SoundMaster.playA:(Ljava/lang/String;F)J
+      17: pop2
+      18: getstatic     #329                // Field com/megacrit/cardcrawl/core/CardCrawlGame.screenShake:Lcom/megacrit/cardcrawl/helpers/ScreenShake;
+      21: getstatic     #333                // Field com/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity.MED:Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity;
+      24: getstatic     #339                // Field com/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur.SHORT:Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur;
+      27: iconst_1
+      28: invokevirtual #345                // Method com/megacrit/cardcrawl/helpers/ScreenShake.shake:(Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeIntensity;Lcom/megacrit/cardcrawl/helpers/ScreenShake$ShakeDur;Z)V
+      31: return
+
+  public java.lang.String getCustomModeCharacterButtonSoundKey();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: ldc_w         #317                // String SLIME_SPLIT
+       3: areturn
+
+  public java.lang.String getLocalizedCharacterName();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #272                // Field NAME:Ljava/lang/String;
+       3: areturn
+
+  public com.megacrit.cardcrawl.characters.AbstractPlayer newInstance();
+    descriptor: ()Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+    Code:
+       0: new           #2                  // class slimebound/characters/SlimeboundCharacter
+       3: dup
+       4: getstatic     #272                // Field NAME:Ljava/lang/String;
+       7: getstatic     #351                // Field slimebound/patches/SlimeboundEnum.SLIMEBOUND:Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;
+      10: invokespecial #356                // Method "<init>":(Ljava/lang/String;Lcom/megacrit/cardcrawl/characters/AbstractPlayer$PlayerClass;)V
+      13: areturn
+
+  public java.lang.String getSpireHeartText();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #359                // Field charStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       3: getfield      #363                // Field com/megacrit/cardcrawl/localization/CharacterStrings.TEXT:[Ljava/lang/String;
+       6: iconst_1
+       7: aaload
+       8: areturn
+
+  public com.badlogic.gdx.graphics.Color getSlashAttackColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #368                // Field com/badlogic/gdx/graphics/Color.GREEN:Lcom/badlogic/gdx/graphics/Color;
+       3: areturn
+
+  public com.megacrit.cardcrawl.actions.AbstractGameAction$AttackEffect[] getSpireHeartSlashEffect();
+    descriptor: ()[Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+    Code:
+       0: bipush        6
+       2: anewarray     #371                // class com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect
+       5: dup
+       6: iconst_0
+       7: getstatic     #373                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.BLUNT_HEAVY:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      10: aastore
+      11: dup
+      12: iconst_1
+      13: getstatic     #377                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.SMASH:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      16: aastore
+      17: dup
+      18: iconst_2
+      19: getstatic     #373                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.BLUNT_HEAVY:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      22: aastore
+      23: dup
+      24: iconst_3
+      25: getstatic     #373                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.BLUNT_HEAVY:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      28: aastore
+      29: dup
+      30: iconst_4
+      31: getstatic     #377                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.SMASH:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      34: aastore
+      35: dup
+      36: iconst_5
+      37: getstatic     #373                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.BLUNT_HEAVY:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+      40: aastore
+      41: areturn
+
+  public java.lang.String getVampireText();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: getstatic     #359                // Field charStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       3: getfield      #363                // Field com/megacrit/cardcrawl/localization/CharacterStrings.TEXT:[Ljava/lang/String;
+       6: iconst_2
+       7: aaload
+       8: areturn
+
+  public void applyStartOfTurnCards();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #380                // Method basemod/abstracts/CustomPlayer.applyStartOfTurnCards:()V
+       4: aload_0
+       5: getfield      #136                // Field puddleForm:Z
+       8: ifeq          25
+      11: aload_0
+      12: ldc_w         #385                // String IntangiblePlayer
+      15: invokevirtual #387                // Method hasPower:(Ljava/lang/String;)Z
+      18: ifne          25
+      21: aload_0
+      22: invokevirtual #142                // Method removePuddleForm:()V
+      25: return
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: getstatic     #391                // Field com/megacrit/cardcrawl/core/CardCrawlGame.languagePack:Lcom/megacrit/cardcrawl/localization/LocalizedStrings;
+       3: ldc_w         #395                // String Slimebound
+       6: invokevirtual #397                // Method com/megacrit/cardcrawl/localization/LocalizedStrings.getCharacterString:(Ljava/lang/String;)Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+       9: putstatic     #359                // Field charStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+      12: getstatic     #359                // Field charStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+      15: getfield      #403                // Field com/megacrit/cardcrawl/localization/CharacterStrings.NAMES:[Ljava/lang/String;
+      18: iconst_0
+      19: aaload
+      20: putstatic     #272                // Field NAME:Ljava/lang/String;
+      23: getstatic     #359                // Field charStrings:Lcom/megacrit/cardcrawl/localization/CharacterStrings;
+      26: getfield      #363                // Field com/megacrit/cardcrawl/localization/CharacterStrings.TEXT:[Ljava/lang/String;
+      29: iconst_0
+      30: aaload
+      31: putstatic     #275                // Field DESCRIPTION:Ljava/lang/String;
+      34: bipush        11
+      36: anewarray     #9                  // class java/lang/String
+      39: dup
+      40: iconst_0
+      41: ldc_w         #406                // String slimeboundResources/SlimeboundImages/char/orb/layer1.png
+      44: aastore
+      45: dup
+      46: iconst_1
+      47: ldc_w         #408                // String slimeboundResources/SlimeboundImages/char/orb/layer2.png
+      50: aastore
+      51: dup
+      52: iconst_2
+      53: ldc_w         #410                // String slimeboundResources/SlimeboundImages/char/orb/layer3.png
+      56: aastore
+      57: dup
+      58: iconst_3
+      59: ldc_w         #412                // String slimeboundResources/SlimeboundImages/char/orb/layer4.png
+      62: aastore
+      63: dup
+      64: iconst_4
+      65: ldc_w         #414                // String slimeboundResources/SlimeboundImages/char/orb/layer5.png
+      68: aastore
+      69: dup
+      70: iconst_5
+      71: ldc_w         #416                // String slimeboundResources/SlimeboundImages/char/orb/layer6.png
+      74: aastore
+      75: dup
+      76: bipush        6
+      78: ldc_w         #418                // String slimeboundResources/SlimeboundImages/char/orb/layer1d.png
+      81: aastore
+      82: dup
+      83: bipush        7
+      85: ldc_w         #420                // String slimeboundResources/SlimeboundImages/char/orb/layer2d.png
+      88: aastore
+      89: dup
+      90: bipush        8
+      92: ldc_w         #422                // String slimeboundResources/SlimeboundImages/char/orb/layer3d.png
+      95: aastore
+      96: dup
+      97: bipush        9
+      99: ldc_w         #424                // String slimeboundResources/SlimeboundImages/char/orb/layer4d.png
+     102: aastore
+     103: dup
+     104: bipush        10
+     106: ldc_w         #426                // String slimeboundResources/SlimeboundImages/char/orb/layer5d.png
+     109: aastore
+     110: putstatic     #1                  // Field orbTextures:[Ljava/lang/String;
+     113: new           #300                // class com/badlogic/gdx/graphics/Color
+     116: dup
+     117: fconst_0
+     118: ldc           #40                 // float 0.1f
+     120: fconst_0
+     121: fconst_1
+     122: invokespecial #428                // Method com/badlogic/gdx/graphics/Color."<init>":(FFFF)V
+     125: putstatic     #294                // Field cardRenderColor:Lcom/badlogic/gdx/graphics/Color;
+     128: ldc_w         #431                // float 75.0f
+     131: getstatic     #231                // Field com/megacrit/cardcrawl/core/Settings.scale:F
+     134: fmul
+     135: putstatic     #227                // Field mainRenderYOffset:F
+     138: return
+}

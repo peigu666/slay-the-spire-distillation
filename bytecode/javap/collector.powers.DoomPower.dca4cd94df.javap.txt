@@ -1,0 +1,278 @@
+Compiled from "DoomPower.java"
+public class collector.powers.DoomPower extends collector.powers.AbstractCollectorPower implements com.evacipated.cardcrawl.mod.stslib.powers.interfaces.HealthBarRenderPower {
+  public static final java.lang.String NAME;
+    descriptor: Ljava/lang/String;
+
+  public static final java.lang.String POWER_ID;
+    descriptor: Ljava/lang/String;
+
+  public static final com.megacrit.cardcrawl.powers.AbstractPower$PowerType TYPE;
+    descriptor: Lcom/megacrit/cardcrawl/powers/AbstractPower$PowerType;
+
+  public static final boolean TURN_BASED;
+    descriptor: Z
+
+  public collector.powers.DoomPower(com.megacrit.cardcrawl.monsters.AbstractMonster, int);
+    descriptor: (Lcom/megacrit/cardcrawl/monsters/AbstractMonster;I)V
+    Code:
+       0: aload_0
+       1: ldc           #3                  // String Doom
+       3: getstatic     #5                  // Field TYPE:Lcom/megacrit/cardcrawl/powers/AbstractPower$PowerType;
+       6: iconst_0
+       7: aload_1
+       8: aconst_null
+       9: iload_2
+      10: invokespecial #9                  // Method collector/powers/AbstractCollectorPower."<init>":(Ljava/lang/String;Lcom/megacrit/cardcrawl/powers/AbstractPower$PowerType;ZLcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;I)V
+      13: aload_0
+      14: bipush        99
+      16: putfield      #15                 // Field priority:I
+      19: return
+
+  public int getHealthBarAmount();
+    descriptor: ()I
+    Code:
+       0: iconst_0
+       1: istore_1
+       2: getstatic     #19                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       5: getstatic     #25                 // Field collector/relics/JadeRing.ID:Ljava/lang/String;
+       8: invokevirtual #31                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+      11: ifeq          22
+      14: aload_0
+      15: getfield      #37                 // Field amount:I
+      18: bipush        6
+      20: iadd
+      21: istore_1
+      22: getstatic     #19                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      25: getstatic     #25                 // Field collector/relics/JadeRing.ID:Ljava/lang/String;
+      28: invokevirtual #31                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+      31: ifne          39
+      34: aload_0
+      35: getfield      #37                 // Field amount:I
+      38: istore_1
+      39: iload_1
+      40: ireturn
+
+  public void atStartOfTurn();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #40                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getCurrRoom:()Lcom/megacrit/cardcrawl/rooms/AbstractRoom;
+       3: getfield      #44                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom.phase:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+       6: getstatic     #50                 // Field com/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase.COMBAT:Lcom/megacrit/cardcrawl/rooms/AbstractRoom$RoomPhase;
+       9: if_acmpne     25
+      12: invokestatic  #55                 // Method com/megacrit/cardcrawl/dungeons/AbstractDungeon.getMonsters:()Lcom/megacrit/cardcrawl/monsters/MonsterGroup;
+      15: invokevirtual #59                 // Method com/megacrit/cardcrawl/monsters/MonsterGroup.areMonstersBasicallyDead:()Z
+      18: ifne          25
+      21: aload_0
+      22: invokevirtual #65                 // Method explode:()V
+      25: return
+
+  public void explode();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokevirtual #69                 // Method flashWithoutSound:()V
+       4: getstatic     #72                 // Field java/lang/System.out:Ljava/io/PrintStream;
+       7: ldc           #78                 // String DEBUG: Checking Affliction.
+       9: invokevirtual #80                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      12: aload_0
+      13: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+      16: checkcast     #90                 // class com/megacrit/cardcrawl/monsters/AbstractMonster
+      19: invokestatic  #92                 // Method collector/util/Wiz.isAfflicted:(Lcom/megacrit/cardcrawl/monsters/AbstractMonster;)Z
+      22: ifeq          36
+      25: getstatic     #72                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      28: ldc           #98                 // String DEBUG: Affliction confirmed.
+      30: invokevirtual #80                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      33: goto          117
+      36: aload_0
+      37: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+      40: getstatic     #100                // Field collector/powers/DemisePower.POWER_ID:Ljava/lang/String;
+      43: invokevirtual #105                // Method com/megacrit/cardcrawl/core/AbstractCreature.hasPower:(Ljava/lang/String;)Z
+      46: ifeq          89
+      49: getstatic     #72                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      52: ldc           #110                // String DEBUG: There is no Affliction. Reducing DemisePower by 1.
+      54: invokevirtual #80                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      57: iconst_1
+      58: anewarray     #112                // class com/megacrit/cardcrawl/actions/AbstractGameAction
+      61: dup
+      62: iconst_0
+      63: new           #114                // class com/megacrit/cardcrawl/actions/common/ReducePowerAction
+      66: dup
+      67: aload_0
+      68: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+      71: aload_0
+      72: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+      75: getstatic     #100                // Field collector/powers/DemisePower.POWER_ID:Ljava/lang/String;
+      78: iconst_1
+      79: invokespecial #116                // Method com/megacrit/cardcrawl/actions/common/ReducePowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Ljava/lang/String;I)V
+      82: aastore
+      83: invokestatic  #119                // Method collector/util/Wiz.atb:([Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+      86: goto          117
+      89: getstatic     #72                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      92: ldc           #123                // String DEBUG: There is no Affliction. Removing DoomPower
+      94: invokevirtual #80                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      97: aload_0
+      98: new           #125                // class com/megacrit/cardcrawl/actions/common/RemoveSpecificPowerAction
+     101: dup
+     102: aload_0
+     103: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+     106: aload_0
+     107: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+     110: aload_0
+     111: invokespecial #127                // Method com/megacrit/cardcrawl/actions/common/RemoveSpecificPowerAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/powers/AbstractPower;)V
+     114: invokevirtual #130                // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     117: getstatic     #19                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     120: getstatic     #25                 // Field collector/relics/JadeRing.ID:Ljava/lang/String;
+     123: invokevirtual #31                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+     126: ifeq          170
+     129: aload_0
+     130: getfield      #37                 // Field amount:I
+     133: bipush        6
+     135: iadd
+     136: aload_0
+     137: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+     140: getfield      #134                // Field com/megacrit/cardcrawl/core/AbstractCreature.currentHealth:I
+     143: if_icmplt     170
+     146: getstatic     #72                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     149: ldc           #137                // String DEBUG: Kill SFX with Jade Ring.
+     151: invokevirtual #80                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+     154: getstatic     #139                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     157: ldc           #145                // String BELL
+     159: ldc           #147                // float -0.2f
+     161: ldc           #148                // float -0.3f
+     163: invokestatic  #149                // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     166: invokevirtual #155                // Method com/megacrit/cardcrawl/audio/SoundMaster.playA:(Ljava/lang/String;F)J
+     169: pop2
+     170: getstatic     #19                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     173: getstatic     #25                 // Field collector/relics/JadeRing.ID:Ljava/lang/String;
+     176: invokevirtual #31                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+     179: ifne          220
+     182: aload_0
+     183: getfield      #37                 // Field amount:I
+     186: aload_0
+     187: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+     190: getfield      #134                // Field com/megacrit/cardcrawl/core/AbstractCreature.currentHealth:I
+     193: if_icmplt     220
+     196: getstatic     #72                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     199: ldc           #161                // String DEBUG: Kill SFX without Jade Ring.
+     201: invokevirtual #80                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+     204: getstatic     #139                // Field com/megacrit/cardcrawl/core/CardCrawlGame.sound:Lcom/megacrit/cardcrawl/audio/SoundMaster;
+     207: ldc           #145                // String BELL
+     209: ldc           #147                // float -0.2f
+     211: ldc           #148                // float -0.3f
+     213: invokestatic  #149                // Method com/badlogic/gdx/math/MathUtils.random:(FF)F
+     216: invokevirtual #155                // Method com/megacrit/cardcrawl/audio/SoundMaster.playA:(Ljava/lang/String;F)J
+     219: pop2
+     220: getstatic     #19                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     223: getstatic     #25                 // Field collector/relics/JadeRing.ID:Ljava/lang/String;
+     226: invokevirtual #31                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+     229: ifeq          269
+     232: getstatic     #72                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     235: ldc           #163                // String DEBUG: Dealing damage with Jade Ring.
+     237: invokevirtual #80                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+     240: aload_0
+     241: new           #165                // class com/megacrit/cardcrawl/actions/common/LoseHPAction
+     244: dup
+     245: aload_0
+     246: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+     249: aload_0
+     250: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+     253: aload_0
+     254: getfield      #37                 // Field amount:I
+     257: bipush        6
+     259: iadd
+     260: getstatic     #167                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.NONE:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+     263: invokespecial #173                // Method com/megacrit/cardcrawl/actions/common/LoseHPAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;ILcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;)V
+     266: invokevirtual #130                // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     269: getstatic     #19                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+     272: getstatic     #25                 // Field collector/relics/JadeRing.ID:Ljava/lang/String;
+     275: invokevirtual #31                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+     278: ifne          315
+     281: getstatic     #72                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     284: ldc           #176                // String DEBUG: Dealing damage without Jade Ring.
+     286: invokevirtual #80                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+     289: aload_0
+     290: new           #165                // class com/megacrit/cardcrawl/actions/common/LoseHPAction
+     293: dup
+     294: aload_0
+     295: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+     298: aload_0
+     299: getfield      #86                 // Field owner:Lcom/megacrit/cardcrawl/core/AbstractCreature;
+     302: aload_0
+     303: getfield      #37                 // Field amount:I
+     306: getstatic     #167                // Field com/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect.NONE:Lcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;
+     309: invokespecial #173                // Method com/megacrit/cardcrawl/actions/common/LoseHPAction."<init>":(Lcom/megacrit/cardcrawl/core/AbstractCreature;Lcom/megacrit/cardcrawl/core/AbstractCreature;ILcom/megacrit/cardcrawl/actions/AbstractGameAction$AttackEffect;)V
+     312: invokevirtual #130                // Method addToBot:(Lcom/megacrit/cardcrawl/actions/AbstractGameAction;)V
+     315: return
+
+  public void updateDescription();
+    descriptor: ()V
+    Code:
+       0: getstatic     #19                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+       3: getstatic     #25                 // Field collector/relics/JadeRing.ID:Ljava/lang/String;
+       6: invokevirtual #31                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+       9: ifne          51
+      12: aload_0
+      13: new           #178                // class java/lang/StringBuilder
+      16: dup
+      17: invokespecial #180                // Method java/lang/StringBuilder."<init>":()V
+      20: aload_0
+      21: getfield      #182                // Field DESCRIPTIONS:[Ljava/lang/String;
+      24: iconst_0
+      25: aaload
+      26: invokevirtual #186                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      29: aload_0
+      30: getfield      #37                 // Field amount:I
+      33: invokevirtual #190                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      36: aload_0
+      37: getfield      #182                // Field DESCRIPTIONS:[Ljava/lang/String;
+      40: iconst_1
+      41: aaload
+      42: invokevirtual #186                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      45: invokevirtual #193                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      48: putfield      #197                // Field description:Ljava/lang/String;
+      51: getstatic     #19                 // Field com/megacrit/cardcrawl/dungeons/AbstractDungeon.player:Lcom/megacrit/cardcrawl/characters/AbstractPlayer;
+      54: getstatic     #25                 // Field collector/relics/JadeRing.ID:Ljava/lang/String;
+      57: invokevirtual #31                 // Method com/megacrit/cardcrawl/characters/AbstractPlayer.hasRelic:(Ljava/lang/String;)Z
+      60: ifeq          107
+      63: aload_0
+      64: getfield      #37                 // Field amount:I
+      67: bipush        6
+      69: iadd
+      70: istore_1
+      71: aload_0
+      72: new           #178                // class java/lang/StringBuilder
+      75: dup
+      76: invokespecial #180                // Method java/lang/StringBuilder."<init>":()V
+      79: aload_0
+      80: getfield      #182                // Field DESCRIPTIONS:[Ljava/lang/String;
+      83: iconst_0
+      84: aaload
+      85: invokevirtual #186                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      88: iload_1
+      89: invokevirtual #190                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      92: aload_0
+      93: getfield      #182                // Field DESCRIPTIONS:[Ljava/lang/String;
+      96: iconst_1
+      97: aaload
+      98: invokevirtual #186                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     101: invokevirtual #193                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     104: putfield      #197                // Field description:Ljava/lang/String;
+     107: return
+
+  public com.badlogic.gdx.graphics.Color getColor();
+    descriptor: ()Lcom/badlogic/gdx/graphics/Color;
+    Code:
+       0: getstatic     #200                // Field com/badlogic/gdx/graphics/Color.PURPLE:Lcom/badlogic/gdx/graphics/Color;
+       3: invokevirtual #206                // Method com/badlogic/gdx/graphics/Color.cpy:()Lcom/badlogic/gdx/graphics/Color;
+       6: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: ldc           #3                  // String Doom
+       2: invokestatic  #210                // Method makeID:(Ljava/lang/String;)Ljava/lang/String;
+       5: putstatic     #214                // Field POWER_ID:Ljava/lang/String;
+       8: getstatic     #215                // Field com/megacrit/cardcrawl/powers/AbstractPower$PowerType.DEBUFF:Lcom/megacrit/cardcrawl/powers/AbstractPower$PowerType;
+      11: putstatic     #5                  // Field TYPE:Lcom/megacrit/cardcrawl/powers/AbstractPower$PowerType;
+      14: return
+}
